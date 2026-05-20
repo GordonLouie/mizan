@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /custom
+
+Sitemap: https://mizan.app/sitemap.xml

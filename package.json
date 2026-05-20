@@ -1,0 +1,32 @@
+{
+  "name": "mizan",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test:engine": "tsx src/lib/__tests__/screen.test.ts",
+    "test:engine:compiled": "tsc --target es2022 --module commonjs --outDir .test-build --resolveJsonModule --esModuleInterop --moduleResolution node src/lib/__tests__/screen.test.ts src/lib/screen.ts src/lib/scholars.ts src/lib/purification.ts src/lib/types.ts && mkdir -p .test-build/data && cp -r src/data/. .test-build/data/ && node .test-build/lib/__tests__/screen.test.js"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.460.0",
+    "marked": "^18.0.4",
+    "next": "15.0.3",
+    "react": "^19.0.0-rc-66855b96-20241106",
+    "react-dom": "^19.0.0-rc-66855b96-20241106"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.14",
+    "tsx": "^4.22.3",
+    "typescript": "^5.9.3"
+  }
+}

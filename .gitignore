@@ -1,0 +1,11 @@
+/node_modules
+/.next/
+/out/
+/build
+.DS_Store
+.env*
+!.env.example
+*.tsbuildinfo
+test.txt
+test2.txt
+test3.txt
