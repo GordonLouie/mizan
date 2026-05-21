@@ -4,9 +4,11 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { listStocks } from "@/lib/data";
 import { SCHOLAR_PROFILES, getScholar } from "@/lib/scholars";
+import { loadCustomProfile } from "@/lib/customProfile";
 import { screenStock } from "@/lib/screen";
-import type { StockFundamentals, Verdict } from "@/lib/types";
+import type { Verdict } from "@/lib/types";
 import ScholarPicker from "@/components/ScholarPicker";
+import DemoBanner from "@/components/DemoBanner";
 import { Search, ArrowUpDown } from "lucide-react";
 
 type SortKey = "verdict" | "ticker" | "name" | "sector" | "marketCap" | "illiquid" | "debt";
@@ -26,6 +28,7 @@ function UniverseInner() {
   const [verdictFilter, setVerdictFilter] = useState<"" | Verdict>("");
   const [sortBy, setSortBy] = useState<SortKey>("verdict");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  const [bump, setBump] = useState(0);
 
   useEffect(() => {
     try {
@@ -34,13 +37,18 @@ function UniverseInner() {
     } catch {}
   }, []);
 
-  const scholar = getScholar(scholarId);
-  const allStocks = listStocks();
+  useEffect(() => {
+    const onFocus = () => setBump((b) => b + 1);
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, []);
 
-  const sectors = useMemo(
-    () => Array.from(new Set(allStocks.map((s) => s.sector))).sort(),
-    [allStocks],
+  const scholar = useMemo(
+    () => (scholarId === "custom" ? loadCustomProfile() : getScholar(scholarId)),
+    [scholarId, bump],
   );
+  const allStocks = listStocks();
+  const sectors = useMemo(() => Array.from(new Set(allStocks.map((s) => s.sector))).sort(), [allStocks]);
 
   const enriched = useMemo(
     () => allStocks.map((s) => ({ stock: s, result: screenStock(s, scholar) })),
@@ -51,11 +59,7 @@ function UniverseInner() {
     let rows = enriched;
     if (query.trim()) {
       const q = query.toLowerCase();
-      rows = rows.filter(
-        (r) =>
-          r.stock.ticker.toLowerCase().includes(q) ||
-          r.stock.name.toLowerCase().includes(q),
-      );
+      rows = rows.filter((r) => r.stock.ticker.toLowerCase().includes(q) || r.stock.name.toLowerCase().includes(q));
     }
     if (sector) rows = rows.filter((r) => r.stock.sector === sector);
     if (verdictFilter) rows = rows.filter((r) => r.result.verdict === verdictFilter);
@@ -76,7 +80,6 @@ function UniverseInner() {
       const cmp = av < bv ? -1 : av > bv ? 1 : 0;
       return sortDir === "asc" ? cmp : -cmp;
     });
-
     return rows;
   }, [enriched, query, sector, verdictFilter, sortBy, sortDir]);
 
@@ -94,7 +97,6 @@ function UniverseInner() {
     if (sortBy === key) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     else { setSortBy(key); setSortDir("asc"); }
   }
-
   function fmtCap(n: number) {
     if (n >= 1e12) return `$${(n / 1e12).toFixed(2)}T`;
     if (n >= 1e9) return `$${(n / 1e9).toFixed(1)}B`;
@@ -107,11 +109,11 @@ function UniverseInner() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Universe</h1>
         <p className="mt-1 max-w-2xl text-sm text-gray-600">
-          Browse every ticker in Mizan&apos;s dataset against your scholar&apos;s
-          methodology. Filter by sector and verdict, sort by any column, click any
-          row for the full ratio breakdown.
+          Every ticker, screened against your scholar. Filter by sector and verdict, sort by any column, click any ticker for the full breakdown.
         </p>
       </div>
+
+      <DemoBanner />
 
       <ScholarPicker value={scholarId} onChange={setScholarId} />
 
@@ -124,39 +126,25 @@ function UniverseInner() {
 
       <div className="rounded-xl border border-gray-200 bg-white p-4">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <div className="sm:col-span-1">
+          <div>
             <label className="block text-xs font-medium uppercase tracking-wide text-gray-500">Search</label>
             <div className="mt-1 flex items-center gap-2 rounded-md border border-gray-200 bg-gray-50 px-3 py-2 focus-within:border-navy-400 focus-within:bg-white">
               <Search size={14} className="text-gray-400" />
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Ticker or company name"
-                className="w-full bg-transparent text-sm outline-none"
-              />
+              <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Ticker or company" className="w-full bg-transparent text-sm outline-none" />
             </div>
           </div>
           <div>
             <label className="block text-xs font-medium uppercase tracking-wide text-gray-500">Sector</label>
-            <select
-              value={sector}
-              onChange={(e) => setSector(e.target.value)}
-              className="mt-1 w-full rounded-md border border-gray-200 bg-gray-50 px-2 py-1.5 text-sm focus:border-navy-400 focus:bg-white focus:outline-none"
-            >
+            <select value={sector} onChange={(e) => setSector(e.target.value)}
+              className="mt-1 w-full rounded-md border border-gray-200 bg-gray-50 px-2 py-1.5 text-sm focus:border-navy-400 focus:bg-white focus:outline-none">
               <option value="">All sectors</option>
-              {sectors.map((s) => (
-                <option key={s} value={s}>{s}</option>
-              ))}
+              {sectors.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </div>
           <div>
             <label className="block text-xs font-medium uppercase tracking-wide text-gray-500">Verdict</label>
-            <select
-              value={verdictFilter}
-              onChange={(e) => setVerdictFilter(e.target.value as any)}
-              className="mt-1 w-full rounded-md border border-gray-200 bg-gray-50 px-2 py-1.5 text-sm focus:border-navy-400 focus:bg-white focus:outline-none"
-            >
+            <select value={verdictFilter} onChange={(e) => setVerdictFilter(e.target.value as any)}
+              className="mt-1 w-full rounded-md border border-gray-200 bg-gray-50 px-2 py-1.5 text-sm focus:border-navy-400 focus:bg-white focus:outline-none">
               <option value="">All verdicts</option>
               <option value="pass">Pass only</option>
               <option value="borderline">Borderline only</option>
@@ -180,16 +168,10 @@ function UniverseInner() {
             </tr>
           </thead>
           <tbody>
-            {filtered.length === 0 && (
-              <tr><td colSpan={7} className="p-8 text-center text-sm text-gray-500">No matches with current filters.</td></tr>
-            )}
+            {filtered.length === 0 && <tr><td colSpan={7} className="p-8 text-center text-sm text-gray-500">No matches with current filters.</td></tr>}
             {filtered.map(({ stock, result }) => (
               <tr key={stock.ticker} className="border-t border-gray-100 hover:bg-gray-50">
-                <td className="px-4 py-2">
-                  <Link href={`/screen?ticker=${stock.ticker}`} className="font-semibold text-navy-700 hover:text-navy-900 hover:underline">
-                    {stock.ticker}
-                  </Link>
-                </td>
+                <td className="px-4 py-2"><Link href={`/screen?ticker=${stock.ticker}`} className="font-semibold text-navy-700 hover:text-navy-900 hover:underline">{stock.ticker}</Link></td>
                 <td className="px-4 py-2 text-gray-700">{stock.name}</td>
                 <td className="px-4 py-2 text-xs text-gray-500">{stock.sector}</td>
                 <td className="px-4 py-2 text-right tabular-nums text-gray-700">{fmtCap(stock.marketCapUsd)}</td>
@@ -201,9 +183,7 @@ function UniverseInner() {
                     (result.verdict === "pass" ? "bg-emerald-50 text-emerald-700"
                      : result.verdict === "borderline" ? "bg-amber-50 text-amber-700"
                      : "bg-rose-50 text-rose-700")
-                  }>
-                    {result.verdict}
-                  </span>
+                  }>{result.verdict}</span>
                 </td>
               </tr>
             ))}
@@ -211,10 +191,7 @@ function UniverseInner() {
         </table>
       </div>
 
-      <p className="text-xs text-gray-500">
-        Showing {filtered.length} of {enriched.length} tickers. Click any ticker to
-        see the full ratio breakdown.
-      </p>
+      <p className="text-xs text-gray-500">Showing {filtered.length} of {enriched.length} tickers.</p>
     </div>
   );
 }
@@ -240,8 +217,7 @@ function SortHeader({ label, k, sortBy, sortDir, onClick, className }: {
   return (
     <th className={"px-4 py-2 " + (className ?? "")}>
       <button type="button" onClick={() => onClick(k)} className={"inline-flex items-center gap-1 " + (active ? "text-navy-800" : "")}>
-        {label}
-        <ArrowUpDown size={11} className={active ? "" : "opacity-30"} />
+        {label}<ArrowUpDown size={11} className={active ? "" : "opacity-30"} />
       </button>
     </th>
   );

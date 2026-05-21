@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
+import Onboarding from "@/components/Onboarding";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mizan.app"),
@@ -34,8 +35,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Mizan — halal investing, calibrated to your conscience.",
-    description:
-      "The first stock screener that adapts to your scholar's methodology.",
+    description: "The first stock screener that adapts to your scholar's methodology.",
     creator: "@mizanapp",
     images: ["/og_image.svg"],
   },
@@ -85,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </p>
           </div>
         </footer>
+        <Onboarding />
       </body>
     </html>
   );
