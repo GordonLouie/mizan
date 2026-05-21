@@ -73,11 +73,22 @@ export function ProgressRing({
           style={{ transition: "stroke-dashoffset 0.6s ease-out" }}
         />
       </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="font-bold text-gray-900 tabular-nums" style={{ fontFamily: "Georgia, serif", fontSize: size * 0.22 }}>
-          {label ?? `${Math.round(percent)}%`}
-        </div>
-        {sublabel && <div className="mt-1 max-w-[80%] text-center text-[11px] font-medium uppercase tracking-widest text-gray-500">{sublabel}</div>}
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+        {(() => {
+          const text = label ?? `${Math.round(percent)}%`;
+          // Scale font down for longer / non-numeric labels
+          const isShortNumeric = /^[$\d,.%\s]+$/.test(text) && text.length <= 8;
+          const fontSize = isShortNumeric ? size * 0.22 : size * 0.13;
+          return (
+            <div
+              className="font-bold text-gray-900 tabular-nums text-center"
+              style={{ fontFamily: "Georgia, serif", fontSize, lineHeight: 1.05 }}
+            >
+              {text}
+            </div>
+          );
+        })()}
+        {sublabel && <div className="mt-1 max-w-[85%] text-center text-[11px] font-medium uppercase tracking-widest text-gray-500">{sublabel}</div>}
       </div>
     </div>
   );

@@ -29,9 +29,12 @@ function Figure({ children, caption }: { children: React.ReactNode; caption: str
 export function ShareSliceDiagram() {
   const COLS = 24, ROWS = 8;
   const dotR = 4, gap = 12;
-  const gridX = 0, gridY = 60;
+  const gridX = 0, gridY = 70;
   const totalW = (COLS - 1) * gap;
-  const highlight = { r: 3, c: 9 };
+  // Highlight a dot near top-right so the label can flow outside the grid
+  const highlight = { r: 1, c: COLS - 4 };
+  const highlightX = gridX + highlight.c * gap;
+  const highlightY = gridY + highlight.r * gap;
 
   const dots: React.ReactElement[] = [];
   for (let r = 0; r < ROWS; r++) {
@@ -47,27 +50,26 @@ export function ShareSliceDiagram() {
 
   return (
     <Figure caption="A company is divided into many small slices. Buying a share means buying one slice. Its value rises and falls with the business.">
-      <svg viewBox={`-40 0 ${totalW + 80} 220`} xmlns="http://www.w3.org/2000/svg" className="w-full max-w-2xl" role="img" aria-label="A grid of dots representing shares of Apple, with one highlighted in gold.">
+      <svg viewBox={`-20 0 ${totalW + 120} 240`} xmlns="http://www.w3.org/2000/svg" className="w-full max-w-2xl" role="img" aria-label="A grid of dots representing shares of Apple, with one highlighted in gold and labeled.">
         {/* Headline */}
-        <text x="0" y="22" fontSize="11" fontWeight="600" fill={MUTED} fontFamily={SANS} letterSpacing="0.16em">APPLE  ·  16 BILLION SHARES</text>
+        <text x="0" y="28" fontSize="11" fontWeight="600" fill={MUTED} fontFamily={SANS} letterSpacing="0.16em">APPLE  ·  16 BILLION SHARES</text>
 
         {/* The grid of dots */}
         {dots}
 
-        {/* Pointer from highlighted dot */}
-        <line x1={gridX + highlight.c * gap + 8} y1={gridY + highlight.r * gap}
-              x2={gridX + highlight.c * gap + 60} y2={gridY + highlight.r * gap - 20}
-              stroke={INK} strokeWidth={0.5} />
-
-        <text x={gridX + highlight.c * gap + 64} y={gridY + highlight.r * gap - 22}
-              fontSize="12" fontStyle="italic" fill={INK} fontFamily={SERIF}>
-          one of these is yours.
+        {/* Pointer from highlighted dot — short hop right then a label outside the grid */}
+        <line x1={highlightX + 6} y1={highlightY} x2={totalW + 24} y2={highlightY} stroke={INK} strokeWidth={0.5} />
+        <text x={totalW + 30} y={highlightY - 6} fontSize="12" fontStyle="italic" fill={INK} fontFamily={SERIF}>
+          one of these
+        </text>
+        <text x={totalW + 30} y={highlightY + 8} fontSize="12" fontStyle="italic" fill={INK} fontFamily={SERIF}>
+          is yours.
         </text>
 
         {/* Hairline + caption row */}
-        <line x1="0" y1="196" x2={totalW} y2="196" stroke={HAIR} />
-        <text x="0" y="214" fontSize="10" fill={MUTED} fontFamily={SANS}>If Apple grows, so does your slice.</text>
-        <text x={totalW} y="214" textAnchor="end" fontSize="10" fill={MUTED} fontFamily={SANS}>If Apple shrinks, so does your slice.</text>
+        <line x1="0" y1="212" x2={totalW} y2="212" stroke={HAIR} />
+        <text x="0" y="230" fontSize="10" fill={MUTED} fontFamily={SANS}>If Apple grows, so does your slice.</text>
+        <text x={totalW} y="230" textAnchor="end" fontSize="10" fill={MUTED} fontFamily={SANS}>If Apple shrinks, so does your slice.</text>
       </svg>
     </Figure>
   );
