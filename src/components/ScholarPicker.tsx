@@ -1,28 +1,83 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { SCHOLAR_PROFILES } from "@/lib/scholars";
 import type { ScholarProfile } from "@/lib/types";
-import { useEffect, useState } from "react";
-import { Info } from "lucide-react";
+import { ChevronDown, Settings } from "lucide-react";
 
 interface Props {
   value: string;
   onChange: (id: string) => void;
+  /** When true, default to expanded card-grid (used in onboarding flows). */
+  expanded?: boolean;
 }
 
-export default function ScholarPicker({ value, onChange }: Props) {
-  const [open, setOpen] = useState<string | null>(null);
+export default function ScholarPicker({ value, onChange, expanded }: Props) {
+  const [open, setOpen] = useState(false);
   const current = SCHOLAR_PROFILES.find((p) => p.id === value) ?? SCHOLAR_PROFILES[0];
 
   useEffect(() => {
-    try {
-      localStorage.setItem("mizan.scholarId", value);
-    } catch {}
+    try { localStorage.setItem("mizan.scholarId", value); } catch {}
   }, [value]);
 
+  // Compact version (default on screening pages)
+  if (!expanded) {
+    return (
+      <div className="rounded-md border border-gray-200 bg-white">
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="flex w-full items-center justify-between px-3 py-2 text-left"
+          aria-expanded={open}
+        >
+          <span className="flex items-center gap-3">
+            <span className="text-xs font-semibold uppercase tracking-widest text-gray-500">Scholar</span>
+            <span className="text-sm font-medium text-gray-900">{current.label}</span>
+          </span>
+          <ChevronDown size={14} className={"text-gray-500 " + (open ? "rotate-180 transition" : "transition")} />
+        </button>
+
+        {open && (
+          <div className="border-t border-gray-100 px-3 py-3">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {SCHOLAR_PROFILES.map((p: ScholarProfile) => {
+                const selected = p.id === value;
+                return (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => { onChange(p.id); setOpen(false); }}
+                    className={
+                      "rounded-md border p-3 text-left transition " +
+                      (selected
+                        ? "border-navy-700 bg-navy-50"
+                        : "border-gray-200 bg-white hover:border-gray-300")
+                    }
+                  >
+                    <div className="text-sm font-semibold text-gray-900">{p.short}</div>
+                    <div className="mt-0.5 text-xs text-gray-500">{p.label}</div>
+                    <div className="mt-1.5 text-xs text-gray-600">{p.blurb}</div>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="mt-3 flex items-center justify-between border-t border-gray-100 pt-3 text-xs">
+              <span className="text-gray-500">Don&apos;t see your scholar?</span>
+              <Link href="/custom" className="inline-flex items-center gap-1 font-medium text-navy-700 hover:text-navy-900">
+                <Settings size={12} /> Build your own
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Expanded card-grid version (used in onboarding / custom builder)
   return (
     <div>
-      <div className="mb-1 text-xs font-medium uppercase tracking-wide text-gray-500">
+      <div className="mb-1 text-xs font-semibold uppercase tracking-widest text-gray-500">
         Your scholar / standard
       </div>
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -40,52 +95,13 @@ export default function ScholarPicker({ value, onChange }: Props) {
                   : "border-gray-200 bg-white hover:border-gray-300")
               }
             >
-              <div className="flex items-center justify-between">
-                <div className="font-semibold text-gray-900">{p.short}</div>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setOpen(open === p.id ? null : p.id);
-                  }}
-                  className="rounded p-1 text-gray-400 hover:text-gray-700"
-                  aria-label="More info"
-                >
-                  <Info size={14} />
-                </button>
-              </div>
+              <div className="font-semibold text-gray-900">{p.short}</div>
               <div className="mt-0.5 text-xs text-gray-500">{p.label}</div>
-              {open === p.id && (
-                <div className="mt-2 rounded bg-white p-2 text-xs text-gray-700 ring-1 ring-gray-200">
-                  {p.blurb}
-                  <div className="mt-2 grid grid-cols-2 gap-1 text-[11px]">
-                    <div>Impure income ≤ {p.maxImpermissibleIncomePct}%</div>
-                    <div>Debt ≤ {p.maxDebtToMarketCapPct}%</div>
-                    <div>Cash+sec ≤ {p.maxCashSecuritiesToMarketCapPct}%</div>
-                    {p.maxReceivablesToMarketCapPct !== null && (
-                      <div>Receivables ≤ {p.maxReceivablesToMarketCapPct}%</div>
-                    )}
-                    {p.minIlliquidAssetsToTotalAssetsPct !== null && (
-                      <div className="col-span-2 font-semibold text-navy-700">
-                        Illiquid assets ≥ {p.minIlliquidAssetsToTotalAssetsPct}%
-                      </div>
-                    )}
-                    <div className="col-span-2 italic text-gray-500">
-                      Purify:{" "}
-                      {p.purificationScope === "dividends_and_gains"
-                        ? "dividends + capital gains"
-                        : "dividends only"}
-                    </div>
-                  </div>
-                </div>
-              )}
+              <div className="mt-2 text-xs text-gray-700">{p.blurb}</div>
             </button>
           );
         })}
       </div>
-      <p className="mt-2 text-xs text-gray-500">
-        Selected: <span className="font-medium text-gray-700">{current.label}</span>
-      </p>
     </div>
   );
 }

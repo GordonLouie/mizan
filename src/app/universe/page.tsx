@@ -119,9 +119,9 @@ function UniverseInner() {
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-4">
         <Stat label="Total tickers" value={stats.total.toString()} />
-        <Stat label="Pass under your scholar" value={stats.pass.toString()} color="emerald" />
-        <Stat label="Borderline" value={stats.border.toString()} color="amber" />
-        <Stat label="Fail" value={stats.fail.toString()} color="rose" />
+        <Stat label="Halal under your scholar" value={stats.pass.toString()} color="emerald" />
+        <Stat label="Doubtful" value={stats.border.toString()} color="amber" />
+        <Stat label="Not halal" value={stats.fail.toString()} color="rose" />
       </div>
 
       <div className="rounded-xl border border-gray-200 bg-white p-4">
@@ -146,9 +146,9 @@ function UniverseInner() {
             <select value={verdictFilter} onChange={(e) => setVerdictFilter(e.target.value as any)}
               className="mt-1 w-full rounded-md border border-gray-200 bg-gray-50 px-2 py-1.5 text-sm focus:border-navy-400 focus:bg-white focus:outline-none">
               <option value="">All verdicts</option>
-              <option value="pass">Pass only</option>
-              <option value="borderline">Borderline only</option>
-              <option value="fail">Fail only</option>
+              <option value="pass">Halal only</option>
+              <option value="borderline">Doubtful only</option>
+              <option value="fail">Not halal only</option>
             </select>
           </div>
         </div>
@@ -183,7 +183,7 @@ function UniverseInner() {
                     (result.verdict === "pass" ? "bg-emerald-50 text-emerald-700"
                      : result.verdict === "borderline" ? "bg-amber-50 text-amber-700"
                      : "bg-rose-50 text-rose-700")
-                  }>{result.verdict}</span>
+                  }>{result.verdict === "pass" ? "Halal" : result.verdict === "borderline" ? "Doubtful" : "Not halal"}</span>
                 </td>
               </tr>
             ))}

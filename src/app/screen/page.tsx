@@ -12,7 +12,7 @@ import ComplianceCard from "@/components/ComplianceCard";
 import TickerSearch from "@/components/TickerSearch";
 import FeaturedTickers from "@/components/FeaturedTickers";
 import DemoBanner from "@/components/DemoBanner";
-import { Settings } from "lucide-react";
+import { VERDICT_LABEL } from "@/lib/verdictLabels";
 
 export default function ScreenPage() {
   return (
@@ -24,9 +24,9 @@ export default function ScreenPage() {
 
 function ScreenLoader() {
   return (
-    <div className="space-y-4">
-      <div className="h-8 w-64 animate-pulse rounded bg-gray-100" />
-      <div className="h-4 w-96 animate-pulse rounded bg-gray-100" />
+    <div className="space-y-4 py-8">
+      <div className="h-10 w-80 animate-pulse rounded bg-gray-100" />
+      <div className="h-5 w-96 animate-pulse rounded bg-gray-100" />
       <div className="h-32 w-full animate-pulse rounded bg-gray-100" />
     </div>
   );
@@ -64,46 +64,35 @@ function ScreenInner() {
     [stock, scholar],
   );
 
-  const showSideBySide =
-    stock && (stock.ticker === "AMZN" || stock.ticker === "META" || stock.ticker === "NFLX");
+  // Compute verdicts for ALL scholars at once, for the side-by-side panel
+  const allVerdicts = useMemo(() => {
+    if (!stock) return [];
+    return SCHOLAR_PROFILES.filter((p) => p.id !== "custom").map((p) => ({
+      scholar: p,
+      verdict: screenStock(stock, scholarId === "custom" && p.id === scholarId ? scholar : p === scholar ? scholar : p).verdict,
+    }));
+  }, [stock, scholar, scholarId]);
 
   return (
     <div className="space-y-6">
+      {/* Header strip */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Stock screener</h1>
-        <p className="mt-1 text-sm text-gray-600">
-          Search a ticker or company name. Mizan returns a transparent compliance verdict and the
-          underlying ratios — calibrated to your selected scholar.
-        </p>
+        <div className="text-xs font-semibold uppercase tracking-widest text-gold-600">Stock screener</div>
+        <h1 className="mt-2 text-3xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+          Search a stock
+        </h1>
       </div>
 
-      <DemoBanner />
+      {/* Search */}
+      <TickerSearch value={ticker} onChange={(t) => setTicker(t)} autoFocus={!ticker} />
 
+      {!ticker && <DemoBanner />}
+
+      {/* Scholar picker — compact */}
       <ScholarPicker value={scholarId} onChange={setScholarId} />
 
-      {scholarId === "custom" && (
-        <div className="flex items-center justify-between rounded-md border border-navy-200 bg-navy-50 px-4 py-3 text-sm text-navy-800">
-          <span>Using your custom thresholds. <Link href="/custom" className="font-medium underline">Edit</Link> them.</span>
-          <Link href="/custom" className="inline-flex items-center gap-1 text-xs text-navy-700">
-            <Settings size={12} /> Configure
-          </Link>
-        </div>
-      )}
-
-      <div className="rounded-xl border border-gray-200 bg-white p-4">
-        <label className="mb-1 block text-xs font-medium uppercase tracking-wide text-gray-500">Ticker</label>
-        <TickerSearch
-          value={ticker}
-          onChange={(t) => setTicker(t)}
-          autoFocus={!ticker}
-        />
-        <div className="mt-3 text-xs text-gray-500">
-          Or <Link href="/universe" className="text-navy-700 underline">browse the universe</Link> of all {stocks.length} tickers.
-        </div>
-      </div>
-
       {!ticker && (
-        <div className="rounded-xl border border-gray-200 bg-white p-5">
+        <div className="pt-2">
           <FeaturedTickers onPick={(t) => setTicker(t)} />
         </div>
       )}
@@ -115,26 +104,55 @@ function ScreenInner() {
         </div>
       )}
 
-      {stock && result && !showSideBySide && (
+      {/* The headline verdict */}
+      {stock && result && (
         <ComplianceCard stock={stock} result={result} />
       )}
 
-      {stock && result && showSideBySide && (
-        <>
-          <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-            <strong>Heads up:</strong> {stock.ticker} is a great demo of why
-            single-standard apps miss the nuance. Below is your selected scholar&apos;s
-            verdict — and, side-by-side, Mufti Taqi Usmani&apos;s, which adds an
-            illiquid-asset floor.
+      {/* Universal multi-scholar verdict strip — ALL scholars at once */}
+      {stock && allVerdicts.length > 0 && (
+        <div className="rounded-2xl border border-gray-200 bg-white">
+          <div className="border-b border-gray-100 px-6 py-4 sm:px-8">
+            <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">All five scholars on {stock.ticker}</div>
+            <h2 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+              The verdict differs. The right answer is yours.
+            </h2>
           </div>
-          <ComplianceCard stock={stock} result={result} />
-          {scholarId !== "taqi_usmani" && (
-            <ComplianceCard
-              stock={stock}
-              result={screenStock(stock, getScholar("taqi_usmani"))}
-            />
-          )}
-        </>
+          <div className="divide-y divide-gray-100 sm:grid sm:grid-cols-5 sm:divide-x sm:divide-y-0">
+            {allVerdicts.map(({ scholar: p, verdict }) => {
+              const v = verdict;
+              const color = v === "pass" ? "text-emerald-700" : v === "borderline" ? "text-amber-700" : "text-rose-700";
+              const isCurrent = p.id === scholarId;
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => setScholarId(p.id)}
+                  className={
+                    "block px-6 py-5 text-left transition hover:bg-gray-50 " +
+                    (isCurrent ? "bg-navy-50" : "")
+                  }
+                >
+                  <div className="text-xs font-semibold text-gray-500">{p.short}</div>
+                  <div className={`mt-2 text-xl font-bold ${color}`} style={{ fontFamily: "Georgia, serif" }}>
+                    {VERDICT_LABEL[v]}
+                  </div>
+                  {isCurrent && (
+                    <div className="mt-1 text-[10px] font-semibold uppercase tracking-wider text-navy-700">your scholar</div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {stock && (
+        <p className="text-center text-xs text-gray-500">
+          <Link href="/universe" className="text-navy-700 underline">Browse all {stocks.length} tickers</Link>
+          {" · "}
+          <Link href="/methodology" className="text-navy-700 underline">How we compute these verdicts</Link>
+        </p>
       )}
     </div>
   );

@@ -186,7 +186,7 @@ export default function PortfolioPage() {
       {score && score.results.length > 0 && (
         <div className="rounded-xl border border-gray-200 bg-white p-5">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Stat label="Holdings that pass" value={`${score.results.filter((r) => r.verdict === "pass").length} / ${score.results.length}`} />
+            <Stat label="Halal holdings" value={`${score.results.filter((r) => r.verdict === "pass").length} / ${score.results.length}`} />
             <Stat label="Pass rate" value={`${(score.passRate * 100).toFixed(0)}%`} />
             <Stat label="Weight-adjusted pass rate" value={`${(score.weightedPassRate * 100).toFixed(0)}%`} />
           </div>
@@ -210,7 +210,7 @@ export default function PortfolioPage() {
                          : r.verdict === "borderline" ? "bg-amber-50 text-amber-700"
                          : "bg-rose-50 text-rose-700")
                       }>
-                        {r.verdict}
+                        {r.verdict === "pass" ? "Halal" : r.verdict === "borderline" ? "Doubtful" : "Not halal"}
                       </span>
                     </td>
                     <td className="text-gray-600">
