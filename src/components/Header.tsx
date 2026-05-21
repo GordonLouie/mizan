@@ -2,20 +2,21 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, GraduationCap } from "lucide-react";
 
 const PRIMARY = [
+  { href: "/learn", label: "Learn", highlight: true },
   { href: "/screen", label: "Screen" },
   { href: "/universe", label: "Universe" },
-  { href: "/portfolio", label: "Portfolio" },
   { href: "/ask", label: "Ask" },
   { href: "/zakat", label: "Zakat" },
-  { href: "/blog", label: "Blog" },
+  { href: "/portfolio", label: "Portfolio" },
 ];
 
 const SECONDARY = [
   { href: "/custom", label: "Custom profile" },
   { href: "/purification", label: "Purification" },
+  { href: "/blog", label: "Blog" },
   { href: "/compare", label: "Compare" },
   { href: "/methodology", label: "Methodology" },
   { href: "/glossary", label: "Glossary" },
@@ -39,14 +40,20 @@ export default function Header() {
               Mizan
             </span>
             <span className="hidden text-xs text-gray-500 xl:inline">
-              halal investing, calibrated
+              halal investing, made clear
             </span>
           </div>
         </Link>
 
         <nav className="hidden items-center gap-5 text-sm font-medium text-gray-700 lg:flex">
           {PRIMARY.map((l) => (
-            <Link key={l.href} href={l.href} className="hover:text-navy-700">{l.label}</Link>
+            l.highlight ? (
+              <Link key={l.href} href={l.href} className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-0.5 text-emerald-700 hover:bg-emerald-100">
+                <GraduationCap size={14} /> {l.label}
+              </Link>
+            ) : (
+              <Link key={l.href} href={l.href} className="hover:text-navy-700">{l.label}</Link>
+            )
           ))}
           <div className="group relative">
             <button className="inline-flex items-center gap-1 hover:text-navy-700">More ▾</button>
