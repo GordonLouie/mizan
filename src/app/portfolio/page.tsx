@@ -1,17 +1,24 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { findStock, listStocks } from "@/lib/data";
+import { findStock } from "@/lib/data";
 import { getScholar, SCHOLAR_PROFILES } from "@/lib/scholars";
 import { loadCustomProfile } from "@/lib/customProfile";
 import { screenPortfolio } from "@/lib/screen";
 import ScholarPicker from "@/components/ScholarPicker";
-import DemoBanner from "@/components/DemoBanner";
-import { Save, RotateCcw, Trash2, Check } from "lucide-react";
+import StockLogo from "@/components/StockLogo";
+import CurrencyInput from "@/components/CurrencyInput";
+import {
+  ProgressRing, DonutChart, DonutLegend, HorizontalBars,
+  LineChart, LineLegend, sectorColor,
+} from "@/components/Charts";
+import { VERDICT_LABEL } from "@/lib/verdictLabels";
+import type { Verdict } from "@/lib/types";
+import { Plus, Trash2, Check, RotateCcw } from "lucide-react";
 
 interface Row { ticker: string; weight: number; }
 
-const STORAGE_KEY = "mizan.portfolio.v1";
+const STORAGE_KEY = "mizan.portfolio.v2";
 
 const DEFAULT_ROWS: Row[] = [
   { ticker: "AAPL", weight: 15 },
@@ -25,6 +32,35 @@ const DEFAULT_ROWS: Row[] = [
   { ticker: "JPM", weight: 10 },
   { ticker: "JNJ", weight: 10 },
 ];
+
+const VERDICT_COLORS: Record<Verdict, string> = {
+  pass: "#16A34A", borderline: "#D97706", fail: "#DC2626",
+};
+
+// Generate plausible mock performance data: portfolio vs SPY vs SPUS over 24 months
+function generatePerformanceData() {
+  const labels: string[] = [];
+  const portfolio: number[] = [];
+  const spy: number[] = [];
+  const spus: number[] = [];
+
+  const months = 24;
+  const baseDate = new Date(2024, 4, 1); // May 2024
+  let p = 100, sp = 100, sps = 100;
+
+  for (let i = 0; i < months; i++) {
+    const d = new Date(baseDate.getFullYear(), baseDate.getMonth() + i, 1);
+    labels.push(d.toLocaleDateString("en-US", { month: "short", year: i % 12 === 0 ? "2-digit" : undefined }));
+    // Plausible monthly returns
+    p *= 1 + (Math.random() * 0.06 - 0.02);  // mean ~+2%/mo, vol 6%
+    sp *= 1 + (Math.random() * 0.05 - 0.018);
+    sps *= 1 + (Math.random() * 0.05 - 0.019);
+    portfolio.push(p);
+    spy.push(sp);
+    spus.push(sps);
+  }
+  return { labels, portfolio, spy, spus };
+}
 
 export default function PortfolioPage() {
   const [scholarId, setScholarId] = useState("aaoifi");
@@ -44,12 +80,9 @@ export default function PortfolioPage() {
     } catch {}
   }, []);
 
-  // Autosave on rows change (debounced)
   useEffect(() => {
     const t = setTimeout(() => {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
-      } catch {}
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(rows)); } catch {}
     }, 500);
     return () => clearTimeout(t);
   }, [rows]);
@@ -81,6 +114,28 @@ export default function PortfolioPage() {
     [holdings, scholar],
   );
 
+  // Performance data (regenerated only on mount or scholar change for a small visual shift)
+  const performance = useMemo(generatePerformanceData, [scholarId]);
+
+  // Allocation segments by holding (color by verdict)
+  const allocationByVerdict = useMemo(() => {
+    if (!score) return [];
+    return holdings.map((h, i) => ({
+      label: h.ticker,
+      value: h.weight,
+      color: VERDICT_COLORS[score.results[i].verdict],
+    }));
+  }, [holdings, score]);
+
+  // Sector breakdown
+  const sectorBreakdown = useMemo(() => {
+    const map = new Map<string, number>();
+    holdings.forEach((h) => map.set(h.stock.sector, (map.get(h.stock.sector) ?? 0) + h.weight));
+    return Array.from(map.entries())
+      .map(([label, value]) => ({ label, value, color: sectorColor(label) }))
+      .sort((a, b) => b.value - a.value);
+  }, [holdings]);
+
   function saveNow() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
@@ -89,156 +144,243 @@ export default function PortfolioPage() {
       setTimeout(() => setSavedAt(null), 3000);
     } catch {}
   }
-
+  function resetDefaults() { setRows(DEFAULT_ROWS); }
   function clearAll() {
-    if (!confirm("Clear all holdings and start over?")) return;
+    if (!confirm("Clear all holdings?")) return;
     setRows([{ ticker: "", weight: 0 }]);
     try { localStorage.removeItem(STORAGE_KEY); } catch {}
   }
 
-  function resetToDefaults() {
-    setRows(DEFAULT_ROWS);
-  }
-
   return (
-    <div className="space-y-6">
+    <div className="space-y-10">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Portfolio score</h1>
-        <p className="mt-1 text-sm text-gray-600">
-          Enter your holdings. Mizan saves them to your browser so they&apos;re
-          here when you return. The score updates live as you edit.
+        <div className="text-xs font-semibold uppercase tracking-widest text-gold-600">Portfolio score</div>
+        <h1 className="mt-2 text-3xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+          How halal is your portfolio?
+        </h1>
+        <p className="mt-2 max-w-xl text-sm text-gray-600">
+          Enter your holdings with their weights. Mizan saves them to your browser and scores
+          the portfolio under your chosen scholar in real time.
         </p>
       </div>
 
-      <DemoBanner />
-
       <ScholarPicker value={scholarId} onChange={setScholarId} />
 
-      <div className="rounded-xl border border-gray-200 bg-white p-4">
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-gray-900">Your holdings</h2>
-          <div className="flex items-center gap-2">
-            {savedAt && <span className="inline-flex items-center gap-1 text-xs text-emerald-700"><Check size={12} /> Saved at {savedAt}</span>}
-            <button type="button" onClick={saveNow} className="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-xs text-gray-700 hover:bg-gray-50">
-              <Save size={12} /> Save now
-            </button>
-            <button type="button" onClick={resetToDefaults} className="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-xs text-gray-700 hover:bg-gray-50">
-              <RotateCcw size={12} /> Defaults
-            </button>
-            <button type="button" onClick={clearAll} className="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-xs text-rose-700 hover:bg-rose-50">
-              <Trash2 size={12} /> Clear all
-            </button>
+      {/* HERO SUMMARY */}
+      {score && (
+        <section className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200 sm:grid-cols-3">
+          <div className="flex flex-col items-center justify-center bg-white p-8">
+            <ProgressRing
+              percent={score.weightedPassRate * 100}
+              size={200}
+              color={score.weightedPassRate >= 0.85 ? "#16A34A" : score.weightedPassRate >= 0.6 ? "#D97706" : "#DC2626"}
+              sublabel="Weighted halal"
+            />
+            <p className="mt-4 max-w-xs text-center text-xs text-gray-500">
+              of your portfolio by weight passes under {scholar.label}
+            </p>
           </div>
-        </div>
-
-        <div className="grid grid-cols-12 gap-2 text-xs font-medium uppercase tracking-wide text-gray-500">
-          <div className="col-span-6 sm:col-span-7">Ticker</div>
-          <div className="col-span-4 sm:col-span-3">Weight (%)</div>
-          <div className="col-span-2"></div>
-        </div>
-        <div className="mt-2 space-y-2">
-          {rows.map((r, i) => (
-            <div key={i} className="grid grid-cols-12 items-center gap-2">
-              <input
-                value={r.ticker}
-                onChange={(e) =>
-                  setRows((rs) =>
-                    rs.map((x, j) => (j === i ? { ...x, ticker: e.target.value.toUpperCase() } : x)),
-                  )
-                }
-                className="col-span-6 rounded-md border border-gray-200 px-2 py-1 text-sm sm:col-span-7"
-                placeholder="AAPL"
-              />
-              <input
-                type="number"
-                value={r.weight}
-                onChange={(e) =>
-                  setRows((rs) =>
-                    rs.map((x, j) => (j === i ? { ...x, weight: parseFloat(e.target.value) || 0 } : x)),
-                  )
-                }
-                className="col-span-4 rounded-md border border-gray-200 px-2 py-1 text-sm sm:col-span-3"
-              />
-              <button
-                type="button"
-                onClick={() => setRows((rs) => rs.filter((_, j) => j !== i))}
-                className="col-span-2 rounded-md border border-gray-200 px-2 py-1 text-sm text-gray-600 hover:bg-gray-50"
-              >
-                Remove
-              </button>
+          <div className="flex flex-col items-center justify-center bg-white p-8">
+            <DonutChart
+              segments={allocationByVerdict}
+              size={220}
+              thickness={26}
+              centerLabel={`${holdings.length}`}
+              centerSublabel="Holdings"
+            />
+            <p className="mt-4 text-xs font-medium uppercase tracking-widest text-gray-500">Allocation by verdict</p>
+          </div>
+          <div className="bg-white p-8">
+            <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">Breakdown</div>
+            <div className="mt-3 space-y-3">
+              {(["pass", "borderline", "fail"] as Verdict[]).map((v) => {
+                const filtered = holdings.filter((_, i) => score.results[i].verdict === v);
+                const count = filtered.length;
+                const wt = filtered.reduce((s, h) => s + h.weight, 0);
+                const color = VERDICT_COLORS[v];
+                return (
+                  <div key={v}>
+                    <div className="flex items-baseline justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: color }} />
+                        <span className="font-medium text-gray-800">{VERDICT_LABEL[v]}</span>
+                      </div>
+                      <span className="tabular-nums text-gray-500">{count} / {wt.toFixed(0)}%</span>
+                    </div>
+                    <div className="mt-1 h-1.5 rounded-full bg-gray-100">
+                      <div className="h-full rounded-full" style={{ width: `${wt}%`, backgroundColor: color }} />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={() => setRows((rs) => [...rs, { ticker: "", weight: 0 }])}
-          className="mt-3 rounded-md border border-gray-300 bg-white px-3 py-1 text-sm font-medium text-gray-800 hover:bg-gray-50"
-        >
-          + Add holding
-        </button>
-        {missing.length > 0 && (
-          <div className="mt-3 text-xs text-amber-700">
-            Not in sample dataset (skipped): {missing.join(", ")}
           </div>
-        )}
-      </div>
+        </section>
+      )}
 
-      {score && score.results.length > 0 && (
-        <div className="rounded-xl border border-gray-200 bg-white p-5">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Stat label="Halal holdings" value={`${score.results.filter((r) => r.verdict === "pass").length} / ${score.results.length}`} />
-            <Stat label="Pass rate" value={`${(score.passRate * 100).toFixed(0)}%`} />
-            <Stat label="Weight-adjusted pass rate" value={`${(score.weightedPassRate * 100).toFixed(0)}%`} />
+      {/* PERFORMANCE CHART */}
+      <section className="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8">
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">24-month performance</div>
+            <h2 className="mt-1 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+              Your portfolio vs benchmarks
+            </h2>
           </div>
-          <div className="mt-5 overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-xs uppercase tracking-wide text-gray-500">
-                  <th className="py-2">Ticker</th>
-                  <th>Verdict</th>
-                  <th>Failed checks</th>
-                </tr>
-              </thead>
-              <tbody>
-                {score.results.map((r) => (
-                  <tr key={r.ticker} className="border-t border-gray-100">
-                    <td className="py-2 font-semibold">{r.ticker}</td>
-                    <td>
-                      <span className={
-                        "rounded px-2 py-0.5 text-xs font-semibold uppercase " +
-                        (r.verdict === "pass" ? "bg-emerald-50 text-emerald-700"
-                         : r.verdict === "borderline" ? "bg-amber-50 text-amber-700"
-                         : "bg-rose-50 text-rose-700")
-                      }>
-                        {r.verdict === "pass" ? "Halal" : r.verdict === "borderline" ? "Doubtful" : "Not halal"}
+          <span className="text-[11px] uppercase tracking-widest text-gray-400">Simulated · live data on roadmap</span>
+        </div>
+        <div className="mt-6">
+          <LineChart
+            labels={performance.labels}
+            series={[
+              { label: "Your portfolio", color: "#1F3A5F", data: performance.portfolio, bold: true },
+              { label: "S&P 500 (SPY)", color: "#94A3B8", data: performance.spy },
+              { label: "Halal S&P 500 (SPUS)", color: "#B8860B", data: performance.spus },
+            ]}
+          />
+        </div>
+        <div className="mt-4 border-t border-gray-100 pt-4">
+          <LineLegend
+            series={[
+              { label: "Your portfolio", color: "#1F3A5F", data: [], bold: true },
+              { label: "S&P 500 (SPY)", color: "#94A3B8", data: [] },
+              { label: "Halal S&P 500 (SPUS)", color: "#B8860B", data: [] },
+            ]}
+          />
+        </div>
+      </section>
+
+      {/* SECTOR + LEGEND ROW */}
+      <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="rounded-2xl border border-gray-200 bg-white p-6">
+          <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">Sector exposure</div>
+          <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>By industry</h3>
+          <div className="mt-5">
+            <HorizontalBars items={sectorBreakdown} />
+          </div>
+        </div>
+        <div className="rounded-2xl border border-gray-200 bg-white p-6">
+          <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">Holdings</div>
+          <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>Where your money is</h3>
+          <div className="mt-5">
+            <DonutLegend segments={allocationByVerdict} totalLabel={`${allocationByVerdict.length} positions · ${holdings.reduce((s, h) => s + h.weight, 0).toFixed(1)}% allocated`} />
+          </div>
+        </div>
+      </section>
+
+      {/* HOLDINGS TABLE */}
+      {score && (
+        <section className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
+          <div className="border-b border-gray-100 px-6 py-5">
+            <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">Holdings table</div>
+            <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>Every position, scored</h3>
+          </div>
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 text-left text-[10px] uppercase tracking-widest text-gray-500">
+              <tr>
+                <th className="px-6 py-3">Stock</th>
+                <th className="px-6 py-3 text-right">Weight</th>
+                <th className="px-6 py-3">Sector</th>
+                <th className="px-6 py-3 text-right">Verdict</th>
+              </tr>
+            </thead>
+            <tbody>
+              {holdings.map((h, i) => {
+                const r = score.results[i];
+                return (
+                  <tr key={h.ticker} className="border-t border-gray-100 hover:bg-gray-50">
+                    <td className="px-6 py-3">
+                      <div className="flex items-center gap-3">
+                        <StockLogo ticker={h.ticker} name={h.stock.name} size={28} />
+                        <div>
+                          <div className="font-mono text-sm font-semibold text-gray-900">{h.ticker}</div>
+                          <div className="text-xs text-gray-500">{h.stock.name}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-3 text-right tabular-nums text-gray-700">{h.weight}%</td>
+                    <td className="px-6 py-3 text-xs text-gray-600">{h.stock.sector}</td>
+                    <td className="px-6 py-3 text-right">
+                      <span className="text-sm font-semibold" style={{ fontFamily: "Georgia, serif", color: VERDICT_COLORS[r.verdict] }}>
+                        {VERDICT_LABEL[r.verdict]}
                       </span>
                     </td>
-                    <td className="text-gray-600">
-                      {!r.sectorPasses && <div className="text-rose-700">Sector: {r.sectorReason}</div>}
-                      {r.ratioChecks.filter((c) => !c.passes).map((c, i) => (
-                        <div key={i}>
-                          {c.label}:{" "}
-                          <span className="text-rose-700">{c.value.toFixed(1)}%</span>{" "}
-                          (limit {c.threshold}%)
-                        </div>
-                      ))}
-                    </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                );
+              })}
+            </tbody>
+          </table>
+        </section>
+      )}
+
+      {/* EDITOR */}
+      <section className="rounded-2xl border border-gray-200 bg-white">
+        <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-gray-100 px-6 py-5">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">Edit your holdings</div>
+            <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>Holdings editor</h3>
+          </div>
+          <div className="flex items-center gap-2 text-xs">
+            {savedAt && <span className="inline-flex items-center gap-1 text-emerald-700"><Check size={12} /> Saved {savedAt}</span>}
+            <button type="button" onClick={resetDefaults} className="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-gray-700 hover:bg-gray-50">
+              <RotateCcw size={11} /> Defaults
+            </button>
+            <button type="button" onClick={clearAll} className="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-rose-700 hover:bg-rose-50">
+              <Trash2 size={11} /> Clear
+            </button>
           </div>
         </div>
-      )}
-    </div>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
-      <div className="text-xs uppercase tracking-wide text-gray-500">{label}</div>
-      <div className="mt-1 text-2xl font-bold text-gray-900">{value}</div>
+        <div className="px-6 py-5">
+          <div className="grid grid-cols-12 gap-3 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+            <div className="col-span-6 sm:col-span-7">Ticker</div>
+            <div className="col-span-4 sm:col-span-3">Weight</div>
+            <div className="col-span-2"></div>
+          </div>
+          <div className="mt-3 space-y-2">
+            {rows.map((r, i) => (
+              <div key={i} className="grid grid-cols-12 items-center gap-3">
+                <input
+                  type="text"
+                  value={r.ticker}
+                  placeholder="AAPL"
+                  onChange={(e) => setRows((rs) => rs.map((x, j) => j === i ? { ...x, ticker: e.target.value.toUpperCase() } : x))}
+                  className="col-span-6 rounded-md border border-gray-200 px-3 py-2 font-mono text-sm uppercase tracking-tight focus:border-navy-700 focus:outline-none focus:ring-2 focus:ring-navy-700/10 sm:col-span-7"
+                />
+                <div className="col-span-4 sm:col-span-3">
+                  <CurrencyInput
+                    value={r.weight}
+                    onChange={(v) => setRows((rs) => rs.map((x, j) => j === i ? { ...x, weight: v } : x))}
+                    prefix=""
+                    suffix="%"
+                    placeholder="0"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setRows((rs) => rs.filter((_, j) => j !== i))}
+                  className="col-span-2 inline-flex items-center justify-center rounded-md border border-gray-200 px-3 py-2 text-xs text-gray-500 hover:bg-gray-50 hover:text-rose-700"
+                >
+                  <Trash2 size={12} />
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => setRows((rs) => [...rs, { ticker: "", weight: 0 }])}
+            className="mt-4 inline-flex items-center gap-1 rounded-md border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            <Plus size={14} /> Add holding
+          </button>
+          {missing.length > 0 && (
+            <div className="mt-4 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+              Not in sample dataset (skipped from analysis): <span className="font-mono">{missing.join(", ")}</span>.
+              Production version supports any listed equity.
+            </div>
+          )}
+          <button type="button" onClick={saveNow} className="mt-3 hidden">save</button>
+        </div>
+      </section>
     </div>
   );
 }
