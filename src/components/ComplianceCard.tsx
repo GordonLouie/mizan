@@ -3,8 +3,7 @@
 import { useState } from "react";
 import type { ScreeningResult, StockFundamentals } from "@/lib/types";
 import RatioBar from "./RatioBar";
-import GlossaryTerm from "./GlossaryTerm";
-import { GLOSSARY } from "@/lib/glossaryEntries";
+import StockLogo from "./StockLogo";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 
 interface Props {
@@ -12,108 +11,92 @@ interface Props {
   result: ScreeningResult;
 }
 
-function plainExplanation(stock: StockFundamentals, result: ScreeningResult): { headline: string; reason: string; details: string[] } {
+function plainReason(stock: StockFundamentals, result: ScreeningResult): string {
   if (result.verdict === "pass") {
-    return {
-      headline: `Yes — ${stock.ticker} is halal under ${result.scholarLabel}.`,
-      reason: `${stock.name}'s business is permissible, and its finances are within this scholar's limits.`,
-      details: [
-        "It earns from a permissible business (no alcohol, gambling, conventional banking, etc.).",
-        "Its borrowing is within the limit your scholar accepts.",
-        "Its cash and interest-earning holdings are within limits.",
-      ],
-    };
+    return `${stock.name}'s business is permissible and its finances are within this scholar's limits.`;
   }
   if (result.verdict === "borderline") {
     const failed = result.ratioChecks.find((c) => !c.passes);
-    return {
-      headline: `Doubtful — ${stock.ticker} fails one check under ${result.scholarLabel}.`,
-      reason: `Everything else passes, but ${failed?.label.toLowerCase()} is outside this scholar's threshold.`,
-      details: [
-        "The business itself is permissible.",
-        "Most ratios are within limits.",
-        `${failed?.label} comes in at ${failed?.value.toFixed(1)}% versus a limit of ${failed?.threshold}% — that's why it didn't fully pass.`,
-      ],
-    };
+    return `Everything passes except ${failed?.label.toLowerCase()} — ${failed?.value.toFixed(1)}% versus a limit of ${failed?.threshold}%.`;
   }
-  // fail
   if (!result.sectorPasses) {
-    return {
-      headline: `No — ${stock.ticker} is not halal under ${result.scholarLabel}.`,
-      reason: `${stock.name}'s main business is in a sector your scholar excludes.`,
-      details: [result.sectorReason],
-    };
+    return `${stock.name}'s main business falls in a sector this scholar excludes (${result.sectorReason.replace("Excluded sector: ", "").replace(".", "")}).`;
   }
-  const fails = result.ratioChecks.filter((c) => !c.passes);
-  return {
-    headline: `No — ${stock.ticker} is not halal under ${result.scholarLabel}.`,
-    reason: `${stock.name}'s business is permissible, but its finances exceed this scholar's limits.`,
-    details: fails.map((c) => `${c.label}: ${c.value.toFixed(1)}% (limit ${c.threshold}%) — ${c.explanation}`),
-  };
+  const failed = result.ratioChecks.filter((c) => !c.passes);
+  if (failed.length === 1) {
+    return `Business is permissible, but ${failed[0].label.toLowerCase()} comes in at ${failed[0].value.toFixed(1)}% versus a limit of ${failed[0].threshold}%.`;
+  }
+  return `${stock.name}'s business is permissible, but ${failed.length} financial ratios exceed this scholar's limits.`;
 }
 
-const VERDICT_COLOR: Record<string, { text: string; bg: string }> = {
-  pass:        { text: "text-emerald-700", bg: "bg-emerald-50" },
-  borderline:  { text: "text-amber-700",  bg: "bg-amber-50" },
-  fail:        { text: "text-rose-700",   bg: "bg-rose-50" },
+const VERDICT_COLOR: Record<string, { text: string; bg: string; border: string }> = {
+  pass:       { text: "text-emerald-700", bg: "bg-emerald-50",  border: "border-emerald-100" },
+  borderline: { text: "text-amber-700",   bg: "bg-amber-50",    border: "border-amber-100" },
+  fail:       { text: "text-rose-700",    bg: "bg-rose-50",     border: "border-rose-100" },
 };
 
 export default function ComplianceCard({ stock, result }: Props) {
   const [showMath, setShowMath] = useState(false);
-  const plain = plainExplanation(stock, result);
+  const reason = plainReason(stock, result);
   const colors = VERDICT_COLOR[result.verdict];
+  const dataAsOf = "Q1 2026";
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
-      {/* Headline strip */}
-      <div className={`${colors.bg} px-6 py-8 sm:px-10 sm:py-12`}>
-        <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">
-          {stock.ticker}  ·  {stock.name}  ·  {result.scholarLabel}
+    <article className={`overflow-hidden rounded-2xl border ${colors.border} bg-white`}>
+      {/* Hero verdict */}
+      <div className={`${colors.bg} px-6 py-10 sm:px-10 sm:py-14`}>
+        {/* Top row: logo + meta */}
+        <div className="flex items-center gap-3">
+          <StockLogo ticker={stock.ticker} name={stock.name} size={40} />
+          <div>
+            <div className="font-mono text-sm font-semibold tracking-tight text-gray-900">{stock.ticker}</div>
+            <div className="text-xs text-gray-600">{stock.name}</div>
+          </div>
         </div>
-        <div className={`mt-4 text-5xl font-bold sm:text-6xl ${colors.text}`} style={{ fontFamily: "Georgia, serif" }}>
+
+        {/* The verdict word */}
+        <div className={`mt-8 text-6xl font-bold leading-none sm:text-7xl ${colors.text}`} style={{ fontFamily: "Georgia, serif" }}>
           {VERDICT_LABEL[result.verdict]}
         </div>
-        <p className="mt-4 max-w-xl text-base leading-7 text-gray-800">
-          {plain.headline}
+        <p className="mt-5 max-w-xl text-sm leading-6 text-gray-700">
+          {reason}
         </p>
-        <p className="mt-2 max-w-xl text-sm leading-6 text-gray-600">
-          {plain.reason}
-        </p>
+
+        {/* Meta row */}
+        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-gray-200/60 pt-5 text-xs">
+          <div>
+            <span className="font-semibold uppercase tracking-widest text-gray-500">Scholar</span>
+            <span className="ml-2 text-gray-800">{result.scholarLabel}</span>
+          </div>
+          <div>
+            <span className="font-semibold uppercase tracking-widest text-gray-500">Data as of</span>
+            <span className="ml-2 font-mono text-gray-800">{dataAsOf}</span>
+          </div>
+          <div>
+            <span className="font-semibold uppercase tracking-widest text-gray-500">Purification</span>
+            <span className="ml-2 text-gray-800">
+              {result.purificationNote.includes("BOTH") ? "Dividends + gains" : "Dividends only"}
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* Plain-language details */}
-      <div className="border-t border-gray-100 px-6 py-6 sm:px-10">
-        <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">Why this verdict</div>
-        <ul className="mt-3 space-y-2 text-sm leading-6 text-gray-700">
-          {plain.details.map((d, i) => (
-            <li key={i} className="flex items-start gap-2">
-              <span className="mt-2 inline-block h-1 w-1 flex-shrink-0 rounded-full bg-gray-400" />
-              <span>{d}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-4 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
-          <strong>{result.scholarLabel} on{" "}
-            <GlossaryTerm term="purification" def={GLOSSARY["purification"]}>purification</GlossaryTerm>:
-          </strong>{" "}
-          {result.purificationNote}
-        </div>
-
-        {/* Toggle */}
+      {/* Show the math (collapsed by default) */}
+      <div className="border-t border-gray-100">
         <button
           type="button"
           onClick={() => setShowMath((s) => !s)}
-          className="mt-5 inline-flex items-center gap-1 text-xs font-medium text-navy-700 hover:text-navy-900"
+          className="flex w-full items-center justify-between px-6 py-3 text-xs font-medium text-navy-700 hover:bg-gray-50 sm:px-10"
         >
-          {showMath ? "Hide" : "Show"} the math →
+          <span>{showMath ? "Hide" : "Show"} the math</span>
+          <span className="text-gray-400">{showMath ? "−" : "+"}</span>
         </button>
 
         {showMath && (
-          <div className="mt-4 space-y-3 border-t border-gray-100 pt-4">
+          <div className="space-y-3 border-t border-gray-100 px-6 py-5 sm:px-10">
             <div className="rounded-md border border-gray-200 bg-gray-50 p-3 text-sm">
-              <div className="font-medium text-gray-800">Business activity check</div>
-              <div className="mt-0.5 text-gray-700">
+              <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">Sector check</div>
+              <div className="mt-1 text-gray-700">
                 {result.sectorPasses ? (
                   <span className="text-emerald-700">✓ {result.sectorReason}</span>
                 ) : (

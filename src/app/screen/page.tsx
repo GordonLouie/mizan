@@ -12,6 +12,7 @@ import ComplianceCard from "@/components/ComplianceCard";
 import TickerSearch from "@/components/TickerSearch";
 import FeaturedTickers from "@/components/FeaturedTickers";
 import DemoBanner from "@/components/DemoBanner";
+import StockLogo from "@/components/StockLogo";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 
 export default function ScreenPage() {
@@ -27,7 +28,7 @@ function ScreenLoader() {
     <div className="space-y-4 py-8">
       <div className="h-10 w-80 animate-pulse rounded bg-gray-100" />
       <div className="h-5 w-96 animate-pulse rounded bg-gray-100" />
-      <div className="h-32 w-full animate-pulse rounded bg-gray-100" />
+      <div className="h-48 w-full animate-pulse rounded-2xl bg-gray-100" />
     </div>
   );
 }
@@ -59,23 +60,23 @@ function ScreenInner() {
     () => (scholarId === "custom" ? loadCustomProfile() : getScholar(scholarId)),
     [scholarId, bump],
   );
-  const result = useMemo(
-    () => (stock ? screenStock(stock, scholar) : null),
-    [stock, scholar],
-  );
+  const result = useMemo(() => (stock ? screenStock(stock, scholar) : null), [stock, scholar]);
 
-  // Compute verdicts for ALL scholars at once, for the side-by-side panel
+  // All non-custom scholars
   const allVerdicts = useMemo(() => {
     if (!stock) return [];
     return SCHOLAR_PROFILES.filter((p) => p.id !== "custom").map((p) => ({
       scholar: p,
-      verdict: screenStock(stock, scholarId === "custom" && p.id === scholarId ? scholar : p === scholar ? scholar : p).verdict,
+      verdict: screenStock(stock, p).verdict,
     }));
-  }, [stock, scholar, scholarId]);
+  }, [stock]);
+
+  // Only show the multi-scholar strip when scholars disagree
+  const scholarsAgree = allVerdicts.length > 0 &&
+    allVerdicts.every((v) => v.verdict === allVerdicts[0].verdict);
 
   return (
     <div className="space-y-6">
-      {/* Header strip */}
       <div>
         <div className="text-xs font-semibold uppercase tracking-widest text-gold-600">Stock screener</div>
         <h1 className="mt-2 text-3xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
@@ -83,12 +84,10 @@ function ScreenInner() {
         </h1>
       </div>
 
-      {/* Search */}
       <TickerSearch value={ticker} onChange={(t) => setTicker(t)} autoFocus={!ticker} />
 
       {!ticker && <DemoBanner />}
 
-      {/* Scholar picker — compact */}
       <ScholarPicker value={scholarId} onChange={setScholarId} />
 
       {!ticker && (
@@ -104,38 +103,33 @@ function ScreenInner() {
         </div>
       )}
 
-      {/* The headline verdict */}
-      {stock && result && (
-        <ComplianceCard stock={stock} result={result} />
-      )}
+      {stock && result && <ComplianceCard stock={stock} result={result} />}
 
-      {/* Universal multi-scholar verdict strip — ALL scholars at once */}
-      {stock && allVerdicts.length > 0 && (
-        <div className="rounded-2xl border border-gray-200 bg-white">
-          <div className="border-b border-gray-100 px-6 py-4 sm:px-8">
-            <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">All five scholars on {stock.ticker}</div>
+      {/* Multi-scholar strip — ONLY when scholars disagree */}
+      {stock && allVerdicts.length > 0 && !scholarsAgree && (
+        <article className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
+          <div className="border-b border-gray-100 px-6 py-5 sm:px-10">
+            <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">
+              All five scholars on {stock.ticker}
+            </div>
             <h2 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-              The verdict differs. The right answer is yours.
+              They disagree. The right answer is yours.
             </h2>
           </div>
           <div className="divide-y divide-gray-100 sm:grid sm:grid-cols-5 sm:divide-x sm:divide-y-0">
             {allVerdicts.map(({ scholar: p, verdict }) => {
-              const v = verdict;
-              const color = v === "pass" ? "text-emerald-700" : v === "borderline" ? "text-amber-700" : "text-rose-700";
+              const color = verdict === "pass" ? "text-emerald-700" : verdict === "borderline" ? "text-amber-700" : "text-rose-700";
               const isCurrent = p.id === scholarId;
               return (
                 <button
                   key={p.id}
                   type="button"
                   onClick={() => setScholarId(p.id)}
-                  className={
-                    "block px-6 py-5 text-left transition hover:bg-gray-50 " +
-                    (isCurrent ? "bg-navy-50" : "")
-                  }
+                  className={"block w-full px-6 py-5 text-left transition hover:bg-gray-50 " + (isCurrent ? "bg-navy-50/50" : "")}
                 >
                   <div className="text-xs font-semibold text-gray-500">{p.short}</div>
                   <div className={`mt-2 text-xl font-bold ${color}`} style={{ fontFamily: "Georgia, serif" }}>
-                    {VERDICT_LABEL[v]}
+                    {VERDICT_LABEL[verdict]}
                   </div>
                   {isCurrent && (
                     <div className="mt-1 text-[10px] font-semibold uppercase tracking-wider text-navy-700">your scholar</div>
@@ -144,6 +138,18 @@ function ScreenInner() {
               );
             })}
           </div>
+        </article>
+      )}
+
+      {/* When scholars agree — show a unified consensus banner */}
+      {stock && allVerdicts.length > 0 && scholarsAgree && (
+        <div className="flex items-center gap-3 rounded-md border border-gray-200 bg-white px-4 py-3 text-sm">
+          <div className="flex-shrink-0">
+            <StockLogo ticker={stock.ticker} name={stock.name} size={24} />
+          </div>
+          <div className="flex-1 text-gray-700">
+            <strong>Unanimous.</strong> All five mainstream scholars reach the same verdict on {stock.ticker}: <span className="font-semibold">{VERDICT_LABEL[allVerdicts[0].verdict]}</span>.
+          </div>
         </div>
       )}
 
@@ -151,7 +157,7 @@ function ScreenInner() {
         <p className="text-center text-xs text-gray-500">
           <Link href="/universe" className="text-navy-700 underline">Browse all {stocks.length} tickers</Link>
           {" · "}
-          <Link href="/methodology" className="text-navy-700 underline">How we compute these verdicts</Link>
+          <Link href="/methodology" className="text-navy-700 underline">How verdicts are computed</Link>
         </p>
       )}
     </div>
