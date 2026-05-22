@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mizan — 12-week launch calendar</title>
+<style>
+  :root {
+    --navy: #1F3A5F;
+    --navy-dark: #162A44;
+    --navy-50: #F3F6FA;
+    --gold: #B8860B;
+    --gold-light: #FFFAEB;
+    --emerald: #047857;
+    --emerald-50: #ECFDF5;
+    --rose: #BE123C;
+    --amber: #B45309;
+    --amber-50: #FFFBEB;
+    --ink: #0F172A;
+    --muted: #64748B;
+    --hair: #E2E8F0;
+    --serif: Georgia, 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: #FAFAF7;
+    line-height: 1.5;
+    padding: 32px 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+
+  /* Hero */
+  .hero {
+    border-bottom: 1px solid var(--hair);
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+  }
+  .hero .kicker {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .hero .lede {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 600px;
+  }
+  .countdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    margin-top: 24px;
+    background: var(--hair);
+    border: 1px solid var(--hair);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .countdown div {
+    background: white;
+    padding: 16px;
+    text-align: left;
+  }
+  .countdown .label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+  .countdown .num {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .countdown .sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* Timeline strip */
+  .timeline-strip {
+    display: flex;
+    margin: 24px 0 40px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--hair);
+    background: white;
+  }
+  .week-tab {
+    flex: 1;
+    padding: 12px 6px;
+    text-align: center;
+    border-right: 1px solid var(--hair);
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .week-tab:last-child { border-right: 0; }
+  .week-tab .wn {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .week-tab.milestone { background: var(--gold-light); }
+  .week-tab.milestone .wn { color: var(--gold); }
+
+  /* Section title */
+  .section-title {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 48px 0 8px;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  /* Week cards */
+  .weeks {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .week {
+    background: white;
+    border: 1px solid var(--hair);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 24px;
+  }
+  .week.milestone { border-color: var(--gold); border-width: 1.5px; background: var(--gold-light); }
+  .week .num-col {
+    border-right: 1px solid var(--hair);
+    padding-right: 16px;
+  }
+  .week .num {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .week .dates {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .week .focus {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .week h3 {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .week ul {
+    list-style: none;
+  }
+  .week li {
+    font-size: 14px;
+    color: var(--ink);
+    padding: 4px 0 4px 18px;
+    position: relative;
+    line-height: 1.55;
+  }
+  .week li:before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--navy);
+    position: absolute;
+    left: 2px;
+    top: 10px;
+  }
+  .week li .tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .tag.cred { background: var(--navy-50); color: var(--navy); }
+  .tag.dist { background: var(--gold-light); color: var(--gold); }
+  .tag.ops { background: var(--emerald-50); color: var(--emerald); }
+  .tag.cap { background: var(--amber-50); color: var(--amber); }
+
+  /* Milestone callout */
+  .milestone-callout {
+    background: var(--navy);
+    color: white;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 32px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .milestone-callout .date {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .milestone-callout .body h3 {
+    color: white;
+    font-family: var(--serif);
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  .milestone-callout .body p {
+    color: #94B1CB;
+    font-size: 13px;
+  }
+
+  /* Daily disciplines */
+  .daily {
+    background: white;
+    border: 1px solid var(--hair);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 32px 0;
+  }
+  .daily h3 {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .daily-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .daily-item {
+    padding: 12px;
+    border-left: 3px solid var(--navy);
+    background: var(--navy-50);
+    border-radius: 0 6px 6px 0;
+  }
+  .daily-item .when {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    margin-bottom: 4px;
+  }
+  .daily-item .what {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hair);
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.7;
+  }
+  .footer a { color: var(--navy); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .legend .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  @media print {
+    body { background: white; padding: 16px; }
+    .week { break-inside: avoid; }
+    .milestone-callout { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="kicker">Mizan launch plan — Q3 2026</div>
+    <h1>From prototype to first government grant in 12 weeks.</h1>
+    <p class="lede">
+      Your 12-week roadmap from today (22 May 2026) to a real shot at HKD 500K from
+      Cyberport CIP. Each week has a primary focus and 3-5 specific actions. Daily
+      disciplines run in the background. Tick items in <code>PROGRESS.md</code>;
+      come back here when you feel lost.
+    </p>
+
+    <div class="countdown">
+      <div>
+        <div class="label">Today</div>
+        <div class="num">22 May</div>
+        <div class="sub">2026 — Week 0</div>
+      </div>
+      <div>
+        <div class="label">Cyberport CIP deadline</div>
+        <div class="num">3 Aug</div>
+        <div class="sub">10 weeks away</div>
+      </div>
+      <div>
+        <div class="label">HKSTP Ideation opens</div>
+        <div class="num">Late Aug</div>
+        <div class="sub">Cohort 26-23</div>
+      </div>
+      <div>
+        <div class="label">Cyberport decision</div>
+        <div class="num">Oct</div>
+        <div class="sub">6 weeks post-submission</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- TIMELINE STRIP -->
+  <div>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--navy-50);border:1px solid var(--navy);"></span>Credibility</span>
+      <span><span class="dot" style="background:var(--gold-light);border:1px solid var(--gold);"></span>Distribution</span>
+      <span><span class="dot" style="background:var(--emerald-50);border:1px solid var(--emerald);"></span>Operations</span>
+      <span><span class="dot" style="background:var(--amber-50);border:1px solid var(--amber);"></span>Capital</span>
+    </div>
+    <div class="timeline-strip">
+      <div class="week-tab"><span class="wn">1</span>22 May</div>
+      <div class="week-tab"><span class="wn">2</span>29 May</div>
+      <div class="week-tab"><span class="wn">3</span>5 Jun</div>
+      <div class="week-tab"><span class="wn">4</span>12 Jun</div>
+      <div class="week-tab"><span class="wn">5</span>19 Jun</div>
+      <div class="week-tab"><span class="wn">6</span>26 Jun</div>
+      <div class="week-tab"><span class="wn">7</span>3 Jul</div>
+      <div class="week-tab"><span class="wn">8</span>10 Jul</div>
+      <div class="week-tab"><span class="wn">9</span>17 Jul</div>
+      <div class="week-tab"><span class="wn">10</span>24 Jul</div>
+      <div class="week-tab milestone"><span class="wn">11</span>31 Jul</div>
+      <div class="week-tab"><span class="wn">12</span>7 Aug</div>
+    </div>
+  </div>
+
+  <!-- THE 12 WEEKS -->
+  <h2 class="section-title">The 12 weeks</h2>
+  <p class="section-sub">Each week has one focus and 3-5 specific actions. Don't skip ahead.</p>
+
+  <div class="weeks">
+
+    <div class="week">
+      <div class="num-col">
+        <div class="num">01</div>
+        <div class="dates">22-28 May</div>
+      </div>
+      <div>
+        <div class="focus">Infrastructure</div>
+        <h3>Get the operational baseline in place</h3>
+        <ul>
+          <li><span class="tag ops">OPS</span>Buy <code>mizanhq.com</code> on Cloudflare ($10) — 5 min</li>
+          <li><span class="tag ops">OPS</span>Set up Cloudflare Email Routing: <code>jk@mizanhq.com</code> → your gmail — 10 min</li>
+          <li><span class="tag ops">OPS</span>Point Vercel at <code>mizanhq.com</code> — 10 min</li>
+          <li><span class="tag dist">DIST</span>Create <code>@mizanapp</code> on X with real photo + bio. Don't post yet — 10 min</li>
+          <li><span class="tag cred">CRED</span>Open the credibility checklist (<code>_business/17_credibility/01_Credibility_Checklist.md</code>) and read it once — 20 min</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="num-col">
+        <div class="num">02</div>
+        <div class="dates">29 May - 4 Jun</div>
+      </div>
+      <div>
+        <div class="focus">Scholar outreach</div>
+        <h3>The longest-lead-time conversation starts now</h3>
+        <ul>
+          <li><span class="tag cred">CRED</span>Send Mufti Faraz Adam email (draft in <code>_business/04_growth/02_Scholar_Outreach_Emails.md</code>) — 30 min</li>
+          <li><span class="tag cred">CRED</span>Send Sheikh Joe Bradford email — 20 min</li>
+          <li><span class="tag dist">DIST</span>Post your first Mizan thread on X with the AMZN demo screenshot — 30 min</li>
+          <li><span class="tag dist">DIST</span>Personally text 10 Muslim friends asking them to try mizanhq.com — 30 min</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="num-col">
+        <div class="num">03</div>
+        <div class="dates">5-11 Jun</div>
+      </div>
+      <div>
+        <div class="focus">First content</div>
+        <h3>Record YouTube video #1</h3>
+        <ul>
+          <li><span class="tag dist">DIST</span>Record "Is your halal investing app lying to you?" (script in <code>_business/04_growth/03_YouTube_Scripts.md</code>) — 2 hours</li>
+          <li><span class="tag dist">DIST</span>Set up a Mizan YouTube channel under <code>@mizanapp</code></li>
+          <li><span class="tag dist">DIST</span>Tweet 3 times this week minimum (use the calendar in <code>_business/04_growth/04_Twitter_60_Day_Calendar.md</code>)</li>
+          <li><span class="tag cred">CRED</span>If a scholar replied: schedule a Zoom; if not, send a one-line followup</li>
+          <li><span class="tag dist">DIST</span>Text another 10 friends — get to 20 cumulative this week</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="num-col">
+        <div class="num">04</div>
+        <div class="dates">12-18 Jun</div>
+      </div>
+      <div>
+        <div class="focus">User feedback loop</div>
+        <h3>Listen, edit Mizan, listen again</h3>
+        <ul>
+          <li><span class="tag dist">DIST</span>Reach 30 people texted; document the feedback pattern</li>
+          <li><span class="tag cred">CRED</span>Identify the 3 biggest friction points users report</li>
+          <li><span class="tag ops">OPS</span>Ask jk to fix them ("Claude, fix [X], [Y], [Z] based on user feedback")</li>
+          <li><span class="tag dist">DIST</span>Record YouTube video #2: "Mufti Taqi Usmani's 20% rule no app implements"</li>
+          <li><span class="tag dist">DIST</span>Continue Twitter cadence — 3 posts minimum</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="num-col">
+        <div class="num">05</div>
+        <div class="dates">19-25 Jun</div>
+      </div>
+      <div>
+        <div class="focus">Cyberport draft 1</div>
+        <h3>Start writing the real application</h3>
+        <ul>
+          <li><span class="tag cap">CAP</span>Open <code>_business/05_applications/01_Cyberport_Application.md</code> — fill in your specific details (background, contact, milestones)</li>
+          <li><span class="tag cap">CAP</span>Add real evidence: user testimonials so far, Twitter following, scholar conversation status</li>
+          <li><span class="tag cred">CRED</span>If scholar said yes: get a written quote you can use in the application</li>
+          <li><span class="tag dist">DIST</span>Pitch 2 podcasts (IslamicFinanceGuru + Muslim Money Show)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="num-col">
+        <div class="num">06</div>
+        <div class="dates">26 Jun - 2 Jul</div>
+      </div>
+      <div>
+        <div class="focus">First masjid</div>
+        <h3>Approach one real-world distribution partner</h3>
+        <ul>
+          <li><span class="tag dist">DIST</span>Visit or call one masjid in your network (talk track in <code>_business/04_growth/06_Masjid_Partnership_Pitch.md</code>)</li>
+          <li><span class="tag cred">CRED</span>If they say yes: ask the imam to mention Mizan in the next jumu'ah newsletter</li>
+          <li><span class="tag dist">DIST</span>Record YouTube video #3</li>
+          <li><span class="tag cap">CAP</span>Cyberport draft 2 — refine after real evidence</li>
+          <li><span class="tag dist">DIST</span>Continue Twitter cadence (you're now ~12 posts deep)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="num-col">
+        <div class="num">07</div>
+        <div class="dates">3-9 Jul</div>
+      </div>
+      <div>
+        <div class="focus">Discord launch</div>
+        <h3>Build the watering hole</h3>
+        <ul>
+          <li><span class="tag dist">DIST</span>Set up Discord server "Mizan readers" — channels: #general, #halal-stocks, #zakat, #methodology</li>
+          <li><span class="tag dist">DIST</span>Invite the 30+ texted contacts who replied positively</li>
+          <li><span class="tag cred">CRED</span>Publish blog post #1 (<code>_business/10_content/blog/01_Is_Amazon_Halal.md</code>) on mizanhq.com/blog</li>
+          <li><span class="tag dist">DIST</span>Record YouTube video #4</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="num-col">
+        <div class="num">08</div>
+        <div class="dates">10-16 Jul</div>
+      </div>
+      <div>
+        <div class="focus">Investor warmup</div>
+        <h3>Open early-stage investor conversations</h3>
+        <ul>
+          <li><span class="tag cap">CAP</span>Send 4 of the 12 drafted VC emails (<code>_business/04_growth/01_VC_Outreach_Emails.md</code>)</li>
+          <li><span class="tag cap">CAP</span>Not asking for money — asking for 20 minutes of advice</li>
+          <li><span class="tag cred">CRED</span>Publish blog post #2 on mizanhq.com/blog</li>
+          <li><span class="tag cap">CAP</span>Cyberport draft 3 — read out loud, cut anything weak</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="num-col">
+        <div class="num">09</div>
+        <div class="dates">17-23 Jul</div>
+      </div>
+      <div>
+        <div class="focus">Incorporate</div>
+        <h3>Set up the legal entity for HK programmes</h3>
+        <ul>
+          <li><span class="tag ops">OPS</span>Engage Sleek for HK Ltd incorporation (~HK$9K, 10 business days)</li>
+          <li><span class="tag ops">OPS</span>Open Statrys business account in parallel</li>
+          <li><span class="tag cap">CAP</span>Send 4 more VC emails</li>
+          <li><span class="tag cred">CRED</span>Trust center page: jk builds <code>/trust</code> on mizanhq.com</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="num-col">
+        <div class="num">10</div>
+        <div class="dates">24-30 Jul</div>
+      </div>
+      <div>
+        <div class="focus">Cyberport final</div>
+        <h3>Tighten the submission and pre-flight checks</h3>
+        <ul>
+          <li><span class="tag cap">CAP</span>Cyberport draft 4 — final. Read by 1-2 trusted advisors (founder peers, IFG community).</li>
+          <li><span class="tag ops">OPS</span>If Sleek incorporation completed: fill in your BR number and DOI</li>
+          <li><span class="tag cap">CAP</span>Test-submit through the Cyberport portal as a draft to verify all fields accept</li>
+          <li><span class="tag dist">DIST</span>Continue daily Twitter + weekly YouTube cadence</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week milestone">
+      <div class="num-col">
+        <div class="num">11</div>
+        <div class="dates">31 Jul - 6 Aug</div>
+      </div>
+      <div>
+        <div class="focus">Submission week ⭐</div>
+        <h3>Submit Cyberport CIP by 3 August</h3>
+        <ul>
+          <li><span class="tag cap">CAP</span><strong>Submit Cyberport CIP application no later than Aug 3</strong></li>
+          <li><span class="tag cap">CAP</span>Email Cyberport (cip_enquiry@cyberport.hk) confirming receipt</li>
+          <li><span class="tag dist">DIST</span>Public tweet: "Submitted to Cyberport — wish us luck"</li>
+          <li><span class="tag cred">CRED</span>Send a monthly investor update to everyone who's responded to outreach (template in <code>_business/09_investor_relations/01_Monthly_Update_Template.md</code>)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week">
+      <div class="num-col">
+        <div class="num">12</div>
+        <div class="dates">7-13 Aug</div>
+      </div>
+      <div>
+        <div class="focus">Recovery + HKSTP prep</div>
+        <h3>Take a breath, prep the next submission</h3>
+        <ul>
+          <li><span class="tag cap">CAP</span>Start HKSTP Ideation application (opens ~late Aug) — most answers reusable</li>
+          <li><span class="tag dist">DIST</span>Reach out to FinTech Innovation Lab Asia-Pacific (Accenture) for the next intake</li>
+          <li><span class="tag cred">CRED</span>If still no scholar reply: try a personal mutual-connection intro to a different scholar</li>
+          <li><span class="tag dist">DIST</span>Review what worked in the first 11 weeks. Plan next quarter.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BIG MILESTONE -->
+  <div class="milestone-callout">
+    <div class="date">3 Aug</div>
+    <div class="body">
+      <h3>Cyberport CIP submission deadline</h3>
+      <p>The biggest single milestone in the next 12 weeks. HKD 500K non-dilutive + ecosystem credibility. Everything else is in service of this.</p>
+    </div>
+  </div>
+
+  <!-- DAILY DISCIPLINES -->
+  <div class="daily">
+    <h3>Daily disciplines (every day, no exceptions)</h3>
+    <p style="color: var(--muted); font-size: 13px;">Background tasks that compound over the 12 weeks.</p>
+    <div class="daily-items">
+      <div class="daily-item">
+        <div class="when">Morning · 15 min</div>
+        <div class="what">Check email and reply to anything Mizan-related within 24 hours. Sign emails as "jk" — not "Mizan Team."</div>
+      </div>
+      <div class="daily-item">
+        <div class="when">Morning · 15 min</div>
+        <div class="what">Spend 15 minutes on X — engage with halal-finance conversations, reply to comments, like substantive posts. Don't lurk; participate.</div>
+      </div>
+      <div class="daily-item">
+        <div class="when">Evening · 10 min</div>
+        <div class="what">Update PROGRESS.md with one line on what moved forward today. Future you will thank present you.</div>
+      </div>
+      <div class="daily-item">
+        <div class="when">Friday · 30 min</div>
+        <div class="what">Weekly review: what shipped, what stalled, what changes for next week. Adjust the calendar if needed.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Open this file anytime: <code>open ~/mizan/CALENDAR.html</code>.<br>
+    Tick items in <a href="./PROGRESS.md">PROGRESS.md</a>.
+    Refer to <code>_business/</code> for every drafted document.<br>
+    Updated 22 May 2026 — Mizan, day zero.
+  </div>
+
+</div>
+</body>
+</html>

@@ -12,7 +12,10 @@ import ComplianceCard from "@/components/ComplianceCard";
 import TickerSearch from "@/components/TickerSearch";
 import FeaturedTickers from "@/components/FeaturedTickers";
 import DemoBanner from "@/components/DemoBanner";
+import HalalAlternatives from "@/components/HalalAlternatives";
+import WatchlistButton from "@/components/WatchlistButton";
 import StockLogo from "@/components/StockLogo";
+import { Card, PageHeader } from "@/components/ui";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 
 export default function ScreenPage() {
@@ -62,7 +65,6 @@ function ScreenInner() {
   );
   const result = useMemo(() => (stock ? screenStock(stock, scholar) : null), [stock, scholar]);
 
-  // All non-custom scholars
   const allVerdicts = useMemo(() => {
     if (!stock) return [];
     return SCHOLAR_PROFILES.filter((p) => p.id !== "custom").map((p) => ({
@@ -71,18 +73,17 @@ function ScreenInner() {
     }));
   }, [stock]);
 
-  // Only show the multi-scholar strip when scholars disagree
   const scholarsAgree = allVerdicts.length > 0 &&
     allVerdicts.every((v) => v.verdict === allVerdicts[0].verdict);
 
   return (
     <div className="space-y-6">
-      <div>
-        <div className="text-xs font-semibold uppercase tracking-widest text-gold-600">Stock screener</div>
-        <h1 className="mt-2 text-3xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-          Search a stock
-        </h1>
-      </div>
+      <PageHeader
+        kicker="Stock screener"
+        title="Search a stock"
+        description="Find any ticker; see the verdict under your scholar."
+        action={stock ? <WatchlistButton ticker={stock.ticker} /> : undefined}
+      />
 
       <TickerSearch value={ticker} onChange={(t) => setTicker(t)} autoFocus={!ticker} />
 
@@ -97,19 +98,26 @@ function ScreenInner() {
       )}
 
       {ticker && !stock && (
-        <div className="rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
-          <strong>{ticker}</strong> isn&apos;t in Mizan&apos;s current sample dataset.
-          The prototype ships with {stocks.length} representative tickers; in production we ingest live financial data from any listed equity.
-        </div>
+        <Card>
+          <p className="text-sm text-amber-800">
+            <strong>{ticker}</strong> isn&apos;t in Mizan&apos;s current sample dataset.
+            The prototype ships with {stocks.length} representative tickers; production version supports any listed equity.
+          </p>
+        </Card>
       )}
 
       {stock && result && <ComplianceCard stock={stock} result={result} />}
 
+      {/* Halal alternatives — show ONLY when stock fails */}
+      {stock && result && result.verdict === "fail" && (
+        <HalalAlternatives failedStock={stock} scholar={scholar} />
+      )}
+
       {/* Multi-scholar strip — ONLY when scholars disagree */}
       {stock && allVerdicts.length > 0 && !scholarsAgree && (
-        <article className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
-          <div className="border-b border-gray-100 px-6 py-5 sm:px-10">
-            <div className="text-xs font-semibold uppercase tracking-widest text-gray-500">
+        <Card padded={false} className="overflow-hidden">
+          <div className="border-b border-gray-100 px-6 py-5 sm:px-8">
+            <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
               All five scholars on {stock.ticker}
             </div>
             <h2 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
@@ -138,10 +146,9 @@ function ScreenInner() {
               );
             })}
           </div>
-        </article>
+        </Card>
       )}
 
-      {/* When scholars agree — show a unified consensus banner */}
       {stock && allVerdicts.length > 0 && scholarsAgree && (
         <div className="flex items-center gap-3 rounded-md border border-gray-200 bg-white px-4 py-3 text-sm">
           <div className="flex-shrink-0">
@@ -156,6 +163,8 @@ function ScreenInner() {
       {stock && (
         <p className="text-center text-xs text-gray-500">
           <Link href="/universe" className="text-navy-700 underline">Browse all {stocks.length} tickers</Link>
+          {" · "}
+          <Link href="/watchlist" className="text-navy-700 underline">View your watchlist</Link>
           {" · "}
           <Link href="/methodology" className="text-navy-700 underline">How verdicts are computed</Link>
         </p>

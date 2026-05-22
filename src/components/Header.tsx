@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 const TOOLS = [
+  { href: "/watchlist", label: "Watchlist" },
   { href: "/zakat", label: "Zakat calculator" },
   { href: "/portfolio", label: "Portfolio score" },
   { href: "/ask", label: "Ask a scholar" },
