@@ -4,7 +4,10 @@ import { useEffect, useMemo, useState } from "react";
 import { SCHOLAR_PROFILES, getScholar } from "@/lib/scholars";
 import { QA_KNOWLEDGE_BASE, QAEntry } from "@/lib/qa_seed";
 import ScholarPicker from "@/components/ScholarPicker";
+import { PageHeader } from "@/components/ui";
 import { Sparkles, BookOpen, AlertCircle, Search } from "lucide-react";
+
+void Sparkles;
 
 function scoreEntry(entry: QAEntry, query: string): number {
   const q = query.toLowerCase().trim();
@@ -61,19 +64,11 @@ export default function AskPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <div className="flex items-center gap-2 text-sm font-medium text-gold-600">
-          <Sparkles size={16} />
-          <span>AI scholar Q&A</span>
-        </div>
-        <h1 className="mt-1 text-3xl font-bold text-gray-900">Ask a scholar</h1>
-        <p className="mt-2 max-w-2xl text-sm text-gray-600">
-          Type your question. Mizan returns the answer per your selected scholar from
-          a knowledge base of 49 common questions, with citations. The production
-          version is powered by Anthropic Claude with system prompts reviewed by the
-          Shariah Supervisory Board.
-        </p>
-      </div>
+      <PageHeader
+        kicker="AI scholar Q&A"
+        title="Ask a scholar"
+        description="Type your question. Mizan returns the answer per your selected scholar from a knowledge base of 49 common questions, with citations. The production version is powered by Anthropic Claude with system prompts reviewed by the Shariah Supervisory Board."
+      />
 
       <ScholarPicker value={scholarId} onChange={setScholarId} />
 

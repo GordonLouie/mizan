@@ -7,6 +7,7 @@ import { loadCustomProfile } from "@/lib/customProfile";
 import { calculatePurification } from "@/lib/purification";
 import ScholarPicker from "@/components/ScholarPicker";
 import DemoBanner from "@/components/DemoBanner";
+import { Card, PageHeader } from "@/components/ui";
 
 export default function PurificationPage() {
   const [scholarId, setScholarId] = useState("taqi_usmani");
@@ -44,13 +45,11 @@ export default function PurificationPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Purification calculator</h1>
-        <p className="mt-1 text-sm text-gray-600">
-          Calculate the impure portion of your dividend income (and, if your scholar
-          requires it, capital gains). Donate the amount to charity to purify your holding.
-        </p>
-      </div>
+      <PageHeader
+        kicker="Purification"
+        title="Purification calculator"
+        description="Calculate the impure portion of your dividend income (and, if your scholar requires it, capital gains). Donate the amount to charity to purify your holding."
+      />
 
       <DemoBanner />
 
@@ -81,7 +80,7 @@ export default function PurificationPage() {
       </div>
 
       {stock && result && (
-        <div className="rounded-xl border border-gray-200 bg-white p-5">
+        <Card>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Stat label="Estimated annual dividend" value={`$${result.annualDividendUsd.toFixed(2)}`} sub={`From ${stock.dividendYieldPct}% yield`} />
             <Stat label="Impure portion of dividends" value={`$${result.impureDividendUsd.toFixed(2)}`} sub={`${stock.impermissibleIncomePct}% of dividends`} />
@@ -96,7 +95,7 @@ export default function PurificationPage() {
           <div className="mt-3 text-xs text-gray-500">
             v1 ships a one-tap donation flow to LaunchGood / Penny Appeal / Islamic Relief; this prototype computes the amount only.
           </div>
-        </div>
+        </Card>
       )}
     </div>
   );

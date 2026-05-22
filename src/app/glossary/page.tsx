@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PageHeader } from "@/components/ui";
 
 export const metadata = {
   title: "Glossary · Mizan",
@@ -135,18 +136,13 @@ const TERMS: { letter: string; entries: Term[] }[] = [
 export default function GlossaryPage() {
   return (
     <article className="mx-auto max-w-3xl">
-      <div className="inline-block rounded-full bg-navy-50 px-3 py-1 text-xs font-medium text-navy-800">
-        Glossary
-      </div>
-      <h1 className="mt-3 text-3xl font-bold text-gray-900">
-        Islamic finance terms, in plain language.
-      </h1>
-      <p className="mt-2 text-sm text-gray-600">
-        Every term you&apos;ll encounter in halal investing, written without
-        jargon. Bookmark this page; we add to it monthly.
-      </p>
+      <PageHeader
+        kicker="Glossary"
+        title="Islamic finance terms, in plain language."
+        description="Every term you'll encounter in halal investing, written without jargon. Bookmark this page; we add to it monthly."
+      />
 
-      <nav className="mt-6 flex flex-wrap gap-2">
+      <nav className="mt-2 flex flex-wrap gap-2">
         {TERMS.map((t) => (
           <a key={t.letter} href={`#${t.letter}`}
             className="rounded-md border border-gray-200 bg-white px-2 py-1 font-mono text-xs text-gray-700 hover:bg-navy-50 hover:text-navy-700">

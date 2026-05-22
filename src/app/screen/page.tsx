@@ -15,6 +15,7 @@ import DemoBanner from "@/components/DemoBanner";
 import HalalAlternatives from "@/components/HalalAlternatives";
 import WatchlistButton from "@/components/WatchlistButton";
 import StockLogo from "@/components/StockLogo";
+import StockStats from "@/components/StockStats";
 import { Card, PageHeader } from "@/components/ui";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 
@@ -108,6 +109,9 @@ function ScreenInner() {
 
       {stock && result && <ComplianceCard stock={stock} result={result} />}
 
+      {/* Company stats — at-a-glance numbers behind the verdict */}
+      {stock && <StockStats stock={stock} />}
+
       {/* Halal alternatives — show ONLY when stock fails */}
       {stock && result && result.verdict === "fail" && (
         <HalalAlternatives failedStock={stock} scholar={scholar} />
@@ -162,9 +166,11 @@ function ScreenInner() {
 
       {stock && (
         <p className="text-center text-xs text-gray-500">
-          <Link href="/universe" className="text-navy-700 underline">Browse all {stocks.length} tickers</Link>
+          <Link href={`/vs?a=${stock.ticker}&b=MSFT`} className="text-navy-700 underline">Compare {stock.ticker} side-by-side</Link>
           {" · "}
-          <Link href="/watchlist" className="text-navy-700 underline">View your watchlist</Link>
+          <Link href="/lists" className="text-navy-700 underline">Curated lists</Link>
+          {" · "}
+          <Link href="/universe" className="text-navy-700 underline">Browse all {stocks.length} tickers</Link>
           {" · "}
           <Link href="/methodology" className="text-navy-700 underline">How verdicts are computed</Link>
         </p>

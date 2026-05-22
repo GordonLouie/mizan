@@ -7,6 +7,7 @@ import { SCHOLAR_PROFILES } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
 import type { ScholarProfile, ProhibitedSector } from "@/lib/types";
 import ComplianceCard from "@/components/ComplianceCard";
+import { PageHeader } from "@/components/ui";
 import { Save, RotateCcw, Wand2 } from "lucide-react";
 
 const ALL_SECTORS: { id: ProhibitedSector; label: string }[] = [
@@ -126,14 +127,11 @@ function CustomInner() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Build your custom scholar profile</h1>
-        <p className="mt-1 max-w-2xl text-sm text-gray-600">
-          Set your own thresholds for every screening criterion. Saved to your
-          browser. Once saved, select &quot;Custom&quot; on the Screener page to use
-          this profile for any stock.
-        </p>
-      </div>
+      <PageHeader
+        kicker="Advanced"
+        title="Build your custom scholar profile"
+        description="Set your own thresholds for every screening criterion. Saved to your browser. Once saved, select 'Custom' on the Screener page to use this profile for any stock."
+      />
 
       <div className="flex flex-wrap items-center gap-2">
         <span className="text-xs uppercase tracking-wide text-gray-500">Start from a preset:</span>

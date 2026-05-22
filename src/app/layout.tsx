@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Onboarding from "@/components/Onboarding";
+import ToastContainer from "@/components/ToastContainer";
+import MobileTabBar from "@/components/MobileTabBar";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mizan.app"),
@@ -58,7 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <Header />
-        <main className="mx-auto max-w-6xl px-6 py-8">{children}</main>
+        <main className="mx-auto max-w-6xl px-6 py-8 pb-24 md:pb-8">{children}</main>
         <footer className="border-t border-gray-100">
           <div className="mx-auto max-w-6xl px-6 py-8 text-sm text-gray-500">
             <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -86,6 +88,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
         <Onboarding />
+        <ToastContainer />
+        <MobileTabBar />
       </body>
     </html>
   );

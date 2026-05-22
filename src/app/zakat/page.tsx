@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import CurrencyInput from "@/components/CurrencyInput";
 import { ProgressRing, DonutChart, DonutLegend } from "@/components/Charts";
+import { PageHeader } from "@/components/ui";
 import { Heart, Info } from "lucide-react";
 
 const NISAB_GOLD_GRAMS = 87.48;
@@ -70,16 +71,11 @@ export default function ZakatPage() {
 
   return (
     <div className="space-y-10">
-      <div>
-        <div className="text-xs font-semibold uppercase tracking-widest text-gold-600">Zakat calculator</div>
-        <h1 className="mt-2 text-3xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-          What do you owe in zakat this year?
-        </h1>
-        <p className="mt-2 max-w-xl text-sm text-gray-600">
-          Enter your assets and short-term debts. If your net wealth reaches the nisab threshold,
-          zakat is owed at 2.5%.
-        </p>
-      </div>
+      <PageHeader
+        kicker="Zakat calculator"
+        title="What do you owe in zakat this year?"
+        description="Enter your assets and short-term debts. If your net wealth reaches the nisab threshold, zakat is owed at 2.5%."
+      />
 
       {/* HERO RESULT */}
       <section className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200 sm:grid-cols-3">

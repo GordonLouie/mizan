@@ -9,6 +9,7 @@ import { screenStock } from "@/lib/screen";
 import type { Verdict } from "@/lib/types";
 import ScholarPicker from "@/components/ScholarPicker";
 import DemoBanner from "@/components/DemoBanner";
+import { Card, PageHeader, Pill } from "@/components/ui";
 import { Search, ArrowUpDown } from "lucide-react";
 
 type SortKey = "verdict" | "ticker" | "name" | "sector" | "marketCap" | "illiquid" | "debt";
@@ -106,12 +107,11 @@ function UniverseInner() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Universe</h1>
-        <p className="mt-1 max-w-2xl text-sm text-gray-600">
-          Every ticker, screened against your scholar. Filter by sector and verdict, sort by any column, click any ticker for the full breakdown.
-        </p>
-      </div>
+      <PageHeader
+        kicker="Browse"
+        title="Universe"
+        description="Every ticker, screened against your scholar. Filter by sector and verdict, sort by any column, click any ticker for the full breakdown."
+      />
 
       <DemoBanner />
 
@@ -124,7 +124,7 @@ function UniverseInner() {
         <Stat label="Not halal" value={stats.fail.toString()} color="rose" />
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white p-4">
+      <Card className="!p-4">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div>
             <label className="block text-xs font-medium uppercase tracking-wide text-gray-500">Search</label>
@@ -152,9 +152,9 @@ function UniverseInner() {
             </select>
           </div>
         </div>
-      </div>
+      </Card>
 
-      <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white">
+      <Card padded={false} className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 text-left text-xs uppercase tracking-wide text-gray-500">
             <tr>
@@ -178,18 +178,15 @@ function UniverseInner() {
                 <td className="px-4 py-2 text-right tabular-nums text-gray-700">{stock.illiquidAssetsToTotalAssetsPct}%</td>
                 <td className="px-4 py-2 text-right tabular-nums text-gray-700">{stock.debtToMarketCapPct.toFixed(1)}%</td>
                 <td className="px-4 py-2 text-center">
-                  <span className={
-                    "rounded px-2 py-0.5 text-xs font-semibold uppercase " +
-                    (result.verdict === "pass" ? "bg-emerald-50 text-emerald-700"
-                     : result.verdict === "borderline" ? "bg-amber-50 text-amber-700"
-                     : "bg-rose-50 text-rose-700")
-                  }>{result.verdict === "pass" ? "Halal" : result.verdict === "borderline" ? "Doubtful" : "Not halal"}</span>
+                  <Pill tone={result.verdict === "pass" ? "pass" : result.verdict === "borderline" ? "warn" : "fail"}>
+                    {result.verdict === "pass" ? "Halal" : result.verdict === "borderline" ? "Doubtful" : "Not halal"}
+                  </Pill>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
+      </Card>
 
       <p className="text-xs text-gray-500">Showing {filtered.length} of {enriched.length} tickers.</p>
     </div>

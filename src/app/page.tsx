@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import TickerSearch from "@/components/TickerSearch";
-import { ArrowRight, GraduationCap, Calculator, Sparkles } from "lucide-react";
+import { ArrowRight, GraduationCap, Calculator, Sparkles, ListChecks } from "lucide-react";
+import { CURATED_LISTS } from "@/lib/lists";
 
 export default function Home() {
   const router = useRouter();
@@ -104,6 +105,45 @@ export default function Home() {
           <FeatureCard icon={<Sparkles size={18} />} title="Ask a halal-finance question"
             body="49 common questions pre-answered per scholar — crypto, gold, mortgage, 401(k), options, zakat."
             href="/ask" cta="Try the Q&A" />
+        </div>
+      </section>
+
+      {/* CURATED LISTS — editorial entry point */}
+      <section className="mx-auto max-w-4xl">
+        <div className="flex items-end justify-between">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-widest text-gold-600">
+              Curated lists
+            </div>
+            <h2 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
+              Not sure where to start?
+            </h2>
+            <p className="mt-2 max-w-xl text-sm text-gray-600">
+              Hand-picked collections — mega-caps, dividend payers, ETFs, stricter-Hanafi-only equities. Every name re-screened against your scholar.
+            </p>
+          </div>
+          <Link href="/lists" className="hidden text-sm font-medium text-navy-700 hover:text-navy-900 sm:inline-flex sm:items-center sm:gap-1">
+            All lists <ArrowRight size={14} />
+          </Link>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {CURATED_LISTS.slice(0, 3).map((list) => (
+            <Link
+              key={list.slug}
+              href={`/lists/${list.slug}`}
+              className="group block rounded-lg border border-gray-200 bg-white p-5 transition hover:border-navy-300 hover:bg-navy-50/40"
+            >
+              <div className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-amber-50 text-amber-700">
+                <ListChecks size={16} />
+              </div>
+              <div className="mt-3 text-base font-semibold text-gray-900 group-hover:text-navy-800" style={{ fontFamily: "Georgia, serif" }}>
+                {list.title}
+              </div>
+              <div className="mt-1 text-xs text-gray-500">{list.tickers.length} stocks</div>
+              <p className="mt-2 line-clamp-2 text-xs text-gray-600">{list.audience}</p>
+            </Link>
+          ))}
         </div>
       </section>
 

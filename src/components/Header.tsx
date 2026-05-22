@@ -6,6 +6,8 @@ import { Menu, X, ChevronDown } from "lucide-react";
 
 const TOOLS = [
   { href: "/watchlist", label: "Watchlist" },
+  { href: "/lists", label: "Curated lists" },
+  { href: "/vs", label: "Compare two stocks" },
   { href: "/zakat", label: "Zakat calculator" },
   { href: "/portfolio", label: "Portfolio score" },
   { href: "/ask", label: "Ask a scholar" },

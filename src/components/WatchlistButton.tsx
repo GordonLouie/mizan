@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import { isInWatchlist, addToWatchlist, removeFromWatchlist } from "@/lib/watchlist";
+import { toast } from "@/lib/toast";
 
 interface Props {
   ticker: string;
@@ -22,8 +23,13 @@ export default function WatchlistButton({ ticker, size = "md" }: Props) {
   }, [ticker]);
 
   function toggle() {
-    if (saved) removeFromWatchlist(ticker);
-    else addToWatchlist(ticker);
+    if (saved) {
+      removeFromWatchlist(ticker);
+      toast(`Removed ${ticker} from watchlist`, { tone: "info" });
+    } else {
+      addToWatchlist(ticker);
+      toast(`Saved ${ticker} to watchlist`, { tone: "success" });
+    }
   }
 
   if (!mounted) return null;
