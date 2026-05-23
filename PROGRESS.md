@@ -120,7 +120,45 @@ Open questions where your input changes the next move:
 
 ## Things completed since last entry
 
-*(Tick items above; add a one-line note here for anything you want me to know.)*
+**22 May 2026 — overnight product upgrade (commit `c29cdee`, not yet pushed):**
+- **Curated lists feature** at `/lists` — 7 hand-picked collections (mega-caps, dividend payers, ETFs, tech leaders, consumer staples, Mufti Taqi strict, Saudi-listed) with editorial blurbs, per-list stats, and live re-screening against your chosen scholar. Sanity tests confirm every ticker resolves and ≥70% of "halal-*" lists pass under their declared default scholar.
+- **Side-by-side stock comparison** at `/vs?a=AAPL&b=MSFT` — pick any two tickers, see verdicts + 9 financial metrics + the per-scholar verdict matrix. URL is shareable.
+- **Company stats card** below every verdict on `/screen` — last price, market cap with cap-tier hint, dividend yield in both % and $, illiquid-asset ratio with Mufti Taqi floor indicator, full ratio strip, and quick-link pills (Compare, Lists, Methodology).
+- **Methodology page rewrite** at `/methodology` — primary-source citations per scholar (AAOIFI Standard No. 21, Mufti Taqi's two books, S&P DJIM PDF, Sistani.org rulings, minority-view fatawa), with link-out badges by source type (Standard / Publication / Ruling / Index / Fatwa) and a worked example on AMZN.
+- **Mobile bottom tab bar** — fixed 5-tab nav (Screen / Lists / Saved / Zakat / Learn) with safe-area inset for iOS notches. Active-state highlighted by route prefix.
+- **Toast notification system** — events fire from watchlist actions; auto-dismissing pills at the bottom of the viewport.
+- **Design system applied** across Purification, Universe, Ask, Zakat, Glossary, Custom, Methodology pages — all now use the canonical `PageHeader` / `Card` / `Pill` primitives.
+- **Sitemap updated** to include `/lists`, `/lists/<slug>` for all 7 collections, `/vs`, and `/watchlist`.
+
+To push the commit to GitHub (then Vercel auto-deploys):
+```
+cd ~/mizan
+git push origin main
+```
+
+If it asks for credentials, paste your GitHub personal access token as the password (username = `GordonLouie`).
+
+---
+
+**22 May 2026 — visual polish pass (UNCOMMITTED, local files only):**
+
+The apple-slicing diagram and the ratios table both had real overlap bugs that only became visible when I rendered them to PNG and inspected at full size. Rebuilt:
+- **`ShareSliceDiagram`** — highlighted dot moved to the very last column of row 4. Callout line emerges into the empty right margin with no other dots in its path. Headline bounded to the grid width so the leader line never crosses it. Two dueling bottom labels replaced with one centered subtitle. Zero overlap at any viewport.
+- **`RatiosDiagram`** — value/unit overlap (the "%" was crashing into the last digit because `<tspan>` collapses under `text-anchor="end"`). Split into two separate text elements: number right-anchored, unit left-anchored just past it. Status column pulled 20px inward from the viewport edge.
+- **`HalalHaramSourcesDiagram`** — added per-row hairlines so it reads like a real ledger; thicker accent underlines.
+- **`ScholarSpectrumDiagram`** — center-anchored text per column (was left-anchored which made narrow columns clip).
+- **`PurificationDiagram`** / **`ZakatDiagram`** — labels now use small-caps spacing matching the kicker style; baselines tightened.
+- **`FeaturedTickers`** — each card now shows a live verdict pill (Halal / Doubtful / Not halal) under your current scholar, plus the company logo. Much more interactive than the static buttons.
+- **Home wedge** — the two side-by-side panels (AAOIFI vs Mufti Taqi) now show the specific ratio that flips the verdict (Debt/cap 6.5% vs cap 30% / Tangible assets 12% vs floor 20%) with a "within" / "under" tag.
+
+**A previous session left a stale git lock file** that the sandbox can't release. To commit these changes from your terminal:
+```
+cd ~/mizan
+rm -f .git/HEAD.lock
+git add -A
+git commit -m "Visual polish: apple-slice rebuilt, ratios %-overlap fixed, verdict pills, wedge sharpened"
+git push origin main
+```
 
 ---
 

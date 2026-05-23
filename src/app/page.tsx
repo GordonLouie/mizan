@@ -74,15 +74,23 @@ export default function Home() {
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-gray-200 bg-gray-200 sm:grid-cols-2">
-          <div className="bg-white p-6">
-            <div className="text-xs font-semibold uppercase tracking-widest text-emerald-700">Under AAOIFI</div>
-            <div className="mt-4 text-5xl font-bold text-emerald-700" style={{ fontFamily: "Georgia, serif" }}>Halal</div>
-            <p className="mt-4 text-sm text-gray-600">What Zoya, Wahed, and Musaffa would tell you.</p>
+          <div className="bg-white p-7">
+            <div className="text-[11px] font-semibold uppercase tracking-widest text-emerald-700">Under AAOIFI</div>
+            <div className="mt-5 text-5xl font-bold text-emerald-700 sm:text-6xl" style={{ fontFamily: "Georgia, serif" }}>Halal</div>
+            <div className="mt-5 border-t border-gray-100 pt-4 text-xs text-gray-500">
+              Debt/cap <span className="font-mono text-gray-800">6.5%</span> · cap <span className="font-mono">30%</span>
+              <span className="ml-2 inline-block rounded-sm bg-emerald-50 px-1.5 py-0.5 font-semibold uppercase tracking-wider text-emerald-700">within</span>
+            </div>
+            <p className="mt-3 text-sm leading-relaxed text-gray-600">What Zoya, Wahed, and Musaffa would tell you.</p>
           </div>
-          <div className="bg-white p-6">
-            <div className="text-xs font-semibold uppercase tracking-widest text-rose-700">Under Mufti Taqi Usmani</div>
-            <div className="mt-4 text-5xl font-bold text-rose-700" style={{ fontFamily: "Georgia, serif" }}>Not halal</div>
-            <p className="mt-4 text-sm text-gray-600">His illiquid-asset rule excludes AMZN. No other app surfaces this.</p>
+          <div className="bg-white p-7">
+            <div className="text-[11px] font-semibold uppercase tracking-widest text-rose-700">Under Mufti Taqi Usmani</div>
+            <div className="mt-5 text-5xl font-bold text-rose-700 sm:text-6xl" style={{ fontFamily: "Georgia, serif" }}>Not halal</div>
+            <div className="mt-5 border-t border-gray-100 pt-4 text-xs text-gray-500">
+              Tangible assets <span className="font-mono text-gray-800">12%</span> · floor <span className="font-mono">20%</span>
+              <span className="ml-2 inline-block rounded-sm bg-rose-50 px-1.5 py-0.5 font-semibold uppercase tracking-wider text-rose-700">under</span>
+            </div>
+            <p className="mt-3 text-sm leading-relaxed text-gray-600">His illiquid-asset rule excludes AMZN. No other app surfaces this.</p>
           </div>
         </div>
 
