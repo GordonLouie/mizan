@@ -5,11 +5,15 @@ import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 const TOOLS = [
-  { href: "/watchlist", label: "Watchlist" },
+  { href: "/discover", label: "Discover" },
+  { href: "/sectors", label: "Sectors" },
+  { href: "/crypto", label: "Crypto" },
+  { href: "/sukuk", label: "Sukuk" },
   { href: "/lists", label: "Curated lists" },
   { href: "/vs", label: "Compare two stocks" },
-  { href: "/zakat", label: "Zakat calculator" },
+  { href: "/watchlist", label: "Watchlist" },
   { href: "/portfolio", label: "Portfolio score" },
+  { href: "/zakat", label: "Zakat calculator" },
   { href: "/ask", label: "Ask a scholar" },
   { href: "/purification", label: "Purification calc" },
   { href: "/universe", label: "Browse universe" },
@@ -34,6 +38,7 @@ export default function Header() {
 
         <nav className="hidden items-center gap-8 text-sm font-medium text-gray-700 md:flex">
           <Link href="/screen" className="hover:text-navy-800">Screen</Link>
+          <Link href="/discover" className="hover:text-navy-800">Discover</Link>
           <Link href="/learn" className="hover:text-navy-800">Learn</Link>
           <div className="relative" onMouseEnter={() => setToolsOpen(true)} onMouseLeave={() => setToolsOpen(false)}>
             <button className="inline-flex items-center gap-1 hover:text-navy-800">
@@ -61,6 +66,7 @@ export default function Header() {
         <div className="border-t border-gray-100 bg-white px-6 py-4 md:hidden">
           <div className="flex flex-col gap-3 text-sm font-medium">
             <Link href="/screen" onClick={() => setOpen(false)} className="text-gray-800 hover:text-navy-800">Screen</Link>
+            <Link href="/discover" onClick={() => setOpen(false)} className="text-gray-800 hover:text-navy-800">Discover</Link>
             <Link href="/learn" onClick={() => setOpen(false)} className="text-gray-800 hover:text-navy-800">Learn</Link>
             <div className="mt-2 text-xs font-semibold uppercase tracking-wide text-gray-500">Tools</div>
             {TOOLS.map((t) => (
