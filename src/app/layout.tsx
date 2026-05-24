@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Onboarding from "@/components/Onboarding";
 import ToastContainer from "@/components/ToastContainer";
 import MobileTabBar from "@/components/MobileTabBar";
+import FeedbackWidget from "@/components/FeedbackWidget";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mizan.app"),
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
               <nav className="flex flex-wrap gap-3 text-xs">
                 <a href="/about" className="hover:text-navy-700">About</a>
+                <a href="/trust" className="hover:text-navy-700">Trust centre</a>
                 <a href="/methodology" className="hover:text-navy-700">Methodology</a>
                 <a href="/roadmap" className="hover:text-navy-700">Roadmap</a>
                 <a href="/help" className="hover:text-navy-700">Help</a>
@@ -89,6 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </footer>
         <Onboarding />
         <ToastContainer />
+        <FeedbackWidget />
         <MobileTabBar />
       </body>
     </html>

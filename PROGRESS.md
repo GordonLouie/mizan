@@ -162,6 +162,49 @@ git push origin main
 
 ---
 
+**22 May 2026 — competitive synthesis pass (commit `c2b180f`):**
+
+Did a deep audit of Zoya / Musaffa / Wahed / Islamicly / Amana / IFG, wrote the strategic memo at `_business/COMPETITIVE_SYNTHESIS.md`, then implemented the highest-impact features each competitor has that Mizan was missing. Net effect: Mizan moves from "halal stock screener" to "halal investment universe under your scholar." That positioning is the moat.
+
+- **`/discover`** — Zoya-pattern entry page. Trending halal mega-caps under your scholar, where-the-scholars-disagree table (mega-cap names with non-unanimous verdicts), top dividend yielders, sector pass-rate ranking with progress bars, curated-lists shortcut, cross-asset tiles. Re-screens live on every scholar change.
+- **`/crypto`** — covers BTC, ETH, SOL, USDC, USDT, BNB, XRP, ADA, DOGE, SHIB, XMR, AAVE. Each asset shows what it is, an honest blunt summary, and a per-scholar take with citations to Faraz Adam / Mufti Taqi / Joe Bradford / Sistani office / AAOIFI / the strict view. No other app does this multi-view treatment of crypto.
+- **`/sukuk`** — the fixed-income leg every halal portfolio needs. Primer on the five sukuk structures (ijara, mudaraba, musharaka, wakala, murabaha), accessible vehicles (SPSK ETF, SHRA UCITS, Franklin Templeton fund) with AUM / expense / yield / duration, three notable issuances for context, caveats.
+- **`/sectors`** — index lists every sector with halal pass-rate, market cap, average yield, ranked by aggregate market cap. `/sectors/[slug]` is the deep-dive with sortable per-stock table under your scholar.
+- **Header** — Discover promoted to top-level nav next to Screen and Learn. Tools menu expanded with all new routes.
+- **Sitemap** — auto-generates entries for every sector slug + all 7 curated lists + all new top-level routes.
+
+The 5-page `_business/COMPETITIVE_SYNTHESIS.md` doc is your reference for *why* each of these was built and what comes next. Read it before your Sunday call with your co-founder — the build order in that doc is what to ship after these.
+
+To push:
+```
+cd ~/mizan && git push origin main
+```
+
+---
+
+**22 May 2026 — Tier 0 credibility floor (uncommitted, sandbox git lock):**
+
+Strategic decision: solo founder path, friend repositioned as inspiration + first user (unnamed publicly, by his choice). All Tier 0 build work to make Mizan tester-ready and credibility-floor complete is now in the repo, just not committed because of another stale git lock.
+
+- **`/about` rewritten** as honest solo-founder origin story. Leads with "I'm not Muslim, here's why I built this" — transparency as credibility. Four operating principles, founder card, "the reason this exists" card honouring the friend without naming him. Scholar board status visible with "in progress" pills, not vapor claims.
+- **`/trust` new page** — single source-of-truth for credibility. Scoreboard of what's done / in progress / not yet (live product ✓, methodology citations ✓, founder named ✓, scholar chair signed in-progress, HK entity in-progress, Cayman not yet, FMP integration not yet, paid tiers not yet). Methodology sources with primary-source links. Data sources. Privacy posture. Honest list of intentional gaps. Direct line to founder.
+- **`FeedbackWidget`** mounted globally — floating navy button bottom-right of every page. Click → modal form (type: bug/idea/praise/other, message, optional email). Submit → opens mailto with structured body + current page path. No backend, no spam, no auth. User keeps a copy in their Sent folder.
+- **Beta badge** on the homepage hero — amber pill above the headline: "Private beta · scholar onboarding in progress · live data Q3 · See status →" linking to /trust. Tells testers what's intentional gap vs bug.
+- **Footer + sitemap** updated with `/trust`.
+
+To commit and deploy from your terminal:
+```
+cd ~/mizan
+rm -f .git/HEAD.lock
+git add -A
+git commit -m "Tier 0 credibility floor: solo-founder /about, /trust hub, feedback widget, beta badge"
+git push origin main
+```
+
+After this lands, you have the credibility floor to send Mizan to anyone — including the IFG / Bradford / Faraz Adam outreach. The previous co-founder roadmap PDF is now stale; ignore the co-founder framing in it and treat your friend as the unnamed first user / advisor per the new /about.
+
+---
+
 ## Notes and learnings
 
 *(Write down what you learn from real users, scholars, investors. Anything that changes your understanding of the audience or the product.)*

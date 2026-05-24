@@ -14,7 +14,21 @@ export default function Home() {
   return (
     <div className="space-y-20 pb-16">
       {/* HERO — single primary action */}
-      <section className="pt-12 sm:pt-20">
+      <section className="pt-10 sm:pt-16">
+        {/* Beta badge — visible honesty, links to /trust */}
+        <div className="mb-8 flex justify-center">
+          <Link
+            href="/trust"
+            className="group inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50/60 px-3 py-1 text-[11px] font-medium text-amber-900 transition hover:border-amber-300 hover:bg-amber-50"
+          >
+            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+            <span className="font-semibold uppercase tracking-widest">Private beta</span>
+            <span className="hidden text-amber-700 sm:inline">·</span>
+            <span className="hidden text-amber-800 sm:inline">scholar onboarding in progress · live data Q3</span>
+            <span className="text-amber-700 group-hover:underline">See status →</span>
+          </Link>
+        </div>
+
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style={{ fontFamily: "Georgia, serif" }}>
             Is your stock halal?
