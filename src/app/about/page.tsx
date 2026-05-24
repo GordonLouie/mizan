@@ -18,7 +18,7 @@ export default function AboutPage() {
 
       {/* Origin story — leads with honesty */}
       <Card>
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
           The honest origin
         </div>
         <h2 className="mt-1 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
@@ -57,7 +57,7 @@ export default function AboutPage() {
       {/* Principles */}
       <section>
         <div className="mb-4">
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
             What keeps Mizan honest
           </div>
           <h2 className="mt-1 text-2xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
@@ -92,7 +92,7 @@ export default function AboutPage() {
       {/* The team — solo, with inspiration acknowledged */}
       <section>
         <div className="mb-4">
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
             The team
           </div>
           <h2 className="mt-1 text-2xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
@@ -186,7 +186,7 @@ export default function AboutPage() {
       {/* Shariah board status */}
       <section>
         <div className="mb-4">
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
             Religious oversight
           </div>
           <h2 className="mt-1 text-2xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>

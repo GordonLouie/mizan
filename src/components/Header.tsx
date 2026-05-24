@@ -4,20 +4,37 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 
-const TOOLS = [
-  { href: "/discover", label: "Discover" },
-  { href: "/sectors", label: "Sectors" },
-  { href: "/crypto", label: "Crypto" },
-  { href: "/sukuk", label: "Sukuk" },
-  { href: "/lists", label: "Curated lists" },
-  { href: "/vs", label: "Compare two stocks" },
-  { href: "/watchlist", label: "Watchlist" },
-  { href: "/portfolio", label: "Portfolio score" },
-  { href: "/zakat", label: "Zakat calculator" },
-  { href: "/ask", label: "Ask a scholar" },
-  { href: "/purification", label: "Purification calc" },
-  { href: "/universe", label: "Browse universe" },
-  { href: "/custom", label: "Custom scholar profile" },
+// Tools dropdown is organised into 3 columns so 13 destinations don't read
+// as a wall of links. Each column has a clear theme.
+const TOOL_GROUPS: Array<{ heading: string; items: Array<{ href: string; label: string; sub?: string }> }> = [
+  {
+    heading: "Explore",
+    items: [
+      { href: "/discover",  label: "Discover",         sub: "Trending & disagreement" },
+      { href: "/sectors",   label: "Sectors",          sub: "By industry" },
+      { href: "/lists",     label: "Curated lists",    sub: "Editorial collections" },
+      { href: "/universe",  label: "Universe",         sub: "Every ticker" },
+    ],
+  },
+  {
+    heading: "Cross-asset",
+    items: [
+      { href: "/crypto",    label: "Crypto",           sub: "Multi-scholar views" },
+      { href: "/sukuk",     label: "Sukuk",            sub: "Islamic bonds" },
+      { href: "/vs",        label: "Compare stocks",   sub: "Side-by-side" },
+    ],
+  },
+  {
+    heading: "Tools",
+    items: [
+      { href: "/watchlist",     label: "Watchlist",      sub: "Your saved tickers" },
+      { href: "/portfolio",     label: "Portfolio score",sub: "Your compliance %" },
+      { href: "/zakat",         label: "Zakat calculator", sub: "Annual obligation" },
+      { href: "/purification",  label: "Purification",   sub: "Dividend cleansing" },
+      { href: "/ask",           label: "Ask a scholar",  sub: "49 common Q&A" },
+      { href: "/custom",        label: "Custom profile", sub: "Set your thresholds" },
+    ],
+  },
 ];
 
 export default function Header() {
@@ -45,12 +62,27 @@ export default function Header() {
               Tools <ChevronDown size={14} className={toolsOpen ? "rotate-180 transition" : "transition"} />
             </button>
             {toolsOpen && (
-              <div className="absolute right-0 top-full z-20 min-w-[220px] rounded-lg border border-gray-200 bg-white py-2 shadow-lg">
-                {TOOLS.map((t) => (
-                  <Link key={t.href} href={t.href}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-navy-800">
-                    {t.label}
-                  </Link>
+              <div className="absolute right-0 top-full z-20 mt-1 grid w-[640px] grid-cols-3 gap-x-6 gap-y-1 rounded-xl border border-gray-200 bg-white p-5 shadow-lg">
+                {TOOL_GROUPS.map((group) => (
+                  <div key={group.heading}>
+                    <div className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+                      {group.heading}
+                    </div>
+                    <div className="space-y-0.5">
+                      {group.items.map((t) => (
+                        <Link
+                          key={t.href}
+                          href={t.href}
+                          className="block rounded-md px-2 py-1.5 transition hover:bg-gray-50"
+                        >
+                          <div className="text-sm font-medium text-gray-900">{t.label}</div>
+                          {t.sub && (
+                            <div className="text-[11px] text-gray-500">{t.sub}</div>
+                          )}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             )}
@@ -64,15 +96,27 @@ export default function Header() {
 
       {open && (
         <div className="border-t border-gray-100 bg-white px-6 py-4 md:hidden">
-          <div className="flex flex-col gap-3 text-sm font-medium">
-            <Link href="/screen" onClick={() => setOpen(false)} className="text-gray-800 hover:text-navy-800">Screen</Link>
-            <Link href="/discover" onClick={() => setOpen(false)} className="text-gray-800 hover:text-navy-800">Discover</Link>
-            <Link href="/learn" onClick={() => setOpen(false)} className="text-gray-800 hover:text-navy-800">Learn</Link>
-            <div className="mt-2 text-xs font-semibold uppercase tracking-wide text-gray-500">Tools</div>
-            {TOOLS.map((t) => (
-              <Link key={t.href} href={t.href} onClick={() => setOpen(false)} className="text-gray-700 hover:text-navy-800">
-                {t.label}
-              </Link>
+          <div className="flex flex-col gap-1 text-sm">
+            <Link href="/screen"   onClick={() => setOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Screen</Link>
+            <Link href="/discover" onClick={() => setOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Discover</Link>
+            <Link href="/learn"    onClick={() => setOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Learn</Link>
+
+            {TOOL_GROUPS.map((group) => (
+              <div key={group.heading} className="mt-3">
+                <div className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+                  {group.heading}
+                </div>
+                {group.items.map((t) => (
+                  <Link
+                    key={t.href}
+                    href={t.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-md px-2 py-1.5 text-gray-700 hover:bg-gray-50"
+                  >
+                    {t.label}
+                  </Link>
+                ))}
+              </div>
             ))}
           </div>
         </div>

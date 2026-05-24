@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props {
   children: React.ReactNode;
-  /** Top padding variant: spacious, normal, tight. */
+  /** Vertical padding: spacious / normal / tight. Defaults to normal. */
   spacing?: "spacious" | "normal" | "tight";
   className?: string;
 }
@@ -20,6 +20,7 @@ export function Section({ children, spacing = "normal", className = "" }: Props)
 }
 
 interface PageHeaderProps {
+  /** Eyebrow label — appears at most ONCE per page. Keep terse (<3 words). */
   kicker?: string;
   title: string;
   description?: string;
@@ -28,19 +29,60 @@ interface PageHeaderProps {
 
 export function PageHeader({ kicker, title, description, action }: PageHeaderProps) {
   return (
-    <header className="mb-8 flex flex-wrap items-end justify-between gap-4">
+    <header className="mb-10 flex flex-wrap items-end justify-between gap-4">
       <div>
         {kicker && (
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-gold-600">{kicker}</div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-600">
+            {kicker}
+          </div>
         )}
-        <h1 className="mt-2 text-3xl font-bold text-gray-900 sm:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
+        <h1
+          className="mt-2 text-[34px] font-bold leading-[1.05] text-gray-900 sm:text-[42px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
           {title}
         </h1>
         {description && (
-          <p className="mt-2 max-w-2xl text-base text-gray-600">{description}</p>
+          <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-gray-600">{description}</p>
         )}
       </div>
       {action && <div className="flex-shrink-0">{action}</div>}
     </header>
   );
+}
+
+/**
+ * SubHead — for in-page section headings BELOW the PageHeader.
+ * Uses plain bold sans-serif (no amber kicker) so the page has ONE
+ * editorial accent (the PageHeader) and everything else is calm.
+ */
+export function SubHead({
+  title,
+  description,
+}: {
+  title: string;
+  description?: string;
+}) {
+  return (
+    <div className="mb-5">
+      <h2
+        className="text-lg font-bold text-gray-900"
+        style={{ fontFamily: "Georgia, serif" }}
+      >
+        {title}
+      </h2>
+      {description && (
+        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-gray-600">{description}</p>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Hairline rule — FT-style section separator. Use between independent
+ * sections within a page; do NOT wrap content in extra cards when a
+ * hairline can do the same job with less visual weight.
+ */
+export function Hairline({ className = "" }: { className?: string }) {
+  return <hr className={"my-10 border-0 border-t border-gray-200 " + className} />;
 }

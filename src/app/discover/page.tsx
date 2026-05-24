@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { TrendingUp, Sparkles, Rocket, ArrowRight, Building2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { listStocks } from "@/lib/data";
 import { SCHOLAR_PROFILES, getScholar } from "@/lib/scholars";
 import { loadCustomProfile } from "@/lib/customProfile";
@@ -125,7 +125,6 @@ export default function DiscoverPage() {
 
       {/* Trending halal mega-caps */}
       <Section
-        icon={<TrendingUp size={16} />}
         kicker="Trending"
         title="Halal mega-caps right now"
         description="The largest companies passing under your scholar. The names most diaspora Muslim investors already own through index funds."
@@ -140,7 +139,6 @@ export default function DiscoverPage() {
       {/* Where scholars disagree */}
       {disagreements.length > 0 && (
         <Section
-          icon={<Sparkles size={16} />}
           kicker="The honest part"
           title="Where the scholars disagree"
           description="Mega-cap names that pass under one mainstream view and fail under another. Mizan is the only app that surfaces these without choosing for you."
@@ -190,7 +188,6 @@ export default function DiscoverPage() {
       {/* Halal income / dividend payers */}
       {highYield.length > 0 && (
         <Section
-          icon={<Building2 size={16} />}
           kicker="Income"
           title="Halal income — top dividend yielders"
           description="Passing names with the highest dividend yields. Remember purification on the impermissible-income share."
@@ -205,7 +202,6 @@ export default function DiscoverPage() {
 
       {/* Sector pass-rates */}
       <Section
-        icon={<Rocket size={16} />}
         kicker="By industry"
         title="Where the halal universe is concentrated"
         description="Pass-rate by sector under your scholar. Click any sector for the full ranked list."
@@ -257,9 +253,9 @@ export default function DiscoverPage() {
             <Link
               key={list.slug}
               href={`/lists/${list.slug}`}
-              className="group block rounded-lg border border-gray-200 bg-white p-4 transition hover:border-navy-300 hover:bg-navy-50/30"
+              className="group block rounded-xl border border-gray-200 bg-white p-4 transition hover:border-gray-400"
             >
-              <div className="text-[10px] font-semibold uppercase tracking-widest text-amber-700">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
                 {list.kicker}
               </div>
               <div className="mt-2 text-sm font-bold text-gray-900 group-hover:text-navy-800" style={{ fontFamily: "Georgia, serif" }}>
@@ -269,17 +265,17 @@ export default function DiscoverPage() {
             </Link>
           ))}
         </div>
-        <div className="mt-3 text-center text-xs">
+        <div className="mt-4 text-center text-xs">
           <Link href="/lists" className="text-navy-700 hover:underline">All curated lists →</Link>
         </div>
       </Section>
 
-      {/* Cross-asset shortcut */}
-      <Card className="bg-gradient-to-r from-navy-50/40 to-amber-50/40">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {/* Cross-asset shortcut — clean, no gradient */}
+      <Card tone="subtle">
+        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-gray-200 sm:grid-cols-3">
           <CrossAssetTile href="/crypto" title="Crypto" description="BTC, ETH, top 20 — scholar views compared" />
           <CrossAssetTile href="/sukuk" title="Sukuk" description="Islamic bonds — primer and ETFs" />
-          <CrossAssetTile href="/sectors" title="Sectors" description="Browse every industry's halal pass-rate" />
+          <CrossAssetTile href="/sectors" title="Sectors" description="Every industry's halal pass-rate" />
         </div>
       </Card>
 
@@ -291,12 +287,12 @@ export default function DiscoverPage() {
 }
 
 function Section({
-  icon,
   kicker,
   title,
   description,
   children,
 }: {
+  /** Optional — icon prop is intentionally removed; kicker text alone is enough hierarchy. */
   icon?: React.ReactNode;
   kicker: string;
   title: string;
@@ -305,21 +301,14 @@ function Section({
 }) {
   return (
     <section>
-      <div className="mb-4 flex items-start gap-3">
-        {icon && (
-          <div className="mt-1 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md bg-amber-50 text-amber-700">
-            {icon}
-          </div>
-        )}
-        <div>
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
-            {kicker}
-          </div>
-          <h2 className="mt-1 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-            {title}
-          </h2>
-          <p className="mt-1 max-w-2xl text-sm text-gray-600">{description}</p>
+      <div className="mb-5">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+          {kicker}
         </div>
+        <h2 className="mt-1.5 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+          {title}
+        </h2>
+        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-gray-600">{description}</p>
       </div>
       {children}
     </section>
@@ -373,13 +362,13 @@ function CrossAssetTile({ href, title, description }: { href: string; title: str
   return (
     <Link
       href={href}
-      className="group block rounded-md border border-white/0 bg-white p-4 transition hover:border-navy-200 hover:shadow-sm"
+      className="group block bg-white p-5 transition hover:bg-navy-50/40"
     >
       <div className="text-base font-bold text-gray-900 group-hover:text-navy-800" style={{ fontFamily: "Georgia, serif" }}>
         {title}
       </div>
-      <div className="mt-1 text-xs text-gray-600">{description}</div>
-      <div className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-navy-700">
+      <div className="mt-1 text-[13px] leading-relaxed text-gray-600">{description}</div>
+      <div className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-navy-700">
         Explore <ArrowRight size={11} />
       </div>
     </Link>

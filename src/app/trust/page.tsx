@@ -26,7 +26,7 @@ export default function TrustPage() {
       />
 
       <Card className="bg-amber-50/40">
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
           Why this page exists
         </div>
         <p className="mt-3 text-sm leading-7 text-gray-700">
