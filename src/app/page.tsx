@@ -13,9 +13,8 @@ export default function Home() {
 
   return (
     <div className="pb-16">
-      {/* HERO — restrained, single focal point */}
+      {/* 1. STATUS LINE — small whisper, not a banner */}
       <section className="pt-8 sm:pt-12">
-        {/* Beta status — small, subtle, far less ink */}
         <div className="mb-12 flex justify-center">
           <Link
             href="/trust"
@@ -28,6 +27,7 @@ export default function Home() {
           </Link>
         </div>
 
+        {/* 2. HERO — centered, max-w-2xl */}
         <div className="mx-auto max-w-2xl text-center">
           <h1
             className="text-[42px] font-bold leading-[1.02] tracking-tight text-gray-900 sm:text-[64px]"
@@ -39,6 +39,7 @@ export default function Home() {
             Type any ticker. See the verdict under six scholarly methodologies — including the rules no other app implements.
           </p>
 
+          {/* Real TickerSearch — wired to router */}
           <div className="mx-auto mt-10 max-w-xl">
             <TickerSearch
               value=""
@@ -48,6 +49,7 @@ export default function Home() {
             />
           </div>
 
+          {/* Ticker chips */}
           <div className="mt-5 flex flex-wrap items-center justify-center gap-1.5 text-xs">
             <span className="mr-1 text-gray-400">Try</span>
             {["AAPL", "AMZN", "TSLA", "MSFT", "JPM", "SPUS"].map((t) => (
@@ -63,7 +65,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Whisper-thin separator + small trust strip */}
+      {/* 3. HAIRLINE + TRUST STRIP */}
       <div className="mx-auto mt-20 max-w-xl">
         <div className="grid grid-cols-3 gap-6 border-t border-gray-200 pt-6 text-center">
           <TrustStat n="6" label="scholar profiles" />
@@ -72,7 +74,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* THE WEDGE — the only visually-loud thing on the page */}
+      {/* 4. THE WEDGE — page anchor moment, only loud element */}
       <section className="mx-auto mt-28 max-w-3xl">
         <div className="text-center">
           <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-600">
@@ -89,43 +91,42 @@ export default function Home() {
           </p>
         </div>
 
+        {/* FT-print-spread comparison panel */}
         <div className="mt-10 grid grid-cols-1 overflow-hidden rounded-xl border border-gray-200 sm:grid-cols-2">
-          {/* AAOIFI side */}
-          <div className="bg-white p-8">
+          {/* LEFT: AAOIFI */}
+          <div className="bg-white px-10 py-12">
             <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
               Under AAOIFI
             </div>
-            <div className="mt-6 text-[56px] font-bold leading-none text-emerald-700 sm:text-[64px]" style={{ fontFamily: "Georgia, serif" }}>
+            <div
+              className="mt-8 text-[72px] font-bold leading-none text-emerald-700 sm:text-[80px]"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
               Halal
             </div>
-            <div className="mt-6 flex items-baseline gap-2 text-[12px] text-gray-600">
-              <span>Debt/cap</span>
-              <span className="font-mono font-semibold text-gray-900">6.5%</span>
-              <span className="text-gray-300">·</span>
-              <span>cap</span>
-              <span className="font-mono text-gray-700">30%</span>
+            <div className="mt-10 font-mono text-[12px] text-gray-500">
+              Debt / market cap: <span className="text-gray-900">6.5%</span> · cap 30%
             </div>
-            <p className="mt-4 text-[13px] leading-relaxed text-gray-600">
+            <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
               What Zoya, Wahed, and Musaffa would tell you.
             </p>
           </div>
 
-          {/* Border line */}
-          <div className="border-t border-gray-200 bg-white p-8 sm:border-l sm:border-t-0">
+          {/* RIGHT: Mufti Taqi Usmani */}
+          <div className="border-t border-gray-200 bg-white px-10 py-12 sm:border-l sm:border-t-0">
             <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-700">
               Under Mufti Taqi Usmani
             </div>
-            <div className="mt-6 text-[56px] font-bold leading-none text-rose-700 sm:text-[64px]" style={{ fontFamily: "Georgia, serif" }}>
+            <div
+              className="mt-8 text-[72px] font-bold leading-none text-rose-700 sm:text-[80px]"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
               Not halal
             </div>
-            <div className="mt-6 flex items-baseline gap-2 text-[12px] text-gray-600">
-              <span>Tangible</span>
-              <span className="font-mono font-semibold text-gray-900">12%</span>
-              <span className="text-gray-300">·</span>
-              <span>floor</span>
-              <span className="font-mono text-gray-700">20%</span>
+            <div className="mt-10 font-mono text-[12px] text-gray-500">
+              Tangible assets: <span className="text-gray-900">12%</span> · floor 20%
             </div>
-            <p className="mt-4 text-[13px] leading-relaxed text-gray-600">
+            <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
               His illiquid-asset rule excludes AMZN. No other app surfaces this.
             </p>
           </div>
@@ -141,22 +142,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* QUICK TOOLS — 3 cards, minimal chrome */}
+      {/* 5. THREE FEATURE CARDS — gap-px divider trick */}
       <section className="mx-auto mt-28 max-w-4xl">
         <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-3">
-          <FeatureCard icon={<GraduationCap size={18} />} title="New to investing?"
+          <FeatureCard
+            icon={<GraduationCap size={18} />}
+            title="New to investing?"
             body="A 10-minute primer on stocks, halal screening, and what scholars actually disagree about."
-            href="/learn" cta="Halal Investing 101" />
-          <FeatureCard icon={<Calculator size={18} />} title="Calculate your zakat"
+            href="/learn"
+            cta="Halal Investing 101"
+          />
+          <FeatureCard
+            icon={<Calculator size={18} />}
+            title="Calculate your zakat"
             body="Cash, stocks, gold, crypto. Nisab check. 2.5% computed."
-            href="/zakat" cta="Open the calculator" />
-          <FeatureCard icon={<Sparkles size={18} />} title="Ask a question"
+            href="/zakat"
+            cta="Open the calculator"
+          />
+          <FeatureCard
+            icon={<Sparkles size={18} />}
+            title="Ask a question"
             body="49 common questions pre-answered per scholar — crypto, gold, mortgage, 401(k), options."
-            href="/ask" cta="Try the Q&A" />
+            href="/ask"
+            cta="Try the Q&A"
+          />
         </div>
       </section>
 
-      {/* CURATED LISTS — clean grid, no amber */}
+      {/* 6. CURATED LISTS — real data from /lib/lists */}
       <section className="mx-auto mt-28 max-w-4xl">
         <div className="flex items-end justify-between gap-4">
           <div>
@@ -195,7 +208,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TRUST — what we are / aren't */}
+      {/* 7. WHAT MIZAN IS / ISN'T */}
       <section className="mx-auto mt-28 max-w-3xl border-t border-gray-200 pt-14">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
           <div>
@@ -225,6 +238,10 @@ export default function Home() {
     </div>
   );
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   HELPER COMPONENTS
+   ───────────────────────────────────────────────────────────────────────────── */
 
 function TrustStat({ n, label }: { n: string; label: string }) {
   return (
