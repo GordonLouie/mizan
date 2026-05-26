@@ -16,7 +16,7 @@ export default function Home() {
             href="/trust"
             className="group inline-flex items-center gap-1.5 text-[11px] text-gray-500 transition hover:text-gray-700"
           >
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500" />
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-gray-400" />
             <span className="font-medium uppercase tracking-[0.18em]">Private beta</span>
             <span className="text-gray-300">·</span>
             <span className="group-hover:underline">status</span>
@@ -62,7 +62,7 @@ export default function Home() {
       </section>
 
       {/* 3. HAIRLINE + TRUST STRIP */}
-      <div className="mx-auto mt-20 max-w-xl">
+      <div className="mx-auto mt-28 max-w-xl">
         <div className="border-t border-gray-200" />
         <div className="grid grid-cols-3 gap-6 pt-6 text-center">
           <TrustStat n="6" label="scholar profiles" />
@@ -74,7 +74,7 @@ export default function Home() {
       {/* 4. THE WEDGE — page anchor moment */}
       <section className="mx-auto mt-28 max-w-3xl">
         <div className="text-center">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-500">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-amber-600">
             Why Mizan
           </div>
           <h2
@@ -90,50 +90,42 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Comparison panel */}
+        {/* Comparison panel — FT print spread feel */}
         <div className="mt-10 grid grid-cols-1 overflow-hidden rounded-xl border border-gray-200 sm:grid-cols-2">
           {/* LEFT: AAOIFI */}
-          <div className="bg-white p-8">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
+          <div className="bg-white px-10 py-12">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
               Under AAOIFI
             </div>
             <div
-              className="mt-6 text-[56px] font-bold leading-none text-emerald-700 sm:text-[64px]"
+              className="mt-8 text-[72px] font-bold leading-none text-emerald-700 sm:text-[80px]"
               style={{ fontFamily: "Georgia, serif" }}
             >
               Halal
             </div>
-            <div className="mt-6 font-mono text-[12px] text-gray-600">
-              <span>Debt/cap </span>
-              <span className="font-semibold text-gray-900">6.5%</span>
-              <span className="mx-1.5 text-gray-300">·</span>
-              <span>cap </span>
-              <span className="text-gray-700">30%</span>
+            <div className="mt-10 font-mono text-[12px] text-gray-500">
+              Debt / market cap: <span className="text-gray-900">6.5%</span> · cap 30%
             </div>
-            <p className="mt-4 text-[13px] leading-relaxed text-gray-500">
+            <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
               What Zoya, Wahed, and Musaffa would tell you.
             </p>
           </div>
 
           {/* RIGHT: Mufti Taqi Usmani */}
-          <div className="border-t border-gray-200 bg-white p-8 sm:border-l sm:border-t-0">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-700">
+          <div className="border-t border-gray-200 bg-white px-10 py-12 sm:border-l sm:border-t-0">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
               Under Mufti Taqi Usmani
             </div>
             <div
-              className="mt-6 text-[56px] font-bold leading-none text-rose-700 sm:text-[64px]"
+              className="mt-8 text-[72px] font-bold leading-none text-rose-700 sm:text-[80px]"
               style={{ fontFamily: "Georgia, serif" }}
             >
               Not halal
             </div>
-            <div className="mt-6 font-mono text-[12px] text-gray-600">
-              <span>Tangible </span>
-              <span className="font-semibold text-gray-900">12%</span>
-              <span className="mx-1.5 text-gray-300">·</span>
-              <span>floor </span>
-              <span className="text-gray-700">20%</span>
+            <div className="mt-10 font-mono text-[12px] text-gray-500">
+              Tangible assets: <span className="text-gray-900">12%</span> · floor 20%
             </div>
-            <p className="mt-4 text-[13px] leading-relaxed text-gray-500">
+            <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
               His illiquid-asset rule excludes AMZN. No other app surfaces this.
             </p>
           </div>
@@ -143,7 +135,7 @@ export default function Home() {
         <div className="mt-8 text-center">
           <Link
             href="/screen?ticker=AMZN"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-navy-700 transition hover:text-navy-900"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-700 transition hover:text-gray-900"
           >
             See AMZN under all six scholars
             <ArrowRight size={14} />
@@ -194,7 +186,7 @@ export default function Home() {
           </div>
           <Link
             href="/lists"
-            className="hidden items-center gap-1 text-sm font-medium text-navy-700 transition hover:text-navy-900 sm:inline-flex"
+            className="hidden items-center gap-1 text-sm font-medium text-gray-700 transition hover:text-gray-900 sm:inline-flex"
           >
             All lists
             <ArrowRight size={14} />
@@ -229,7 +221,7 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
           {/* LEFT: What Mizan is */}
           <div>
-            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-emerald-700">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-700">
               What Mizan is
             </div>
             <ul className="mt-4 space-y-2.5 text-[14px] leading-relaxed text-gray-700">
@@ -242,7 +234,7 @@ export default function Home() {
 
           {/* RIGHT: What Mizan isn't */}
           <div>
-            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-rose-700">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-700">
               What Mizan isn&apos;t
             </div>
             <ul className="mt-4 space-y-2.5 text-[14px] leading-relaxed text-gray-700">
@@ -266,7 +258,7 @@ function TrustStat({ n, label }: { n: string; label: string }) {
   return (
     <div>
       <div
-        className="text-[28px] font-bold leading-none text-navy-800"
+        className="text-[28px] font-bold leading-none text-gray-900"
         style={{ fontFamily: "Georgia, serif" }}
       >
         {n}
@@ -294,9 +286,9 @@ function FeatureCard({
   return (
     <Link
       href={href}
-      className="block bg-white p-7 transition hover:bg-navy-50/40"
+      className="block bg-white p-7 transition hover:bg-gray-50"
     >
-      <div className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-navy-50 text-navy-800">
+      <div className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 bg-gray-50 text-gray-700">
         {icon}
       </div>
       <h3
@@ -306,7 +298,7 @@ function FeatureCard({
         {title}
       </h3>
       <p className="mt-2 text-[13px] leading-relaxed text-gray-600">{body}</p>
-      <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-navy-700">
+      <div className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-gray-700">
         {cta}
         <ArrowRight size={12} />
       </div>
