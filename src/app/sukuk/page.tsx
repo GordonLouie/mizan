@@ -5,7 +5,6 @@ import {
   SUKUK_VEHICLES,
   NOTABLE_ISSUANCES,
 } from "@/lib/sukuk";
-import { Card, PageHeader, Pill } from "@/components/ui";
 
 export const metadata = {
   title: "Sukuk · Mizan",
@@ -15,202 +14,257 @@ export const metadata = {
 
 export default function SukukPage() {
   return (
-    <div className="space-y-8">
-      <PageHeader
-        kicker="Cross-asset"
-        title="Sukuk — Islamic bonds"
-        description="The fixed-income leg of a halal portfolio. Most diaspora Muslim investors avoid bonds entirely because they don't know sukuk exist or how to access them. This page is the answer."
-      />
+    <div className="pb-20">
+      {/* PAGE HEADER */}
+      <header className="pt-6">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Cross-asset · Sukuk
+        </div>
+        <h1
+          className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          Sukuk — Islamic bonds
+        </h1>
+        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
+          The fixed-income leg of a halal portfolio. Most diaspora Muslim investors avoid
+          bonds entirely because they don&apos;t know sukuk exist or how to access them.
+          This page is the answer.
+        </p>
+      </header>
 
-      {/* Quick framing */}
-      <Card>
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
+      {/* QUICK FRAMING */}
+      <section className="mt-16">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
           Sukuk in one paragraph
         </div>
-        <h2 className="mt-1 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
           Bonds without the interest
         </h2>
-        <p className="mt-3 text-sm leading-7 text-gray-700">
-          Sukuk are Shariah-compliant alternatives to conventional bonds. Instead of lending
-          money at interest, sukuk investors own a fractional share of a real asset (a lease,
-          a partnership, a project) and earn the income that asset generates. The cash-flow
-          profile feels bond-like — predictable periodic payments and a return of principal at
-          maturity — but the underlying structure is genuine asset ownership, not a loan.
-        </p>
-        <p className="mt-3 text-sm leading-7 text-gray-700">
-          Global sukuk issuance reached <strong>$200B+ in 2024</strong>. Sovereign issuers
-          include Saudi Arabia, Indonesia, Malaysia, Türkiye, the UK, Hong Kong, and Luxembourg.
-          As a retail investor you don&apos;t usually buy individual sukuk — you buy a fund or an
-          ETF that holds many.
-        </p>
-      </Card>
-
-      {/* Structures */}
-      <section>
-        <div className="mb-4">
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
-            The five structures
-          </div>
-          <h2 className="mt-1 text-2xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-            How sukuk actually work
-          </h2>
-          <p className="mt-1 max-w-2xl text-sm text-gray-600">
-            Every sukuk uses one of these underlying structures. Your fund prospectus will name
-            the structure for each holding; this is how to read it.
+        <div className="mt-5 max-w-2xl space-y-4 text-[14px] leading-relaxed text-gray-700">
+          <p>
+            Sukuk are Shariah-compliant alternatives to conventional bonds. Instead of
+            lending money at interest, sukuk investors own a fractional share of a real
+            asset (a lease, a partnership, a project) and earn the income that asset
+            generates. The cash-flow profile feels bond-like — predictable periodic
+            payments and a return of principal at maturity — but the underlying structure
+            is genuine asset ownership, not a loan.
+          </p>
+          <p>
+            Global sukuk issuance reached{" "}
+            <strong className="text-gray-900">$200B+ in 2024</strong>. Sovereign issuers
+            include Saudi Arabia, Indonesia, Malaysia, Türkiye, the UK, Hong Kong, and
+            Luxembourg. As a retail investor you don&apos;t usually buy individual
+            sukuk — you buy a fund or an ETF that holds many.
           </p>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {/* STRUCTURES */}
+      <section className="mt-20 border-t border-gray-200 pt-10">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          The five structures
+        </div>
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          How sukuk actually work
+        </h2>
+        <p className="mt-3 max-w-2xl text-[14px] leading-relaxed text-gray-600">
+          Every sukuk uses one of these underlying structures. Your fund prospectus will
+          name the structure for each holding; this is how to read it.
+        </p>
+
+        <div className="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 md:grid-cols-2">
           {SUKUK_STRUCTURES.map((s) => (
-            <Card key={s.id}>
+            <div key={s.id} className="bg-white p-6">
               <div className="flex items-baseline justify-between gap-3">
-                <h3 className="text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+                <h3
+                  className="text-[18px] font-bold text-gray-900"
+                  style={{ fontFamily: "Georgia, serif" }}
+                >
                   {s.name}
                 </h3>
-                <span className="font-mono text-xs text-gray-500" dir="rtl">{s.arabic}</span>
+                <span className="font-mono text-[11px] text-gray-500" dir="rtl">
+                  {s.arabic}
+                </span>
               </div>
-              <p className="mt-3 text-sm leading-6 text-gray-700">{s.what}</p>
-              <div className="mt-4 rounded-md bg-emerald-50/40 px-3 py-2 text-xs leading-5 text-gray-700">
-                <span className="font-semibold uppercase tracking-wider text-emerald-700">Why halal: </span>
+              <p className="mt-3 text-[13px] leading-relaxed text-gray-700">{s.what}</p>
+              <div className="mt-4 border-l-2 border-emerald-300 py-1 pl-3 text-[12px] leading-relaxed text-gray-700">
+                <span className="font-semibold uppercase tracking-[0.14em] text-emerald-700">
+                  Why halal:{" "}
+                </span>
                 {s.why}
               </div>
-              <div className="mt-2 text-xs italic text-gray-500">{s.example}</div>
-            </Card>
+              <div className="mt-3 text-[11px] italic text-gray-500">{s.example}</div>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Accessible vehicles */}
-      <section>
-        <div className="mb-4">
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
-            How to buy
-          </div>
-          <h2 className="mt-1 text-2xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-            Accessible sukuk vehicles
-          </h2>
-          <p className="mt-1 max-w-2xl text-sm text-gray-600">
-            What you can actually buy through a standard retail brokerage. Hand-picked; updated quarterly.
-          </p>
+      {/* VEHICLES */}
+      <section className="mt-20 border-t border-gray-200 pt-10">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          How to buy
         </div>
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          Accessible sukuk vehicles
+        </h2>
+        <p className="mt-3 max-w-2xl text-[14px] leading-relaxed text-gray-600">
+          What you can actually buy through a standard retail brokerage. Hand-picked;
+          updated quarterly.
+        </p>
 
-        <div className="space-y-4">
+        <div className="mt-8 space-y-8">
           {SUKUK_VEHICLES.map((v) => (
-            <Card key={v.ticker} padded={false}>
-              <div className="border-b border-gray-100 px-6 py-5 sm:px-8">
-                <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <div>
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-base font-bold text-gray-900">{v.ticker}</span>
-                      <span className="text-sm text-gray-700">{v.name}</span>
-                    </div>
-                    <div className="mt-1 text-xs text-gray-500">
-                      {v.issuer} · {v.exchange} · {v.wrapper}
-                    </div>
+            <article key={v.ticker} className="rounded-xl border border-gray-200 bg-white p-6">
+              {/* Header row */}
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="flex items-baseline gap-3">
+                    <span className="font-mono text-[16px] font-bold text-gray-900">
+                      {v.ticker}
+                    </span>
+                    <span className="text-[14px] text-gray-700">{v.name}</span>
                   </div>
-                  <Pill tone="navy">{v.wrapper.includes("ETF") ? "ETF" : "Fund"}</Pill>
+                  <div className="mt-1 text-[11px] text-gray-500">
+                    {v.issuer} · {v.exchange} · {v.wrapper}
+                  </div>
                 </div>
+                <span className="rounded-full bg-navy-50 px-2.5 py-0.5 text-[11px] font-semibold text-navy-700">
+                  {v.wrapper.includes("ETF") ? "ETF" : "Fund"}
+                </span>
               </div>
 
-              <div className="grid grid-cols-2 divide-x divide-y divide-gray-100 sm:grid-cols-4 sm:divide-y-0">
-                <Stat label="Yield" value={`${v.distributionYieldPct.toFixed(1)}%`} sub="distribution" tone="pass" />
+              {/* Stats */}
+              <div className="mt-5 grid grid-cols-2 gap-y-4 border-y border-gray-100 py-4 sm:grid-cols-4">
+                <Stat label="Yield" value={`${v.distributionYieldPct.toFixed(1)}%`} sub="distribution" tone="emerald" />
                 <Stat label="Expense" value={`${v.expensePct.toFixed(2)}%`} sub="annual" />
                 <Stat label="Duration" value={v.duration ? `${v.duration.toFixed(1)}y` : "—"} sub="rate sensitivity" />
                 <Stat label="AUM" value={v.aumUsd ? fmtMoney(v.aumUsd) : "—"} sub="under management" />
               </div>
 
-              <div className="space-y-3 border-t border-gray-100 px-6 py-5 sm:px-8">
-                <p className="text-sm leading-6 text-gray-700">
+              {/* Detail */}
+              <div className="mt-5 space-y-3 text-[13px] leading-relaxed text-gray-700">
+                <p>
                   <span className="font-semibold text-gray-900">Holdings: </span>
                   {v.composition}
                 </p>
-                <p className="text-sm leading-6 text-gray-700">
+                <p>
                   <span className="font-semibold text-gray-900">Why this matters: </span>
                   {v.rationale}
                 </p>
-                <a
-                  href={v.info}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-medium text-navy-700 hover:underline"
-                >
-                  Issuer page <ExternalLink size={11} />
-                </a>
               </div>
-            </Card>
+              <a
+                href={v.info}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-1 text-[11px] font-medium text-navy-700 hover:text-navy-900 hover:underline"
+              >
+                Issuer page <ExternalLink size={11} />
+              </a>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* Notable issuances */}
-      <section>
-        <div className="mb-4">
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
-            For context
-          </div>
-          <h2 className="mt-1 text-2xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-            Notable issuances
-          </h2>
-          <p className="mt-1 max-w-2xl text-sm text-gray-600">
-            What the underlying sukuk market looks like — the deals your ETF is likely holding.
-          </p>
+      {/* NOTABLE ISSUANCES */}
+      <section className="mt-20 border-t border-gray-200 pt-10">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          For context
         </div>
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          Notable issuances
+        </h2>
+        <p className="mt-3 max-w-2xl text-[14px] leading-relaxed text-gray-600">
+          What the underlying sukuk market looks like — the deals your ETF is likely holding.
+        </p>
 
-        <Card padded={false} className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50">
-              <tr className="text-left text-[11px] font-semibold uppercase tracking-wide text-gray-500">
-                <th className="px-5 py-3">Issue</th>
-                <th className="px-5 py-3">Size</th>
-                <th className="px-5 py-3">Tenor</th>
-                <th className="px-5 py-3">Structure</th>
-                <th className="px-5 py-3">Rating</th>
+        <div className="mt-6 overflow-x-auto">
+          <table className="w-full min-w-[600px] border-collapse">
+            <thead>
+              <tr className="border-b border-gray-200 text-left">
+                <th className="pb-3 pr-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                  Issue
+                </th>
+                <th className="pb-3 pr-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                  Size
+                </th>
+                <th className="pb-3 pr-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                  Tenor
+                </th>
+                <th className="pb-3 pr-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                  Structure
+                </th>
+                <th className="pb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                  Rating
+                </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
-              {NOTABLE_ISSUANCES.map((i) => (
-                <tr key={i.name}>
-                  <td className="px-5 py-3">
-                    <div className="font-semibold text-gray-900">{i.name}</div>
-                    <div className="mt-0.5 text-xs italic text-gray-500">{i.note}</div>
+            <tbody>
+              {NOTABLE_ISSUANCES.map((i, idx) => (
+                <tr
+                  key={i.name}
+                  className={idx !== NOTABLE_ISSUANCES.length - 1 ? "border-b border-gray-100" : ""}
+                >
+                  <td className="py-3 pr-4">
+                    <div className="text-[14px] font-semibold text-gray-900">{i.name}</div>
+                    <div className="mt-0.5 text-[11px] italic text-gray-500">{i.note}</div>
                   </td>
-                  <td className="px-5 py-3 tabular-nums text-gray-800">{i.size}</td>
-                  <td className="px-5 py-3 text-gray-700">{i.tenor}</td>
-                  <td className="px-5 py-3 text-gray-700">{i.structure}</td>
-                  <td className="px-5 py-3 font-mono text-xs text-gray-700">{i.rating}</td>
+                  <td className="py-3 pr-4 font-mono text-[13px] tabular-nums text-gray-800">
+                    {i.size}
+                  </td>
+                  <td className="py-3 pr-4 text-[13px] text-gray-700">{i.tenor}</td>
+                  <td className="py-3 pr-4 text-[13px] text-gray-700">{i.structure}</td>
+                  <td className="py-3 font-mono text-[12px] text-gray-700">{i.rating}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </Card>
+        </div>
       </section>
 
-      {/* Caveats */}
-      <Card className="bg-gray-50">
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
+      {/* CAVEATS */}
+      <section className="mt-20 border-t border-gray-200 pt-10">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
           Caveats
         </div>
-        <ul className="mt-3 space-y-2 text-sm leading-6 text-gray-700">
+        <ul className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
           <li>
-            <strong>&lsquo;Halal&rsquo; ≠ risk-free.</strong> Sukuk carry credit, duration, and currency
-            risk. Investment-grade sovereign sukuk are roughly comparable to investment-grade
-            conventional bonds in risk profile.
+            <strong className="text-gray-900">&lsquo;Halal&rsquo; ≠ risk-free.</strong>{" "}
+            Sukuk carry credit, duration, and currency risk. Investment-grade sovereign
+            sukuk are roughly comparable to investment-grade conventional bonds in risk
+            profile.
           </li>
           <li>
-            <strong>Structure matters.</strong> Some &lsquo;sukuk&rsquo; deals have been criticised by scholars
-            (notably Mufti Taqi Usmani in 2008) for replicating conventional debt economics under
-            a Shariah wrapper. Look for clearly-structured ijara and musharaka issues.
+            <strong className="text-gray-900">Structure matters.</strong> Some
+            &lsquo;sukuk&rsquo; deals have been criticised by scholars (notably Mufti Taqi
+            Usmani in 2008) for replicating conventional debt economics under a Shariah
+            wrapper. Look for clearly-structured ijara and musharaka issues.
           </li>
           <li>
-            <strong>This isn&apos;t advice.</strong> Speak to a registered adviser before allocating.
-            Mizan is information, not recommendation.
+            <strong className="text-gray-900">This isn&apos;t advice.</strong> Speak to a
+            registered adviser before allocating. Mizan is information, not recommendation.
           </li>
         </ul>
-      </Card>
+      </section>
 
-      <p className="text-center text-xs text-gray-500">
+      {/* FOOTER */}
+      <p className="mt-16 text-center text-[11px] text-gray-500">
         Updated May 2026. Back to{" "}
-        <Link href="/discover" className="text-navy-700 underline">Discover</Link>.
+        <Link href="/discover" className="text-navy-700 underline hover:text-navy-900">
+          Discover
+        </Link>.
       </p>
     </div>
   );
@@ -225,16 +279,21 @@ function Stat({
   label: string;
   value: string;
   sub?: string;
-  tone?: "pass" | "neutral";
+  tone?: "neutral" | "emerald";
 }) {
-  const cls = tone === "pass" ? "text-emerald-700" : "text-gray-900";
+  const cls = tone === "emerald" ? "text-emerald-700" : "text-gray-900";
   return (
-    <div className="px-5 py-4">
-      <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-500">{label}</div>
-      <div className={`mt-1 text-lg font-bold ${cls}`} style={{ fontFamily: "Georgia, serif" }}>
+    <div>
+      <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
+        {label}
+      </div>
+      <div
+        className={`mt-1 text-[18px] font-bold leading-none tabular-nums ${cls}`}
+        style={{ fontFamily: "Georgia, serif" }}
+      >
         {value}
       </div>
-      {sub && <div className="mt-0.5 text-[10px] text-gray-500">{sub}</div>}
+      {sub && <div className="mt-1 text-[10px] text-gray-500">{sub}</div>}
     </div>
   );
 }

@@ -3,10 +3,8 @@ import { ExternalLink } from "lucide-react";
 import {
   CRYPTO_ASSETS,
   VERDICT_LABEL_CRYPTO,
-  VERDICT_TONE_CRYPTO,
   type CryptoVerdict,
 } from "@/lib/crypto";
-import { Card, PageHeader, Pill } from "@/components/ui";
 import { fmtMarketCap } from "@/lib/lists";
 
 export const metadata = {
@@ -15,8 +13,14 @@ export const metadata = {
     "Multi-scholar views on Bitcoin, Ethereum, stablecoins, DeFi tokens, and the rest of the major cryptoassets. No other app shows you what every scholar says, side by side.",
 };
 
+const VERDICT_TONE_CRYPTO_NEW: Record<CryptoVerdict, string> = {
+  halal: "bg-emerald-50 text-emerald-700",
+  doubtful: "bg-amber-50 text-amber-700",
+  not_halal: "bg-rose-50 text-rose-700",
+  no_consensus: "bg-gray-100 text-gray-700",
+};
+
 export default function CryptoPage() {
-  // Compute summary stats — at how many assets does each scholar permit?
   const totalAssets = CRYPTO_ASSETS.length;
   const halalCount = CRYPTO_ASSETS.filter((a) =>
     a.takes.some((t) => t.scholar.includes("Faraz Adam") && t.verdict === "halal"),
@@ -26,172 +30,218 @@ export default function CryptoPage() {
   ).length;
 
   return (
-    <div className="space-y-8">
-      <PageHeader
-        kicker="Cross-asset"
-        title="Crypto compliance"
-        description="The only place on the internet where the major cryptoassets are screened against every scholarly view side by side. Mizan summarises published rulings — it does not issue them."
-      />
-
-      {/* Summary strip */}
-      <Card padded={false}>
-        <div className="grid grid-cols-2 divide-x divide-y divide-gray-100 sm:grid-cols-4 sm:divide-y-0">
-          <Stat label="Assets covered" value={String(totalAssets)} sub="major cryptos by market cap" />
-          <Stat
-            label="Permitted under permissive view"
-            value={`${halalCount}`}
-            sub="Mufti Faraz Adam"
-            tone="pass"
-          />
-          <Stat
-            label="Permitted under strict view"
-            value={`${strictHalalCount}`}
-            sub="zero-tolerance"
-          />
-          <Stat label="Updated" value="May 2026" sub="quarterly review cadence" />
+    <div className="pb-20">
+      {/* PAGE HEADER */}
+      <header className="pt-6">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Cross-asset · Crypto
         </div>
-      </Card>
+        <h1
+          className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          Crypto compliance
+        </h1>
+        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
+          The only place on the internet where the major cryptoassets are screened against
+          every scholarly view side by side. Mizan summarises published rulings — it does
+          not issue them.
+        </p>
+      </header>
 
-      {/* Editorial intro */}
-      <Card>
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
+      {/* SUMMARY STATS */}
+      <div className="mt-10 grid grid-cols-2 gap-y-5 border-y border-gray-200 py-5 sm:grid-cols-4">
+        <Stat label="Assets covered" value={String(totalAssets)} sub="major cryptos by mkt cap" />
+        <Stat
+          label="Permitted (permissive)"
+          value={`${halalCount}`}
+          sub="Mufti Faraz Adam"
+          tone="emerald"
+        />
+        <Stat
+          label="Permitted (strict)"
+          value={`${strictHalalCount}`}
+          sub="zero-tolerance view"
+        />
+        <Stat label="Updated" value="May 2026" sub="quarterly review" />
+      </div>
+
+      {/* HOW TO READ */}
+      <section className="mt-16">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
           Read this first
         </div>
-        <h2 className="mt-1 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
           How to read this page
         </h2>
-        <div className="mt-4 space-y-3 text-sm leading-7 text-gray-700">
+        <div className="mt-5 max-w-2xl space-y-4 text-[14px] leading-relaxed text-gray-700">
           <p>
-            <strong>Crypto compliance is the hardest question in halal finance today.</strong> No
-            formal AAOIFI standard exists. Scholars are working from first principles
-            (riba, gharar, maysir, qabd) without a settled framework. Reasonable scholars reach different conclusions on the same asset.
+            <strong className="text-gray-900">
+              Crypto compliance is the hardest question in halal finance today.
+            </strong>{" "}
+            No formal AAOIFI standard exists. Scholars are working from first principles
+            (riba, gharar, maysir, qabd) without a settled framework. Reasonable scholars
+            reach different conclusions on the same asset.
           </p>
           <p>
-            Mizan&apos;s job is to surface what every credible scholar has actually written or
-            said about each asset, with sources — not to issue a single Mizan verdict. Read
-            the citations. Choose your scholar. Ask a qualified mufti for your specific situation
-            before acting.
-          </p>
-          <p className="border-l-2 border-amber-300 bg-amber-50/40 px-4 py-2 text-xs italic">
-            None of this is investment advice. Crypto markets are volatile; even halal-permissible
-            holdings can lose substantial value. Allocate accordingly.
+            Mizan&apos;s job is to surface what every credible scholar has actually written
+            or said about each asset, with sources — not to issue a single Mizan verdict.
+            Read the citations. Choose your scholar. Ask a qualified mufti for your
+            specific situation before acting.
           </p>
         </div>
-      </Card>
+        <p className="mt-5 max-w-2xl border-l-2 border-amber-300 py-1 pl-4 text-[12px] italic leading-relaxed text-gray-600">
+          None of this is investment advice. Crypto markets are volatile; even
+          halal-permissible holdings can lose substantial value. Allocate accordingly.
+        </p>
+      </section>
 
-      {/* The asset cards */}
-      <div className="space-y-5">
-        <div>
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
-            The assets
-          </div>
-          <h2 className="mt-1 text-2xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-            What every scholar says
-          </h2>
+      {/* ASSETS */}
+      <section className="mt-16">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          The assets
         </div>
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          What every scholar says
+        </h2>
 
-        {CRYPTO_ASSETS.map((asset) => (
-          <Card key={asset.symbol} padded={false}>
-            {/* Asset header */}
-            <div className="border-b border-gray-100 px-6 py-5 sm:px-8">
+        <div className="mt-8 space-y-10">
+          {CRYPTO_ASSETS.map((asset) => (
+            <article key={asset.symbol} className="border-t border-gray-200 pt-8">
+              {/* Asset header */}
               <div className="flex flex-wrap items-baseline justify-between gap-3">
-                <div>
+                <div className="min-w-0">
                   <div className="flex items-baseline gap-3">
-                    <span className="font-mono text-lg font-bold text-gray-900">{asset.symbol}</span>
-                    <span className="text-sm text-gray-600">{asset.name}</span>
+                    <span className="font-mono text-[18px] font-bold text-gray-900">
+                      {asset.symbol}
+                    </span>
+                    <span className="text-[14px] text-gray-600">{asset.name}</span>
                   </div>
-                  <p className="mt-1 max-w-2xl text-sm italic text-gray-600">{asset.what}</p>
+                  <p className="mt-2 max-w-2xl text-[13px] italic leading-relaxed text-gray-600">
+                    {asset.what}
+                  </p>
                 </div>
                 <div className="text-right">
-                  <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
                     Market cap
                   </div>
-                  <div className="text-base font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+                  <div
+                    className="mt-1 font-mono text-[16px] font-bold text-gray-900 tabular-nums"
+                    style={{ fontFamily: "Georgia, serif" }}
+                  >
                     {fmtMarketCap(asset.marketCapUsd)}
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Blunt summary */}
-            <div className="border-b border-gray-100 bg-amber-50/30 px-6 py-4 sm:px-8">
-              <div className="text-[10px] font-semibold uppercase tracking-widest text-amber-700">
-                The honest summary
-              </div>
-              <p className="mt-1 text-sm leading-relaxed text-gray-800">{asset.blunt}</p>
-            </div>
-
-            {/* Scholar takes */}
-            <div className="divide-y divide-gray-100">
-              {asset.takes.map((take, i) => (
-                <div key={i} className="grid grid-cols-1 gap-3 px-6 py-4 sm:grid-cols-[200px_120px_1fr] sm:px-8">
-                  <div className="text-sm font-semibold text-gray-900">{take.scholar}</div>
-                  <div>
-                    <VerdictPill verdict={take.verdict} />
-                  </div>
-                  <div className="text-sm leading-relaxed text-gray-700">
-                    <p>{take.summary}</p>
-                    {take.source && (
-                      <a
-                        href={take.source}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-navy-700 hover:underline"
-                      >
-                        Source <ExternalLink size={11} />
-                      </a>
-                    )}
-                  </div>
+              {/* Blunt summary */}
+              <div className="mt-5 border-l-2 border-gold-500 py-1 pl-4">
+                <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+                  The honest summary
                 </div>
-              ))}
-            </div>
-          </Card>
-        ))}
-      </div>
+                <p className="mt-1 text-[14px] leading-relaxed text-gray-800">{asset.blunt}</p>
+              </div>
 
-      {/* What's NOT covered */}
-      <Card className="bg-gray-50">
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-          What we don't cover
+              {/* Scholar takes */}
+              <div className="mt-6 divide-y divide-gray-100">
+                {asset.takes.map((take, i) => (
+                  <div
+                    key={i}
+                    className="grid grid-cols-1 gap-3 py-4 sm:grid-cols-[180px_100px_1fr] sm:items-start"
+                  >
+                    <div className="text-[13px] font-semibold text-gray-900">
+                      {take.scholar}
+                    </div>
+                    <div>
+                      <VerdictPill verdict={take.verdict} />
+                    </div>
+                    <div className="text-[13px] leading-relaxed text-gray-700">
+                      <p>{take.summary}</p>
+                      {take.source && (
+                        <a
+                          href={take.source}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-navy-700 hover:text-navy-900 hover:underline"
+                        >
+                          Source <ExternalLink size={10} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
-        <h2 className="mt-1 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+      </section>
+
+      {/* WHAT'S NOT COVERED */}
+      <section className="mt-20 border-t border-gray-200 pt-10">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          What we don&apos;t cover
+        </div>
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
           And why
         </h2>
-        <ul className="mt-4 space-y-2 text-sm leading-7 text-gray-700">
+        <ul className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
           <li>
-            <strong>NFTs.</strong> Too varied to generalise — some are permissible art, some are
-            speculation, some include impermissible imagery. Per-NFT analysis is beyond Mizan&apos;s
-            scope.
+            <strong className="text-gray-900">NFTs.</strong> Too varied to generalise — some
+            are permissible art, some are speculation, some include impermissible imagery.
+            Per-NFT analysis is beyond Mizan&apos;s scope.
           </li>
           <li>
-            <strong>ICOs / token launches.</strong> Mostly speculative; no scholar issues blanket
-            permissions on unlaunched tokens.
+            <strong className="text-gray-900">ICOs / token launches.</strong> Mostly
+            speculative; no scholar issues blanket permissions on unlaunched tokens.
           </li>
           <li>
-            <strong>DeFi yield strategies.</strong> Lending protocols (Aave, Compound) and most
-            yield-farming setups involve riba. We mark them &lsquo;not halal&rsquo; categorically.
+            <strong className="text-gray-900">DeFi yield strategies.</strong> Lending
+            protocols (Aave, Compound) and most yield-farming setups involve riba. We mark
+            them &lsquo;not halal&rsquo; categorically.
           </li>
           <li>
-            <strong>Wrapped / synthetic assets.</strong> Inherit the compliance of the underlying
-            plus added gharar concerns.
+            <strong className="text-gray-900">Wrapped / synthetic assets.</strong> Inherit
+            the compliance of the underlying plus added gharar concerns.
           </li>
         </ul>
-      </Card>
+      </section>
 
-      <p className="text-center text-xs text-gray-500">
+      {/* FOOTER */}
+      <p className="mt-16 text-center text-[11px] text-gray-500">
         Disagree with a take here? Email{" "}
-        <a href="mailto:methodology@mizan.app" className="text-navy-700 underline">
+        <a
+          href="mailto:methodology@mizan.app"
+          className="text-navy-700 underline hover:text-navy-900"
+        >
           methodology@mizan.app
         </a>{" "}
-        with the citation. Reviewed quarterly by Mizan&apos;s Shariah Supervisory Board. Back to{" "}
-        <Link href="/discover" className="text-navy-700 underline">Discover</Link>.
+        with the citation. Reviewed quarterly by Mizan&apos;s Shariah Supervisory Board.
+        Back to{" "}
+        <Link href="/discover" className="text-navy-700 underline hover:text-navy-900">
+          Discover
+        </Link>.
       </p>
     </div>
   );
 }
 
 function VerdictPill({ verdict }: { verdict: CryptoVerdict }) {
-  return <Pill tone={VERDICT_TONE_CRYPTO[verdict]}>{VERDICT_LABEL_CRYPTO[verdict]}</Pill>;
+  return (
+    <span
+      className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-semibold ${VERDICT_TONE_CRYPTO_NEW[verdict]}`}
+    >
+      {VERDICT_LABEL_CRYPTO[verdict]}
+    </span>
+  );
 }
 
 function Stat({
@@ -203,16 +253,21 @@ function Stat({
   label: string;
   value: string;
   sub?: string;
-  tone?: "pass" | "neutral";
+  tone?: "neutral" | "emerald";
 }) {
-  const cls = tone === "pass" ? "text-emerald-700" : "text-gray-900";
+  const cls = tone === "emerald" ? "text-emerald-700" : "text-gray-900";
   return (
-    <div className="px-5 py-4">
-      <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-500">{label}</div>
-      <div className={`mt-1 text-xl font-bold ${cls}`} style={{ fontFamily: "Georgia, serif" }}>
+    <div>
+      <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
+        {label}
+      </div>
+      <div
+        className={`mt-1 text-[22px] font-bold leading-none tabular-nums ${cls}`}
+        style={{ fontFamily: "Georgia, serif" }}
+      >
         {value}
       </div>
-      {sub && <div className="mt-0.5 text-[11px] text-gray-500">{sub}</div>}
+      {sub && <div className="mt-1 text-[11px] text-gray-500">{sub}</div>}
     </div>
   );
 }

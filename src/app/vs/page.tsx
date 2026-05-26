@@ -12,9 +12,7 @@ import { priceForTicker } from "@/lib/prices";
 import { fmtMarketCap } from "@/lib/lists";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import ScholarPicker from "@/components/ScholarPicker";
-import StockLogo from "@/components/StockLogo";
 import TickerSearch from "@/components/TickerSearch";
-import { Card, PageHeader, Pill } from "@/components/ui";
 import type { ScreeningResult, StockFundamentals, Verdict } from "@/lib/types";
 
 export default function VsPage() {
@@ -60,7 +58,6 @@ function VsInner() {
     return () => window.removeEventListener("focus", onFocus);
   }, []);
 
-  // Keep URL in sync
   useEffect(() => {
     const sp = new URLSearchParams();
     if (tickerA) sp.set("a", tickerA);
@@ -84,73 +81,84 @@ function VsInner() {
   }
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        kicker="Side by side"
-        title="Compare two stocks"
-        description="Pick any two tickers. See the verdict, the financial ratios, and the price of each — under whichever scholar you follow."
-      />
-
-      <Card padded={false}>
-        <div className="grid grid-cols-1 gap-px bg-gray-100 md:grid-cols-[1fr_auto_1fr]">
-          <div className="bg-white p-5">
-            <div className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-              Stock A
-            </div>
-            <TickerSearch
-              value={tickerA}
-              onChange={(t) => setTickerA(t.toUpperCase())}
-              placeholder="Search ticker A"
-              autoFocus={false}
-            />
-          </div>
-          <div className="flex items-center justify-center bg-white px-3 py-4 md:py-0">
-            <button
-              type="button"
-              onClick={swap}
-              title="Swap"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 text-gray-500 transition hover:border-navy-300 hover:bg-navy-50 hover:text-navy-700"
-            >
-              <ArrowLeftRight size={14} />
-            </button>
-          </div>
-          <div className="bg-white p-5">
-            <div className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-              Stock B
-            </div>
-            <TickerSearch
-              value={tickerB}
-              onChange={(t) => setTickerB(t.toUpperCase())}
-              placeholder="Search ticker B"
-              autoFocus={false}
-            />
-          </div>
+    <div className="pb-20">
+      {/* PAGE HEADER */}
+      <header className="pt-6">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Side by side
         </div>
-      </Card>
+        <h1
+          className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          Compare two stocks
+        </h1>
+        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
+          Pick any two tickers. See the verdict, the financial ratios, and the price of
+          each — under whichever scholar you follow.
+        </p>
+      </header>
 
-      <div>
-        <div className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-gray-500">
+      {/* TICKER SELECTORS */}
+      <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 md:grid-cols-[1fr_auto_1fr]">
+        <div className="bg-white p-5">
+          <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            Stock A
+          </div>
+          <TickerSearch
+            value={tickerA}
+            onChange={(t) => setTickerA(t.toUpperCase())}
+            placeholder="Search ticker A"
+            autoFocus={false}
+          />
+        </div>
+        <div className="flex items-center justify-center bg-white px-3 py-4 md:py-0">
+          <button
+            type="button"
+            onClick={swap}
+            title="Swap"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 text-gray-500 transition hover:border-navy-300 hover:bg-navy-50 hover:text-navy-700"
+          >
+            <ArrowLeftRight size={14} />
+          </button>
+        </div>
+        <div className="bg-white p-5">
+          <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            Stock B
+          </div>
+          <TickerSearch
+            value={tickerB}
+            onChange={(t) => setTickerB(t.toUpperCase())}
+            placeholder="Search ticker B"
+            autoFocus={false}
+          />
+        </div>
+      </div>
+
+      {/* SCHOLAR PICKER */}
+      <div className="mt-6">
+        <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
           Screen against
         </div>
-        <ScholarPicker value={scholarId} onChange={setScholarId} />
+        <div className="sm:max-w-md">
+          <ScholarPicker value={scholarId} onChange={setScholarId} />
+        </div>
       </div>
 
       {(!stockA || !stockB) && (
-        <Card>
-          <p className="text-sm text-amber-800">
-            {!stockA && (
-              <span>
-                <strong>{tickerA}</strong> isn&apos;t in the prototype dataset.{" "}
-              </span>
-            )}
-            {!stockB && (
-              <span>
-                <strong>{tickerB}</strong> isn&apos;t in the prototype dataset.{" "}
-              </span>
-            )}
-            Try one of the suggested pairs below.
-          </p>
-        </Card>
+        <div className="mt-6 rounded-md border border-amber-200 bg-amber-50/60 px-4 py-3 text-[13px] text-amber-900">
+          {!stockA && (
+            <span>
+              <strong>{tickerA}</strong> isn&apos;t in the prototype dataset.{" "}
+            </span>
+          )}
+          {!stockB && (
+            <span>
+              <strong>{tickerB}</strong> isn&apos;t in the prototype dataset.{" "}
+            </span>
+          )}
+          Try one of the suggested pairs below.
+        </div>
       )}
 
       {stockA && stockB && resultA && resultB && (
@@ -180,201 +188,251 @@ function ComparisonGrid({
   const winners = winnersByMetric(a, b);
 
   return (
-    <div className="space-y-4">
-      <Card padded={false} className="overflow-hidden">
-        <div className="grid grid-cols-2">
-          <Hero stock={a} result={ra} />
-          <Hero stock={b} result={rb} bordered />
-        </div>
-      </Card>
+    <div className="mt-12 space-y-10">
+      {/* HERO ROW — two verdict cards side-by-side */}
+      <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-2">
+        <Hero stock={a} result={ra} />
+        <Hero stock={b} result={rb} />
+      </div>
 
-      <Card padded={false} className="overflow-hidden">
-        <div className="border-b border-gray-100 px-6 py-4">
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-            Compared under
-          </div>
-          <h2 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-            {scholarLabel}
-          </h2>
+      {/* METRIC COMPARISON */}
+      <section>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Compared under
         </div>
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50">
-            <tr className="text-left text-[11px] font-semibold uppercase tracking-wide text-gray-500">
-              <th className="px-6 py-3">Metric</th>
-              <th className="px-6 py-3 text-right">{a.ticker}</th>
-              <th className="px-6 py-3 text-right">{b.ticker}</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            <MetricRow
-              label="Sector"
-              valueA={a.sector}
-              valueB={b.sector}
-              winner={null}
-            />
-            <MetricRow
-              label="Market cap"
-              valueA={fmtMarketCap(a.marketCapUsd)}
-              valueB={fmtMarketCap(b.marketCapUsd)}
-              winner={winners.marketCap}
-              winnerHint="bigger"
-            />
-            <MetricRow
-              label="Last price"
-              valueA={fmtPrice(priceForTicker(a.ticker))}
-              valueB={fmtPrice(priceForTicker(b.ticker))}
-              winner={null}
-            />
-            <MetricRow
-              label="Dividend yield"
-              valueA={fmtPct(a.dividendYieldPct)}
-              valueB={fmtPct(b.dividendYieldPct)}
-              winner={winners.dividend}
-              winnerHint="higher yield"
-            />
-            <MetricRow
-              label="Impure income / revenue"
-              valueA={fmtPct(a.impermissibleIncomePct)}
-              valueB={fmtPct(b.impermissibleIncomePct)}
-              winner={winners.impure}
-              winnerHint="lower is cleaner"
-            />
-            <MetricRow
-              label="Interest-bearing debt / market cap"
-              valueA={fmtPct(a.debtToMarketCapPct)}
-              valueB={fmtPct(b.debtToMarketCapPct)}
-              winner={winners.debt}
-              winnerHint="lower is cleaner"
-            />
-            <MetricRow
-              label="Cash + securities / market cap"
-              valueA={fmtPct(a.cashSecuritiesToMarketCapPct)}
-              valueB={fmtPct(b.cashSecuritiesToMarketCapPct)}
-              winner={winners.cash}
-              winnerHint="lower is cleaner"
-            />
-            <MetricRow
-              label="Receivables / market cap"
-              valueA={fmtPct(a.receivablesToMarketCapPct)}
-              valueB={fmtPct(b.receivablesToMarketCapPct)}
-              winner={winners.receivables}
-              winnerHint="lower is cleaner"
-            />
-            <MetricRow
-              label="Illiquid (tangible) assets / total assets"
-              valueA={fmtPct(a.illiquidAssetsToTotalAssetsPct)}
-              valueB={fmtPct(b.illiquidAssetsToTotalAssetsPct)}
-              winner={winners.illiquid}
-              winnerHint="higher passes Mufti Taqi"
-            />
-          </tbody>
-        </table>
-      </Card>
-
-      <Card>
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-          All five scholars
-        </div>
-        <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-          How each tradition sees these two
-        </h3>
-        <div className="mt-4 overflow-x-auto">
-          <table className="w-full text-sm">
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          {scholarLabel}
+        </h2>
+        <div className="mt-6 overflow-x-auto">
+          <table className="w-full min-w-[640px] border-collapse">
             <thead>
-              <tr className="text-left text-[11px] font-semibold uppercase tracking-wide text-gray-500">
-                <th className="py-2 pr-4">Scholar</th>
-                <th className="py-2 pr-4">{a.ticker}</th>
-                <th className="py-2">{b.ticker}</th>
+              <tr className="border-b border-gray-200 text-left">
+                <th className="pb-3 pr-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                  Metric
+                </th>
+                <th className="pb-3 pr-4 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                  {a.ticker}
+                </th>
+                <th className="pb-3 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                  {b.ticker}
+                </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
-              {SCHOLAR_PROFILES.filter((p) => p.id !== "custom").map((p) => {
+            <tbody>
+              <MetricRow label="Sector" valueA={a.sector} valueB={b.sector} winner={null} />
+              <MetricRow
+                label="Market cap"
+                valueA={fmtMarketCap(a.marketCapUsd)}
+                valueB={fmtMarketCap(b.marketCapUsd)}
+                winner={winners.marketCap}
+                winnerHint="bigger"
+              />
+              <MetricRow
+                label="Last price"
+                valueA={fmtPrice(priceForTicker(a.ticker))}
+                valueB={fmtPrice(priceForTicker(b.ticker))}
+                winner={null}
+              />
+              <MetricRow
+                label="Dividend yield"
+                valueA={fmtPct(a.dividendYieldPct)}
+                valueB={fmtPct(b.dividendYieldPct)}
+                winner={winners.dividend}
+                winnerHint="higher yield"
+              />
+              <MetricRow
+                label="Impure income / revenue"
+                valueA={fmtPct(a.impermissibleIncomePct)}
+                valueB={fmtPct(b.impermissibleIncomePct)}
+                winner={winners.impure}
+                winnerHint="lower is cleaner"
+              />
+              <MetricRow
+                label="Debt / market cap"
+                valueA={fmtPct(a.debtToMarketCapPct)}
+                valueB={fmtPct(b.debtToMarketCapPct)}
+                winner={winners.debt}
+                winnerHint="lower is cleaner"
+              />
+              <MetricRow
+                label="Cash + securities / market cap"
+                valueA={fmtPct(a.cashSecuritiesToMarketCapPct)}
+                valueB={fmtPct(b.cashSecuritiesToMarketCapPct)}
+                winner={winners.cash}
+                winnerHint="lower is cleaner"
+              />
+              <MetricRow
+                label="Receivables / market cap"
+                valueA={fmtPct(a.receivablesToMarketCapPct)}
+                valueB={fmtPct(b.receivablesToMarketCapPct)}
+                winner={winners.receivables}
+                winnerHint="lower is cleaner"
+              />
+              <MetricRow
+                label="Illiquid assets / total assets"
+                valueA={fmtPct(a.illiquidAssetsToTotalAssetsPct)}
+                valueB={fmtPct(b.illiquidAssetsToTotalAssetsPct)}
+                winner={winners.illiquid}
+                winnerHint="higher passes Mufti Taqi"
+                isLast
+              />
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* ALL SCHOLARS COMPARISON */}
+      <section className="border-t border-gray-200 pt-10">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Every scholar
+        </div>
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          How each tradition sees these two
+        </h2>
+        <div className="mt-6 overflow-x-auto">
+          <table className="w-full min-w-[480px] border-collapse">
+            <thead>
+              <tr className="border-b border-gray-200 text-left">
+                <th className="pb-3 pr-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                  Scholar
+                </th>
+                <th className="pb-3 pr-4 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                  {a.ticker}
+                </th>
+                <th className="pb-3 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                  {b.ticker}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {SCHOLAR_PROFILES.filter((p) => p.id !== "custom").map((p, idx, arr) => {
                 const va = screenStock(a, p).verdict;
                 const vb = screenStock(b, p).verdict;
                 return (
-                  <tr key={p.id}>
-                    <td className="py-3 pr-4 font-semibold text-gray-700">{p.short}</td>
-                    <td className="py-3 pr-4"><Pill tone={toneFor(va)}>{VERDICT_LABEL[va]}</Pill></td>
-                    <td className="py-3"><Pill tone={toneFor(vb)}>{VERDICT_LABEL[vb]}</Pill></td>
+                  <tr
+                    key={p.id}
+                    className={idx !== arr.length - 1 ? "border-b border-gray-100" : ""}
+                  >
+                    <td className="py-3 pr-4 text-[13px] font-semibold text-gray-900">
+                      {p.short}
+                    </td>
+                    <td className="py-3 pr-4 text-center">
+                      <VerdictPill verdict={va} />
+                    </td>
+                    <td className="py-3 text-center">
+                      <VerdictPill verdict={vb} />
+                    </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
         </div>
-      </Card>
+      </section>
 
-      <p className="text-center text-xs text-gray-500">
-        Side-by-side comparison shows the underlying financials behind each verdict. Open either ticker in the full{" "}
-        <Link href={`/screen?ticker=${a.ticker}`} className="text-navy-700 underline">screener</Link> for the complete ratio breakdown.
+      <p className="text-center text-[11px] text-gray-500">
+        Side-by-side comparison shows the underlying financials behind each verdict. Open
+        either ticker in the full{" "}
+        <Link
+          href={`/screen?ticker=${a.ticker}`}
+          className="text-navy-700 underline hover:text-navy-900"
+        >
+          screener
+        </Link>{" "}
+        for the complete ratio breakdown.
       </p>
     </div>
   );
 }
 
-function Hero({
-  stock, result, bordered,
-}: {
-  stock: StockFundamentals;
-  result: ScreeningResult;
-  bordered?: boolean;
-}) {
+function Hero({ stock, result }: { stock: StockFundamentals; result: ScreeningResult }) {
   const color =
-    result.verdict === "pass" ? "text-emerald-700"
-      : result.verdict === "borderline" ? "text-amber-700"
-        : "text-rose-700";
+    result.verdict === "pass" ? "text-emerald-700" :
+    result.verdict === "borderline" ? "text-amber-700" :
+    "text-rose-700";
   return (
-    <div className={"p-6 sm:p-8 " + (bordered ? "border-l border-gray-100" : "")}>
-      <div className="flex items-center gap-3">
-        <StockLogo ticker={stock.ticker} name={stock.name} size={32} />
-        <div>
-          <div className="font-mono text-sm font-semibold text-gray-900">{stock.ticker}</div>
-          <div className="text-xs text-gray-500">{stock.name}</div>
-        </div>
+    <div className="bg-white p-7 sm:p-9">
+      <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+        {stock.sector}
       </div>
-      <div className={`mt-5 text-4xl font-bold sm:text-5xl ${color}`} style={{ fontFamily: "Georgia, serif" }}>
+      <div className="mt-2 font-mono text-[14px] font-bold text-gray-900">
+        {stock.ticker}
+      </div>
+      <div
+        className="mt-0.5 text-[15px] text-gray-700"
+        style={{ fontFamily: "Georgia, serif" }}
+      >
+        {stock.name}
+      </div>
+      <div
+        className={`mt-6 text-[44px] font-bold leading-none sm:text-[56px] ${color}`}
+        style={{ fontFamily: "Georgia, serif" }}
+      >
         {VERDICT_LABEL[result.verdict]}
       </div>
-      <div className="mt-2 text-xs text-gray-500">
-        {stock.sector} · {fmtMarketCap(stock.marketCapUsd)}
+      <div className="mt-4 font-mono text-[12px] text-gray-500">
+        {fmtMarketCap(stock.marketCapUsd)} market cap
       </div>
     </div>
   );
 }
 
 function MetricRow({
-  label, valueA, valueB, winner, winnerHint,
+  label,
+  valueA,
+  valueB,
+  winner,
+  winnerHint,
+  isLast,
 }: {
   label: string;
   valueA: string;
   valueB: string;
   winner: "a" | "b" | "tie" | null;
   winnerHint?: string;
+  isLast?: boolean;
 }) {
   return (
-    <tr>
-      <td className="px-6 py-3 text-gray-700">
+    <tr className={isLast ? "" : "border-b border-gray-100"}>
+      <td className="py-3 pr-4 text-[13px] text-gray-700">
         {label}
         {winner && winner !== "tie" && winnerHint && (
-          <span className="ml-2 text-[10px] uppercase tracking-wider text-gray-400">
+          <span className="ml-2 text-[10px] uppercase tracking-[0.14em] text-gray-400">
             ({winnerHint})
           </span>
         )}
       </td>
-      <td className={"px-6 py-3 text-right tabular-nums " + winnerClass(winner, "a")}>{valueA}</td>
-      <td className={"px-6 py-3 text-right tabular-nums " + winnerClass(winner, "b")}>{valueB}</td>
+      <td className={"py-3 pr-4 text-right font-mono text-[13px] tabular-nums " + winnerClass(winner, "a")}>
+        {valueA}
+      </td>
+      <td className={"py-3 text-right font-mono text-[13px] tabular-nums " + winnerClass(winner, "b")}>
+        {valueB}
+      </td>
     </tr>
+  );
+}
+
+function VerdictPill({ verdict }: { verdict: Verdict }) {
+  const tone =
+    verdict === "pass" ? "bg-emerald-50 text-emerald-700"
+      : verdict === "fail" ? "bg-rose-50 text-rose-700"
+        : "bg-amber-50 text-amber-700";
+  return (
+    <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold ${tone}`}>
+      {VERDICT_LABEL[verdict]}
+    </span>
   );
 }
 
 function winnerClass(winner: "a" | "b" | "tie" | null, col: "a" | "b") {
   if (winner === col) return "font-semibold text-emerald-700";
-  if (winner === "tie") return "text-gray-700";
   return "text-gray-700";
-}
-
-function toneFor(v: Verdict): "pass" | "warn" | "fail" {
-  return v === "pass" ? "pass" : v === "borderline" ? "warn" : "fail";
 }
 
 function fmtPct(v: number) {
@@ -414,23 +472,22 @@ const SUGGESTED_PAIRS: Array<{ a: string; b: string; label: string }> = [
 
 function SuggestedPairs({ onPick }: { onPick: (a: string, b: string) => void }) {
   return (
-    <Card className="bg-gray-50">
-      <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
+    <div className="mt-16 border-t border-gray-200 pt-8">
+      <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
         Try a comparison
       </div>
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap gap-2">
         {SUGGESTED_PAIRS.map((p) => (
           <button
             key={p.label}
             type="button"
             onClick={() => onPick(p.a, p.b)}
-            className="inline-flex items-center rounded-full border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 transition hover:border-navy-300 hover:bg-navy-50 hover:text-navy-800"
+            className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1.5 text-[12px] font-medium text-gray-700 transition hover:border-navy-300 hover:bg-navy-50 hover:text-navy-800"
           >
             {p.label}
           </button>
         ))}
       </div>
-    </Card>
+    </div>
   );
 }
-
