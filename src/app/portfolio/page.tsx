@@ -8,19 +8,17 @@ import { screenStock } from "@/lib/screen";
 import { loadPortfolio, savePortfolio, newPosition, type Position } from "@/lib/portfolio";
 import { currentPrice } from "@/lib/prices";
 import ScholarPicker from "@/components/ScholarPicker";
-import StockLogo from "@/components/StockLogo";
 import CurrencyInput from "@/components/CurrencyInput";
-import { Card, PageHeader, Button, Pill, SectionHeader } from "@/components/ui";
 import {
   ProgressRing, DonutChart, DonutLegend, HorizontalBars,
   LineChart, LineLegend, sectorColor,
 } from "@/components/Charts";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
-import type { Verdict } from "@/lib/types";
+import type { Verdict, StockFundamentals, ScreeningResult } from "@/lib/types";
 import { Plus, Trash2, RotateCcw, ArrowUpRight, ArrowDownRight } from "lucide-react";
 
 const VERDICT_COLORS: Record<Verdict, string> = {
-  pass: "#16A34A", borderline: "#D97706", fail: "#DC2626",
+  pass: "#047857", borderline: "#B45309", fail: "#BE123C",
 };
 
 type Period = "1M" | "3M" | "6M" | "1Y" | "2Y" | "ALL";
@@ -42,7 +40,6 @@ function generatePerformanceData(period: Period) {
   for (let i = 0; i <= months; i++) {
     const d = new Date(baseDate.getFullYear(), baseDate.getMonth() + i, 1);
     labels.push(d.toLocaleDateString("en-US", { month: "short", year: "2-digit" }));
-    // Seeded-ish deterministic walk
     const seed = Math.sin(i * 13.7);
     p *= 1 + (seed * 0.03 + 0.012);
     sp *= 1 + (Math.cos(i * 7.3) * 0.025 + 0.008);
@@ -64,6 +61,17 @@ function fmtMoneyShort(n: number): string {
 }
 function fmtPct(n: number): string {
   return (n >= 0 ? "+" : "") + n.toFixed(2) + "%";
+}
+
+interface EnrichedPosition {
+  pos: Position;
+  stock: StockFundamentals;
+  price: number;
+  value: number;
+  cost: number;
+  gain: number;
+  gainPct: number;
+  result: ScreeningResult;
 }
 
 export default function PortfolioPage() {
@@ -101,10 +109,9 @@ export default function PortfolioPage() {
     [scholarId, bump],
   );
 
-  // Enrich positions with stock data, price, cost, gain
-  const enriched = useMemo(() => {
+  const enriched: EnrichedPosition[] = useMemo(() => {
     return positions
-      .map((pos) => {
+      .map((pos): EnrichedPosition | null => {
         const stock = findStock(pos.ticker);
         if (!stock) return null;
         const price = currentPrice(stock);
@@ -115,10 +122,7 @@ export default function PortfolioPage() {
         const result = screenStock(stock, scholar);
         return { pos, stock, price, value, cost, gain, gainPct, result };
       })
-      .filter(Boolean) as Array<{
-        pos: Position; stock: any; price: number; value: number;
-        cost: number; gain: number; gainPct: number; result: any;
-      }>;
+      .filter((x): x is EnrichedPosition => x !== null);
   }, [positions, scholar]);
 
   const totalValue = enriched.reduce((s, e) => s + e.value, 0);
@@ -134,7 +138,7 @@ export default function PortfolioPage() {
   const allocationByVerdict = enriched.map((e) => ({
     label: e.stock.ticker,
     value: e.value,
-    color: VERDICT_COLORS[e.result.verdict as Verdict],
+    color: VERDICT_COLORS[e.result.verdict],
   }));
 
   const sectorBreakdown = useMemo(() => {
@@ -173,41 +177,77 @@ export default function PortfolioPage() {
   }
 
   return (
-    <div className="space-y-10">
-      <PageHeader
-        kicker="Portfolio"
-        title="Your halal investing dashboard"
-        description="Real positions with cost basis. Track gain/loss, sector exposure, and compliance under your scholar. Saved to your browser."
-        action={
-          <Button onClick={() => setShowEditor((s) => !s)} variant="secondary" leftIcon={<Plus size={14} />}>
-            {showEditor ? "Hide editor" : "Edit positions"}
-          </Button>
-        }
-      />
+    <div className="pb-20">
+      {/* PAGE HEADER */}
+      <header className="pt-6">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+              Portfolio
+            </div>
+            <h1
+              className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              Your halal investing dashboard
+            </h1>
+            <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
+              Real positions with cost basis. Track gain/loss, sector exposure, and
+              compliance under your scholar. Saved to your browser.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowEditor((s) => !s)}
+            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+          >
+            <Plus size={14} /> {showEditor ? "Hide editor" : "Edit positions"}
+          </button>
+        </div>
+      </header>
 
-      <ScholarPicker value={scholarId} onChange={setScholarId} />
+      {/* SCHOLAR PICKER */}
+      <div className="mt-8 sm:max-w-md">
+        <ScholarPicker value={scholarId} onChange={setScholarId} />
+      </div>
 
       {/* HERO METRICS */}
-      <section className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200 sm:grid-cols-4">
+      <section className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-4">
         <div className="bg-white p-6">
-          <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-500">Total value</div>
-          <div className="mt-2 text-3xl font-bold text-gray-900 tabular-nums" style={{ fontFamily: "Georgia, serif" }}>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            Total value
+          </div>
+          <div
+            className="mt-2 text-[28px] font-bold leading-none tabular-nums text-gray-900"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
             {fmtMoneyShort(totalValue)}
           </div>
-          <div className={"mt-1 inline-flex items-center gap-1 text-xs font-medium tabular-nums " +
-            (totalGain >= 0 ? "text-emerald-700" : "text-rose-700")}>
+          <div
+            className={
+              "mt-2 inline-flex items-center gap-1 text-[12px] font-medium tabular-nums " +
+              (totalGain >= 0 ? "text-emerald-700" : "text-rose-700")
+            }
+          >
             {totalGain >= 0 ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
             {fmtPct(totalGainPct)}
-            <span className="text-gray-500 font-normal">({fmtMoneyShort(totalGain)})</span>
+            <span className="font-normal text-gray-500">
+              ({fmtMoneyShort(totalGain)})
+            </span>
           </div>
         </div>
 
         <div className="bg-white p-6">
-          <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-500">Cost basis</div>
-          <div className="mt-2 text-3xl font-bold text-gray-900 tabular-nums" style={{ fontFamily: "Georgia, serif" }}>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            Cost basis
+          </div>
+          <div
+            className="mt-2 text-[28px] font-bold leading-none tabular-nums text-gray-900"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
             {fmtMoneyShort(totalCost)}
           </div>
-          <div className="mt-1 text-xs text-gray-500">
+          <div className="mt-2 text-[11px] text-gray-500">
             Across {enriched.length} {enriched.length === 1 ? "position" : "positions"}
           </div>
         </div>
@@ -217,44 +257,62 @@ export default function PortfolioPage() {
             percent={halalPct}
             size={120}
             thickness={10}
-            color={halalPct >= 85 ? "#16A34A" : halalPct >= 60 ? "#D97706" : "#DC2626"}
+            color={halalPct >= 85 ? "#047857" : halalPct >= 60 ? "#B45309" : "#BE123C"}
             sublabel="Halal"
           />
         </div>
 
         <div className="bg-white p-6">
-          <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-500">Halal value</div>
-          <div className="mt-2 text-3xl font-bold tabular-nums" style={{ fontFamily: "Georgia, serif", color: halalPct >= 85 ? "#047857" : halalPct >= 60 ? "#B45309" : "#BE123C" }}>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            Halal value
+          </div>
+          <div
+            className="mt-2 text-[28px] font-bold leading-none tabular-nums"
+            style={{
+              fontFamily: "Georgia, serif",
+              color:
+                halalPct >= 85 ? "#047857" : halalPct >= 60 ? "#B45309" : "#BE123C",
+            }}
+          >
             {fmtMoneyShort(halalValue)}
           </div>
-          <div className="mt-1 text-xs text-gray-500">Under {scholar.short}</div>
+          <div className="mt-2 text-[11px] text-gray-500">Under {scholar.short}</div>
         </div>
       </section>
 
       {/* PERFORMANCE CHART */}
-      <Card padded={false}>
-        <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-gray-100 px-6 py-5 sm:px-8">
+      <section className="mt-12">
+        <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">Performance</div>
-            <h2 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+              Performance
+            </div>
+            <h2
+              className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
               Your portfolio vs benchmarks
             </h2>
           </div>
           <div className="flex items-center gap-1 rounded-md border border-gray-200 bg-gray-50 p-1">
-            {(["1M","3M","6M","1Y","2Y","ALL"] as Period[]).map((p) => (
-              <button key={p} type="button" onClick={() => setPeriod(p)}
+            {(["1M", "3M", "6M", "1Y", "2Y", "ALL"] as Period[]).map((p) => (
+              <button
+                key={p}
+                type="button"
+                onClick={() => setPeriod(p)}
                 className={
                   "rounded px-2.5 py-1 text-[11px] font-semibold transition-colors " +
                   (period === p
                     ? "bg-white text-navy-800 shadow-sm"
                     : "text-gray-500 hover:text-gray-900")
-                }>
+                }
+              >
                 {p}
               </button>
             ))}
           </div>
         </div>
-        <div className="px-6 pt-6 sm:px-8">
+        <div className="mt-6 rounded-xl border border-gray-200 bg-white p-6">
           <LineChart
             labels={performance.labels}
             series={[
@@ -263,24 +321,31 @@ export default function PortfolioPage() {
               { label: "Halal S&P 500 (SPUS)", color: "#B8860B", data: performance.spus },
             ]}
           />
+          <div className="mt-5 border-t border-gray-100 pt-4">
+            <LineLegend
+              series={[
+                { label: "Your portfolio", color: "#1F3A5F", data: [], bold: true },
+                { label: "S&P 500 (SPY)", color: "#94A3B8", data: [] },
+                { label: "Halal S&P 500 (SPUS)", color: "#B8860B", data: [] },
+              ]}
+            />
+          </div>
         </div>
-        <div className="border-t border-gray-100 px-6 py-4 sm:px-8">
-          <LineLegend series={[
-            { label: "Your portfolio", color: "#1F3A5F", data: [], bold: true },
-            { label: "S&P 500 (SPY)", color: "#94A3B8", data: [] },
-            { label: "Halal S&P 500 (SPUS)", color: "#B8860B", data: [] },
-          ]} />
-        </div>
-      </Card>
+      </section>
 
       {/* ALLOCATION + SECTOR */}
-      <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Card padded={false}>
-          <div className="border-b border-gray-100 px-6 py-5">
-            <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">Allocation</div>
-            <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>By holding</h3>
+      <section className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="rounded-xl border border-gray-200 bg-white p-6">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            Allocation
           </div>
-          <div className="grid grid-cols-2 gap-4 p-6">
+          <h3
+            className="mt-2 text-[18px] font-bold text-gray-900"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            By holding
+          </h3>
+          <div className="mt-5 grid grid-cols-2 gap-4">
             <div className="flex items-center justify-center">
               {allocationByVerdict.length > 0 ? (
                 <DonutChart
@@ -300,118 +365,200 @@ export default function PortfolioPage() {
               )}
             </div>
           </div>
-        </Card>
+        </div>
 
-        <Card padded={false}>
-          <div className="border-b border-gray-100 px-6 py-5">
-            <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">Sector exposure</div>
-            <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>By industry</h3>
+        <div className="rounded-xl border border-gray-200 bg-white p-6">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            Sector exposure
           </div>
-          <div className="p-6">
+          <h3
+            className="mt-2 text-[18px] font-bold text-gray-900"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            By industry
+          </h3>
+          <div className="mt-5">
             {sectorBreakdown.length > 0 ? (
               <HorizontalBars items={sectorBreakdown} />
             ) : (
               <p className="text-sm text-gray-500">Add positions to see sector breakdown</p>
             )}
           </div>
-        </Card>
+        </div>
       </section>
 
       {/* HOLDINGS TABLE */}
-      <Card padded={false}>
-        <div className="flex flex-wrap items-end justify-between gap-3 border-b border-gray-100 px-6 py-5 sm:px-8">
+      <section className="mt-12">
+        <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">Holdings</div>
-            <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>Every position, scored</h3>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+              Holdings
+            </div>
+            <h2
+              className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              Every position, scored
+            </h2>
           </div>
-          <div className="flex items-center gap-2 text-xs">
+          <div className="flex items-center gap-2 text-[11px]">
             <span className="text-gray-500">Sort by:</span>
-            {([{ k: "value" as const, l: "Value" }, { k: "ticker" as const, l: "Ticker" }, { k: "gain" as const, l: "Gain %" }]).map((opt) => (
-              <button key={opt.k} type="button" onClick={() => setSortKey(opt.k)}
+            {[
+              { k: "value" as const, l: "Value" },
+              { k: "ticker" as const, l: "Ticker" },
+              { k: "gain" as const, l: "Gain %" },
+            ].map((opt) => (
+              <button
+                key={opt.k}
+                type="button"
+                onClick={() => setSortKey(opt.k)}
                 className={
                   "rounded-md px-2 py-1 font-medium transition-colors " +
-                  (sortKey === opt.k ? "bg-navy-50 text-navy-800" : "text-gray-500 hover:text-gray-900")
-                }>{opt.l}</button>
+                  (sortKey === opt.k
+                    ? "bg-navy-50 text-navy-800"
+                    : "text-gray-500 hover:text-gray-900")
+                }
+              >
+                {opt.l}
+              </button>
             ))}
           </div>
         </div>
+
         {sortedHoldings.length === 0 ? (
-          <div className="p-12 text-center">
-            <p className="text-sm text-gray-500">No positions yet. Click <strong>Edit positions</strong> above to add one.</p>
+          <div className="mt-8 border-y border-gray-200 py-12 text-center">
+            <p className="text-[14px] text-gray-500">
+              No positions yet. Click <strong>Edit positions</strong> above to add one.
+            </p>
           </div>
         ) : (
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-left text-[10px] uppercase tracking-widest text-gray-500">
-              <tr>
-                <th className="px-6 py-3">Stock</th>
-                <th className="px-6 py-3 text-right">Shares</th>
-                <th className="px-6 py-3 text-right">Avg cost</th>
-                <th className="px-6 py-3 text-right">Price</th>
-                <th className="px-6 py-3 text-right">Value</th>
-                <th className="px-6 py-3 text-right">Gain</th>
-                <th className="px-6 py-3 text-right">Verdict</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedHoldings.map((e) => (
-                <tr key={e.pos.id} className="border-t border-gray-100 hover:bg-gray-50">
-                  <td className="px-6 py-3">
-                    <div className="flex items-center gap-3">
-                      <StockLogo ticker={e.stock.ticker} name={e.stock.name} size={32} />
-                      <div>
-                        <div className="font-mono text-sm font-semibold text-gray-900">{e.stock.ticker}</div>
-                        <div className="text-xs text-gray-500">{e.stock.name}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-3 text-right tabular-nums text-gray-700">{e.pos.shares}</td>
-                  <td className="px-6 py-3 text-right tabular-nums text-gray-700">{fmtMoney(e.pos.avgCost)}</td>
-                  <td className="px-6 py-3 text-right tabular-nums text-gray-700">{fmtMoney(e.price)}</td>
-                  <td className="px-6 py-3 text-right tabular-nums font-semibold text-gray-900">{fmtMoneyShort(e.value)}</td>
-                  <td className={"px-6 py-3 text-right tabular-nums font-semibold " + (e.gain >= 0 ? "text-emerald-700" : "text-rose-700")}>
-                    {fmtPct(e.gainPct)}
-                    <div className="text-xs font-normal text-gray-500">{fmtMoneyShort(e.gain)}</div>
-                  </td>
-                  <td className="px-6 py-3 text-right">
-                    <Pill tone={e.result.verdict === "pass" ? "pass" : e.result.verdict === "borderline" ? "warn" : "fail"}>
-                      {VERDICT_LABEL[e.result.verdict as keyof typeof VERDICT_LABEL]}
-                    </Pill>
-                  </td>
+          <div className="mt-6 overflow-x-auto">
+            <table className="w-full min-w-[720px] border-collapse">
+              <thead>
+                <tr className="border-b border-gray-200 text-left">
+                  <th className="pb-3 pr-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                    Stock
+                  </th>
+                  <th className="pb-3 pr-4 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                    Shares
+                  </th>
+                  <th className="pb-3 pr-4 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                    Avg cost
+                  </th>
+                  <th className="pb-3 pr-4 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                    Price
+                  </th>
+                  <th className="pb-3 pr-4 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                    Value
+                  </th>
+                  <th className="pb-3 pr-4 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                    Gain
+                  </th>
+                  <th className="pb-3 pr-2 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                    Verdict
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {sortedHoldings.map((e, idx) => (
+                  <tr
+                    key={e.pos.id}
+                    className={idx !== sortedHoldings.length - 1 ? "border-b border-gray-100" : ""}
+                  >
+                    <td className="py-3 pr-4">
+                      <div className="font-mono text-sm font-semibold text-gray-900">
+                        {e.stock.ticker}
+                      </div>
+                      <div className="mt-0.5 text-[11px] text-gray-500">{e.stock.name}</div>
+                    </td>
+                    <td className="py-3 pr-4 text-right font-mono text-[13px] tabular-nums text-gray-700">
+                      {e.pos.shares}
+                    </td>
+                    <td className="py-3 pr-4 text-right font-mono text-[13px] tabular-nums text-gray-700">
+                      {fmtMoney(e.pos.avgCost)}
+                    </td>
+                    <td className="py-3 pr-4 text-right font-mono text-[13px] tabular-nums text-gray-700">
+                      {fmtMoney(e.price)}
+                    </td>
+                    <td className="py-3 pr-4 text-right font-mono text-[13px] font-semibold tabular-nums text-gray-900">
+                      {fmtMoneyShort(e.value)}
+                    </td>
+                    <td
+                      className={
+                        "py-3 pr-4 text-right font-mono text-[13px] font-semibold tabular-nums " +
+                        (e.gain >= 0 ? "text-emerald-700" : "text-rose-700")
+                      }
+                    >
+                      {fmtPct(e.gainPct)}
+                      <div className="text-[11px] font-normal text-gray-500">
+                        {fmtMoneyShort(e.gain)}
+                      </div>
+                    </td>
+                    <td className="py-3 pr-2 text-right">
+                      <VerdictPill verdict={e.result.verdict} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
-      </Card>
+      </section>
 
       {/* EDITOR */}
       {showEditor && (
-        <Card padded={false}>
-          <div className="flex flex-wrap items-end justify-between gap-3 border-b border-gray-100 px-6 py-5">
-            <SectionHeader kicker="Positions editor" title="Add, edit, remove positions" description="All changes save automatically." />
-            <div className="flex items-center gap-2 text-xs">
-              <Button variant="secondary" size="sm" leftIcon={<RotateCcw size={11} />} onClick={resetDefaults}>
-                Reset to sample
-              </Button>
+        <section className="mt-12 border-t border-gray-200 pt-10">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+                Positions editor
+              </div>
+              <h2
+                className="mt-2 text-[22px] font-bold leading-tight text-gray-900 sm:text-[26px]"
+                style={{ fontFamily: "Georgia, serif" }}
+              >
+                Add, edit, remove positions
+              </h2>
+              <p className="mt-1 text-[13px] text-gray-600">
+                All changes save automatically.
+              </p>
             </div>
+            <button
+              type="button"
+              onClick={resetDefaults}
+              className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-3 py-1.5 text-[12px] font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+            >
+              <RotateCcw size={11} /> Reset to sample
+            </button>
           </div>
-          <div className="space-y-3 px-6 py-5">
+
+          <div className="mt-6 space-y-3">
             {positions.map((p) => {
               const stock = findStock(p.ticker);
               return (
-                <div key={p.id} className="grid grid-cols-12 gap-2 rounded-lg border border-gray-200 bg-gray-50 p-3 sm:p-4">
+                <div
+                  key={p.id}
+                  className="grid grid-cols-12 gap-2 rounded-lg border border-gray-200 bg-gray-50 p-4"
+                >
                   <div className="col-span-12 sm:col-span-3">
-                    <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-500">Ticker</label>
+                    <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
+                      Ticker
+                    </label>
                     <input
-                      type="text" value={p.ticker}
+                      type="text"
+                      value={p.ticker}
                       onChange={(e) => updatePosition(p.id, { ticker: e.target.value.toUpperCase() })}
                       placeholder="AAPL"
                       className="mt-1 w-full rounded-md border border-gray-200 bg-white px-3 py-2 font-mono text-sm uppercase tracking-tight focus:border-navy-700 focus:outline-none focus:ring-2 focus:ring-navy-700/10"
                     />
-                    {stock && <div className="mt-1 text-[10px] text-gray-500">{stock.name}</div>}
+                    {stock && (
+                      <div className="mt-1 text-[10px] text-gray-500">{stock.name}</div>
+                    )}
                   </div>
                   <div className="col-span-6 sm:col-span-2">
-                    <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-500">Shares</label>
+                    <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
+                      Shares
+                    </label>
                     <CurrencyInput
                       value={p.shares}
                       onChange={(v) => updatePosition(p.id, { shares: v })}
@@ -420,14 +567,18 @@ export default function PortfolioPage() {
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-2">
-                    <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-500">Avg cost</label>
+                    <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
+                      Avg cost
+                    </label>
                     <CurrencyInput
                       value={p.avgCost}
                       onChange={(v) => updatePosition(p.id, { avgCost: v })}
                     />
                   </div>
                   <div className="col-span-9 sm:col-span-3">
-                    <label className="block text-[10px] font-semibold uppercase tracking-widest text-gray-500">Purchase date</label>
+                    <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
+                      Purchase date
+                    </label>
                     <input
                       type="date"
                       value={p.purchaseDate}
@@ -437,8 +588,9 @@ export default function PortfolioPage() {
                   </div>
                   <div className="col-span-3 sm:col-span-2 flex items-end justify-end">
                     <button
-                      type="button" onClick={() => removePosition(p.id)}
-                      className="inline-flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-2 text-gray-400 hover:bg-rose-50 hover:text-rose-700"
+                      type="button"
+                      onClick={() => removePosition(p.id)}
+                      className="inline-flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-2 text-gray-400 transition hover:bg-rose-50 hover:text-rose-700"
                       aria-label="Remove position"
                     >
                       <Trash2 size={14} />
@@ -447,12 +599,30 @@ export default function PortfolioPage() {
                 </div>
               );
             })}
-            <Button onClick={addPosition} variant="secondary" leftIcon={<Plus size={14} />}>
-              Add position
-            </Button>
+            <button
+              type="button"
+              onClick={addPosition}
+              className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+            >
+              <Plus size={14} /> Add position
+            </button>
           </div>
-        </Card>
+        </section>
       )}
     </div>
+  );
+}
+
+function VerdictPill({ verdict }: { verdict: Verdict }) {
+  const tone =
+    verdict === "pass" ? "bg-emerald-50 text-emerald-700"
+      : verdict === "fail" ? "bg-rose-50 text-rose-700"
+        : "bg-amber-50 text-amber-700";
+  return (
+    <span
+      className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold ${tone}`}
+    >
+      {VERDICT_LABEL[verdict]}
+    </span>
   );
 }
