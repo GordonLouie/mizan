@@ -3,11 +3,10 @@
 import { use, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowRight, ChevronLeft } from "lucide-react";
 import { CURATED_LISTS, getList, rowsForList, statsForList, fmtMarketCap } from "@/lib/lists";
 import { SCHOLAR_PROFILES } from "@/lib/scholars";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
-import { Card, PageHeader, Pill } from "@/components/ui";
-import StockLogo from "@/components/StockLogo";
 import ScholarPicker from "@/components/ScholarPicker";
 import type { Verdict } from "@/lib/types";
 
@@ -37,117 +36,161 @@ export default function CuratedListPage({ params }: PageProps) {
   const passPct = stats.total ? Math.round((stats.pass / stats.total) * 100) : 0;
 
   return (
-    <div className="space-y-6">
-      <nav className="text-xs text-gray-500">
-        <Link href="/lists" className="hover:text-navy-800">
-          Curated lists
-        </Link>{" "}
-        / <span className="text-gray-700">{list.title}</span>
+    <div className="pb-20">
+      {/* BREADCRUMB */}
+      <nav className="pt-6 text-[12px] text-gray-500">
+        <Link href="/lists" className="inline-flex items-center gap-1 hover:text-navy-700">
+          <ChevronLeft size={12} /> All curated lists
+        </Link>
       </nav>
 
-      <PageHeader
-        kicker={list.kicker}
-        title={list.title}
-        description={list.audience}
-      />
+      {/* PAGE HEADER */}
+      <header className="mt-6">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          {list.kicker}
+        </div>
+        <h1
+          className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          {list.title}
+        </h1>
+        <p className="mt-3 max-w-xl text-[15px] italic leading-relaxed text-gray-600">
+          {list.audience}
+        </p>
+      </header>
 
-      <Card>
-        <p className="text-sm leading-relaxed text-gray-700">{list.blurb}</p>
+      {/* BLURB + OPTIONAL NOTE */}
+      <div className="mt-8 max-w-2xl">
+        <p className="text-[14px] leading-relaxed text-gray-700">{list.blurb}</p>
         {list.note && (
-          <p className="mt-3 border-l-2 border-amber-300 bg-amber-50/40 px-4 py-2 text-xs italic text-gray-700">
+          <p className="mt-4 border-l-2 border-gray-300 py-1 pl-4 text-[12px] italic leading-relaxed text-gray-600">
             {list.note}
           </p>
         )}
-      </Card>
-
-      <Card padded={false}>
-        <div className="grid grid-cols-2 divide-x divide-gray-100 sm:grid-cols-4">
-          <Stat label="Stocks" value={String(stats.total)} />
-          <Stat label="Halal" value={`${stats.pass} (${passPct}%)`} tone="pass" />
-          <Stat label="Avg yield" value={`${stats.avgDividendYield.toFixed(1)}%`} />
-          <Stat label="Total cap" value={fmtMarketCap(stats.totalMarketCapUsd)} />
-        </div>
-      </Card>
-
-      <div>
-        <div className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-          Screen against
-        </div>
-        <ScholarPicker value={scholarId} onChange={setScholarId} />
       </div>
 
-      <Card padded={false} className="overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50">
-              <tr className="text-left text-[11px] font-semibold uppercase tracking-wide text-gray-500">
-                <th className="px-5 py-3">Company</th>
-                <th className="px-5 py-3 text-right">Market cap</th>
-                <th className="hidden px-5 py-3 text-right md:table-cell">Div yield</th>
-                <th className="hidden px-5 py-3 text-right md:table-cell">Debt/cap</th>
-                <th className="hidden px-5 py-3 text-right lg:table-cell">Impure inc.</th>
-                <th className="px-5 py-3 text-right">Verdict</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {rows.map(({ stock, verdict }) => (
-                <tr key={stock.ticker} className="hover:bg-gray-50">
-                  <td className="px-5 py-3">
-                    <Link
-                      href={`/screen?ticker=${stock.ticker}`}
-                      className="flex items-center gap-3 group"
-                    >
-                      <StockLogo ticker={stock.ticker} name={stock.name} size={28} />
-                      <div>
-                        <div className="font-semibold text-gray-900 group-hover:text-navy-800">
-                          {stock.ticker}
-                        </div>
-                        <div className="text-xs text-gray-500">{stock.name}</div>
-                      </div>
-                    </Link>
-                  </td>
-                  <td className="px-5 py-3 text-right tabular-nums text-gray-800">
-                    {fmtMarketCap(stock.marketCapUsd)}
-                  </td>
-                  <td className="hidden px-5 py-3 text-right tabular-nums text-gray-800 md:table-cell">
-                    {stock.dividendYieldPct
-                      ? `${stock.dividendYieldPct.toFixed(1)}%`
-                      : "—"}
-                  </td>
-                  <td className="hidden px-5 py-3 text-right tabular-nums text-gray-800 md:table-cell">
-                    {stock.debtToMarketCapPct.toFixed(1)}%
-                  </td>
-                  <td className="hidden px-5 py-3 text-right tabular-nums text-gray-800 lg:table-cell">
-                    {stock.impermissibleIncomePct.toFixed(1)}%
-                  </td>
-                  <td className="px-5 py-3 text-right">
-                    <VerdictPill verdict={verdict} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Card>
+      {/* UNIVERSE STATS — hairline-separated, no card chrome */}
+      <div className="mt-10 grid grid-cols-2 gap-y-5 border-y border-gray-200 py-5 sm:grid-cols-4">
+        <StatPlain label="Stocks" value={String(stats.total)} />
+        <StatPlain label="Halal" value={`${stats.pass} (${passPct}%)`} tone="emerald" />
+        <StatPlain label="Avg yield" value={`${stats.avgDividendYield.toFixed(1)}%`} />
+        <StatPlain label="Total cap" value={fmtMarketCap(stats.totalMarketCapUsd)} />
+      </div>
 
-      <Card className="bg-gray-50">
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
+      {/* SCHOLAR PICKER */}
+      <div className="mt-10">
+        <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Screen against
+        </div>
+        <div className="sm:max-w-md">
+          <ScholarPicker value={scholarId} onChange={setScholarId} />
+        </div>
+      </div>
+
+      {/* STOCKS TABLE */}
+      <div className="mt-8 overflow-x-auto">
+        <table className="w-full min-w-[600px] border-collapse">
+          <thead>
+            <tr className="border-b border-gray-200 text-left">
+              <th className="pb-3 pr-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                Company
+              </th>
+              <th className="pb-3 pr-4 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                Market cap
+              </th>
+              <th className="hidden pb-3 pr-4 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500 md:table-cell">
+                Div yield
+              </th>
+              <th className="hidden pb-3 pr-4 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500 md:table-cell">
+                Debt/cap
+              </th>
+              <th className="hidden pb-3 pr-4 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500 lg:table-cell">
+                Impure inc.
+              </th>
+              <th className="pb-3 pr-2 text-right text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                Verdict
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(({ stock, verdict }, idx) => (
+              <tr
+                key={stock.ticker}
+                className={idx !== rows.length - 1 ? "border-b border-gray-100" : ""}
+              >
+                <td className="py-3 pr-4">
+                  <Link
+                    href={`/screen?ticker=${stock.ticker}`}
+                    className="group block"
+                  >
+                    <div className="font-mono text-sm font-semibold text-gray-900 group-hover:text-navy-800">
+                      {stock.ticker}
+                    </div>
+                    <div className="mt-0.5 text-[11px] text-gray-500">{stock.name}</div>
+                  </Link>
+                </td>
+                <td className="py-3 pr-4 text-right font-mono text-[13px] tabular-nums text-gray-800">
+                  {fmtMarketCap(stock.marketCapUsd)}
+                </td>
+                <td className="hidden py-3 pr-4 text-right font-mono text-[13px] tabular-nums text-gray-800 md:table-cell">
+                  {stock.dividendYieldPct
+                    ? `${stock.dividendYieldPct.toFixed(1)}%`
+                    : "—"}
+                </td>
+                <td className="hidden py-3 pr-4 text-right font-mono text-[13px] tabular-nums text-gray-800 md:table-cell">
+                  {stock.debtToMarketCapPct.toFixed(1)}%
+                </td>
+                <td className="hidden py-3 pr-4 text-right font-mono text-[13px] tabular-nums text-gray-800 lg:table-cell">
+                  {stock.impermissibleIncomePct.toFixed(1)}%
+                </td>
+                <td className="py-3 pr-2 text-right">
+                  <VerdictPill verdict={verdict} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* MORE LISTS */}
+      <div className="mt-16 border-t border-gray-200 pt-8">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
           More lists
         </div>
-        <div className="mt-3 flex flex-wrap gap-2">
+        <h2
+          className="mt-2 text-[20px] font-bold text-gray-900"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          Other curated collections
+        </h2>
+        <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {CURATED_LISTS.filter((l) => l.slug !== list.slug).map((l) => (
             <Link
               key={l.slug}
               href={`/lists/${l.slug}`}
-              className="inline-flex items-center rounded-full border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 transition hover:border-navy-300 hover:bg-navy-50 hover:text-navy-800"
+              className="group block border border-gray-200 bg-white p-4 transition hover:border-gray-400"
             >
-              {l.title}
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+                {l.kicker}
+              </div>
+              <div
+                className="mt-2 text-[15px] font-bold leading-snug text-gray-900 group-hover:text-navy-800"
+                style={{ fontFamily: "Georgia, serif" }}
+              >
+                {l.title}
+              </div>
+              <div className="mt-1 flex items-center justify-between text-[11px]">
+                <span className="text-gray-500">{l.tickers.length} stocks</span>
+                <ArrowRight size={12} className="text-gray-400 transition group-hover:text-gray-700" />
+              </div>
             </Link>
           ))}
         </div>
-      </Card>
+      </div>
 
-      <p className="text-center text-xs text-gray-500">
+      {/* DISCLAIMER */}
+      <p className="mt-12 text-center text-[11px] leading-relaxed text-gray-500">
         Curated lists are starting points for research, not investment advice. Names are
         re-screened on every page load against the scholar you select above.
       </p>
@@ -155,23 +198,25 @@ export default function CuratedListPage({ params }: PageProps) {
   );
 }
 
-function Stat({
+/* ─── HELPERS ─────────────────────────────────────────────────────────────── */
+
+function StatPlain({
   label,
   value,
   tone = "neutral",
 }: {
   label: string;
   value: string;
-  tone?: "pass" | "neutral";
+  tone?: "neutral" | "emerald";
 }) {
-  const cls = tone === "pass" ? "text-emerald-700" : "text-gray-900";
+  const cls = tone === "emerald" ? "text-emerald-700" : "text-gray-900";
   return (
-    <div className="px-5 py-4">
-      <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-500">
+    <div>
+      <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
         {label}
       </div>
       <div
-        className={`mt-1 text-2xl font-bold ${cls}`}
+        className={`mt-1 text-[22px] font-bold leading-none tabular-nums ${cls}`}
         style={{ fontFamily: "Georgia, serif" }}
       >
         {value}
@@ -181,6 +226,13 @@ function Stat({
 }
 
 function VerdictPill({ verdict }: { verdict: Verdict }) {
-  const tone = verdict === "pass" ? "pass" : verdict === "borderline" ? "warn" : "fail";
-  return <Pill tone={tone}>{VERDICT_LABEL[verdict]}</Pill>;
+  const tone =
+    verdict === "pass" ? "bg-emerald-50 text-emerald-700"
+      : verdict === "fail" ? "bg-rose-50 text-rose-700"
+        : "bg-amber-50 text-amber-700";
+  return (
+    <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold ${tone}`}>
+      {VERDICT_LABEL[verdict]}
+    </span>
+  );
 }
