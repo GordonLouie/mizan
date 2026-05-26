@@ -14,10 +14,11 @@ import FeaturedTickers from "@/components/FeaturedTickers";
 import DemoBanner from "@/components/DemoBanner";
 import HalalAlternatives from "@/components/HalalAlternatives";
 import WatchlistButton from "@/components/WatchlistButton";
-import StockLogo from "@/components/StockLogo";
 import StockStats from "@/components/StockStats";
-import { Card, PageHeader } from "@/components/ui";
+import { Card } from "@/components/ui";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
+import { fmtMarketCap } from "@/lib/lists";
+import { ArrowRight, BarChart3 } from "lucide-react";
 
 export default function ScreenPage() {
   return (
@@ -66,115 +67,268 @@ function ScreenInner() {
   );
   const result = useMemo(() => (stock ? screenStock(stock, scholar) : null), [stock, scholar]);
 
+  // Run the screen against every non-custom scholar so the evidence table
+  // can always show all five mainstream verdicts side by side.
   const allVerdicts = useMemo(() => {
     if (!stock) return [];
-    return SCHOLAR_PROFILES.filter((p) => p.id !== "custom").map((p) => ({
-      scholar: p,
-      verdict: screenStock(stock, p).verdict,
-    }));
+    return SCHOLAR_PROFILES.filter((p) => p.id !== "custom").map((p) => {
+      const r = screenStock(stock, p);
+      const failing = r.ratioChecks.find((c) => !c.passes);
+      const decidingMetric = !r.sectorPasses
+        ? r.sectorReason
+        : failing
+          ? `${failing.label} ${failing.value.toFixed(1)}% ${failing.direction === "max" ? "≤" : "≥"} ${failing.threshold}%`
+          : "All ratios pass";
+      return { scholar: p, verdict: r.verdict, decidingMetric, isFailing: !!failing || !r.sectorPasses };
+    });
   }, [stock]);
 
   const scholarsAgree = allVerdicts.length > 0 &&
     allVerdicts.every((v) => v.verdict === allVerdicts[0].verdict);
 
-  return (
-    <div className="space-y-6">
-      <PageHeader
-        kicker="Stock screener"
-        title="Search a stock"
-        description="Find any ticker; see the verdict under your scholar."
-        action={stock ? <WatchlistButton ticker={stock.ticker} /> : undefined}
-      />
-
-      <TickerSearch value={ticker} onChange={(t) => setTicker(t)} autoFocus={!ticker} />
-
-      {!ticker && <DemoBanner />}
-
-      <ScholarPicker value={scholarId} onChange={setScholarId} />
-
-      {!ticker && (
+  // ─── EMPTY STATE: no ticker selected ──────────────────────────────────────
+  if (!stock) {
+    return (
+      <div className="space-y-6 pb-16">
         <div className="pt-2">
-          <FeaturedTickers onPick={(t) => setTicker(t)} />
-        </div>
-      )}
-
-      {ticker && !stock && (
-        <Card>
-          <p className="text-sm text-amber-800">
-            <strong>{ticker}</strong> isn&apos;t in Mizan&apos;s current sample dataset.
-            The prototype ships with {stocks.length} representative tickers; production version supports any listed equity.
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+            Stock screener
+          </div>
+          <h1
+            className="mt-3 text-[32px] font-bold leading-tight text-gray-900 sm:text-[40px]"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            Search a stock
+          </h1>
+          <p className="mt-2 max-w-xl text-[15px] text-gray-600">
+            Find any ticker; see the verdict under every major scholar.
           </p>
-        </Card>
-      )}
+        </div>
 
-      {stock && result && <ComplianceCard stock={stock} result={result} />}
+        <TickerSearch value={ticker} onChange={(t) => setTicker(t)} autoFocus={!ticker} />
 
-      {/* Company stats — at-a-glance numbers behind the verdict */}
-      {stock && <StockStats stock={stock} />}
+        {!ticker && <DemoBanner />}
 
-      {/* Halal alternatives — show ONLY when stock fails */}
-      {stock && result && result.verdict === "fail" && (
-        <HalalAlternatives failedStock={stock} scholar={scholar} />
-      )}
+        <ScholarPicker value={scholarId} onChange={setScholarId} />
 
-      {/* Multi-scholar strip — ONLY when scholars disagree */}
-      {stock && allVerdicts.length > 0 && !scholarsAgree && (
-        <Card padded={false} className="overflow-hidden">
-          <div className="border-b border-gray-100 px-6 py-5 sm:px-8">
-            <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-              All five scholars on {stock.ticker}
-            </div>
-            <h2 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-              They disagree. The right answer is yours.
-            </h2>
+        {!ticker && (
+          <div className="pt-2">
+            <FeaturedTickers onPick={(t) => setTicker(t)} />
           </div>
-          <div className="divide-y divide-gray-100 sm:grid sm:grid-cols-5 sm:divide-x sm:divide-y-0">
-            {allVerdicts.map(({ scholar: p, verdict }) => {
-              const color = verdict === "pass" ? "text-emerald-700" : verdict === "borderline" ? "text-amber-700" : "text-rose-700";
-              const isCurrent = p.id === scholarId;
-              return (
-                <button
-                  key={p.id}
-                  type="button"
-                  onClick={() => setScholarId(p.id)}
-                  className={"block w-full px-6 py-5 text-left transition hover:bg-gray-50 " + (isCurrent ? "bg-navy-50/50" : "")}
-                >
-                  <div className="text-xs font-semibold text-gray-500">{p.short}</div>
-                  <div className={`mt-2 text-xl font-bold ${color}`} style={{ fontFamily: "Georgia, serif" }}>
-                    {VERDICT_LABEL[verdict]}
-                  </div>
-                  {isCurrent && (
-                    <div className="mt-1 text-[10px] font-semibold uppercase tracking-wider text-navy-700">your scholar</div>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </Card>
-      )}
+        )}
 
-      {stock && allVerdicts.length > 0 && scholarsAgree && (
-        <div className="flex items-center gap-3 rounded-md border border-gray-200 bg-white px-4 py-3 text-sm">
-          <div className="flex-shrink-0">
-            <StockLogo ticker={stock.ticker} name={stock.name} size={24} />
+        {ticker && !stock && (
+          <Card>
+            <p className="text-sm text-amber-800">
+              <strong>{ticker}</strong> isn&apos;t in Mizan&apos;s current sample dataset.
+              The prototype ships with {stocks.length} representative tickers; production version supports any listed equity.
+            </p>
+          </Card>
+        )}
+      </div>
+    );
+  }
+
+  // ─── STOCK SELECTED: hero + evidence table + breakdown ────────────────────
+  const verdictColor =
+    result!.verdict === "pass" ? "text-emerald-700" :
+    result!.verdict === "fail" ? "text-rose-700" : "text-amber-700";
+
+  return (
+    <div className="space-y-10 pb-16">
+      {/* TICKER + SCHOLAR TOOLBAR */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
+        <TickerSearch value={ticker} onChange={(t) => setTicker(t)} />
+        <div className="sm:min-w-[260px]">
+          <ScholarPicker value={scholarId} onChange={setScholarId} />
+        </div>
+      </div>
+
+      {/* HERO ROW — company info LEFT, verdict card RIGHT */}
+      <section className="grid grid-cols-12 gap-6">
+        <div className="col-span-12 lg:col-span-7">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+            {stock.ticker} · {stock.sector}
           </div>
-          <div className="flex-1 text-gray-700">
-            <strong>Unanimous.</strong> All five mainstream scholars reach the same verdict on {stock.ticker}: <span className="font-semibold">{VERDICT_LABEL[allVerdicts[0].verdict]}</span>.
+          <h1
+            className="mt-2 text-[32px] font-bold leading-[1.1] text-gray-900 sm:text-[40px]"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            {stock.name}
+          </h1>
+          <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+            <Stat label="Market cap" value={fmtMarketCap(stock.marketCapUsd)} />
+            <Stat label="Debt/cap" value={`${stock.debtToMarketCapPct.toFixed(1)}%`} />
+            <Stat label="Cash+sec/cap" value={`${stock.cashSecuritiesToMarketCapPct.toFixed(1)}%`} />
+            <Stat label="Illiq assets" value={`${stock.illiquidAssetsToTotalAssetsPct.toFixed(0)}%`} />
+          </div>
+          <div className="mt-5">
+            <WatchlistButton ticker={stock.ticker} />
           </div>
         </div>
+
+        {/* VERDICT CARD — the visual focal point */}
+        <div className="col-span-12 lg:col-span-5">
+          <div className="rounded-xl border border-gray-200 bg-white p-6">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+              Under {scholar.short}
+            </div>
+            <div
+              className={`mt-3 text-[56px] font-bold leading-none ${verdictColor}`}
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              {VERDICT_LABEL[result!.verdict]}
+            </div>
+            <p className="mt-4 text-[13px] leading-relaxed text-gray-600">
+              {result!.sectorPasses
+                ? result!.ratioChecks.find((c) => !c.passes)?.explanation ?? "All ratio thresholds pass under this methodology."
+                : result!.sectorReason}
+            </p>
+            <Link
+              href="/methodology"
+              className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-navy-700 hover:text-navy-900"
+            >
+              See methodology <ArrowRight size={12} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* EVIDENCE TABLE — centerpiece, all 5 scholars at once */}
+      <section>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Multi-scholar view
+        </div>
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          {scholarsAgree ? "All five scholars agree." : "The scholars disagree."}
+        </h2>
+        <p className="mt-1 max-w-xl text-sm text-gray-600">
+          {scholarsAgree
+            ? `Every mainstream methodology reaches the same verdict on ${stock.ticker}.`
+            : `Same stock, different rulebooks. Click any row to make it your active scholar.`}
+        </p>
+
+        <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 bg-white">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-200 bg-gray-50 text-left text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                <th className="px-5 py-3">Scholar</th>
+                <th className="px-5 py-3">Verdict</th>
+                <th className="px-5 py-3 text-right">Deciding metric</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allVerdicts.map(({ scholar: p, verdict, decidingMetric }, idx) => {
+                const verdictTone =
+                  verdict === "pass" ? "bg-emerald-50 text-emerald-700" :
+                  verdict === "fail" ? "bg-rose-50 text-rose-700" :
+                  "bg-amber-50 text-amber-700";
+                const isCurrent = p.id === scholarId;
+                return (
+                  <tr
+                    key={p.id}
+                    onClick={() => setScholarId(p.id)}
+                    className={`cursor-pointer transition hover:bg-gray-50 ${idx !== allVerdicts.length - 1 ? "border-b border-gray-100" : ""} ${isCurrent ? "bg-navy-50/40" : ""}`}
+                  >
+                    <td className="px-5 py-4">
+                      <div className="text-sm font-semibold text-gray-900">{p.short}</div>
+                      {isCurrent && (
+                        <div className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-navy-700">
+                          Your scholar
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-5 py-4">
+                      <span className={`inline-block rounded-full px-2.5 py-1 text-xs font-semibold ${verdictTone}`}>
+                        {VERDICT_LABEL[verdict]}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 text-right">
+                      <span className="font-mono text-xs text-gray-600">{decidingMetric}</span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* FULL COMPLIANCE BREAKDOWN — kept from original */}
+      <section>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Full breakdown
+        </div>
+        <h2
+          className="mt-2 text-[22px] font-bold leading-tight text-gray-900 sm:text-[26px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          Every check, every threshold
+        </h2>
+        <div className="mt-6">
+          <ComplianceCard stock={stock} result={result!} />
+        </div>
+      </section>
+
+      {/* COMPANY STATS */}
+      <section>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Company snapshot
+        </div>
+        <div className="mt-4">
+          <StockStats stock={stock} />
+        </div>
+      </section>
+
+      {/* HALAL ALTERNATIVES — only when fail */}
+      {result!.verdict === "fail" && (
+        <section>
+          <HalalAlternatives failedStock={stock} scholar={scholar} />
+        </section>
       )}
 
-      {stock && (
-        <p className="text-center text-xs text-gray-500">
-          <Link href={`/vs?a=${stock.ticker}&b=MSFT`} className="text-navy-700 underline">Compare {stock.ticker} side-by-side</Link>
-          {" · "}
-          <Link href="/lists" className="text-navy-700 underline">Curated lists</Link>
-          {" · "}
-          <Link href="/universe" className="text-navy-700 underline">Browse all {stocks.length} tickers</Link>
-          {" · "}
-          <Link href="/methodology" className="text-navy-700 underline">How verdicts are computed</Link>
-        </p>
-      )}
+      {/* FOOTER ACTIONS */}
+      <section className="border-t border-gray-200 pt-8">
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <Link
+            href={`/vs?a=${stock.ticker}&b=MSFT`}
+            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+          >
+            Compare side-by-side <ArrowRight size={14} />
+          </Link>
+          <Link
+            href="/portfolio"
+            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+          >
+            <BarChart3 size={14} /> Add to portfolio score
+          </Link>
+          <Link
+            href="/lists"
+            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+          >
+            Curated lists <ArrowRight size={14} />
+          </Link>
+          <Link
+            href={`/methodology`}
+            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+          >
+            How verdicts are computed <ArrowRight size={14} />
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-baseline gap-1.5">
+      <span className="text-[11px] uppercase tracking-[0.14em] text-gray-500">{label}</span>
+      <span className="font-mono text-sm font-semibold text-gray-900">{value}</span>
+    </div>
+  );
+}
+
