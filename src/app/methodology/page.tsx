@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { SCHOLAR_PROFILES } from "@/lib/scholars";
-import { Card, PageHeader, Pill } from "@/components/ui";
-import { ExternalLink, BookOpen } from "lucide-react";
+import { ExternalLink, ArrowRight } from "lucide-react";
 
 export const metadata = {
   title: "Methodology · Mizan",
@@ -9,22 +8,11 @@ export const metadata = {
     "How Mizan screens stocks across six scholarly methodologies — with primary-source citations for every threshold.",
 };
 
-// ────────────────────────────────────────────────────────────────────────────
-// Primary sources per scholar profile.
-// Citations link directly to the published methodology document.
-// Every threshold in src/lib/scholars.ts must trace back to one of these.
-// ────────────────────────────────────────────────────────────────────────────
-
 interface Source {
-  /** Display title — used as link text. */
   title: string;
-  /** URL to the primary source. */
   url: string;
-  /** Type: original standard, scholar publication, official ruling, market index methodology. */
   kind: "standard" | "publication" | "ruling" | "index" | "fatwa";
-  /** Year published / last updated, if known. */
   year?: number;
-  /** Why we cite it — what specific rules it supplies. */
   cites: string;
 }
 
@@ -42,7 +30,8 @@ const SOURCES: Record<string, Source[]> = {
       title: "AAOIFI Governance Standards — Shariah Supervisory Board",
       url: "https://aaoifi.com/governance-and-ethics-board/?lang=en",
       kind: "standard",
-      cites: "Sector exclusion enumeration (alcohol, tobacco, pork, gambling, conventional finance, weapons, adult entertainment).",
+      cites:
+        "Sector exclusion enumeration (alcohol, tobacco, pork, gambling, conventional finance, weapons, adult entertainment).",
     },
   ],
   taqi_usmani: [
@@ -130,48 +119,53 @@ const KIND_LABEL: Record<Source["kind"], string> = {
   fatwa: "Fatwa",
 };
 
-const KIND_TONE: Record<Source["kind"], "navy" | "gold" | "neutral"> = {
-  standard: "navy",
-  publication: "neutral",
-  ruling: "gold",
-  index: "navy",
-  fatwa: "gold",
-};
-
 export default function MethodologyPage() {
   return (
-    <div className="space-y-10">
-      <PageHeader
-        kicker="Trust center"
-        title="How Mizan screens stocks"
-        description="Every threshold in Mizan traces back to a public, primary source — the original standard, the scholar's own publication, or the index methodology. No black-box scores."
-      />
-
-      {/* The two screens */}
-      <Card>
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-          The two screens
+    <div className="pb-20">
+      {/* PAGE HEADER */}
+      <header className="pt-6">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Trust centre · Methodology
         </div>
-        <h2 className="mt-2 text-2xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-          Sector first, then financial ratios
-        </h2>
-        <p className="mt-4 text-sm leading-7 text-gray-700">
-          Every stock goes through two screens, in order. If the sector screen fails,
-          the verdict is <strong>Not halal</strong> and the financial ratios are not
-          applied — a company that earns its money from a prohibited activity cannot be
-          rescued by a clean balance sheet.
+        <h1
+          className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          How Mizan screens stocks
+        </h1>
+        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
+          Every threshold in Mizan traces back to a public, primary source — the original
+          standard, the scholar&apos;s own publication, or the index methodology. No
+          black-box scores.
         </p>
-        <ol className="mt-4 ml-5 list-decimal space-y-3 text-sm leading-7 text-gray-700">
+      </header>
+
+      {/* THE TWO SCREENS */}
+      <section className="mt-16">
+        <SectionHead
+          kicker="How the engine works"
+          title="Sector first, then financial ratios"
+        />
+        <div className="mt-6 max-w-2xl space-y-4 text-[15px] leading-relaxed text-gray-700">
+          <p>
+            Every stock goes through two screens, in order. If the sector screen fails,
+            the verdict is <strong className="text-gray-900">Not halal</strong> and the
+            financial ratios are not applied — a company that earns its money from a
+            prohibited activity cannot be rescued by a clean balance sheet.
+          </p>
+        </div>
+        <ol className="mt-6 max-w-2xl space-y-5 pl-5 text-[14px] leading-relaxed text-gray-700 [list-style:decimal]">
           <li>
-            <strong>Sector exclusion.</strong> Alcohol production / sale, gambling,
-            tobacco, conventional banking / insurance / interest-based lending, weapons
-            and defense (most profiles), pork products, adult entertainment, non-halal
-            food processing. Each profile chooses which of these to apply.
+            <strong className="text-gray-900">Sector exclusion.</strong> Alcohol production
+            / sale, gambling, tobacco, conventional banking / insurance / interest-based
+            lending, weapons and defence (most profiles), pork products, adult
+            entertainment, non-halal food processing. Each profile chooses which of these
+            to apply.
           </li>
           <li>
-            <strong>Financial ratio screen.</strong> Between three and five ratio checks
-            depending on the scholar:
-            <ul className="ml-5 mt-2 list-disc space-y-1">
+            <strong className="text-gray-900">Financial ratio screen.</strong> Between
+            three and five ratio checks depending on the scholar:
+            <ul className="mt-3 space-y-1.5 pl-5 [list-style:disc]">
               <li>Impermissible income / revenue.</li>
               <li>Interest-bearing debt / market cap.</li>
               <li>Cash + interest-bearing securities / market cap.</li>
@@ -185,226 +179,272 @@ export default function MethodologyPage() {
             </ul>
           </li>
         </ol>
-      </Card>
+      </section>
 
-      {/* Profiles + primary sources */}
-      <section className="space-y-5">
-        <div>
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
-            Per-scholar references
-          </div>
-          <h2 className="mt-1 text-2xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-            The six profiles and the sources behind them
-          </h2>
-        </div>
+      {/* PER-SCHOLAR PROFILES */}
+      <section className="mt-20">
+        <SectionHead
+          kicker="Per-scholar references"
+          title="The six profiles and the sources behind them"
+        />
 
-        {SCHOLAR_PROFILES.map((p) => {
-          const sources = SOURCES[p.id] ?? [];
-          return (
-            <Card key={p.id} padded={false}>
-              <div className="border-b border-gray-100 px-6 py-5 sm:px-8">
+        <div className="mt-8 space-y-12">
+          {SCHOLAR_PROFILES.map((p) => {
+            const sources = SOURCES[p.id] ?? [];
+            return (
+              <article
+                key={p.id}
+                className="border-t border-gray-200 pt-8"
+              >
+                {/* Scholar heading */}
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <h3
-                    className="text-lg font-bold text-gray-900"
+                    className="text-[22px] font-bold leading-tight text-gray-900"
                     style={{ fontFamily: "Georgia, serif" }}
                   >
                     {p.label}
                   </h3>
-                  <Pill tone="navy">{p.short}</Pill>
+                  <span className="rounded-full bg-navy-50 px-2.5 py-0.5 text-[11px] font-semibold text-navy-700">
+                    {p.short}
+                  </span>
                 </div>
-                <p className="mt-2 text-sm text-gray-700">{p.blurb}</p>
-              </div>
+                <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-gray-600">
+                  {p.blurb}
+                </p>
 
-              <div className="grid grid-cols-1 gap-px bg-gray-100 md:grid-cols-2">
-                {/* Thresholds */}
-                <div className="bg-white p-6">
-                  <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-                    Thresholds
-                  </div>
-                  <dl className="mt-3 space-y-2 text-sm">
-                    <Threshold name="Impermissible income / revenue" op="≤" v={p.maxImpermissibleIncomePct} />
-                    <Threshold name="Interest-bearing debt / market cap" op="≤" v={p.maxDebtToMarketCapPct} />
-                    <Threshold name="Cash + securities / market cap" op="≤" v={p.maxCashSecuritiesToMarketCapPct} />
-                    {p.maxReceivablesToMarketCapPct !== null && (
-                      <Threshold name="Receivables / market cap" op="≤" v={p.maxReceivablesToMarketCapPct} />
-                    )}
-                    {p.minIlliquidAssetsToTotalAssetsPct !== null && (
-                      <Threshold
-                        name="Illiquid assets / total assets"
-                        op="≥"
-                        v={p.minIlliquidAssetsToTotalAssetsPct}
-                        emphasised
-                      />
-                    )}
-                    <div className="flex items-center justify-between border-t border-gray-100 pt-2 text-xs">
-                      <dt className="text-gray-600">Purification scope</dt>
-                      <dd className="italic text-gray-700">
-                        {p.purificationScope === "dividends_and_gains"
-                          ? "dividends + capital gains"
-                          : "dividends only"}
-                      </dd>
+                {/* Two-column: thresholds + sources */}
+                <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-2">
+                  {/* THRESHOLDS */}
+                  <div>
+                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+                      Thresholds
                     </div>
-                  </dl>
-                </div>
-
-                {/* Sources */}
-                <div className="bg-white p-6">
-                  <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-                    Primary sources
+                    <dl className="mt-3 divide-y divide-gray-100">
+                      <Threshold name="Impermissible income / revenue" op="≤" v={p.maxImpermissibleIncomePct} />
+                      <Threshold name="Interest-bearing debt / market cap" op="≤" v={p.maxDebtToMarketCapPct} />
+                      <Threshold name="Cash + securities / market cap" op="≤" v={p.maxCashSecuritiesToMarketCapPct} />
+                      {p.maxReceivablesToMarketCapPct !== null && (
+                        <Threshold name="Receivables / market cap" op="≤" v={p.maxReceivablesToMarketCapPct} />
+                      )}
+                      {p.minIlliquidAssetsToTotalAssetsPct !== null && (
+                        <Threshold
+                          name="Illiquid assets / total assets"
+                          op="≥"
+                          v={p.minIlliquidAssetsToTotalAssetsPct}
+                          emphasised
+                        />
+                      )}
+                      <div className="flex items-center justify-between py-2.5 text-[12px]">
+                        <dt className="text-gray-600">Purification scope</dt>
+                        <dd className="italic text-gray-700">
+                          {p.purificationScope === "dividends_and_gains"
+                            ? "dividends + capital gains"
+                            : "dividends only"}
+                        </dd>
+                      </div>
+                    </dl>
                   </div>
-                  <ul className="mt-3 space-y-3">
-                    {sources.map((s, i) => (
-                      <li key={i} className="border-l-2 border-gray-200 pl-3">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <Pill tone={KIND_TONE[s.kind]} size="sm">
-                            {KIND_LABEL[s.kind]}
-                          </Pill>
-                          {s.year && (
-                            <span className="text-[11px] text-gray-500">{s.year}</span>
+
+                  {/* SOURCES */}
+                  <div>
+                    <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+                      Primary sources
+                    </div>
+                    <ul className="mt-3 space-y-4">
+                      {sources.map((s, i) => (
+                        <li key={i} className="border-l-2 border-gray-200 pl-4">
+                          <div className="flex flex-wrap items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.14em]">
+                            <span className="text-gray-700">{KIND_LABEL[s.kind]}</span>
+                            {s.year && (
+                              <span className="text-gray-400">· {s.year}</span>
+                            )}
+                          </div>
+                          {s.url.startsWith("http") ? (
+                            <a
+                              href={s.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-2 inline-flex items-start gap-1.5 text-[14px] font-medium leading-snug text-navy-700 hover:text-navy-900 hover:underline"
+                            >
+                              <span>{s.title}</span>
+                              <ExternalLink size={12} className="mt-1 flex-shrink-0" />
+                            </a>
+                          ) : (
+                            <Link
+                              href={s.url}
+                              className="mt-2 inline-block text-[14px] font-medium leading-snug text-navy-700 hover:text-navy-900 hover:underline"
+                            >
+                              {s.title}
+                            </Link>
                           )}
-                        </div>
-                        {s.url.startsWith("http") ? (
-                          <a
-                            href={s.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="mt-1 inline-flex items-start gap-1 text-sm font-medium text-navy-700 hover:underline"
-                          >
-                            <span>{s.title}</span>
-                            <ExternalLink size={12} className="mt-1 flex-shrink-0" />
-                          </a>
-                        ) : (
-                          <Link href={s.url} className="mt-1 inline-block text-sm font-medium text-navy-700 hover:underline">
-                            {s.title}
-                          </Link>
-                        )}
-                        <p className="mt-1 text-xs leading-5 text-gray-600">{s.cites}</p>
-                      </li>
-                    ))}
-                  </ul>
+                          <p className="mt-1.5 text-[12px] leading-relaxed text-gray-600">
+                            {s.cites}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </Card>
-          );
-        })}
+              </article>
+            );
+          })}
+        </div>
       </section>
 
-      {/* Worked example */}
-      <Card className="bg-amber-50/40">
-        <div className="flex items-start gap-3">
-          <div className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md bg-amber-100 text-amber-700">
-            <BookOpen size={16} />
-          </div>
-          <div>
-            <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
-              Worked example
-            </div>
-            <h2 className="mt-1 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-              Why scholars disagree on AMZN
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-gray-700">
-              Amazon&apos;s interest-bearing debt (≈6.5% of market cap) sits well below
-              AAOIFI&apos;s 30% cap and DJIM&apos;s 33% cap, and its impermissible income
-              (≈2.8% of revenue) is under every scholar&apos;s threshold. Under AAOIFI and
-              DJIM, AMZN is Halal.
-            </p>
-            <p className="mt-2 text-sm leading-6 text-gray-700">
-              Mufti Taqi Usmani adds the illiquid-asset floor: tangible assets must exceed
-              20% of total assets. Amazon&apos;s ratio is ≈12% — overwhelmingly intangible
-              (brand, code, AWS goodwill). Under his published standard, AMZN does not
-              represent ownership of enough real assets to be tradable, and the verdict
-              flips to <strong>Not halal</strong>.
-            </p>
-            <p className="mt-2 text-sm leading-6 text-gray-700">
-              No standard is &quot;more correct.&quot; The disagreement is real, published, and
-              held by hundreds of millions of Muslims. Mizan&apos;s job is to surface it.
-            </p>
-            <div className="mt-3">
-              <Link href="/screen?ticker=AMZN" className="text-sm font-medium text-navy-700 hover:underline">
-                See AMZN under all five scholars →
-              </Link>
-            </div>
-          </div>
+      {/* WORKED EXAMPLE */}
+      <section className="mt-20 border-t border-gray-200 pt-10">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-600">
+          Worked example
         </div>
-      </Card>
-
-      {/* Data sources */}
-      <Card>
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-          Where the data comes from
-        </div>
-        <h2 className="mt-1 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-          Financial fundamentals
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          Why scholars disagree on AMZN
         </h2>
-        <p className="mt-3 text-sm leading-7 text-gray-700">
-          Financial fundamentals are sourced from Financial Modeling Prep in Year 1 and
-          graduate to Refinitiv / SIX Financial as international coverage expands. Mizan
-          computes the Shariah ratios in-house from balance-sheet primitives — we do not
-          rely on any third party&apos;s pre-computed &quot;halal score&quot;.
-        </p>
-        <p className="mt-2 text-sm leading-7 text-gray-700">
-          Stock fundamentals refresh nightly. When a company files a 10-K, 10-Q, or
-          equivalent, we re-screen every affected position within four hours and notify
-          Pro-tier users whose portfolio verdicts change.
-        </p>
-        <p className="mt-2 text-xs italic text-gray-500">
-          The current prototype runs against a 163-ticker representative sample seeded
-          from public filings. Production version covers any listed equity.
-        </p>
-      </Card>
-
-      {/* SSB */}
-      <Card>
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-          Oversight
+        <div className="mt-5 max-w-2xl space-y-4 text-[14px] leading-relaxed text-gray-700">
+          <p>
+            Amazon&apos;s interest-bearing debt (≈6.5% of market cap) sits well below
+            AAOIFI&apos;s 30% cap and DJIM&apos;s 33% cap, and its impermissible income
+            (≈2.8% of revenue) is under every scholar&apos;s threshold. Under AAOIFI and
+            DJIM, AMZN is Halal.
+          </p>
+          <p>
+            Mufti Taqi Usmani adds the illiquid-asset floor: tangible assets must exceed
+            20% of total assets. Amazon&apos;s ratio is ≈12% — overwhelmingly intangible
+            (brand, code, AWS goodwill). Under his published standard, AMZN does not
+            represent ownership of enough real assets to be tradable, and the verdict
+            flips to <strong className="text-gray-900">Not halal</strong>.
+          </p>
+          <p>
+            No standard is &quot;more correct.&quot; The disagreement is real, published,
+            and held by hundreds of millions of Muslims. Mizan&apos;s job is to surface it.
+          </p>
         </div>
-        <h2 className="mt-1 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-          Shariah Supervisory Board
-        </h2>
-        <p className="mt-3 text-sm leading-7 text-gray-700">
-          Mizan&apos;s Shariah Supervisory Board reviews every methodology release before
-          it ships, meets quarterly, audits a sample of AI Q&amp;A outputs each quarter,
-          and co-signs an annual public Shariah report.
-        </p>
-        <p className="mt-3 text-sm leading-7 text-gray-700">
-          Board composition is published as scholars confirm in writing. We do not
-          publish names before written engagement is in place — claims of supervision
-          without the corresponding documentation are common in this industry and we
-          refuse to participate.
-        </p>
-      </Card>
-
-      {/* Corrections */}
-      <Card className="bg-gray-50">
-        <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
-          Disagreements & corrections
+        <div className="mt-5">
+          <Link
+            href="/screen?ticker=AMZN"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-navy-700 hover:text-navy-900"
+          >
+            See AMZN under all six scholars <ArrowRight size={14} />
+          </Link>
         </div>
-        <h2 className="mt-1 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-          We welcome challenge
-        </h2>
-        <p className="mt-3 text-sm leading-7 text-gray-700">
+      </section>
+
+      {/* DATA SOURCES */}
+      <section className="mt-20 border-t border-gray-200 pt-10">
+        <SectionHead
+          kicker="Where the data comes from"
+          title="Financial fundamentals"
+        />
+        <div className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
+          <p>
+            Financial fundamentals are sourced from Financial Modeling Prep in Year 1 and
+            graduate to Refinitiv / SIX Financial as international coverage expands. Mizan
+            computes the Shariah ratios in-house from balance-sheet primitives — we do not
+            rely on any third party&apos;s pre-computed &quot;halal score&quot;.
+          </p>
+          <p>
+            Stock fundamentals refresh nightly. When a company files a 10-K, 10-Q, or
+            equivalent, we re-screen every affected position within four hours and notify
+            Pro-tier users whose portfolio verdicts change.
+          </p>
+          <p className="text-[12px] italic text-gray-500">
+            The current prototype runs against a 163-ticker representative sample seeded
+            from public filings. Production version covers any listed equity.
+          </p>
+        </div>
+      </section>
+
+      {/* OVERSIGHT */}
+      <section className="mt-20 border-t border-gray-200 pt-10">
+        <SectionHead
+          kicker="Oversight"
+          title="Shariah Supervisory Board"
+        />
+        <div className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
+          <p>
+            Mizan&apos;s Shariah Supervisory Board reviews every methodology release
+            before it ships, meets quarterly, audits a sample of AI Q&amp;A outputs each
+            quarter, and co-signs an annual public Shariah report.
+          </p>
+          <p>
+            Board composition is published as scholars confirm in writing. We do not
+            publish names before written engagement is in place — claims of supervision
+            without the corresponding documentation are common in this industry and we
+            refuse to participate.
+          </p>
+        </div>
+      </section>
+
+      {/* CORRECTIONS */}
+      <section className="mt-20 border-t border-gray-200 pt-10">
+        <SectionHead
+          kicker="Disagreements & corrections"
+          title="We welcome challenge"
+        />
+        <p className="mt-5 max-w-2xl text-[14px] leading-relaxed text-gray-700">
           If you believe a scholar profile in Mizan misrepresents the underlying
           scholarship, write to{" "}
-          <a href="mailto:methodology@mizan.app" className="text-navy-700 underline">
+          <a
+            href="mailto:methodology@mizan.app"
+            className="text-navy-700 underline hover:text-navy-900"
+          >
             methodology@mizan.app
           </a>{" "}
           with the citation. Every note is reviewed by the Shariah Board and a public
           changelog entry is added if a profile changes.
         </p>
-      </Card>
+      </section>
 
-      <p className="text-center text-xs text-gray-500">
-        Last updated 22 May 2026. <Link href="/" className="text-navy-700 underline">Back to home.</Link>
+      <p className="mt-16 text-center text-[11px] text-gray-500">
+        Last updated 22 May 2026.{" "}
+        <Link href="/" className="text-navy-700 underline hover:text-navy-900">
+          Back to home
+        </Link>.
       </p>
     </div>
   );
 }
 
-function Threshold({ name, op, v, emphasised }: { name: string; op: "≤" | "≥"; v: number; emphasised?: boolean }) {
+function SectionHead({ kicker, title }: { kicker: string; title: string }) {
   return (
-    <div className={"flex items-center justify-between " + (emphasised ? "font-semibold text-navy-700" : "text-gray-700")}>
+    <div>
+      <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+        {kicker}
+      </div>
+      <h2
+        className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+        style={{ fontFamily: "Georgia, serif" }}
+      >
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+function Threshold({
+  name,
+  op,
+  v,
+  emphasised,
+}: {
+  name: string;
+  op: "≤" | "≥";
+  v: number;
+  emphasised?: boolean;
+}) {
+  return (
+    <div
+      className={
+        "flex items-center justify-between py-2.5 text-[13px] " +
+        (emphasised ? "font-semibold text-navy-700" : "text-gray-700")
+      }
+    >
       <dt>{name}</dt>
-      <dd className="tabular-nums">{op} {v}%</dd>
+      <dd className="font-mono tabular-nums">
+        {op} {v}%
+      </dd>
     </div>
   );
 }
