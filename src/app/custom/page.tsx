@@ -7,7 +7,6 @@ import { SCHOLAR_PROFILES } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
 import type { ScholarProfile, ProhibitedSector } from "@/lib/types";
 import ComplianceCard from "@/components/ComplianceCard";
-import { PageHeader } from "@/components/ui";
 import { Save, RotateCcw, Wand2 } from "lucide-react";
 
 const ALL_SECTORS: { id: ProhibitedSector; label: string }[] = [
@@ -22,11 +21,11 @@ const ALL_SECTORS: { id: ProhibitedSector; label: string }[] = [
 ];
 
 const PRESETS: { id: string; label: string }[] = [
-  { id: "aaoifi", label: "AAOIFI preset" },
-  { id: "taqi_usmani", label: "Mufti Taqi preset" },
-  { id: "djim", label: "DJIM preset" },
-  { id: "jafari", label: "Ja'fari preset" },
-  { id: "strict", label: "Strict preset" },
+  { id: "aaoifi", label: "AAOIFI" },
+  { id: "taqi_usmani", label: "Mufti Taqi" },
+  { id: "djim", label: "DJIM" },
+  { id: "jafari", label: "Ja'fari" },
+  { id: "strict", label: "Strict" },
 ];
 
 interface SavedProfile {
@@ -40,7 +39,10 @@ interface SavedProfile {
 }
 
 const DEFAULT: SavedProfile = {
-  excludedSectors: ["alcohol", "gambling", "tobacco", "conventional_finance", "weapons", "pork", "adult_entertainment", "non_halal_food"],
+  excludedSectors: [
+    "alcohol", "gambling", "tobacco", "conventional_finance",
+    "weapons", "pork", "adult_entertainment", "non_halal_food",
+  ],
   maxImpermissibleIncomePct: 5,
   maxDebtToMarketCapPct: 30,
   maxCashSecuritiesToMarketCapPct: 30,
@@ -53,7 +55,7 @@ const STORAGE_KEY = "mizan.customProfile";
 
 export default function CustomProfilePage() {
   return (
-    <Suspense fallback={<div className="text-sm text-gray-500">Loading…</div>}>
+    <Suspense fallback={<div className="py-8 text-sm text-gray-500">Loading…</div>}>
       <CustomInner />
     </Suspense>
   );
@@ -126,108 +128,199 @@ function CustomInner() {
   }
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        kicker="Advanced"
-        title="Build your custom scholar profile"
-        description="Set your own thresholds for every screening criterion. Saved to your browser. Once saved, select 'Custom' on the Screener page to use this profile for any stock."
-      />
+    <div className="pb-20">
+      {/* PAGE HEADER */}
+      <header className="pt-6">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Advanced
+        </div>
+        <h1
+          className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          Build your custom scholar profile
+        </h1>
+        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
+          Set your own thresholds for every screening criterion. Saved to your browser.
+          Once saved, select &lsquo;Custom&rsquo; on the Screener page to use this profile
+          for any stock.
+        </p>
+      </header>
 
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs uppercase tracking-wide text-gray-500">Start from a preset:</span>
+      {/* PRESETS */}
+      <div className="mt-8 flex flex-wrap items-center gap-2">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+          Start from a preset:
+        </span>
         {PRESETS.map((p) => (
-          <button key={p.id} type="button" onClick={() => loadPreset(p.id)} className="rounded-md border border-gray-200 bg-white px-2 py-1 text-xs text-gray-700 hover:border-navy-300 hover:bg-gray-50">
-            <Wand2 size={11} className="mr-1 inline" />{p.label}
+          <button
+            key={p.id}
+            type="button"
+            onClick={() => loadPreset(p.id)}
+            className="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-white px-2.5 py-1 text-[11px] font-medium text-gray-700 transition hover:border-navy-300 hover:text-navy-800"
+          >
+            <Wand2 size={11} />
+            {p.label}
           </button>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      {/* EDITOR + PREVIEW */}
+      <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Editor */}
-        <div className="space-y-5 rounded-xl border border-gray-200 bg-white p-5">
-          <h2 className="text-base font-semibold text-gray-900">Thresholds</h2>
+        <div className="rounded-xl border border-gray-200 bg-white p-6">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            Thresholds
+          </div>
+          <h2
+            className="mt-2 text-[18px] font-bold text-gray-900"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            Your screening rules
+          </h2>
 
-          <Slider
-            label="Max impermissible income / revenue"
-            value={profile.maxImpermissibleIncomePct}
-            min={0} max={10} step={0.5}
-            unit="%"
-            onChange={(v) => setProfile((p) => ({ ...p, maxImpermissibleIncomePct: v }))}
-          />
-          <Slider
-            label="Max interest-bearing debt / market cap"
-            value={profile.maxDebtToMarketCapPct}
-            min={0} max={50} step={1}
-            unit="%"
-            onChange={(v) => setProfile((p) => ({ ...p, maxDebtToMarketCapPct: v }))}
-          />
-          <Slider
-            label="Max cash + interest-bearing securities / market cap"
-            value={profile.maxCashSecuritiesToMarketCapPct}
-            min={0} max={50} step={1}
-            unit="%"
-            onChange={(v) => setProfile((p) => ({ ...p, maxCashSecuritiesToMarketCapPct: v }))}
-          />
-          <OptionalSlider
-            label="Max receivables / market cap (set null if not screened)"
-            value={profile.maxReceivablesToMarketCapPct}
-            min={0} max={50} step={1}
-            unit="%"
-            onChange={(v) => setProfile((p) => ({ ...p, maxReceivablesToMarketCapPct: v }))}
-          />
-          <OptionalSlider
-            label="Min illiquid assets / total assets (Mufti Taqi)"
-            value={profile.minIlliquidAssetsToTotalAssetsPct}
-            min={0} max={50} step={1}
-            unit="%"
-            onChange={(v) => setProfile((p) => ({ ...p, minIlliquidAssetsToTotalAssetsPct: v }))}
-          />
+          <div className="mt-6 space-y-6">
+            <Slider
+              label="Max impermissible income / revenue"
+              value={profile.maxImpermissibleIncomePct}
+              min={0}
+              max={10}
+              step={0.5}
+              unit="%"
+              onChange={(v) => setProfile((p) => ({ ...p, maxImpermissibleIncomePct: v }))}
+            />
+            <Slider
+              label="Max interest-bearing debt / market cap"
+              value={profile.maxDebtToMarketCapPct}
+              min={0}
+              max={50}
+              step={1}
+              unit="%"
+              onChange={(v) => setProfile((p) => ({ ...p, maxDebtToMarketCapPct: v }))}
+            />
+            <Slider
+              label="Max cash + securities / market cap"
+              value={profile.maxCashSecuritiesToMarketCapPct}
+              min={0}
+              max={50}
+              step={1}
+              unit="%"
+              onChange={(v) =>
+                setProfile((p) => ({ ...p, maxCashSecuritiesToMarketCapPct: v }))
+              }
+            />
+            <OptionalSlider
+              label="Max receivables / market cap"
+              value={profile.maxReceivablesToMarketCapPct}
+              min={0}
+              max={50}
+              step={1}
+              unit="%"
+              onChange={(v) =>
+                setProfile((p) => ({ ...p, maxReceivablesToMarketCapPct: v }))
+              }
+            />
+            <OptionalSlider
+              label="Min illiquid assets / total assets (Mufti Taqi)"
+              value={profile.minIlliquidAssetsToTotalAssetsPct}
+              min={0}
+              max={50}
+              step={1}
+              unit="%"
+              onChange={(v) =>
+                setProfile((p) => ({ ...p, minIlliquidAssetsToTotalAssetsPct: v }))
+              }
+            />
+          </div>
 
-          <div>
-            <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Purification scope</div>
-            <div className="mt-2 flex gap-2">
+          <div className="mt-6 border-t border-gray-100 pt-5">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+              Purification scope
+            </div>
+            <div className="mt-2 flex flex-wrap gap-2">
               {(["dividends", "dividends_and_gains"] as const).map((s) => (
-                <button key={s} type="button" onClick={() => setProfile((p) => ({ ...p, purificationScope: s }))}
-                  className={"rounded-md border px-3 py-1.5 text-xs " + (profile.purificationScope === s ? "border-navy-700 bg-navy-50 text-navy-800" : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50")}>
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setProfile((p) => ({ ...p, purificationScope: s }))}
+                  className={
+                    "rounded-md border px-3 py-1.5 text-[12px] font-medium transition " +
+                    (profile.purificationScope === s
+                      ? "border-navy-700 bg-navy-50 text-navy-800"
+                      : "border-gray-200 bg-white text-gray-700 hover:border-gray-400")
+                  }
+                >
                   {s === "dividends" ? "Dividends only" : "Dividends + capital gains"}
                 </button>
               ))}
             </div>
           </div>
 
-          <div>
-            <div className="text-xs font-medium uppercase tracking-wide text-gray-500">Excluded sectors</div>
+          <div className="mt-6 border-t border-gray-100 pt-5">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+              Excluded sectors
+            </div>
             <div className="mt-2 grid grid-cols-2 gap-1.5">
               {ALL_SECTORS.map((s) => {
                 const on = profile.excludedSectors.includes(s.id);
                 return (
-                  <button key={s.id} type="button" onClick={() => toggleSector(s.id)}
-                    className={"rounded-md border px-2 py-1.5 text-left text-xs " + (on ? "border-navy-700 bg-navy-50 text-navy-800" : "border-gray-200 bg-white text-gray-500 hover:bg-gray-50")}>
-                    <span className="font-mono mr-1">{on ? "✓" : "·"}</span>{s.label}
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => toggleSector(s.id)}
+                    className={
+                      "rounded-md border px-3 py-1.5 text-left text-[12px] transition " +
+                      (on
+                        ? "border-navy-700 bg-navy-50 text-navy-800"
+                        : "border-gray-200 bg-white text-gray-500 hover:border-gray-400")
+                    }
+                  >
+                    <span className="mr-2 font-mono">{on ? "✓" : "·"}</span>
+                    {s.label}
                   </button>
                 );
               })}
             </div>
           </div>
 
-          <div className="flex items-center gap-2 border-t border-gray-100 pt-4">
-            <button type="button" onClick={save} className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-3 py-1.5 text-sm font-medium text-white hover:bg-navy-700">
+          <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-gray-100 pt-5">
+            <button
+              type="button"
+              onClick={save}
+              className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2 text-sm font-semibold text-white transition hover:bg-navy-700"
+            >
               <Save size={14} /> Save profile
             </button>
-            <button type="button" onClick={reset} className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">
+            <button
+              type="button"
+              onClick={reset}
+              className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+            >
               <RotateCcw size={14} /> Reset to defaults
             </button>
-            {savedAt && <span className="text-xs text-emerald-700">Saved at {savedAt}</span>}
+            {savedAt && (
+              <span className="text-[11px] font-medium text-emerald-700">
+                Saved at {savedAt}
+              </span>
+            )}
           </div>
         </div>
 
         {/* Live preview */}
-        <div className="space-y-3">
-          <div className="rounded-xl border border-gray-200 bg-white p-4">
-            <label className="block text-xs font-medium uppercase tracking-wide text-gray-500">Live preview against</label>
-            <select value={previewTicker} onChange={(e) => setPreviewTicker(e.target.value)} className="mt-1 w-full rounded-md border border-gray-200 bg-gray-50 px-2 py-1.5 text-sm focus:border-navy-400 focus:bg-white">
+        <div className="space-y-4">
+          <div className="rounded-xl border border-gray-200 bg-white p-5">
+            <label className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+              Live preview against
+            </label>
+            <select
+              value={previewTicker}
+              onChange={(e) => setPreviewTicker(e.target.value)}
+              className="mt-2 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-[14px] focus:border-navy-700 focus:outline-none focus:ring-2 focus:ring-navy-700/10"
+            >
               {listStocks().slice(0, 50).map((s) => (
-                <option key={s.ticker} value={s.ticker}>{s.ticker} — {s.name}</option>
+                <option key={s.ticker} value={s.ticker}>
+                  {s.ticker} — {s.name}
+                </option>
               ))}
             </select>
           </div>
@@ -238,22 +331,61 @@ function CustomInner() {
   );
 }
 
-function Slider({ label, value, min, max, step, unit, onChange }: {
-  label: string; value: number; min: number; max: number; step: number; unit: string; onChange: (v: number) => void;
+function Slider({
+  label,
+  value,
+  min,
+  max,
+  step,
+  unit,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  unit: string;
+  onChange: (v: number) => void;
 }) {
   return (
     <div>
       <div className="flex items-baseline justify-between">
-        <label className="text-sm text-gray-700">{label}</label>
-        <span className="font-mono text-sm font-semibold text-navy-700">{value}{unit}</span>
+        <label className="text-[13px] text-gray-700">{label}</label>
+        <span className="font-mono text-[13px] font-semibold text-navy-700 tabular-nums">
+          {value}
+          {unit}
+        </span>
       </div>
-      <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(parseFloat(e.target.value))} className="mt-1 w-full" />
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(parseFloat(e.target.value))}
+        className="mt-2 w-full accent-navy-700"
+      />
     </div>
   );
 }
 
-function OptionalSlider({ label, value, min, max, step, unit, onChange }: {
-  label: string; value: number | null; min: number; max: number; step: number; unit: string; onChange: (v: number | null) => void;
+function OptionalSlider({
+  label,
+  value,
+  min,
+  max,
+  step,
+  unit,
+  onChange,
+}: {
+  label: string;
+  value: number | null;
+  min: number;
+  max: number;
+  step: number;
+  unit: string;
+  onChange: (v: number | null) => void;
 }) {
   const [enabled, setEnabled] = useState(value !== null);
   useEffect(() => setEnabled(value !== null), [value]);
@@ -261,18 +393,36 @@ function OptionalSlider({ label, value, min, max, step, unit, onChange }: {
   return (
     <div>
       <div className="flex items-baseline justify-between">
-        <label className="flex items-center gap-2 text-sm text-gray-700">
-          <input type="checkbox" checked={enabled} onChange={(e) => {
-            const on = e.target.checked;
-            setEnabled(on);
-            onChange(on ? (value ?? Math.round((min + max) / 4)) : null);
-          }} />
+        <label className="flex items-center gap-2 text-[13px] text-gray-700">
+          <input
+            type="checkbox"
+            checked={enabled}
+            onChange={(e) => {
+              const on = e.target.checked;
+              setEnabled(on);
+              onChange(on ? (value ?? Math.round((min + max) / 4)) : null);
+            }}
+            className="accent-navy-700"
+          />
           {label}
         </label>
-        {enabled && <span className="font-mono text-sm font-semibold text-navy-700">{value}{unit}</span>}
+        {enabled && (
+          <span className="font-mono text-[13px] font-semibold text-navy-700 tabular-nums">
+            {value}
+            {unit}
+          </span>
+        )}
       </div>
       {enabled && value !== null && (
-        <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(parseFloat(e.target.value))} className="mt-1 w-full" />
+        <input
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(e) => onChange(parseFloat(e.target.value))}
+          className="mt-2 w-full accent-navy-700"
+        />
       )}
     </div>
   );
