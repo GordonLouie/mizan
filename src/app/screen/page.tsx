@@ -23,85 +23,44 @@ const AMZN = {
   price: "$186.20",
   pe: "42.1",
   subSector: "Retail",
-  debtToMarketCap: 6.5,
-  interestIncomeRatio: 1.2,
-  halalRevenueRatio: 2.8,
-  tangibleAssets: 12,
-  illiquidAssets: 18,
 };
 
 const SCHOLAR_VERDICTS = [
   {
     id: "aaoifi",
     name: "AAOIFI",
-    methodology: "Industry-standard shariah screening",
     verdict: "halal" as const,
-    decidingMetric: "Debt / market cap: 6.5% (cap 30%)",
-    ratios: [
-      { name: "Debt ratio", value: "6.5%", threshold: "< 30%", pass: true },
-      { name: "Interest income", value: "1.2%", threshold: "< 5%", pass: true },
-      { name: "Haram revenue", value: "2.8%", threshold: "< 5%", pass: true },
-    ],
+    decidingMetric: "Debt / market cap 6.5%",
   },
   {
     id: "mufti-taqi",
     name: "Mufti Taqi Usmani",
-    methodology: "Tangible-asset floor + stricter thresholds",
     verdict: "not-halal" as const,
-    decidingMetric: "Tangible assets: 12% (floor 20%)",
-    ratios: [
-      { name: "Debt ratio", value: "6.5%", threshold: "< 30%", pass: true },
-      { name: "Tangible assets", value: "12%", threshold: "> 20%", pass: false },
-      { name: "Haram revenue", value: "2.8%", threshold: "< 5%", pass: true },
-    ],
+    decidingMetric: "Tangible assets 12% < 20%",
   },
   {
     id: "djim",
     name: "DJIM",
-    methodology: "Dow Jones Islamic Market Index criteria",
     verdict: "halal" as const,
-    decidingMetric: "All ratios within threshold",
-    ratios: [
-      { name: "Debt ratio", value: "6.5%", threshold: "< 33%", pass: true },
-      { name: "Cash + securities", value: "18%", threshold: "< 33%", pass: true },
-      { name: "Receivables", value: "22%", threshold: "< 33%", pass: true },
-    ],
+    decidingMetric: "All ratios pass",
   },
   {
     id: "jafari",
     name: "Ja'fari",
-    methodology: "Shia jurisprudence interpretation",
     verdict: "halal" as const,
-    decidingMetric: "Debt ratio: 6.5% (cap 30%)",
-    ratios: [
-      { name: "Debt ratio", value: "6.5%", threshold: "< 30%", pass: true },
-      { name: "Interest income", value: "1.2%", threshold: "< 5%", pass: true },
-      { name: "Haram revenue", value: "2.8%", threshold: "< 5%", pass: true },
-    ],
+    decidingMetric: "Debt ratio 6.5%",
   },
   {
     id: "strict",
     name: "Strict",
-    methodology: "Conservative interpretation across schools",
     verdict: "doubtful" as const,
-    decidingMetric: "Illiquid assets: 18% (floor 20%)",
-    ratios: [
-      { name: "Debt ratio", value: "6.5%", threshold: "< 25%", pass: true },
-      { name: "Illiquid assets", value: "18%", threshold: "> 20%", pass: false },
-      { name: "Haram revenue", value: "2.8%", threshold: "< 3%", pass: true },
-    ],
+    decidingMetric: "Illiquid assets 18% < 20%",
   },
   {
     id: "custom",
     name: "Custom",
-    methodology: "Your configured thresholds",
     verdict: "halal" as const,
-    decidingMetric: "All custom thresholds pass",
-    ratios: [
-      { name: "Debt ratio", value: "6.5%", threshold: "< 30%", pass: true },
-      { name: "Interest income", value: "1.2%", threshold: "< 5%", pass: true },
-      { name: "Haram revenue", value: "2.8%", threshold: "< 5%", pass: true },
-    ],
+    decidingMetric: "All thresholds pass",
   },
 ];
 
@@ -113,9 +72,9 @@ export default function ScreenPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 1. STICKY TOP BAR */}
+      {/* STICKY TOP BAR */}
       <div className="sticky top-0 z-40 border-b border-gray-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-3">
           {/* Ticker search input */}
           <div className="relative">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -123,7 +82,7 @@ export default function ScreenPage() {
               type="text"
               value={ticker}
               onChange={(e) => setTicker(e.target.value.toUpperCase())}
-              className="h-9 w-48 rounded border border-gray-300 bg-white pl-9 pr-3 font-mono text-sm text-gray-900 placeholder:text-gray-400 focus:border-navy-700 focus:outline-none focus:ring-1 focus:ring-navy-700"
+              className="h-9 w-44 rounded border border-gray-300 bg-white pl-9 pr-3 font-mono text-sm text-gray-900 placeholder:text-gray-400 focus:border-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-900"
               placeholder="Enter ticker…"
             />
           </div>
@@ -136,7 +95,7 @@ export default function ScreenPage() {
                 onClick={() => setSelectedScholar(s.id)}
                 className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition ${
                   selectedScholar === s.id
-                    ? "bg-navy-800 text-white"
+                    ? "bg-gray-900 text-white"
                     : "border border-gray-300 bg-white text-gray-600 hover:border-gray-400 hover:text-gray-900"
                 }`}
               >
@@ -148,22 +107,22 @@ export default function ScreenPage() {
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="mx-auto max-w-6xl px-6 py-8">
-        {/* 2. HERO ROW */}
+      <div className="mx-auto max-w-5xl px-6 py-10">
+        {/* HERO ROW */}
         <div className="grid grid-cols-12 gap-8">
           {/* LEFT: Company info */}
-          <div className="col-span-12 lg:col-span-8">
+          <div className="col-span-12 lg:col-span-7">
             <h1
-              className="text-[32px] font-bold leading-tight text-gray-900"
+              className="text-3xl font-bold leading-tight text-gray-900"
               style={{ fontFamily: "Georgia, serif" }}
             >
               {AMZN.name}
             </h1>
-            <p className="mt-1.5 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-gray-500">
               {AMZN.ticker} · {AMZN.exchange} · {AMZN.sector}
             </p>
 
-            {/* 4-stat row */}
+            {/* Stats row */}
             <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
               <Stat label="Market cap" value={AMZN.marketCap} />
               <Stat label="Price" value={AMZN.price} />
@@ -172,14 +131,14 @@ export default function ScreenPage() {
             </div>
           </div>
 
-          {/* RIGHT: Verdict card */}
-          <div className="col-span-12 lg:col-span-4">
+          {/* RIGHT: Verdict card - visual focal point */}
+          <div className="col-span-12 lg:col-span-5">
             <div className="rounded border border-gray-200 bg-white p-6">
               <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
                 Under {currentScholar.name}
               </div>
               <div
-                className={`mt-3 text-[48px] font-bold leading-none ${
+                className={`mt-3 text-5xl font-bold leading-none ${
                   currentScholar.verdict === "halal"
                     ? "text-emerald-700"
                     : currentScholar.verdict === "not-halal"
@@ -194,31 +153,17 @@ export default function ScreenPage() {
                     ? "Not halal"
                     : "Doubtful"}
               </div>
-
-              {/* 3 ratio rows */}
-              <div className="mt-6 space-y-3">
-                {currentScholar.ratios.map((r) => (
-                  <div key={r.name} className="flex items-center justify-between text-xs">
-                    <span className="text-gray-600">{r.name}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-gray-900">{r.value}</span>
-                      <span className="text-gray-400">/</span>
-                      <span className="font-mono text-gray-500">{r.threshold}</span>
-                      <span
-                        className={`h-2 w-2 rounded-full ${r.pass ? "bg-emerald-500" : "bg-rose-500"}`}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <p className="mt-4 font-mono text-xs text-gray-500">
+                {currentScholar.decidingMetric}
+              </p>
             </div>
           </div>
         </div>
 
-        {/* 3. EVIDENCE TABLE */}
-        <div className="mt-12">
+        {/* EVIDENCE TABLE - centerpiece */}
+        <div className="mt-14">
           <h2
-            className="text-lg font-bold text-gray-900"
+            className="text-xl font-bold text-gray-900"
             style={{ fontFamily: "Georgia, serif" }}
           >
             Six scholars, six verdicts
@@ -227,104 +172,114 @@ export default function ScreenPage() {
             The same stock screened under different methodologies.
           </p>
 
-          <div className="mt-6 rounded border border-gray-200 bg-white">
-            {SCHOLAR_VERDICTS.map((scholar, idx) => (
-              <div
-                key={scholar.id}
-                className={`flex flex-col gap-3 px-6 py-4 sm:flex-row sm:items-center sm:justify-between ${
-                  idx !== SCHOLAR_VERDICTS.length - 1 ? "border-b border-gray-100" : ""
-                } ${selectedScholar === scholar.id ? "bg-navy-50/30" : ""}`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="min-w-[140px]">
-                    <span className="text-sm font-semibold text-gray-900">{scholar.name}</span>
-                  </div>
-                  <Link
-                    href="/methodology"
-                    className="hidden items-center gap-1 text-xs text-gray-400 hover:text-navy-700 sm:flex"
+          <div className="mt-6 overflow-hidden rounded border border-gray-200 bg-white">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-200 bg-gray-50 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-6 py-3">Scholar</th>
+                  <th className="px-6 py-3">Verdict</th>
+                  <th className="px-6 py-3 text-right">Deciding metric</th>
+                </tr>
+              </thead>
+              <tbody>
+                {SCHOLAR_VERDICTS.map((scholar, idx) => (
+                  <tr
+                    key={scholar.id}
+                    className={`${
+                      idx !== SCHOLAR_VERDICTS.length - 1 ? "border-b border-gray-100" : ""
+                    } ${selectedScholar === scholar.id ? "bg-gray-50" : ""}`}
                   >
-                    methodology <ExternalLink size={10} />
-                  </Link>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <span className="font-mono text-xs text-gray-500">{scholar.decidingMetric}</span>
-                  <span
-                    className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                      scholar.verdict === "halal"
-                        ? "bg-emerald-50 text-emerald-700"
-                        : scholar.verdict === "not-halal"
-                          ? "bg-rose-50 text-rose-700"
-                          : "bg-amber-50 text-amber-600"
-                    }`}
-                  >
-                    {scholar.verdict === "halal"
-                      ? "Halal"
-                      : scholar.verdict === "not-halal"
-                        ? "Not halal"
-                        : "Doubtful"}
-                  </span>
-                </div>
-              </div>
-            ))}
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm font-medium text-gray-900">{scholar.name}</span>
+                        <Link
+                          href="/methodology"
+                          className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600"
+                        >
+                          <ExternalLink size={10} />
+                        </Link>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`inline-block rounded-full px-2.5 py-1 text-xs font-semibold ${
+                          scholar.verdict === "halal"
+                            ? "bg-emerald-50 text-emerald-700"
+                            : scholar.verdict === "not-halal"
+                              ? "bg-rose-50 text-rose-700"
+                              : "bg-amber-50 text-amber-600"
+                        }`}
+                      >
+                        {scholar.verdict === "halal"
+                          ? "Halal"
+                          : scholar.verdict === "not-halal"
+                            ? "Not halal"
+                            : "Doubtful"}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <span className="font-mono text-xs text-gray-500">{scholar.decidingMetric}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 
-        {/* 4. WHY THE VERDICTS DIFFER */}
-        <div className="mx-auto mt-12 max-w-3xl border-t border-gray-200 pt-8">
+        {/* WHY THE VERDICTS DIFFER */}
+        <div className="mx-auto mt-14 max-w-3xl border-t border-gray-200 pt-10">
           <h3
-            className="text-base font-bold text-gray-900"
+            className="text-lg font-bold text-gray-900"
             style={{ fontFamily: "Georgia, serif" }}
           >
             Why the verdicts differ
           </h3>
           <div className="mt-4 space-y-4 text-sm leading-relaxed text-gray-600">
             <p>
-              AAOIFI&apos;s standard screens use <strong>market capitalization</strong> as the
+              AAOIFI&apos;s standard screens use <strong className="text-gray-900">market capitalization</strong> as the
               denominator for debt ratios. Amazon&apos;s debt-to-market-cap ratio of 6.5% falls
-              comfortably below the 30% threshold, resulting in a &ldquo;Halal&rdquo; verdict.
-              This is the methodology used by most consumer halal investing apps.
+              comfortably below the 30% threshold, resulting in a halal verdict.
             </p>
             <p>
               Mufti Taqi Usmani&apos;s framework includes an additional
-              <strong> tangible-asset floor</strong>: the company must hold at least 20% of its
+              <strong className="text-gray-900"> tangible-asset floor</strong>: the company must hold at least 20% of its
               assets in illiquid, tangible form (property, plant, equipment, inventory). Amazon,
-              as a capital-light tech retailer, holds only 12% — below this threshold. This
-              disqualifies the stock under his methodology, even though all other ratios pass.
+              as a capital-light tech retailer, holds only 12% — below this threshold.
             </p>
           </div>
         </div>
 
-        {/* 5. PURIFICATION ESTIMATE */}
+        {/* PURIFICATION ESTIMATE */}
         <div className="mx-auto mt-10 max-w-3xl rounded border border-gray-200 bg-white px-6 py-4">
           <p className="text-sm text-gray-600">
             <span className="font-semibold text-gray-900">Purification estimate:</span> If you
             held 100 shares of AMZN this year, your estimated purification obligation is{" "}
-            <span className="font-mono font-semibold text-navy-800">$52.14</span>.{" "}
-            <Link href="/purification" className="text-navy-700 underline hover:text-navy-900">
+            <span className="font-mono font-semibold text-gray-900">$52.14</span>.{" "}
+            <Link href="/purification" className="text-gray-600 underline hover:text-gray-900">
               Calculate yours →
             </Link>
           </p>
         </div>
 
-        {/* 6. FOOTER ACTIONS */}
-        <div className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-4 border-t border-gray-200 pt-8">
+        {/* FOOTER ACTIONS */}
+        <div className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-4 border-t border-gray-200 pt-10">
           <Link
             href={`/vs?a=AMZN&b=`}
-            className="inline-flex items-center gap-1.5 rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+            className="inline-flex items-center gap-1.5 rounded border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-gray-300 hover:text-gray-900"
           >
             Compare AMZN with another stock <ArrowRight size={14} />
           </Link>
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+            className="inline-flex items-center gap-1.5 rounded border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-gray-300 hover:text-gray-900"
           >
             <Bookmark size={14} />
             Save to watchlist
           </button>
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+            className="inline-flex items-center gap-1.5 rounded border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-gray-300 hover:text-gray-900"
           >
             <BarChart3 size={14} />
             Add to portfolio score
