@@ -1,327 +1,430 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Bitcoin, FileText, GitCompare } from "lucide-react";
-
-// Hardcoded data per spec
-const TRENDING_MEGA_CAPS = [
-  { ticker: "AAPL", name: "Apple Inc.", marketCap: "$3.1T", price: "$186.20" },
-  { ticker: "MSFT", name: "Microsoft", marketCap: "$3.2T", price: "$420.55" },
-  { ticker: "GOOGL", name: "Alphabet", marketCap: "$2.1T", price: "$172.30" },
-  { ticker: "NVDA", name: "NVIDIA", marketCap: "$3.0T", price: "$124.80" },
-];
-
-const SCHOLAR_DISAGREEMENTS = [
-  { ticker: "AMZN", name: "Amazon", aaoifi: "pass", muftiTaqi: "fail", strict: "borderline" },
-  { ticker: "TSLA", name: "Tesla", aaoifi: "pass", muftiTaqi: "pass", strict: "borderline" },
-  { ticker: "JPM", name: "JPMorgan", aaoifi: "fail", muftiTaqi: "fail", strict: "fail" },
-  { ticker: "META", name: "Meta", aaoifi: "pass", muftiTaqi: "pass", strict: "pass" },
-  { ticker: "BRK.B", name: "Berkshire", aaoifi: "borderline", muftiTaqi: "fail", strict: "fail" },
-  { ticker: "V", name: "Visa", aaoifi: "fail", muftiTaqi: "fail", strict: "fail" },
-];
-
-const TOP_DIVIDEND_YIELDERS = [
-  { ticker: "T", name: "AT&T", marketCap: "$122B", price: "$20.45", yield: "6.8%" },
-  { ticker: "VZ", name: "Verizon", marketCap: "$176B", price: "$41.80", yield: "6.4%" },
-  { ticker: "KO", name: "Coca-Cola", marketCap: "$263B", price: "$61.20", yield: "3.1%" },
-  { ticker: "CSCO", name: "Cisco", marketCap: "$192B", price: "$47.30", yield: "3.2%" },
-];
-
-const SECTOR_PASS_RATES = [
-  { sector: "Technology", passRate: 78 },
-  { sector: "Healthcare", passRate: 64 },
-  { sector: "Consumer Staples", passRate: 52 },
-  { sector: "Industrials", passRate: 41 },
-  { sector: "Energy", passRate: 38 },
-  { sector: "Financials", passRate: 12 },
-];
-
-const CROSS_ASSET_TILES = [
-  {
-    icon: Bitcoin,
-    kicker: "Crypto",
-    title: "Multi-scholar views",
-    body: "BTC, ETH, and top altcoins — each assessed under six scholarly methodologies.",
-    href: "/crypto",
-    cta: "Explore crypto",
-  },
-  {
-    icon: FileText,
-    kicker: "Sukuk",
-    title: "Islamic bonds",
-    body: "Fixed-income alternatives structured for Sharia compliance. Primer and ETF list.",
-    href: "/sukuk",
-    cta: "Explore sukuk",
-  },
-  {
-    icon: GitCompare,
-    kicker: "Compare stocks",
-    title: "Side-by-side",
-    body: "Pick any two tickers and see their compliance profile compared across all scholars.",
-    href: "/vs",
-    cta: "Compare now",
-  },
-];
+import { listStocks } from "@/lib/data";
+import { SCHOLAR_PROFILES, getScholar } from "@/lib/scholars";
+import { loadCustomProfile } from "@/lib/customProfile";
+import { screenStock } from "@/lib/screen";
+import { fmtMarketCap, CURATED_LISTS } from "@/lib/lists";
+import ScholarPicker from "@/components/ScholarPicker";
+import type { StockFundamentals, Verdict } from "@/lib/types";
 
 export default function DiscoverPage() {
+  const [scholarId, setScholarId] = useState("aaoifi");
+  const [bump, setBump] = useState(0);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("mizan.scholarId");
+      if (saved && SCHOLAR_PROFILES.some((p) => p.id === saved)) setScholarId(saved);
+    } catch {}
+    const onFocus = () => setBump((b) => b + 1);
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, []);
+
+  const scholar = useMemo(
+    () => (scholarId === "custom" ? loadCustomProfile() : getScholar(scholarId)),
+    [scholarId, bump],
+  );
+
+  const all = listStocks();
+  const enriched = useMemo(
+    () => all.map((s) => ({ stock: s, verdict: screenStock(s, scholar).verdict })),
+    [all, scholar],
+  );
+
+  // Trending = biggest halal mega-caps under user's scholar
+  const trending = useMemo(
+    () => enriched
+      .filter((e) => e.verdict === "pass")
+      .sort((a, b) => b.stock.marketCapUsd - a.stock.marketCapUsd)
+      .slice(0, 4),
+    [enriched],
+  );
+
+  // High-yield halal — passing names with best dividend yield
+  const highYield = useMemo(
+    () => enriched
+      .filter((e) => e.verdict === "pass" && e.stock.dividendYieldPct >= 2)
+      .sort((a, b) => b.stock.dividendYieldPct - a.stock.dividendYieldPct)
+      .slice(0, 4),
+    [enriched],
+  );
+
+  // Scholars-disagree — stocks where mainstream verdicts differ
+  const disagreements = useMemo(() => {
+    const profiles = SCHOLAR_PROFILES.filter((p) => p.id !== "custom");
+    const out: Array<{ stock: StockFundamentals; verdicts: Record<string, Verdict> }> = [];
+    for (const s of all) {
+      const v: Record<string, Verdict> = {};
+      for (const p of profiles) v[p.id] = screenStock(s, p).verdict;
+      const uniq = new Set(Object.values(v));
+      if (uniq.size > 1 && s.marketCapUsd >= 100e9) {
+        out.push({ stock: s, verdicts: v });
+      }
+    }
+    return out.sort((a, b) => b.stock.marketCapUsd - a.stock.marketCapUsd).slice(0, 6);
+  }, [all]);
+
+  // Per-sector pass rate
+  const sectorStats = useMemo(() => {
+    const map = new Map<string, { total: number; pass: number; marketCap: number }>();
+    for (const { stock, verdict } of enriched) {
+      const entry = map.get(stock.sector) ?? { total: 0, pass: 0, marketCap: 0 };
+      entry.total++;
+      if (verdict === "pass") entry.pass++;
+      entry.marketCap += stock.marketCapUsd;
+      map.set(stock.sector, entry);
+    }
+    return [...map.entries()]
+      .map(([sector, s]) => ({ sector, ...s, passPct: s.total ? s.pass / s.total : 0 }))
+      .sort((a, b) => b.marketCap - a.marketCap);
+  }, [enriched]);
+
+  // Universe-level totals
+  const stats = useMemo(() => {
+    const pass = enriched.filter((e) => e.verdict === "pass").length;
+    const totalMcap = all.reduce((s, x) => s + x.marketCapUsd, 0);
+    const passMcap = enriched.filter((e) => e.verdict === "pass")
+      .reduce((s, x) => s + x.stock.marketCapUsd, 0);
+    return {
+      total: all.length,
+      pass,
+      passPct: all.length ? pass / all.length : 0,
+      mcapPassPct: totalMcap ? passMcap / totalMcap : 0,
+    };
+  }, [enriched, all]);
+
+  const mainstreamScholars = SCHOLAR_PROFILES.filter((p) => p.id !== "custom");
+
   return (
     <div className="pb-20">
       {/* 1. PAGE HEADER */}
-      <header className="pt-10">
+      <header className="pt-6">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
           Discover
         </div>
         <h1
-          className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900"
+          className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
           style={{ fontFamily: "Georgia, serif" }}
         >
           Find your next halal investment
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
-          Curated by scholar — re-screened against your selected methodology.
+          Trending names, where scholars disagree, sector pass-rates — re-screened live against your selected methodology.
         </p>
       </header>
 
+      {/* SCHOLAR PICKER */}
+      <div className="mt-8 sm:max-w-md">
+        <ScholarPicker value={scholarId} onChange={setScholarId} />
+      </div>
+
+      {/* UNIVERSE SUMMARY — hairline-separated, no card chrome */}
+      <div className="mt-10 grid grid-cols-2 gap-y-5 border-t border-b border-gray-200 py-5 sm:grid-cols-4">
+        <StatPlain label="Universe" value={`${stats.total}`} sub="tickers" />
+        <StatPlain label="Halal" value={`${stats.pass}`} sub={`${Math.round(stats.passPct * 100)}% by count`} tone="emerald" />
+        <StatPlain label="Halal by mkt cap" value={`${Math.round(stats.mcapPassPct * 100)}%`} sub="weighted" tone="emerald" />
+        <StatPlain label="Scholars covered" value="6" sub="incl. your custom" />
+      </div>
+
       {/* 2. TRENDING HALAL MEGA-CAPS */}
       <section className="mt-20">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          Trending
-        </div>
-        <h2
-          className="mt-2 text-[26px] font-bold leading-tight text-gray-900"
-          style={{ fontFamily: "Georgia, serif" }}
-        >
-          Halal mega-caps
-        </h2>
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {TRENDING_MEGA_CAPS.map((stock) => (
-            <Link
-              key={stock.ticker}
-              href={`/screen?ticker=${stock.ticker}`}
-              className="relative block rounded-none border border-gray-200 bg-white p-5 transition hover:border-gray-400"
-            >
-              <span className="absolute right-4 top-4 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
-                Halal
-              </span>
-              <div className="font-mono text-[13px] font-semibold text-gray-900">
-                {stock.ticker}
-              </div>
-              <div
-                className="mt-1 text-[17px] font-bold text-gray-900"
-                style={{ fontFamily: "Georgia, serif" }}
-              >
-                {stock.name}
-              </div>
-              <div className="mt-3 flex items-baseline justify-between">
-                <span className="font-mono text-[11px] text-gray-500">
-                  {stock.marketCap}
-                </span>
-                <span className="font-mono text-sm font-semibold text-gray-900">
-                  {stock.price}
-                </span>
-              </div>
-            </Link>
+        <SectionHead kicker="Trending" title="Halal mega-caps right now" sub="The largest companies passing under your scholar." />
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {trending.map(({ stock }) => (
+            <StockCard key={stock.ticker} stock={stock} />
           ))}
         </div>
       </section>
 
-      {/* 3. WHERE SCHOLARS DISAGREE */}
-      <section className="mt-24">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          Multi-scholar view
-        </div>
-        <h2
-          className="mt-2 text-[26px] font-bold leading-tight text-gray-900"
-          style={{ fontFamily: "Georgia, serif" }}
-        >
-          Where the scholars split
-        </h2>
-        <p className="mt-2 max-w-xl text-sm text-gray-600">
-          Same stock, different rulebooks. The honest part no other app shows you.
-        </p>
-        <div className="mt-6 overflow-x-auto">
-          <table className="w-full min-w-[540px] border-collapse">
-            <thead>
-              <tr className="border-b border-gray-200 text-left">
-                <th className="pb-3 pr-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
-                  Ticker
-                </th>
-                <th className="pb-3 pr-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
-                  Company
-                </th>
-                <th className="pb-3 pr-4 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
-                  AAOIFI
-                </th>
-                <th className="pb-3 pr-4 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
-                  Mufti Taqi
-                </th>
-                <th className="pb-3 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
-                  Strict
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {SCHOLAR_DISAGREEMENTS.map((row, idx) => (
-                <tr
-                  key={row.ticker}
-                  className={idx !== SCHOLAR_DISAGREEMENTS.length - 1 ? "border-b border-gray-100" : ""}
-                >
-                  <td className="py-3 pr-4">
-                    <Link
-                      href={`/screen?ticker=${row.ticker}`}
-                      className="font-mono text-sm font-semibold text-gray-900 hover:text-navy-700"
-                    >
-                      {row.ticker}
-                    </Link>
-                  </td>
-                  <td className="py-3 pr-4 text-sm text-gray-700">{row.name}</td>
-                  <td className="py-3 pr-4 text-center">
-                    <VerdictPill verdict={row.aaoifi} />
-                  </td>
-                  <td className="py-3 pr-4 text-center">
-                    <VerdictPill verdict={row.muftiTaqi} />
-                  </td>
-                  <td className="py-3 text-center">
-                    <VerdictPill verdict={row.strict} />
-                  </td>
+      {/* 3. WHERE SCHOLARS DISAGREE — the differentiator */}
+      {disagreements.length > 0 && (
+        <section className="mt-24">
+          <SectionHead
+            kicker="The honest part"
+            title="Where the scholars disagree"
+            sub="Same stock, different rulebooks. No other app surfaces this without picking for you."
+          />
+          <div className="mt-6 overflow-x-auto">
+            <table className="w-full min-w-[640px] border-collapse">
+              <thead>
+                <tr className="border-b border-gray-200 text-left">
+                  <th className="pb-3 pr-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                    Company
+                  </th>
+                  {mainstreamScholars.map((p) => (
+                    <th key={p.id} className="pb-3 pr-3 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+                      {p.short}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+              </thead>
+              <tbody>
+                {disagreements.map(({ stock, verdicts }, idx) => (
+                  <tr
+                    key={stock.ticker}
+                    className={idx !== disagreements.length - 1 ? "border-b border-gray-100" : ""}
+                  >
+                    <td className="py-3 pr-4">
+                      <Link
+                        href={`/screen?ticker=${stock.ticker}`}
+                        className="group block"
+                      >
+                        <div className="font-mono text-sm font-semibold text-gray-900 group-hover:text-navy-800">
+                          {stock.ticker}
+                        </div>
+                        <div className="mt-0.5 text-[11px] text-gray-500">{stock.name}</div>
+                      </Link>
+                    </td>
+                    {mainstreamScholars.map((p) => (
+                      <td key={p.id} className="py-3 pr-3 text-center">
+                        <VerdictPill verdict={verdicts[p.id]} />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
 
       {/* 4. TOP DIVIDEND YIELDERS */}
-      <section className="mt-24">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          Income
-        </div>
-        <h2
-          className="mt-2 text-[26px] font-bold leading-tight text-gray-900"
-          style={{ fontFamily: "Georgia, serif" }}
-        >
-          Top dividend yielders
-        </h2>
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {TOP_DIVIDEND_YIELDERS.map((stock) => (
-            <Link
-              key={stock.ticker}
-              href={`/screen?ticker=${stock.ticker}`}
-              className="block rounded-none border border-gray-200 bg-white p-5 transition hover:border-gray-400"
-            >
-              <div className="font-mono text-[13px] font-semibold text-gray-900">
-                {stock.ticker}
-              </div>
-              <div
-                className="mt-1 text-[17px] font-bold text-gray-900"
-                style={{ fontFamily: "Georgia, serif" }}
-              >
-                {stock.name}
-              </div>
-              <div className="mt-3 flex items-baseline justify-between">
-                <span className="font-mono text-[11px] text-gray-500">
-                  {stock.marketCap}
-                </span>
-                <span className="font-mono text-sm font-semibold text-gray-900">
-                  {stock.price}
-                </span>
-              </div>
-              <div className="mt-2 font-mono text-sm font-semibold text-gold-600">
-                {stock.yield} yield
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {highYield.length > 0 && (
+        <section className="mt-24">
+          <SectionHead
+            kicker="Income"
+            title="Top halal dividend yielders"
+            sub="Passing names with the best yields. Remember purification on the impermissible-income share."
+          />
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {highYield.map(({ stock }) => (
+              <StockCard
+                key={stock.ticker}
+                stock={stock}
+                yieldPct={stock.dividendYieldPct}
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* 5. SECTOR PASS-RATE RANKING */}
       <section className="mt-24">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          By sector
-        </div>
-        <h2
-          className="mt-2 text-[26px] font-bold leading-tight text-gray-900"
-          style={{ fontFamily: "Georgia, serif" }}
-        >
-          Sector pass-rate ranking
-        </h2>
-        <p className="mt-2 max-w-xl text-sm text-gray-600">
-          Percentage of stocks passing under the current scholar&apos;s methodology.
-        </p>
+        <SectionHead
+          kicker="By industry"
+          title="Sector pass-rate ranking"
+          sub="Percentage of stocks passing under the current scholar's methodology."
+        />
         <div className="mt-6 space-y-3">
-          {SECTOR_PASS_RATES.map((sector) => (
-            <div key={sector.sector} className="flex items-center gap-4">
-              <div className="w-36 flex-shrink-0 text-sm font-medium text-gray-900">
-                {sector.sector}
-              </div>
-              <div className="flex-1">
-                <div className="h-2 w-full rounded-none bg-gray-100">
-                  <div
-                    className="h-2 rounded-none bg-navy-800"
-                    style={{ width: `${sector.passRate}%` }}
-                  />
-                </div>
-              </div>
-              <div className="w-12 text-right font-mono text-sm font-semibold text-gray-900">
-                {sector.passRate}%
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 6. CROSS-ASSET TILES */}
-      <section className="mt-24">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {CROSS_ASSET_TILES.map((tile) => {
-            const Icon = tile.icon;
+          {sectorStats.map((s) => {
+            const slug = sectorSlug(s.sector);
+            const pct = Math.round(s.passPct * 100);
             return (
               <Link
-                key={tile.href}
-                href={tile.href}
-                className="group block border border-gray-200 bg-white p-6 transition hover:border-gray-400"
+                key={s.sector}
+                href={`/sectors/${slug}`}
+                className="group flex items-center gap-4 rounded-md py-2 transition hover:bg-gray-50"
               >
-                <Icon size={20} className="text-gray-500" strokeWidth={1.5} />
-                <div className="mt-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-                  {tile.kicker}
+                <div className="w-32 flex-shrink-0 truncate pl-2 text-sm font-medium text-gray-900 sm:w-44">
+                  {s.sector}
                 </div>
-                <div
-                  className="mt-2 text-lg font-bold text-gray-900"
-                  style={{ fontFamily: "Georgia, serif" }}
-                >
-                  {tile.title}
+                <div className="flex-1">
+                  <div className="h-2 w-full bg-gray-100">
+                    <div
+                      className="h-2 bg-navy-800 transition-all"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
                 </div>
-                <p className="mt-2 text-[13px] leading-relaxed text-gray-600">
-                  {tile.body}
-                </p>
-                <div className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-navy-700 group-hover:text-navy-900">
-                  {tile.cta} <ArrowRight size={14} />
+                <div className="flex w-20 items-center justify-end gap-1.5 pr-2 font-mono text-sm font-semibold text-gray-900">
+                  {pct}%
+                  <ArrowRight size={12} className="text-gray-400 transition group-hover:text-gray-700" />
                 </div>
               </Link>
             );
           })}
         </div>
       </section>
+
+      {/* 6. CURATED LISTS SHORTCUT */}
+      <section className="mt-24">
+        <SectionHead
+          kicker="Editor's picks"
+          title="Curated collections"
+          sub="Hand-picked lists for income, ETFs, mega-caps, stricter-Hanafi, and more."
+        />
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {CURATED_LISTS.slice(0, 4).map((list) => (
+            <Link
+              key={list.slug}
+              href={`/lists/${list.slug}`}
+              className="group block border border-gray-200 bg-white p-5 transition hover:border-gray-400"
+            >
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+                {list.kicker}
+              </div>
+              <div className="mt-2 text-[15px] font-bold leading-snug text-gray-900 group-hover:text-navy-800" style={{ fontFamily: "Georgia, serif" }}>
+                {list.title}
+              </div>
+              <div className="mt-1 text-[11px] text-gray-500">{list.tickers.length} stocks</div>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-5 text-center text-xs">
+          <Link href="/lists" className="text-navy-700 hover:underline">
+            All curated lists →
+          </Link>
+        </div>
+      </section>
+
+      {/* 7. CROSS-ASSET TILES */}
+      <section className="mt-24">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <CrossAssetTile
+            icon={Bitcoin}
+            kicker="Crypto"
+            title="Multi-scholar views"
+            body="BTC, ETH, and top altcoins — assessed under six methodologies."
+            href="/crypto"
+            cta="Explore crypto"
+          />
+          <CrossAssetTile
+            icon={FileText}
+            kicker="Sukuk"
+            title="Islamic bonds"
+            body="Fixed-income alternatives structured for Sharia compliance."
+            href="/sukuk"
+            cta="Explore sukuk"
+          />
+          <CrossAssetTile
+            icon={GitCompare}
+            kicker="Compare"
+            title="Side-by-side"
+            body="Pick any two tickers and compare their compliance profiles."
+            href="/vs"
+            cta="Compare stocks"
+          />
+        </div>
+      </section>
+
+      <p className="mt-16 text-center text-[11px] text-gray-500">
+        All figures re-screened on every page load against the scholar you select above. Data: Q1 2026 sample ({stats.total} representative tickers).
+      </p>
     </div>
   );
 }
 
-function VerdictPill({ verdict }: { verdict: "pass" | "fail" | "borderline" }) {
-  const styles = {
-    pass: "border-emerald-200 bg-emerald-50 text-emerald-700",
-    fail: "border-rose-200 bg-rose-50 text-rose-700",
-    borderline: "border-amber-200 bg-amber-50 text-amber-700",
-  };
-  const labels = {
-    pass: "Halal",
-    fail: "Not halal",
-    borderline: "Doubtful",
-  };
+/* ─── HELPERS ─────────────────────────────────────────────────────────────── */
+
+function SectionHead({ kicker, title, sub }: { kicker: string; title: string; sub?: string }) {
   return (
-    <span
-      className={`inline-block rounded-full border px-2 py-0.5 text-[10px] font-semibold ${styles[verdict]}`}
+    <div>
+      <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+        {kicker}
+      </div>
+      <h2 className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]" style={{ fontFamily: "Georgia, serif" }}>
+        {title}
+      </h2>
+      {sub && <p className="mt-2 max-w-xl text-sm text-gray-600">{sub}</p>}
+    </div>
+  );
+}
+
+function StatPlain({ label, value, sub, tone = "neutral" }: { label: string; value: string; sub?: string; tone?: "neutral" | "emerald" }) {
+  const cls = tone === "emerald" ? "text-emerald-700" : "text-gray-900";
+  return (
+    <div>
+      <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
+        {label}
+      </div>
+      <div className={`mt-1 text-[22px] font-bold leading-none tabular-nums ${cls}`} style={{ fontFamily: "Georgia, serif" }}>
+        {value}
+      </div>
+      {sub && <div className="mt-1 text-[11px] text-gray-500">{sub}</div>}
+    </div>
+  );
+}
+
+function StockCard({ stock, yieldPct }: { stock: StockFundamentals; yieldPct?: number }) {
+  return (
+    <Link
+      href={`/screen?ticker=${stock.ticker}`}
+      className="relative block border border-gray-200 bg-white p-4 transition hover:border-gray-400"
     >
-      {labels[verdict]}
+      <span className="absolute right-3 top-3 rounded-full border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-emerald-700">
+        Halal
+      </span>
+      <div className="font-mono text-[12px] font-semibold text-gray-900">{stock.ticker}</div>
+      <div className="mt-1 line-clamp-1 text-[15px] font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+        {stock.name}
+      </div>
+      <div className="mt-3 flex items-baseline justify-between font-mono text-[11px] text-gray-500">
+        <span>{fmtMarketCap(stock.marketCapUsd)}</span>
+        {yieldPct !== undefined && (
+          <span className="text-sm font-semibold text-gold-600">{yieldPct.toFixed(1)}%</span>
+        )}
+      </div>
+    </Link>
+  );
+}
+
+function VerdictPill({ verdict }: { verdict: Verdict }) {
+  const tone =
+    verdict === "pass" ? "bg-emerald-50 text-emerald-700"
+      : verdict === "fail" ? "bg-rose-50 text-rose-700"
+        : "bg-amber-50 text-amber-700";
+  const label =
+    verdict === "pass" ? "Halal"
+      : verdict === "fail" ? "Not halal"
+        : "Doubtful";
+  return (
+    <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold ${tone}`}>
+      {label}
     </span>
   );
+}
+
+function CrossAssetTile({
+  icon: Icon,
+  kicker,
+  title,
+  body,
+  href,
+  cta,
+}: {
+  icon: typeof Bitcoin;
+  kicker: string;
+  title: string;
+  body: string;
+  href: string;
+  cta: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group block border border-gray-200 bg-white p-6 transition hover:border-gray-400"
+    >
+      <Icon size={20} className="text-gray-500" strokeWidth={1.5} />
+      <div className="mt-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+        {kicker}
+      </div>
+      <div className="mt-2 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+        {title}
+      </div>
+      <p className="mt-2 text-[13px] leading-relaxed text-gray-600">{body}</p>
+      <div className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-navy-700 group-hover:text-navy-900">
+        {cta} <ArrowRight size={14} />
+      </div>
+    </Link>
+  );
+}
+
+// Slug must match the one used in /sectors/[slug]
+function sectorSlug(sector: string): string {
+  return sector.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
