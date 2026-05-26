@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import GlossaryTerm from "@/components/GlossaryTerm";
 import { GLOSSARY } from "@/lib/glossaryEntries";
 import {
@@ -12,7 +13,8 @@ import {
 
 export const metadata = {
   title: "Halal investing 101 · Mizan",
-  description: "Never invested before? Start here. Plain-language explanation of stocks, halal investing, and how Mizan helps.",
+  description:
+    "Never invested before? Start here. Plain-language explanation of stocks, halal investing, and how Mizan helps.",
 };
 
 function G({ term, children }: { term: string; children?: React.ReactNode }) {
@@ -22,26 +24,34 @@ function G({ term, children }: { term: string; children?: React.ReactNode }) {
 
 export default function LearnPage() {
   return (
-    <article className="mx-auto max-w-3xl">
-      <div className="inline-block rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800">
-        Start here if you&apos;re new to investing
-      </div>
-      <h1 className="mt-4 text-3xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-        Halal investing, explained from scratch.
-      </h1>
-      <p className="mt-3 text-base text-gray-700">
-        If you&apos;ve never bought a stock and you&apos;re not sure what halal investing
-        even means, you&apos;re in the right place. This page assumes nothing. Read it
-        once and you&apos;ll understand 80% of what Mizan does.
-      </p>
+    <article className="mx-auto max-w-3xl pb-20">
+      {/* PAGE HEADER */}
+      <header className="pt-6">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Halal investing 101
+        </div>
+        <h1
+          className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          Halal investing, explained from scratch.
+        </h1>
+        <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-gray-600">
+          If you&apos;ve never bought a stock and you&apos;re not sure what halal investing
+          even means, you&apos;re in the right place. This page assumes nothing. Read it
+          once and you&apos;ll understand 80% of what Mizan does.
+        </p>
+      </header>
 
-      <div className="mt-6 rounded-md border border-gray-200 bg-gray-50 p-4 text-sm text-gray-700">
-        <strong>How to use this page:</strong> short sections, plain English, visual
-        diagrams. Any word with a{" "}
-        <span className="border-b border-dotted border-navy-400 text-navy-700">dotted underline</span>{" "}
+      {/* HOW-TO STRIP */}
+      <div className="mt-10 border-y border-gray-200 py-4 text-[13px] leading-relaxed text-gray-600">
+        <strong className="text-gray-900">How to use this page:</strong> short sections,
+        plain English, visual diagrams. Any word with a{" "}
+        <span className="border-b border-dotted border-gray-400 text-gray-800">dotted underline</span>{" "}
         has a quick definition — hover or tap it. Skim what you know, read what you don&apos;t.
       </div>
 
+      {/* SECTIONS */}
       <Section n={1} title="What is a stock, actually?">
         <p>
           When a company like Apple wants to grow, it sometimes sells small ownership
@@ -53,7 +63,7 @@ export default function LearnPage() {
 
         <ShareSliceDiagram />
 
-        <p className="mt-3">
+        <p>
           The place where stocks are bought and sold is called a stock exchange — like
           the New York Stock Exchange. You buy them through a <G term="brokerage" />{" "}
           like Robinhood, Fidelity, or Schwab. It&apos;s the same idea as buying gold
@@ -71,14 +81,14 @@ export default function LearnPage() {
 
         <HalalHaramSourcesDiagram />
 
-        <p className="mt-3">
+        <p>
           Modern companies are complicated. Even a company in a permissible business
           (say, a software company) might earn small amounts of interest on its bank
           account. So <G term="halal" /> investing isn&apos;t a single yes/no — it&apos;s
           a screening process that checks: <em>is the company&apos;s main business
           permissible, and are its finances within acceptable limits?</em>
         </p>
-        <p className="mt-3">
+        <p>
           That&apos;s what Mizan does. It looks at any company you ask about and tells
           you, in plain numbers, whether it passes the screen for your tradition.
         </p>
@@ -95,7 +105,7 @@ export default function LearnPage() {
 
         <ScholarSpectrumDiagram />
 
-        <p className="mt-3">
+        <p>
           For example, the question of how much interest income a company can have
           before it&apos;s no longer permissible to own: <G term="aaoifi">AAOIFI</G>{" "}
           says less than 5%. <G term="mufti taqi usmani">Mufti Taqi Usmani</G> agrees
@@ -103,7 +113,7 @@ export default function LearnPage() {
           must be at least 20% of total assets. The strictest interpretations allow no
           interest exposure at all.
         </p>
-        <p className="mt-3">
+        <p>
           So the same stock can be halal under one scholar and not under another. Mizan
           shows you the verdict under all six major methodologies side-by-side. You
           pick which one to follow based on which scholar you trust most — usually one
@@ -120,32 +130,32 @@ export default function LearnPage() {
 
         <RatiosDiagram />
 
-        <ul className="ml-5 mt-3 list-disc space-y-2 text-gray-700">
+        <ul className="mt-4 space-y-3 pl-5 text-[15px] leading-relaxed text-gray-700 [list-style:disc]">
           <li>
-            <strong>{G({ term: "Impermissible income", children: "Impermissible income" })}{" "}</strong>
+            <strong className="text-gray-900">{G({ term: "Impermissible income", children: "Impermissible income" })}{" "}</strong>
             — what percentage of the company&apos;s revenue is from impermissible sources
             (mostly interest on cash)? Most scholars cap at 5%.
           </li>
           <li>
-            <strong>{G({ term: "Interest-bearing debt", children: "Interest-bearing debt" })}{" "}</strong>
+            <strong className="text-gray-900">{G({ term: "Interest-bearing debt", children: "Interest-bearing debt" })}{" "}</strong>
             — how much money has the company borrowed at interest, relative to its size?
             Cap is usually 30-33%.
           </li>
           <li>
-            <strong>Cash + securities</strong> — how much is the company sitting on in
+            <strong className="text-gray-900">Cash + securities</strong> — how much is the company sitting on in
             cash and interest-earning securities? Cap is also 30-33%.
           </li>
           <li>
-            <strong>{G({ term: "Receivables", children: "Receivables" })}{" "}</strong>
+            <strong className="text-gray-900">{G({ term: "Receivables", children: "Receivables" })}{" "}</strong>
             — money owed to the company by its customers. Some scholars cap this at 33%.
           </li>
           <li>
-            <strong>{G({ term: "Illiquid assets", children: "Illiquid assets" })}{" "}</strong>
+            <strong className="text-gray-900">{G({ term: "Illiquid assets", children: "Illiquid assets" })}{" "}</strong>
             — what percentage of the balance sheet is real, physical stuff? Mufti Taqi
             Usmani specifically requires at least 20%.
           </li>
         </ul>
-        <p className="mt-3">
+        <p>
           A stock passes a methodology if it&apos;s in a permissible business AND its
           ratios are all within that scholar&apos;s limits.
         </p>
@@ -160,16 +170,16 @@ export default function LearnPage() {
 
         <PurificationDiagram />
 
-        <p className="mt-3">
+        <p>
           <G term="purification">Purification</G> is the practice of calculating that
           impure slice and donating it to charity, without expecting reward in return.
           It cleanses your earnings. Some scholars (like Mufti Taqi) also require
           purifying realized <G term="capital gain">capital gains</G>, not just dividends.
         </p>
-        <p className="mt-3">
+        <p>
           Mizan calculates this for you — both the dividend portion and (where required)
           the gain portion.{" "}
-          <Link href="/purification" className="text-navy-700 underline">Try it.</Link>
+          <Link href="/purification" className="text-navy-700 underline hover:text-navy-900">Try it.</Link>
         </p>
       </Section>
 
@@ -183,42 +193,42 @@ export default function LearnPage() {
 
         <ZakatDiagram />
 
-        <p className="mt-3">
+        <p>
           You pay it on your zakat anniversary date (one lunar year after you first had
           enough wealth to qualify, called <G term="nisab" />). Mizan has a calculator
           that handles this end-to-end at{" "}
-          <Link href="/zakat" className="text-navy-700 underline">/zakat</Link>.
+          <Link href="/zakat" className="text-navy-700 underline hover:text-navy-900">/zakat</Link>.
         </p>
       </Section>
 
       <Section n={7} title="Okay — what do I actually do?">
         <p>If you&apos;ve read this far, here&apos;s the simplest possible path:</p>
-        <ol className="ml-5 mt-3 list-decimal space-y-2 text-gray-700">
+        <ol className="mt-4 space-y-3 pl-5 text-[15px] leading-relaxed text-gray-700 [list-style:decimal]">
           <li>
-            <strong>Pick a scholar to follow.</strong> If you genuinely don&apos;t know
+            <strong className="text-gray-900">Pick a scholar to follow.</strong> If you genuinely don&apos;t know
             which scholar matches your tradition, start with <G term="aaoifi">AAOIFI</G> —
             it&apos;s the most widely-used mainstream standard. You can always switch.
           </li>
           <li>
-            <strong>Try the screener.</strong> Search for any stock you&apos;ve heard of —
+            <strong className="text-gray-900">Try the screener.</strong> Search for any stock you&apos;ve heard of —
             Apple, Tesla, Amazon — and see Mizan&apos;s verdict.{" "}
-            <Link href="/screen?ticker=AAPL" className="text-navy-700 underline">Try Apple here.</Link>
+            <Link href="/screen?ticker=AAPL" className="text-navy-700 underline hover:text-navy-900">Try Apple here.</Link>
           </li>
           <li>
-            <strong>Open a brokerage account.</strong> Robinhood, Fidelity, or Schwab in
+            <strong className="text-gray-900">Open a brokerage account.</strong> Robinhood, Fidelity, or Schwab in
             the US. Free to open. Takes 10 minutes.
           </li>
           <li>
-            <strong>Buy a halal-screened ETF as a starting point.</strong> ETFs like SPUS
+            <strong className="text-gray-900">Buy a halal-screened ETF as a starting point.</strong> ETFs like SPUS
             or HLAL hold dozens of halal-screened companies in one share. They&apos;re
             the easiest first investment for a Muslim investor.
           </li>
           <li>
-            <strong>Set a small monthly amount.</strong> Even $50/month invested
+            <strong className="text-gray-900">Set a small monthly amount.</strong> Even $50/month invested
             regularly compounds meaningfully over years. You don&apos;t need a lot to start.
           </li>
         </ol>
-        <p className="mt-3 text-sm italic text-gray-600">
+        <p className="mt-4 text-[13px] italic text-gray-500">
           None of this is investment advice — we&apos;re information, not advisors. Speak
           to a licensed financial planner before making decisions that matter.
         </p>
@@ -244,7 +254,7 @@ export default function LearnPage() {
           The account itself isn&apos;t haram — what matters is what&apos;s inside it.
           Most default funds hold things you can&apos;t hold halal-wise. Use your
           brokerage window (if your plan has one) or contribute to an IRA instead.{" "}
-          <Link href="/blog/is-my-401k-halal-guide" className="text-navy-700 underline">Full guide here.</Link>
+          <Link href="/blog/is-my-401k-halal-guide" className="text-navy-700 underline hover:text-navy-900">Full guide here.</Link>
         </Q>
         <Q q="What if Mizan and my local imam disagree?">
           Follow your local imam, especially on questions specific to your situation.
@@ -253,18 +263,33 @@ export default function LearnPage() {
         </Q>
       </Section>
 
-      <div className="mt-12 rounded-xl border border-navy-200 bg-navy-50 p-6">
-        <h2 className="text-lg font-semibold text-navy-900">You&apos;re ready.</h2>
-        <p className="mt-2 text-sm text-navy-800">
+      {/* BOTTOM CTA */}
+      <div className="mt-16 border-t border-gray-200 pt-10">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Next
+        </div>
+        <h2
+          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          You&apos;re ready.
+        </h2>
+        <p className="mt-3 max-w-xl text-[14px] leading-relaxed text-gray-600">
           Open the screener, pick a stock you&apos;ve heard of, and try Mizan. The
           product makes a lot more sense when you actually use it.
         </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <Link href="/screen?ticker=AAPL" className="inline-flex items-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-sm font-semibold text-white hover:bg-navy-700">
-            Try the screener on Apple →
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link
+            href="/screen?ticker=AAPL"
+            className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-700"
+          >
+            Try the screener on Apple <ArrowRight size={14} />
           </Link>
-          <Link href="/zakat" className="inline-flex items-center gap-2 rounded-md border border-navy-200 bg-white px-4 py-2 text-sm font-semibold text-navy-800 hover:bg-navy-100">
-            Calculate your zakat
+          <Link
+            href="/zakat"
+            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+          >
+            Calculate your zakat <ArrowRight size={14} />
           </Link>
         </div>
       </div>
@@ -274,21 +299,30 @@ export default function LearnPage() {
 
 function Section({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
   return (
-    <section className="mt-10 border-t border-gray-100 pt-8">
+    <section className="mt-14 border-t border-gray-200 pt-10">
       <div className="flex items-baseline gap-3">
-        <span className="font-mono text-xs font-bold text-gold-600">{String(n).padStart(2, "0")}</span>
-        <h2 className="text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>{title}</h2>
+        <span className="font-mono text-[12px] font-semibold text-gold-600">
+          {String(n).padStart(2, "0")}
+        </span>
+        <h2
+          className="text-[22px] font-bold leading-tight text-gray-900 sm:text-[26px]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          {title}
+        </h2>
       </div>
-      <div className="mt-3 space-y-2 text-base leading-7 text-gray-700">{children}</div>
+      <div className="mt-5 space-y-4 text-[15px] leading-relaxed text-gray-700">
+        {children}
+      </div>
     </section>
   );
 }
 
 function Q({ q, children }: { q: string; children: React.ReactNode }) {
   return (
-    <div className="mt-3 rounded-md border border-gray-200 bg-white p-3">
-      <div className="text-sm font-semibold text-gray-900">{q}</div>
-      <div className="mt-1 text-sm leading-6 text-gray-700">{children}</div>
+    <div className="mt-5 border-l-2 border-gray-200 py-1 pl-4">
+      <div className="text-[14px] font-semibold text-gray-900">{q}</div>
+      <div className="mt-1 text-[14px] leading-relaxed text-gray-600">{children}</div>
     </div>
   );
 }
