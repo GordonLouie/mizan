@@ -11,3 +11,6 @@ test2.txt
 test3.txt
 .test-build/
 .test-build/
+
+# Enrichment script working file
+.enrich-progress.json
