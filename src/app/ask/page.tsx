@@ -75,8 +75,8 @@ export default function AskPage() {
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
           Type your question. Mizan returns the answer per your selected scholar from a
           knowledge base of 49 common questions, with citations. The production version
-          is powered by Anthropic Claude with system prompts reviewed by the Shariah
-          Supervisory Board.
+          will be powered by Anthropic Claude with system prompts reviewed by qualified
+          scholars once that engagement is in place.
         </p>
       </header>
 

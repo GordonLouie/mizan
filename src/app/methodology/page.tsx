@@ -360,19 +360,21 @@ export default function MethodologyPage() {
       <section className="mt-20 border-t border-gray-200 pt-10">
         <SectionHead
           kicker="Oversight"
-          title="Shariah Supervisory Board"
+          title="Shariah Supervisory Board — not yet"
         />
         <div className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
           <p>
-            Mizan&apos;s Shariah Supervisory Board reviews every methodology release
-            before it ships, meets quarterly, audits a sample of AI Q&amp;A outputs each
-            quarter, and co-signs an annual public Shariah report.
+            Mizan does not yet have a Shariah Supervisory Board. Until one is seated,
+            credibility comes entirely from the primary-source citations on this page —
+            every threshold in the engine traces back to a public document you can verify.
+            That citation chain is intentionally the credibility floor.
           </p>
           <p>
-            Board composition is published as scholars confirm in writing. We do not
-            publish names before written engagement is in place — claims of supervision
-            without the corresponding documentation are common in this industry and we
-            refuse to participate.
+            When a board is engaged, the plan is: quarterly methodology review, audited
+            sample of AI Q&amp;A outputs, and an annual public Shariah report co-signed by
+            named scholars. We will not publish any name before written engagement is in
+            place — claims of supervision without documentation are common in this
+            industry and we refuse to participate.
           </p>
         </div>
       </section>
@@ -392,8 +394,8 @@ export default function MethodologyPage() {
           >
             methodology@mizan.app
           </a>{" "}
-          with the citation. Every note is reviewed by the Shariah Board and a public
-          changelog entry is added if a profile changes.
+          with the citation. Every note is reviewed against the cited primary source and a
+          public changelog entry is added if a profile changes.
         </p>
       </section>
 

@@ -224,8 +224,7 @@ export default function CryptoPage() {
         >
           methodology@mizan.app
         </a>{" "}
-        with the citation. Reviewed quarterly by Mizan&apos;s Shariah Supervisory Board.
-        Back to{" "}
+        with the citation. Updated quarterly from public scholarly publications. Back to{" "}
         <Link href="/discover" className="text-navy-700 underline hover:text-navy-900">
           Discover
         </Link>.

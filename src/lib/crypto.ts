@@ -2,7 +2,7 @@
 //
 // Mizan does NOT issue rulings. Mizan summarises what each scholar / school
 // has publicly said about a category, and cites the source so users can read
-// it themselves. All entries reviewed quarterly by the Shariah Board.
+// it themselves. All entries updated quarterly from public scholarly publications.
 
 export type CryptoVerdict = "halal" | "doubtful" | "not_halal" | "no_consensus";
 

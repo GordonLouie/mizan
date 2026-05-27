@@ -78,18 +78,18 @@ export default function TrustPage() {
           />
           <StatusRow
             item={{
-              label: "Shariah Supervisory Board: chair signed",
-              status: "in_progress",
+              label: "Shariah Supervisory Board",
+              status: "not_yet",
               detail:
-                "Mufti Faraz Adam (Amanah Advisors, UK) — outreach in progress. We will not list any scholar as 'on the board' until written engagement is in place.",
+                "No board is currently engaged. Until one is, credibility comes from the primary-source citations on /methodology. We will not list any scholar as 'on the board' until written engagement is in place — claims of supervision without documentation are common in this industry and we refuse to participate.",
             }}
           />
           <StatusRow
             item={{
-              label: "Shariah Supervisory Board: full panel (3 scholars)",
-              status: "in_progress",
+              label: "Co-founder / additional team",
+              status: "not_yet",
               detail:
-                "Chair (Hanafi target) + Member (Hanbali/Maliki target, Joe Bradford) + Member (Ja'fari target). Identifying and reaching out.",
+                "Mizan is built solo today by Gordon Louie. No co-founder or additional team member is currently engaged. Future hires will appear here when in place.",
             }}
           />
           <StatusRow
@@ -121,7 +121,7 @@ export default function TrustPage() {
               label: "Paid subscription tiers live",
               status: "not_yet",
               detail:
-                "Free tier only until the Supervisory Board chair is publicly named.",
+                "Free tier only. Paid tiers are gated on a real Shariah Supervisory Board being seated first.",
             }}
           />
         </ul>
@@ -132,18 +132,25 @@ export default function TrustPage() {
         <SectionHead title="Who we are" />
         <div className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
           <p>
-            Mizan is led by <strong className="text-gray-900">Gordon Louie</strong>{" "}
-            (Founder &amp; CEO, Hong&nbsp;Kong-based technologist) and built with a Muslim
-            co-founder who heads Community &amp; Shariah Relations. The co-founder follows
-            the strict view and was Mizan&apos;s first user; he leads scholar outreach and
-            community work and reviews every major product decision. His name and photo will
-            appear here once formal LOI is signed.
+            Mizan is built today by{" "}
+            <strong className="text-gray-900">Gordon Louie</strong> — a Hong&nbsp;Kong-based
+            technologist, solo founder. A Muslim friend got me thinking about why existing
+            halal-investing apps hide scholarly disagreement instead of surfacing it; that
+            curiosity is the origin of the project.
           </p>
           <p>
             Gordon is <strong className="text-gray-900">not Muslim</strong>. The product
-            makes no religious claims of its own — it surfaces what scholars publicly say and
-            cites the source. The religious authority belongs to the Supervisory Board. The
-            full team breakdown is on{" "}
+            makes no religious claims of its own — it surfaces what scholars publicly say
+            and cites the source. Religious authority belongs to the published scholars and,
+            in time, to a Shariah Supervisory Board that does not yet exist. Until that
+            board is seated, the citation chain on{" "}
+            <Link
+              href="/methodology"
+              className="text-navy-700 underline hover:text-navy-900"
+            >
+              /methodology
+            </Link>{" "}
+            is the credibility. Full origin story on{" "}
             <Link href="/about" className="text-navy-700 underline hover:text-navy-900">
               /about
             </Link>.
@@ -315,7 +322,8 @@ export default function TrustPage() {
           <a href="mailto:methodology@mizan.app" className="text-navy-700 underline hover:text-navy-900">
             methodology@mizan.app
           </a>{" "}
-          and are read by the Supervisory Board.
+          and are reviewed against the cited primary source — and against the Supervisory
+          Board, once one is seated.
         </p>
       </section>
 

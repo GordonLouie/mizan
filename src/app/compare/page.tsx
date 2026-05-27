@@ -5,7 +5,7 @@ const ROWS = [
   { feature: "Mufti Taqi Usmani illiquid-asset rule", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
   { feature: "Ja'fari (Shia) profile", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
   { feature: "User-customizable thresholds", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
-  { feature: "Named Shariah supervisory board", mizan: true, zoya: true, musaffa: true, wahed: true, islamicly: true },
+  { feature: "Named Shariah supervisory board", mizan: false, zoya: true, musaffa: true, wahed: true, islamicly: true },
   { feature: "Stock screening", mizan: true, zoya: true, musaffa: true, wahed: false, islamicly: true },
   { feature: "Portfolio compliance scoring", mizan: true, zoya: true, musaffa: false, wahed: false, islamicly: false },
   { feature: "Brokerage sync (Plaid)", mizan: true, zoya: true, musaffa: false, wahed: false, islamicly: false },

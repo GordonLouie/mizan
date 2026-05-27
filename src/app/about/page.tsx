@@ -21,8 +21,8 @@ export default function AboutPage() {
           Why this exists
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
-          The product began with one friend. The principles are what kept it from becoming
-          dishonest as it grew.
+          One friend got me curious about a real gap in halal investing tools. The
+          principles below are what keep it honest as the product grows.
         </p>
       </header>
 
@@ -40,33 +40,26 @@ export default function AboutPage() {
         <div className="mt-5 max-w-2xl space-y-4 text-[15px] leading-relaxed text-gray-700">
           <p>
             I&apos;m not Muslim. I&apos;m a Hong&nbsp;Kong-based technologist named
-            Gordon, and the reason Mizan exists is a single friend who follows the strict
-            view — the position that any interest exposure, however small, renders an
-            investment impermissible.
+            Gordon, and the reason Mizan exists is a single friend. He looked at the
+            existing halal-investing apps and kept seeing verdicts that didn&apos;t match
+            what he believed his own scholars taught. Different scholars reach different
+            verdicts on the same stock — but the apps either pick one rulebook and hide
+            the rest, or wrap a black-box score around the whole thing.
           </p>
           <p>
-            Every halal-investing app on the market told him things were halal that he
-            didn&apos;t believe were halal. He&apos;d open Zoya, see <em>Pass</em> on a
-            stock, and reject the verdict because the underlying methodology was someone
-            else&apos;s — not his. The strict community, the Hanafi diaspora following
-            Mufti Taqi Usmani&apos;s additional illiquid-asset rule, and Ja&apos;fari Shia
-            investors with a different framework altogether — they&apos;re all served by a
-            single AAOIFI default that treats their disagreements as if they didn&apos;t exist.
+            The Hanafi diaspora following Mufti Taqi Usmani&apos;s additional
+            illiquid-asset rule, Ja&apos;fari Shia investors with a different framework
+            altogether, and the strict-view community — they&apos;re all served by a
+            single AAOIFI default that treats their disagreements as if they didn&apos;t
+            exist.
           </p>
           <p>
-            I built Mizan because I&apos;m a builder. I will never claim authority I
-            don&apos;t have. The religious authority belongs to the scholars on the
-            Supervisory Board. My job is to make sure the scholars they actually follow
-            are represented faithfully in the product, with sources cited, math shown,
-            and no black-box scores. The fact that I&apos;m an outsider is exactly what
-            lets Mizan stay neutral across every madhab — I have no stake in which
-            scholar is right.
-          </p>
-          <p>
-            That friend is now Mizan&apos;s co-founder, leading community work, scholar
-            relationships, and every conversation where being Muslim is the right voice.
-            He reviews every major product decision before it ships. I&apos;m CEO;
-            he&apos;s the conscience.
+            I built Mizan because I&apos;m a builder. I will never claim religious
+            authority I don&apos;t have. My job is to faithfully represent what scholars
+            have already published — with the sources cited, the math shown, and no
+            black-box scores. The fact that I&apos;m an outsider is exactly what lets
+            Mizan stay neutral across every madhab: I have no stake in which scholar is
+            right.
           </p>
         </div>
       </section>
@@ -96,13 +89,13 @@ export default function AboutPage() {
           />
           <Principle
             n="03"
-            title="Credibility before code."
-            body="The Supervisory Board reviews every methodology release before it ships. We do not publish a scholar's name before written engagement is in place — claims of supervision without documentation are common in this industry, and we refuse to participate."
+            title="Credibility through citation."
+            body="Every threshold in the screening engine traces back to a public, primary document — AAOIFI Shariah Standard No. 21, Mufti Taqi Usmani's published works, the S&P DJIM methodology PDF, the Sistani office's Code of Practice. Until a Shariah Supervisory Board is formally seated, the citation chain is the credibility."
           />
           <Principle
             n="04"
             title="The strict view is a first-class profile."
-            body="Most apps either ignore the strict regime or hide it. Mizan ships it as one of six profiles, with the same care as AAOIFI or DJIM. The friend who inspired this product follows it; so will many of our users."
+            body="Most apps either ignore the zero-tolerance regime or hide it. Mizan ships it as one of six profiles, with the same care as AAOIFI or DJIM."
           />
         </div>
       </section>
@@ -119,7 +112,7 @@ export default function AboutPage() {
           Who&apos;s behind this
         </h2>
 
-        <div className="mt-8 space-y-6">
+        <div className="mt-8">
           {/* Founder & CEO */}
           <div className="rounded-xl border border-gray-200 bg-white p-7">
             <div className="flex flex-wrap items-start gap-5">
@@ -138,16 +131,18 @@ export default function AboutPage() {
                     Gordon Louie
                   </h3>
                   <span className="rounded-full bg-navy-50 px-2.5 py-0.5 text-[11px] font-semibold text-navy-700">
-                    Founder &amp; CEO
+                    Founder
                   </span>
                 </div>
                 <div className="mt-1 text-[11px] uppercase tracking-[0.14em] text-gray-500">
                   Hong Kong · technologist · builds &amp; ships
                 </div>
                 <p className="mt-4 text-[14px] leading-relaxed text-gray-700">
-                  Leads product, engineering, strategy, and operations. Not a scholar —
-                  defers every religious question to the Supervisory Board. Reads and
-                  replies to every substantive email personally; no support tickets.
+                  Solo founder. Leads product, engineering, methodology research, and
+                  every other surface of Mizan today. Not a scholar — defers every
+                  religious question to the cited primary sources and to qualified scholars
+                  the project will engage as it grows. Reads and replies to every
+                  substantive email personally; no support tickets.
                 </p>
                 <p className="mt-2 text-[13px] leading-relaxed text-gray-600">
                   Contact:{" "}
@@ -162,105 +157,29 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Co-founder */}
-          <div className="rounded-xl border border-gray-200 bg-white p-7">
-            <div className="flex flex-wrap items-start gap-5">
-              <div
-                className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-amber-100 text-3xl font-bold text-amber-800"
-                style={{ fontFamily: "Georgia, serif" }}
-              >
-                ?
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-baseline gap-2">
-                  <h3
-                    className="text-[20px] font-bold text-gray-900"
-                    style={{ fontFamily: "Georgia, serif" }}
-                  >
-                    [Co-founder name]
-                  </h3>
-                  <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold text-amber-800">
-                    Co-founder
-                  </span>
-                </div>
-                <div className="mt-1 text-[11px] uppercase tracking-[0.14em] text-gray-500">
-                  Hong Kong · Community &amp; Shariah Relations
-                </div>
-                <p className="mt-4 text-[14px] leading-relaxed text-gray-700">
-                  Muslim, follows the strict view, and was Mizan&apos;s first user. Leads
-                  scholar outreach, community-building (Discord, masjid partnerships), and
-                  every conversation where being Muslim matters most. Reviews every major
-                  product decision before it ships.
-                </p>
-                <p className="mt-2 text-[12px] italic leading-relaxed text-gray-500">
-                  Name and photo published once formal LOI is signed. He is on the team
-                  today and visible in every public conversation.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* How we divide the work */}
-          <div className="border-l-2 border-gray-300 py-2 pl-5">
+          {/* Honest note about what's not yet here */}
+          <div className="mt-6 border-l-2 border-gray-300 py-2 pl-5">
             <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
-              How we divide the work
+              What&apos;s not yet here
             </div>
             <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-gray-700">
-              Gordon owns product, infrastructure, legal, and government applications
-              (Cyberport, HKSTP). Co-founder owns scholar relationships, masjid outreach,
-              community moderation, and any public statement where being Muslim is the
-              right voice. Strategic decisions are made together; final call sits with the CEO.
+              Mizan does not yet have a formal Shariah Supervisory Board, a named
+              co-founder, or paid scholar engagements. Until those happen, credibility
+              comes from the primary-source citations on{" "}
+              <Link
+                href="/methodology"
+                className="text-navy-700 underline hover:text-navy-900"
+              >
+                /methodology
+              </Link>
+              {" "}and from the honest scoreboard on{" "}
+              <Link href="/trust" className="text-navy-700 underline hover:text-navy-900">
+                /trust
+              </Link>
+              . Both pages are updated as facts change.
             </p>
           </div>
         </div>
-      </section>
-
-      {/* SHARIAH BOARD */}
-      <section className="mt-20 border-t border-gray-200 pt-10">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          Religious oversight
-        </div>
-        <h2
-          className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
-        >
-          Shariah Supervisory Board
-        </h2>
-        <p className="mt-3 max-w-2xl text-[14px] leading-relaxed text-gray-600">
-          The board reviews every methodology before release, meets quarterly, and audits
-          AI Q&amp;A outputs each quarter. Names below are targets currently in
-          conversation — none are listed as &lsquo;on the board&rsquo; until written
-          engagement is in place.
-        </p>
-
-        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <BoardCard
-            role="Chair (target)"
-            name="Mufti Faraz Adam"
-            note="UK · Hanafi · Amanah Advisors"
-            status="Outreach in progress"
-          />
-          <BoardCard
-            role="Member (target)"
-            name="Sheikh Joe Bradford"
-            note="US · Hanbali/Maliki · AAOIFI-certified"
-            status="Outreach in progress"
-          />
-          <BoardCard
-            role="Member (target)"
-            name="Ja'fari scholar"
-            note="Al-Mahdi Institute UK · candidate"
-            status="Identifying"
-          />
-        </div>
-
-        <p className="mt-5 text-[12px] italic text-gray-500">
-          Status updated weekly as conversations progress. Honest scoreboard — see{" "}
-          <Link href="/trust" className="text-navy-700 underline hover:text-navy-900">
-            /trust
-          </Link>{" "}
-          for the current state.
-        </p>
       </section>
 
       {/* COMPANY FACTS */}
@@ -290,10 +209,7 @@ export default function AboutPage() {
             label="Funding status"
             value="Bootstrapped, applying to Cyberport CIP (deadline Aug 3)"
           />
-          <Fact
-            label="Team size"
-            value="2 — Founder/CEO + Co-founder (Community & Shariah Relations, name pending LOI)"
-          />
+          <Fact label="Team size" value="1 — Founder, building solo today" />
         </dl>
       </section>
 
@@ -346,12 +262,7 @@ export default function AboutPage() {
 function Principle({ n, title, body }: { n: string; title: string; body: string }) {
   return (
     <div className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-1 py-6">
-      <div
-        className="font-mono text-[12px] font-semibold text-gold-600"
-        style={{ fontFamily: "ui-monospace, monospace" }}
-      >
-        {n}
-      </div>
+      <div className="font-mono text-[12px] font-semibold text-gold-600">{n}</div>
       <div>
         <h3
           className="text-[16px] font-bold leading-tight text-gray-900"
@@ -360,36 +271,6 @@ function Principle({ n, title, body }: { n: string; title: string; body: string 
           {title}
         </h3>
         <p className="mt-2 text-[14px] leading-relaxed text-gray-700">{body}</p>
-      </div>
-    </div>
-  );
-}
-
-function BoardCard({
-  role,
-  name,
-  note,
-  status,
-}: {
-  role: string;
-  name: string;
-  note: string;
-  status: string;
-}) {
-  return (
-    <div className="border border-gray-200 bg-white p-5">
-      <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
-        {role}
-      </div>
-      <div
-        className="mt-2 text-[15px] font-bold text-gray-900"
-        style={{ fontFamily: "Georgia, serif" }}
-      >
-        {name}
-      </div>
-      <div className="mt-1 text-[11px] text-gray-600">{note}</div>
-      <div className="mt-4 inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-amber-800">
-        {status}
       </div>
     </div>
   );

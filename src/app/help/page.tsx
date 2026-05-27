@@ -104,15 +104,15 @@ const SECTIONS: { title: string; faqs: FAQ[] }[] = [
     faqs: [
       {
         q: "I think Mizan implements [scholar's] methodology wrong.",
-        a: <>Tell us, please. We update with citation. Write to <a href="mailto:methodology@mizan.app" className="text-navy-700 underline">methodology@mizan.app</a> with the specific scholar, the specific ruling, and the published source. Our Shariah Board reviews every such note.</>,
+        a: <>Tell us, please. We update with citation. Write to <a href="mailto:methodology@mizan.app" className="text-navy-700 underline">methodology@mizan.app</a> with the specific scholar, the specific ruling, and the published source. Every note is reviewed against the cited primary source and a public changelog entry is added if a profile changes.</>,
       },
       {
         q: "Does Mizan have a Shariah board?",
-        a: <>Yes. See <a href="/about" className="text-navy-700 underline">/about</a> for the current named members. The board reviews every methodology before release, meets quarterly, and audits AI Q&A outputs.</>,
+        a: <>Not yet. Until one is engaged, credibility comes from the primary-source citations on <a href="/methodology" className="text-navy-700 underline">/methodology</a>. The honest scoreboard of what is and isn&apos;t in place lives on <a href="/trust" className="text-navy-700 underline">/trust</a>.</>,
       },
       {
         q: "What about crypto? Is BTC halal?",
-        a: <>Crypto is a year-2 feature. The scholarly debate is genuinely unresolved: some scholars accept Bitcoin and asset-backed tokens, most flag yield-bearing DeFi as riba. We&apos;ll ship a separate crypto layer with scholar-by-scholar verdicts once our methodology is complete and reviewed by the board.</>,
+        a: <>The scholarly debate is genuinely unresolved: some scholars accept Bitcoin and asset-backed tokens, most flag yield-bearing DeFi as riba. Our <a href="/crypto" className="text-navy-700 underline">/crypto</a> page summarises what every scholar has publicly said, with sources you can verify.</>,
       },
     ],
   },

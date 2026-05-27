@@ -735,7 +735,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     ],
     "a": {
       "aaoifi": {
-        "t": "Mizan is a Hong Kong-based fintech founded by jk in 2026. The Shariah Supervisory Board includes Mufti Faraz Adam (UK Hanafi, Chair target), Sheikh Joe Bradford (US, Member target), and a Ja'fari scholar from the Al-Mahdi Institute (Member target). See /about for current named members.",
+        "t": "Mizan is a Hong Kong-based fintech, founded solo in 2026 by Gordon Louie — a non-Muslim technologist. A Shariah Supervisory Board is not yet engaged; credibility currently comes from the primary-source citations on /methodology (AAOIFI Standard No. 21, Mufti Taqi Usmani's published works, the DJIM methodology PDF, the Sistani office). The honest scoreboard of what is and isn't in place lives at /trust.",
         "c": []
       }
     }
