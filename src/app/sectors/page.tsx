@@ -123,9 +123,8 @@ export default function SectorsIndex() {
       </section>
 
       <p className="mt-12 text-center text-[11px] text-gray-500">
-        Pass-rates reflect the {sectors.reduce((s, x) => s + x.total, 0)} tickers Mizan
-        currently covers with live FMP data. Coverage expands as more fundamentals are
-        ingested.
+        Pass-rates reflect Mizan&apos;s current {sectors.reduce((s, x) => s + x.total, 0)}-ticker
+        representative sample. Live FMP integration is wired in for production expansion.
       </p>
     </div>
   );

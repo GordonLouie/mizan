@@ -351,8 +351,9 @@ export default function MethodologyPage() {
             Pro-tier users whose portfolio verdicts change.
           </p>
           <p className="text-[12px] italic text-gray-500">
-            Mizan currently covers {listStocks().length}+ tickers with live FMP
-            fundamentals; coverage expands as more symbols are ingested.
+            Current prototype screens a {listStocks().length}-ticker representative sample.
+            FMP live-data integration is wired in; production coverage scales to any listed
+            equity as the daily enrichment script runs.
           </p>
         </div>
       </section>

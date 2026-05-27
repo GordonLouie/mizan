@@ -57,7 +57,7 @@ export default function TrustPage() {
               label: "Live product deployed",
               status: "done",
               detail:
-                "Mizan is live, public, free to use. Web app supports six scholarly profiles, screens stocks with live Financial Modeling Prep fundamentals, full source on GitHub.",
+                "Mizan is live, public, free to use. Web app supports six scholarly profiles, screens a 163-ticker representative sample, full source on GitHub.",
             }}
           />
           <StatusRow
@@ -113,7 +113,7 @@ export default function TrustPage() {
               label: "Live financial data integration (Financial Modeling Prep)",
               status: "not_yet",
               detail:
-                "Wired in. Mizan now reads live fundamentals from Financial Modeling Prep's /stable API. Coverage expanding as more symbols are ingested.",
+                "Integration code is in place (FMP /stable API, ratio computation, sector mapping). Live data not yet serving — the daily enrichment script accumulates real fundamentals as FMP quota allows, then replaces the seed.",
             }}
           />
           <StatusRow
@@ -212,11 +212,12 @@ export default function TrustPage() {
         <SectionHead title="Where the data comes from" />
         <ul className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
           <li>
-            <strong className="text-gray-900">Live (May 2026):</strong> Real-time
-            fundamentals via Financial Modeling Prep&apos;s /stable API — balance sheets,
-            income statements, ratios. Computed in-house from raw filings; nothing relies
-            on a third-party &lsquo;halal score.&rsquo; Coverage expands as more symbols
-            are added to the daily enrichment run.
+            <strong className="text-gray-900">Current (May 2026):</strong> 163 representative
+            tickers hand-seeded from Q1 2026 public filings. The FMP live-data integration
+            is wired (balance sheets, income statements, ratios) but not yet serving —
+            enrichment runs are gated by free-tier daily quotas, so real data accumulates
+            in batches. Ratios are computed in-house from raw filings; nothing relies on
+            any third-party &lsquo;halal score.&rsquo;
           </li>
           <li>
             <strong className="text-gray-900">Year 1 production:</strong> Financial Modeling
@@ -291,9 +292,10 @@ export default function TrustPage() {
           </li>
           <li>
             <span className="text-gray-400">·</span>{" "}
-            <strong className="text-gray-900">Full equity universe</strong>{" "}
-            — FMP free-tier daily caps mean coverage grows in increments rather than all
-            at once; a paid FMP plan unlocks the long tail.
+            <strong className="text-gray-900">Live FMP data serving production</strong>{" "}
+            — integration code is in place; real fundamentals replace the seed as the
+            daily enrichment script runs against FMP&apos;s free tier (paid plan would
+            ship it all at once).
           </li>
         </ul>
         <p className="mt-5 text-[12px] italic text-gray-500">
