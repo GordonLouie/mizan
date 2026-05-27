@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SCHOLAR_PROFILES } from "@/lib/scholars";
+import { listStocks } from "@/lib/data";
 import { ExternalLink, ArrowRight } from "lucide-react";
 
 export const metadata = {
@@ -350,8 +351,8 @@ export default function MethodologyPage() {
             Pro-tier users whose portfolio verdicts change.
           </p>
           <p className="text-[12px] italic text-gray-500">
-            The current prototype runs against a 163-ticker representative sample seeded
-            from public filings. Production version covers any listed equity.
+            Mizan currently covers {listStocks().length}+ tickers with live FMP
+            fundamentals; coverage expands as more symbols are ingested.
           </p>
         </div>
       </section>

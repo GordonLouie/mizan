@@ -57,7 +57,7 @@ export default function TrustPage() {
               label: "Live product deployed",
               status: "done",
               detail:
-                "Mizan is live, public, free to use. Web app supports six scholarly profiles, screens 163 representative tickers in the prototype, full source on GitHub.",
+                "Mizan is live, public, free to use. Web app supports six scholarly profiles, screens stocks with live Financial Modeling Prep fundamentals, full source on GitHub.",
             }}
           />
           <StatusRow
@@ -113,7 +113,7 @@ export default function TrustPage() {
               label: "Live financial data integration (Financial Modeling Prep)",
               status: "not_yet",
               detail:
-                "Current prototype runs on a 163-ticker representative sample seeded from public Q1 2026 filings. Production data pipeline scheduled Q3.",
+                "Wired in. Mizan now reads live fundamentals from Financial Modeling Prep's /stable API. Coverage expanding as more symbols are ingested.",
             }}
           />
           <StatusRow
@@ -212,9 +212,11 @@ export default function TrustPage() {
         <SectionHead title="Where the data comes from" />
         <ul className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
           <li>
-            <strong className="text-gray-900">Current prototype (May 2026):</strong> 163
-            representative tickers hand-seeded from public Q1 2026 filings (10-Ks, 10-Qs,
-            equivalent international filings). Used for engine validation and design.
+            <strong className="text-gray-900">Live (May 2026):</strong> Real-time
+            fundamentals via Financial Modeling Prep&apos;s /stable API — balance sheets,
+            income statements, ratios. Computed in-house from raw filings; nothing relies
+            on a third-party &lsquo;halal score.&rsquo; Coverage expands as more symbols
+            are added to the daily enrichment run.
           </li>
           <li>
             <strong className="text-gray-900">Year 1 production:</strong> Financial Modeling
@@ -289,8 +291,9 @@ export default function TrustPage() {
           </li>
           <li>
             <span className="text-gray-400">·</span>{" "}
-            <strong className="text-gray-900">Stock universe beyond 163 sample tickers</strong>{" "}
-            — production scales to any listed equity once FMP is wired in (Q3).
+            <strong className="text-gray-900">Full equity universe</strong>{" "}
+            — FMP free-tier daily caps mean coverage grows in increments rather than all
+            at once; a paid FMP plan unlocks the long tail.
           </li>
         </ul>
         <p className="mt-5 text-[12px] italic text-gray-500">

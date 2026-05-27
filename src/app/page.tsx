@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import TickerSearch from "@/components/TickerSearch";
 import { ArrowRight, GraduationCap, Calculator, Sparkles } from "lucide-react";
 import { CURATED_LISTS } from "@/lib/lists";
+import { listStocks } from "@/lib/data";
 
 export default function Home() {
   const router = useRouter();
@@ -69,7 +70,7 @@ export default function Home() {
       <div className="mx-auto mt-20 max-w-xl">
         <div className="grid grid-cols-3 gap-6 border-t border-gray-200 pt-6 text-center">
           <TrustStat n="6" label="scholar profiles" />
-          <TrustStat n="163" label="stocks screened" />
+          <TrustStat n={listStocks().length.toString()} label="stocks screened" />
           <TrustStat n="0" label="black-box scores" />
         </div>
       </div>

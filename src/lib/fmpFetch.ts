@@ -4,15 +4,18 @@
  * Used by scripts/enrichStocks.ts at build time to populate src/data/stocks.json.
  * NOT used at runtime — production reads from the pre-computed JSON.
  *
+ * Uses the new "stable" API surface (post-Aug-2025). Legacy /api/v3/ endpoints
+ * are inaccessible to new accounts.
+ *
  * Required env var: FMP_API_KEY  (loaded from .env.local)
  */
 
 import type { StockFundamentals, ProhibitedSector } from "./types";
 
-const FMP_BASE = "https://financialmodelingprep.com/api/v3";
+const FMP_BASE = "https://financialmodelingprep.com/stable";
 
 // Approximate risk-free yield used to estimate interest income when companies
-// don't report it separately. 4% is a conservative US Treasury-ish proxy as of 2026.
+// don't report it separately. 4% is a conservative US Treasury-ish proxy.
 const RISK_FREE_RATE = 0.04;
 
 interface FMPProfile {
@@ -20,10 +23,10 @@ interface FMPProfile {
   companyName: string;
   sector: string | null;
   industry: string | null;
-  mktCap: number;
+  marketCap: number;
   price: number;
   beta: number;
-  lastDiv: number;
+  lastDividend: number;
   isEtf: boolean;
   exchange: string;
 }
@@ -53,19 +56,23 @@ interface FMPIncome {
   interestExpense: number;
 }
 
-interface FMPKeyMetrics {
+interface FMPRatios {
   symbol: string;
   date: string;
   dividendYield: number;
-  marketCap: number;
 }
 
-async function fmpGet<T>(path: string, apiKey: string): Promise<T | null> {
-  const sep = path.includes("?") ? "&" : "?";
-  const url = `${FMP_BASE}${path}${sep}apikey=${apiKey}`;
+async function fmpGet<T>(
+  path: string,
+  symbol: string,
+  apiKey: string,
+  extraParams: Record<string, string> = {},
+): Promise<T | null> {
+  const params = new URLSearchParams({ symbol, ...extraParams, apikey: apiKey });
+  const url = `${FMP_BASE}${path}?${params.toString()}`;
   const res = await fetch(url);
   if (!res.ok) {
-    console.warn(`FMP ${path} returned ${res.status}`);
+    console.warn(`FMP ${path}?symbol=${symbol} returned ${res.status}`);
     return null;
   }
   try {
@@ -77,8 +84,7 @@ async function fmpGet<T>(path: string, apiKey: string): Promise<T | null> {
 
 /**
  * Map FMP industry strings to Mizan's ProhibitedSector taxonomy.
- * Conservative: only flag explicit matches. Ambiguous industries flag nothing
- * and rely on the ratio screen to catch problems.
+ * Conservative: only flag explicit matches.
  */
 export function industryToProhibitedFlags(
   industry: string | null,
@@ -88,50 +94,36 @@ export function industryToProhibitedFlags(
   const i = (industry ?? "").toLowerCase();
   const s = (sector ?? "").toLowerCase();
 
-  // Alcohol
   if (/\b(beer|wine|spirits|liquor|brewer|distill|alcohol)\b/.test(i)) {
     flags.push("alcohol");
   }
-  // Tobacco
   if (/\btobacco\b/.test(i)) {
     flags.push("tobacco");
   }
-  // Gambling
   if (/\b(gambling|casino|gaming|lottery)\b/.test(i)) {
     flags.push("gambling");
   }
-  // Conventional finance — banks, insurance, credit services, asset managers
   if (
     /\b(bank|insurance|credit services|capital markets|asset management|mortgage|consumer finance|reinsurance)\b/.test(i) ||
-    /\bfinancial services\b/.test(s) && /\b(bank|insurance|credit)\b/.test(i)
+    (/\bfinancial services\b/.test(s) && /\b(bank|insurance|credit)\b/.test(i))
   ) {
     flags.push("conventional_finance");
   }
-  // Weapons / defense
   if (/\b(aerospace.*defense|defense|weapons|firearms)\b/.test(i)) {
     flags.push("weapons");
   }
-  // Pork — rarely a standalone industry; defer to ratio + manual flagging
-  // Adult entertainment
   if (/\b(adult|gentlemen|entertainment.*adult)\b/.test(i)) {
     flags.push("adult_entertainment");
   }
-  // Non-halal food — packaged foods that aren't certified; flag if explicit
   if (/\bpork|swine\b/.test(i)) {
     flags.push("pork");
   }
-
   return flags;
 }
 
-/**
- * Map FMP sector strings to Mizan's display sector taxonomy.
- * Mizan's sectors are looser — used only for display + sector pages.
- */
 export function normalizeSector(fmpSector: string | null): string {
   if (!fmpSector) return "Other";
   const s = fmpSector.trim();
-  // Direct passthroughs that already match Mizan's display vocabulary
   const known = [
     "Technology", "Healthcare", "Financial Services", "Consumer Discretionary",
     "Consumer Staples", "Energy", "Industrials", "Materials", "Real Estate",
@@ -145,7 +137,7 @@ export function normalizeSector(fmpSector: string | null): string {
 
 /**
  * Compute Mizan's StockFundamentals from FMP raw data.
- * Returns null if essential data (profile or balance sheet) is missing.
+ * Returns null if essential data (profile) is missing.
  */
 export async function fetchStockFundamentals(
   ticker: string,
@@ -154,45 +146,47 @@ export async function fetchStockFundamentals(
   if (!apiKey) throw new Error("FMP_API_KEY is required");
   const tk = ticker.toUpperCase().trim();
 
-  // Fetch all 4 endpoints in parallel
-  const [profileRes, bsRes, incomeRes, keyMetricsRes] = await Promise.all([
-    fmpGet<FMPProfile[]>(`/profile/${tk}`, apiKey),
-    fmpGet<FMPBalanceSheet[]>(`/balance-sheet-statement/${tk}?limit=1`, apiKey),
-    fmpGet<FMPIncome[]>(`/income-statement/${tk}?limit=1`, apiKey),
-    fmpGet<FMPKeyMetrics[]>(`/key-metrics/${tk}?limit=1`, apiKey),
+  // Fetch all endpoints in parallel
+  const [profileRes, bsRes, incomeRes, ratiosRes] = await Promise.all([
+    fmpGet<FMPProfile[]>("/profile", tk, apiKey),
+    fmpGet<FMPBalanceSheet[]>("/balance-sheet-statement", tk, apiKey, { limit: "1" }),
+    fmpGet<FMPIncome[]>("/income-statement", tk, apiKey, { limit: "1" }),
+    fmpGet<FMPRatios[]>("/ratios", tk, apiKey, { limit: "1" }),
   ]);
 
   const profile = profileRes?.[0];
+  if (!profile) return null;
+
   const bs = bsRes?.[0];
-  if (!profile || !bs) return null;
+  // Require balance sheet — without it we can't honestly compute the screening
+  // ratios that matter (debt, cash, illiquid assets). Skip rather than report 0s.
+  if (!bs) return null;
 
   const income = incomeRes?.[0];
-  const keyMetrics = keyMetricsRes?.[0];
+  const ratios = ratiosRes?.[0];
 
-  const mktCap = profile.mktCap || 1; // avoid divide-by-zero
+  const mktCap = profile.marketCap || 1; // avoid divide-by-zero
   const totalAssets = bs.totalAssets || 1;
 
-  // ── Debt ratio ──────────────────────────────────────────────────────────
-  const totalDebt = bs.totalDebt ?? (bs.shortTermDebt ?? 0) + (bs.longTermDebt ?? 0);
+  // ── Debt ratio ──
+  const totalDebt =
+    bs.totalDebt ?? ((bs.shortTermDebt ?? 0) + (bs.longTermDebt ?? 0));
   const debtToMarketCapPct = (totalDebt / mktCap) * 100;
 
-  // ── Cash + securities ratio ─────────────────────────────────────────────
+  // ── Cash + securities ratio ──
   const cashAndSecurities =
     bs.cashAndShortTermInvestments ??
     (bs.cashAndCashEquivalents ?? 0) + (bs.shortTermInvestments ?? 0);
   const cashSecuritiesToMarketCapPct = (cashAndSecurities / mktCap) * 100;
 
-  // ── Receivables ratio ───────────────────────────────────────────────────
+  // ── Receivables ratio ──
   const receivablesToMarketCapPct = ((bs.netReceivables ?? 0) / mktCap) * 100;
 
-  // ── Illiquid assets ratio ───────────────────────────────────────────────
-  // Mufti Taqi's framework: tangible / total. We approximate as PPE + inventory
-  // (most defensible "real, physical" share). Intangibles excluded.
+  // ── Illiquid assets ratio ──
   const illiquid = (bs.propertyPlantEquipmentNet ?? 0) + (bs.inventory ?? 0);
   const illiquidAssetsToTotalAssetsPct = (illiquid / totalAssets) * 100;
 
-  // ── Impermissible income estimate ───────────────────────────────────────
-  // Prefer reported interest income; fall back to cash × risk-free-rate proxy.
+  // ── Impermissible income estimate ──
   let interestIncome = income?.interestIncome ?? 0;
   if (!interestIncome) {
     interestIncome = cashAndSecurities * RISK_FREE_RATE;
@@ -200,11 +194,15 @@ export async function fetchStockFundamentals(
   const revenue = income?.revenue || 1;
   const impermissibleIncomePct = (interestIncome / revenue) * 100;
 
-  // ── Dividend yield ──────────────────────────────────────────────────────
-  // FMP returns yield as a fraction (0.025 = 2.5%); convert to pct.
-  const dividendYieldPct = (keyMetrics?.dividendYield ?? 0) * 100;
+  // ── Dividend yield ──
+  // /ratios returns dividendYield as a fraction (0.025 = 2.5%); convert to pct.
+  // Fall back to profile.lastDividend / price if ratios missing.
+  let dividendYieldPct = (ratios?.dividendYield ?? 0) * 100;
+  if (!dividendYieldPct && profile.lastDividend && profile.price) {
+    dividendYieldPct = (profile.lastDividend / profile.price) * 100;
+  }
 
-  // ── Sector flags ────────────────────────────────────────────────────────
+  // ── Sector flags ──
   const sectorFlags = industryToProhibitedFlags(profile.industry, profile.sector);
 
   return {

@@ -133,7 +133,7 @@ export default function TickerSearch({ value, onChange, placeholder, autoFocus }
 
       {open && query.trim() && matches.length === 0 && (
         <div className="absolute z-20 mt-1 w-full rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800 shadow-lg">
-          No tickers matching <strong>{query}</strong>. Mizan ships with 163 sample tickers; live data is on the roadmap.
+          No tickers matching <strong>{query}</strong>. Mizan currently covers {stocks.length} tickers with live FMP fundamentals — coverage expands daily.
         </div>
       )}
     </div>
