@@ -34,66 +34,30 @@ const BATCH_DELAY_MS = 1000;
 // search for. Grouped by region. Add/remove as needed.
 
 const SEED_TICKERS: string[] = [
-  // ── US Mega-caps ──
-  "AAPL", "MSFT", "GOOGL", "GOOG", "AMZN", "NVDA", "META", "TSLA", "BRK.B",
-  "AVGO", "LLY", "JPM", "V", "MA", "UNH", "XOM", "JNJ", "WMT", "PG", "HD",
-  "ORCL", "COST", "ABBV", "MRK", "CVX", "BAC", "KO", "PEP", "TMO", "ADBE",
-  "CRM", "MCD", "ACN", "ABT", "LIN", "AMD", "CSCO", "TXN", "DHR", "WFC",
-  "NFLX", "PM", "DIS", "NKE", "VZ", "INTC", "QCOM", "AMGN", "IBM", "T",
+  // ── Mega-caps everyone knows (covers all home-page chips, /vs pairs, /discover hardcoded refs) ──
+  "AAPL", "MSFT", "GOOGL", "AMZN", "NVDA", "META", "TSLA", "BRK.B", "V", "MA",
+  "JPM", "BAC", "WFC", "LLY", "UNH", "JNJ", "PFE", "MRK", "ABBV", "AVGO",
 
-  // ── US Large-cap dividend / industrial ──
-  "INTU", "PFE", "HON", "UNP", "NEE", "RTX", "GE", "CAT", "MS", "GS",
-  "BLK", "BMY", "SPGI", "AXP", "LOW", "LMT", "BKNG", "DE", "MDT", "NOW",
-  "BA", "ELV", "PLD", "TJX", "ISRG", "SYK", "ADP", "GILD", "MMC", "VRTX",
-  "ETN", "C", "REGN", "AMAT", "CB", "MO", "PYPL", "SCHW", "PGR", "ZTS",
-  "MDLZ", "BSX", "FI", "DUK", "EOG", "SO", "ANET", "BDX", "CCI", "ICE",
+  // ── Big consumer + staples (dividend yielders on /discover and curated lists) ──
+  "WMT", "PG", "KO", "PEP", "COST", "HD", "MCD", "SBUX", "DIS", "NKE",
 
-  // ── US Mid-cap + growth ──
-  "ABNB", "UBER", "SHOP", "SQ", "PLTR", "SNOW", "CRWD", "PANW", "FTNT",
-  "MELI", "TEAM", "DDOG", "ZS", "OKTA", "MDB", "NET", "WDAY", "VEEV",
-  "ETSY", "PINS", "ROKU", "DKNG", "RBLX", "U", "TWLO", "DOCU", "ZM",
-  "COIN", "HOOD", "SOFI", "RIVN", "LCID", "F", "GM", "BA", "DAL", "UAL",
-  "LUV", "AAL", "JBLU", "SAVE", "AAL", "ALK", "MTN", "HLT", "MAR", "H",
-  "WYNN", "MGM", "LVS", "CZR", "RCL", "CCL", "NCLH", "PARA", "WBD",
+  // ── Dividend / income names (linked from /lists "Halal dividend payers") ──
+  "T", "VZ", "CSCO", "INTC", "IBM", "TXN", "QCOM",
 
-  // ── US Tech secondary ──
-  "TSM", "ASML", "AMAT", "LRCX", "KLAC", "MRVL", "ON", "MU", "WDC", "STX",
-  "NTNX", "DELL", "HPQ", "HPE", "GLW", "ARM", "MCHP", "ADI", "MPWR", "TER",
-  "NTAP", "ANSS", "CTSH", "CDW", "EPAM", "GLOB", "TYL", "CDNS", "SNPS", "FIS",
-  "FISV", "GPN", "JKHY", "PAYC", "PCTY", "WIX", "PEGA", "BILL", "FROG",
+  // ── Energy (curated list constituents) ──
+  "XOM", "CVX", "COP", "EOG",
 
-  // ── US Healthcare + biotech ──
-  "TMO", "BMY", "CVS", "WBA", "CI", "HCA", "MCK", "COR", "BAX", "BIO",
-  "MTD", "RMD", "IDXX", "WST", "STE", "ZBH", "EW", "ALGN", "DXCM", "PODD",
-  "MOH", "CNC", "HUM", "ANTM", "BIIB", "INCY", "MRNA", "BNTX", "ALNY",
-  "VRTX", "REGN", "GILD", "BMRN", "TECH", "EXAS", "AMN", "GMED",
+  // ── Industrials + materials (curated list) ──
+  "UPS", "UNP", "HON", "CAT", "BA", "GE", "PLD", "NEM",
 
-  // ── US Energy + materials ──
-  "XOM", "CVX", "COP", "EOG", "SLB", "PSX", "MPC", "VLO", "PXD", "OXY",
-  "DVN", "FANG", "HES", "MRO", "APA", "EQT", "HAL", "BKR", "FTI", "OKE",
-  "WMB", "ET", "EPD", "KMI", "LNG", "TRGP", "CLF", "FCX", "NEM", "GOLD",
-  "AA", "X", "STLD", "NUE", "RS", "ATI", "VMC", "MLM", "CRH", "EXP",
+  // ── Tech extended (popular Muslim investor searches) ──
+  "ORCL", "CRM", "ADBE", "NFLX", "AMD", "TSM", "ASML", "ARM",
 
-  // ── US Consumer staples + retail ──
-  "KO", "PEP", "WMT", "COST", "PG", "CL", "KMB", "GIS", "K", "HSY",
-  "MDLZ", "MO", "PM", "STZ", "BUD", "DEO", "TAP", "SAM", "BF.B",
-  "KR", "WBA", "TGT", "DG", "DLTR", "ROST", "TJX", "BBY", "ULTA", "LULU",
-  "TPR", "RL", "CPB", "CAG", "SJM", "HRL", "MKC", "CHD", "CLX", "ENR",
+  // ── International ADRs that come up a lot ──
+  "BABA", "TM", "SAP", "NVO",
 
-  // ── US REITs ──
-  "PLD", "AMT", "CCI", "EQIX", "PSA", "SPG", "WELL", "DLR", "O", "AVB",
-  "EXR", "ARE", "VTR", "WY", "BXP", "ESS", "MAA", "UDR", "CPT", "REG",
-
-  // ── International ETFs + ADRs ──
-  "BABA", "NIO", "XPEV", "LI", "PDD", "JD", "BIDU", "TCOM", "ZTO", "NTES",
-  "TSM", "ASML", "SAP", "NVO", "AZN", "RIO", "BHP", "VALE", "TM", "HMC",
-  "SONY", "SE", "MELI", "GLOB", "STM", "INFY", "WIT", "RDY", "ITUB", "BBD",
-
-  // ── Halal-specific ETFs ──
-  "SPUS", "HLAL", "SPSK", "SHRA.L", "FALCON",
-
-  // ── Saudi / GCC (FMP coverage may be limited; will fail-soft) ──
-  "2222.SR", "1120.SR", "1180.SR", "1211.SR", "7010.SR", "4001.SR",
+  // ── Halal-specific ETFs (must work — these are pillars of the product) ──
+  "SPUS", "HLAL", "SPSK",
 ];
 
 // ─── MAIN ──────────────────────────────────────────────────────────────────
