@@ -130,6 +130,29 @@ async function main() {
     (s): s is StockFundamentals => s !== null,
   );
 
+  // DEFENSIVE: never overwrite an existing stocks.json with an empty array.
+  // If this run produced zero results (e.g. quota exhausted, all 4xx), leave
+  // the existing data alone so we don't break the site.
+  if (stocks.length === 0) {
+    console.log(`\n⚠  Zero stocks succeeded this run. ${OUTPUT_PATH} is UNCHANGED.`);
+    console.log(`   ${progress.failed.length} tickers failed. Likely FMP quota.`);
+    console.log(`   Wait for quota reset, then rerun.`);
+    return;
+  }
+
+  // Also defensive: if current file has MORE stocks than this run produced,
+  // don't shrink it. (Run failed partway after a previous successful run.)
+  try {
+    const existing = JSON.parse(readFileSync(OUTPUT_PATH, "utf-8"));
+    if (Array.isArray(existing) && existing.length > stocks.length) {
+      console.log(`\n⚠  Existing ${OUTPUT_PATH} has ${existing.length} stocks; this run produced ${stocks.length}.`);
+      console.log(`   File NOT overwritten. Delete .enrich-progress.json and rerun if you want a full refresh.`);
+      return;
+    }
+  } catch {
+    // ignore — file may be missing or unparseable; we'll write fresh below
+  }
+
   // Sort by market cap descending for stable, readable output
   stocks.sort((a, b) => b.marketCapUsd - a.marketCapUsd);
 
@@ -137,7 +160,6 @@ async function main() {
 
   console.log(`\n✓ Wrote ${stocks.length} stocks to ${OUTPUT_PATH}`);
   console.log(`  ${progress.failed.length} tickers failed (see .enrich-progress.json)`);
-  console.log(`\nRotate your FMP key now if you pasted it anywhere public.`);
 }
 
 main().catch((err) => {
