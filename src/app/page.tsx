@@ -65,16 +65,23 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Ticker chips — secondary */}
+          {/* Company chips — names, not ticker symbols (more inclusive for casual users) */}
           <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5 text-xs">
             <span className="mr-1 text-gray-400">Or try</span>
-            {["AAPL", "TSLA", "MSFT", "JPM", "META", "SPUS"].map((t) => (
+            {[
+              { ticker: "AAPL", name: "Apple" },
+              { ticker: "TSLA", name: "Tesla" },
+              { ticker: "MSFT", name: "Microsoft" },
+              { ticker: "JPM", name: "JPMorgan" },
+              { ticker: "META", name: "Meta" },
+              { ticker: "SPUS", name: "Halal S&P ETF" },
+            ].map((s) => (
               <Link
-                key={t}
-                href={`/screen?ticker=${t}`}
-                className="rounded-md border border-gray-200 bg-white px-2 py-1 font-mono text-[11px] text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+                key={s.ticker}
+                href={`/screen?ticker=${s.ticker}`}
+                className="rounded-md border border-gray-200 bg-white px-2 py-1 text-[11px] text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
               >
-                {t}
+                {s.name}
               </Link>
             ))}
           </div>
