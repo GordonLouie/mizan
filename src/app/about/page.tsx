@@ -26,7 +26,7 @@ export default function AboutPage() {
         </p>
       </header>
 
-      {/* ORIGIN STORY */}
+      {/* ORIGIN STORY — first-person, vulnerable, conversational */}
       <section className="mt-16">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
           The honest origin
@@ -35,31 +35,47 @@ export default function AboutPage() {
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
           style={{ fontFamily: "Georgia, serif" }}
         >
-          Built by an outsider, inspired by a Muslim friend.
+          I&apos;m not Muslim. Here&apos;s why I&apos;m building this.
         </h2>
         <div className="mt-5 max-w-2xl space-y-4 text-[15px] leading-relaxed text-gray-700">
           <p>
-            I&apos;m not Muslim. I&apos;m a Hong&nbsp;Kong-based technologist named
-            Gordon, and the reason Mizan exists is a single friend. He looked at the
-            existing halal-investing apps and kept seeing verdicts that didn&apos;t match
-            what he believed his own scholars taught. Different scholars reach different
-            verdicts on the same stock — but the apps either pick one rulebook and hide
-            the rest, or wrap a black-box score around the whole thing.
+            My name&apos;s Gordon. I build software in Hong Kong. I&apos;m Chinese, not
+            Muslim, and until two years ago I didn&apos;t know what &ldquo;halal
+            investing&rdquo; meant.
           </p>
           <p>
-            The Hanafi diaspora following Mufti Taqi Usmani&apos;s additional
-            illiquid-asset rule, Ja&apos;fari Shia investors with a different framework
-            altogether, and the strict-view community — they&apos;re all served by a
-            single AAOIFI default that treats their disagreements as if they didn&apos;t
-            exist.
+            What changed: a close friend of mine — devout, careful, the kind of person
+            who actually reads the fine print on his retirement account — showed me his
+            screen on one of the popular halal investing apps. The app said a stock
+            passed. He didn&apos;t believe it. The numbers his scholar would have used
+            weren&apos;t in the app at all. The verdict was just there, take it or leave
+            it. No math, no citation, no way to argue with it.
           </p>
           <p>
-            I built Mizan because I&apos;m a builder. I will never claim religious
-            authority I don&apos;t have. My job is to faithfully represent what scholars
-            have already published — with the sources cited, the math shown, and no
-            black-box scores. The fact that I&apos;m an outsider is exactly what lets
-            Mizan stay neutral across every madhab: I have no stake in which scholar is
-            right.
+            That moment didn&apos;t feel like a finance problem. It felt like someone
+            being told what their religion permits by a black box. And once I saw it, I
+            couldn&apos;t stop seeing it. The Hanafi following Mufti Taqi Usmani&apos;s
+            stricter rule, the Ja&apos;fari Shia with a different framework entirely, the
+            zero-tolerance community — all of them squeezed into one app&apos;s single
+            default.
+          </p>
+          <p>
+            I built Mizan because I&apos;m a builder, and because the gap was obviously
+            real, and because the fact that I have no religious stake is exactly what
+            makes me the right person to represent all the scholars fairly. I will never
+            claim authority I don&apos;t have. I cite the sources. I show the math. I
+            don&apos;t tell anyone what to follow.
+          </p>
+          <p>
+            If you&apos;re Muslim and you find Mizan useful, that&apos;s the whole point.
+            If you find something wrong, email me at{" "}
+            <a
+              href="mailto:hello@mizaninvesting.com"
+              className="text-navy-700 underline hover:text-navy-900"
+            >
+              hello@mizaninvesting.com
+            </a>
+            . I read every message personally.
           </p>
         </div>
       </section>

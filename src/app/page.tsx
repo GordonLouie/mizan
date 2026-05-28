@@ -37,7 +37,12 @@ export default function Home() {
             Is your stock halal?
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-[17px] leading-relaxed text-gray-600">
-            Type any ticker. See the verdict under six scholarly methodologies — including the rules no other app implements.
+            See the verdict under six scholarly methodologies — including Mufti Taqi Usmani&apos;s illiquid-asset rule, the one no other halal app implements.
+          </p>
+
+          {/* Show-the-math claim — Tester 2 said this builds trust immediately */}
+          <p className="mx-auto mt-3 max-w-xl text-[13px] leading-relaxed text-gray-500">
+            Every number sourced. Every threshold cited. No black-box scores.
           </p>
 
           {/* Real TickerSearch — wired to router */}
@@ -45,15 +50,25 @@ export default function Home() {
             <TickerSearch
               value=""
               onChange={(t) => { setT(t); if (t) router.push(`/screen?ticker=${encodeURIComponent(t)}`); }}
-              placeholder="Try AAPL, AMZN, TSLA, or 'apple'…"
+              placeholder="Type a ticker — AAPL, AMZN, TSLA, or 'apple'…"
               autoFocus={false}
             />
           </div>
 
-          {/* Ticker chips */}
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-1.5 text-xs">
-            <span className="mr-1 text-gray-400">Try</span>
-            {["AAPL", "AMZN", "TSLA", "MSFT", "JPM", "SPUS"].map((t) => (
+          {/* DEPTH-OF-USE prompt — lead with the disagreement moment, not a generic chip */}
+          <div className="mx-auto mt-5 max-w-xl">
+            <Link
+              href="/screen?ticker=AMZN"
+              className="inline-flex items-center gap-1.5 text-[13px] font-medium text-navy-700 transition hover:text-navy-900"
+            >
+              See where the scholars split on Amazon <ArrowRight size={13} />
+            </Link>
+          </div>
+
+          {/* Ticker chips — secondary */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5 text-xs">
+            <span className="mr-1 text-gray-400">Or try</span>
+            {["AAPL", "TSLA", "MSFT", "JPM", "META", "SPUS"].map((t) => (
               <Link
                 key={t}
                 href={`/screen?ticker=${t}`}
@@ -63,6 +78,15 @@ export default function Home() {
               </Link>
             ))}
           </div>
+
+          {/* "Don't know your scholar?" onboarding path */}
+          <p className="mt-6 text-[12px] text-gray-500">
+            Don&apos;t know which scholar you follow?{" "}
+            <Link href="/learn" className="text-navy-700 underline hover:text-navy-900">
+              60-second primer
+            </Link>{" "}
+            — most American Muslims start with AAOIFI.
+          </p>
         </div>
       </section>
 
