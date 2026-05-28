@@ -5,6 +5,7 @@ import Onboarding from "@/components/Onboarding";
 import ToastContainer from "@/components/ToastContainer";
 import MobileTabBar from "@/components/MobileTabBar";
 import FeedbackWidget from "@/components/FeedbackWidget";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mizan.app"),
@@ -93,6 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ToastContainer />
         <FeedbackWidget />
         <MobileTabBar />
+        <Analytics />
       </body>
     </html>
   );
