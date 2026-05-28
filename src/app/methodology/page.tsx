@@ -391,10 +391,10 @@ export default function MethodologyPage() {
           If you believe a scholar profile in Mizan misrepresents the underlying
           scholarship, write to{" "}
           <a
-            href="mailto:methodology@mizan.app"
+            href="mailto:methodology@mizaninvesting.com"
             className="text-navy-700 underline hover:text-navy-900"
           >
-            methodology@mizan.app
+            methodology@mizaninvesting.com
           </a>{" "}
           with the citation. Every note is reviewed against the cited primary source and a
           public changelog entry is added if a profile changes.

@@ -44,7 +44,7 @@ export default function FeedbackWidget() {
       `Contact: ${contact || "(none provided)"}\n\n` +
       `Message:\n${message}\n`;
 
-    const mailto = `mailto:hello@mizan.app?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailto = `mailto:hello@mizaninvesting.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailto;
 
     toast("Opened your email app — hit send when ready.", { tone: "success" });

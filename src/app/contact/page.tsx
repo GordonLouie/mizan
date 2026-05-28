@@ -41,7 +41,7 @@ export default function ContactPage() {
     if (!validateEmail(newsletterEmail)) { setNewsState("error"); return; }
     setNewsState("sending");
     // Mailto fallback — in production this hits the Beehiiv / Substack endpoint.
-    const url = `mailto:newsletter@mizan.app?subject=${encodeURIComponent("Subscribe to Mizan newsletter")}&body=${encodeURIComponent("Please add " + newsletterEmail + " to the Mizan newsletter list.")}`;
+    const url = `mailto:newsletter@mizaninvesting.com?subject=${encodeURIComponent("Subscribe to Mizan newsletter")}&body=${encodeURIComponent("Please add " + newsletterEmail + " to the Mizan newsletter list.")}`;
     setTimeout(() => {
       window.location.href = url;
       setNewsState("sent");
@@ -121,12 +121,12 @@ export default function ContactPage() {
               <Mail size={14} /> Direct email
             </h3>
             <ul className="mt-3 space-y-1 text-xs text-gray-700">
-              <li><strong>General:</strong> <a href="mailto:hello@mizan.app" className="text-navy-700 underline">hello@mizan.app</a></li>
-              <li><strong>Press:</strong> <a href="mailto:press@mizan.app" className="text-navy-700 underline">press@mizan.app</a></li>
-              <li><strong>Investors:</strong> <a href="mailto:investors@mizan.app" className="text-navy-700 underline">investors@mizan.app</a></li>
-              <li><strong>Methodology:</strong> <a href="mailto:methodology@mizan.app" className="text-navy-700 underline">methodology@mizan.app</a></li>
-              <li><strong>Privacy:</strong> <a href="mailto:privacy@mizan.app" className="text-navy-700 underline">privacy@mizan.app</a></li>
-              <li><strong>Legal:</strong> <a href="mailto:legal@mizan.app" className="text-navy-700 underline">legal@mizan.app</a></li>
+              <li><strong>General:</strong> <a href="mailto:hello@mizaninvesting.com" className="text-navy-700 underline">hello@mizaninvesting.com</a></li>
+              <li><strong>Press:</strong> <a href="mailto:press@mizaninvesting.com" className="text-navy-700 underline">press@mizaninvesting.com</a></li>
+              <li><strong>Investors:</strong> <a href="mailto:investors@mizaninvesting.com" className="text-navy-700 underline">investors@mizaninvesting.com</a></li>
+              <li><strong>Methodology:</strong> <a href="mailto:methodology@mizaninvesting.com" className="text-navy-700 underline">methodology@mizaninvesting.com</a></li>
+              <li><strong>Privacy:</strong> <a href="mailto:privacy@mizaninvesting.com" className="text-navy-700 underline">privacy@mizaninvesting.com</a></li>
+              <li><strong>Legal:</strong> <a href="mailto:legal@mizaninvesting.com" className="text-navy-700 underline">legal@mizaninvesting.com</a></li>
             </ul>
           </div>
 
@@ -167,13 +167,13 @@ function Field({ label, required, children }: { label: string; required?: boolea
 
 function topicEmail(topic: string): string {
   switch (topic) {
-    case "press": return "press@mizan.app";
-    case "investors": return "investors@mizan.app";
-    case "methodology": return "methodology@mizan.app";
-    case "privacy": return "privacy@mizan.app";
-    case "bug": return "support@mizan.app";
-    case "hardship": return "hello@mizan.app";
-    case "partnership": return "hello@mizan.app";
-    default: return "hello@mizan.app";
+    case "press": return "press@mizaninvesting.com";
+    case "investors": return "investors@mizaninvesting.com";
+    case "methodology": return "methodology@mizaninvesting.com";
+    case "privacy": return "privacy@mizaninvesting.com";
+    case "bug": return "support@mizaninvesting.com";
+    case "hardship": return "hello@mizaninvesting.com";
+    case "partnership": return "hello@mizaninvesting.com";
+    default: return "hello@mizaninvesting.com";
   }
 }

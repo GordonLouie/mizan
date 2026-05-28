@@ -23,7 +23,7 @@ const SECTIONS: { title: string; faqs: FAQ[] }[] = [
       },
       {
         q: "What if my scholar isn't in your list?",
-        a: <>Use the Custom profile to match your scholar&apos;s thresholds, or write to us at <a href="mailto:methodology@mizan.app" className="text-navy-700 underline">methodology@mizan.app</a> with their published ruling and we&apos;ll evaluate adding their profile.</>,
+        a: <>Use the Custom profile to match your scholar&apos;s thresholds, or write to us at <a href="mailto:methodology@mizaninvesting.com" className="text-navy-700 underline">methodology@mizaninvesting.com</a> with their published ruling and we&apos;ll evaluate adding their profile.</>,
       },
     ],
   },
@@ -78,7 +78,7 @@ const SECTIONS: { title: string; faqs: FAQ[] }[] = [
       },
       {
         q: "Do you offer student / hardship discounts?",
-        a: <>Yes. Email <a href="mailto:hello@mizan.app" className="text-navy-700 underline">hello@mizan.app</a> with proof of student status, recent zakat eligibility, or similar — we&apos;ll set you up for Pro at no charge.</>,
+        a: <>Yes. Email <a href="mailto:hello@mizaninvesting.com" className="text-navy-700 underline">hello@mizaninvesting.com</a> with proof of student status, recent zakat eligibility, or similar — we&apos;ll set you up for Pro at no charge.</>,
       },
     ],
   },
@@ -104,7 +104,7 @@ const SECTIONS: { title: string; faqs: FAQ[] }[] = [
     faqs: [
       {
         q: "I think Mizan implements [scholar's] methodology wrong.",
-        a: <>Tell us, please. We update with citation. Write to <a href="mailto:methodology@mizan.app" className="text-navy-700 underline">methodology@mizan.app</a> with the specific scholar, the specific ruling, and the published source. Every note is reviewed against the cited primary source and a public changelog entry is added if a profile changes.</>,
+        a: <>Tell us, please. We update with citation. Write to <a href="mailto:methodology@mizaninvesting.com" className="text-navy-700 underline">methodology@mizaninvesting.com</a> with the specific scholar, the specific ruling, and the published source. Every note is reviewed against the cited primary source and a public changelog entry is added if a profile changes.</>,
       },
       {
         q: "Does Mizan have a Shariah board?",
@@ -128,7 +128,7 @@ export default function HelpPage() {
         <h1 className="mt-3 text-3xl font-bold text-gray-900">How can we help?</h1>
         <p className="mt-2 max-w-2xl text-sm text-gray-600">
           Common questions, real answers. If yours isn&apos;t here, email{" "}
-          <a href="mailto:hello@mizan.app" className="text-navy-700 underline">hello@mizan.app</a>{" "}
+          <a href="mailto:hello@mizaninvesting.com" className="text-navy-700 underline">hello@mizaninvesting.com</a>{" "}
           — we read every one and respond within 48 hours.
         </p>
       </div>

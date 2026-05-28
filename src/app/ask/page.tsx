@@ -154,8 +154,8 @@ export default function AskPage() {
           entries in our seeded knowledge base are shown above — but your question may be
           outside their scope. The production version (powered by Claude) handles
           arbitrary questions. For a specific ruling, write to{" "}
-          <a href="mailto:methodology@mizan.app" className="underline hover:text-amber-700">
-            methodology@mizan.app
+          <a href="mailto:methodology@mizaninvesting.com" className="underline hover:text-amber-700">
+            methodology@mizaninvesting.com
           </a>.
         </div>
       )}

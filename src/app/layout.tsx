@@ -8,7 +8,7 @@ import FeedbackWidget from "@/components/FeedbackWidget";
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mizan.app"),
+  metadataBase: new URL("https://mizaninvesting.com"),
   title: {
     default: "Mizan — halal investing, calibrated to your conscience.",
     template: "%s · Mizan",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     title: "Mizan — halal investing, calibrated to your conscience.",
     description:
       "The first stock screener that adapts to your scholar. Six scholar profiles plus a custom builder. Transparent ratio reasoning behind every verdict.",
-    url: "https://mizan.app",
+    url: "https://mizaninvesting.com",
     siteName: "Mizan",
     images: [{ url: "/og_image.svg", width: 1200, height: 630, alt: "Mizan logo" }],
     locale: "en_US",
@@ -79,7 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <a href="/help" className="hover:text-navy-700">Help</a>
                 <a href="/terms" className="hover:text-navy-700">Terms</a>
                 <a href="/privacy" className="hover:text-navy-700">Privacy</a>
-                <a href="mailto:hello@mizan.app" className="hover:text-navy-700">Contact</a>
+                <a href="mailto:hello@mizaninvesting.com" className="hover:text-navy-700">Contact</a>
               </nav>
             </div>
             <p className="mt-4 text-xs leading-6 text-gray-500">

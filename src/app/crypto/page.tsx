@@ -219,10 +219,10 @@ export default function CryptoPage() {
       <p className="mt-16 text-center text-[11px] text-gray-500">
         Disagree with a take here? Email{" "}
         <a
-          href="mailto:methodology@mizan.app"
+          href="mailto:methodology@mizaninvesting.com"
           className="text-navy-700 underline hover:text-navy-900"
         >
-          methodology@mizan.app
+          methodology@mizaninvesting.com
         </a>{" "}
         with the citation. Updated quarterly from public scholarly publications. Back to{" "}
         <Link href="/discover" className="text-navy-700 underline hover:text-navy-900">

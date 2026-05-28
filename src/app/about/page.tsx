@@ -147,10 +147,10 @@ export default function AboutPage() {
                 <p className="mt-2 text-[13px] leading-relaxed text-gray-600">
                   Contact:{" "}
                   <a
-                    href="mailto:hello@mizan.app"
+                    href="mailto:hello@mizaninvesting.com"
                     className="text-navy-700 underline hover:text-navy-900"
                   >
-                    hello@mizan.app
+                    hello@mizaninvesting.com
                   </a>
                 </p>
               </div>
@@ -226,11 +226,11 @@ export default function AboutPage() {
         </h2>
 
         <dl className="mt-6 max-w-xl divide-y divide-gray-100">
-          <ContactRow label="General" email="hello@mizan.app" />
-          <ContactRow label="Methodology challenge" email="methodology@mizan.app" />
-          <ContactRow label="Press" email="press@mizan.app" />
-          <ContactRow label="Investors" email="investors@mizan.app" />
-          <ContactRow label="Privacy / data" email="privacy@mizan.app" />
+          <ContactRow label="General" email="hello@mizaninvesting.com" />
+          <ContactRow label="Methodology challenge" email="methodology@mizaninvesting.com" />
+          <ContactRow label="Press" email="press@mizaninvesting.com" />
+          <ContactRow label="Investors" email="investors@mizaninvesting.com" />
+          <ContactRow label="Privacy / data" email="privacy@mizaninvesting.com" />
         </dl>
         <p className="mt-6 text-[12px] italic text-gray-500">
           Every substantive email is read by the founder personally. No support tickets,

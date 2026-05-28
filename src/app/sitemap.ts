@@ -4,7 +4,7 @@ import { listStocks } from "@/lib/data";
 import { sectorSlug } from "@/lib/sectors";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://mizan.app";
+  const base = "https://mizaninvesting.com";
   const now = new Date();
   const routes = [
     { url: "", priority: 1.0, change: "weekly" as const },

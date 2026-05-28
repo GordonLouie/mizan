@@ -705,7 +705,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     ],
     "a": {
       "aaoifi": {
-        "t": "From your account page on mizan.app, click Billing → Cancel subscription. Cancellation takes effect at the end of your current billing period. You'll retain Pro features until then.",
+        "t": "From your account page on mizaninvesting.com, click Billing → Cancel subscription. Cancellation takes effect at the end of your current billing period. You'll retain Pro features until then.",
         "c": []
       }
     }
