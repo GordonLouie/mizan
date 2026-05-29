@@ -32,7 +32,7 @@ export const metadata: Metadata = {
       "The first stock screener that adapts to your scholar. Six scholar profiles plus a custom builder. Transparent ratio reasoning behind every verdict.",
     url: "https://mizaninvesting.com",
     siteName: "Mizan",
-    images: [{ url: "/og_image.svg", width: 1200, height: 630, alt: "Mizan logo" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Mizan — multi-scholar halal investing screener" }],
     locale: "en_US",
     type: "website",
   },
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "Mizan — halal investing, calibrated to your conscience.",
     description: "The first stock screener that adapts to your scholar's methodology.",
     creator: "@mizanapp",
-    images: ["/og_image.svg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
