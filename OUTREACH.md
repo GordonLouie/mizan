@@ -39,11 +39,15 @@ personal users with stories, public broadcast actually works.
 
 ---
 
-## DM templates — UPDATED to lead with Mufti Taqi differentiator
+## DM templates — UPDATED with Miqdad origin + Mufti Taqi differentiator
 
-The Council unanimously identified Mufti Taqi's illiquid-asset rule as the
-single biggest distribution lever. No other halal app implements it. Lead
-every template with that fact unless context demands otherwise.
+Two unlocks shape these templates:
+1. **Miqdad** is now Mizan's Founding Advisor. He's the Muslim friend who
+   showed Gordon the halal-app screen that started this. He can be named
+   publicly (his preference: "Miqdad, a Muslim" — no sectarian disclosure).
+   Mention him in any DM to a Muslim contact — the credibility lift is real.
+2. **Mufti Taqi's illiquid-asset rule** remains the single biggest
+   distribution lever. No other halal app implements it.
 
 ### Template A — Hanafi / Mufti Taqi followers (strongest cold lead)
 
@@ -76,11 +80,11 @@ straight to me.
 Deobandi / Barelvi traditions, anyone whose madhab you don't know but who's
 South Asian / Turkish diaspora (statistically Hanafi).
 
-### Template B — Warm intro from your friend
+### Template B — Warm intro from Miqdad
 
 ```
-Hey {name} — {friend's name} suggested I reach out. He's been helping me
-push on a halal investing tool I built (mizaninvesting.com).
+Hey {name} — Miqdad suggested I reach out. He's now Founding Advisor on
+a halal investing tool I built (mizaninvesting.com).
 
 I'm not Muslim, but the gap I'm trying to close is real: it's the only
 halal screener that actually implements Mufti Taqi Usmani's illiquid-asset
@@ -105,7 +109,7 @@ hello@mizaninvesting.com.
 ```
 Hey {name} — Gordon here, technologist in Hong Kong. Not Muslim.
 
-A friend got me curious why existing halal investing apps don't show how
+My friend Miqdad got me curious why existing halal investing apps don't show how
 different scholars actually rule on the same stock — they all hide
 disagreement behind one AAOIFI default. So I built mizaninvesting.com
 that shows the verdict under all 6 scholarly views side-by-side, including

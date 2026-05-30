@@ -67,6 +67,12 @@ export default function AboutPage() {
             don&apos;t tell anyone what to follow.
           </p>
           <p>
+            The friend in this story is Miqdad. He&apos;s a Muslim, based in Hong Kong,
+            and he&apos;s now Mizan&apos;s Founding Advisor — gut-checking the
+            methodology against how a real Muslim investor actually thinks. Without him
+            this project does not exist.
+          </p>
+          <p>
             If you&apos;re Muslim and you find Mizan useful, that&apos;s the whole point.
             If you find something wrong, email me at{" "}
             <a
@@ -173,15 +179,51 @@ export default function AboutPage() {
             </div>
           </div>
 
+          {/* Founding Advisor */}
+          <div className="mt-6 rounded-xl border border-gray-200 bg-white p-7">
+            <div className="flex flex-wrap items-start gap-5">
+              <div
+                className="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-full bg-navy-800 text-4xl font-bold text-gold-500"
+                style={{ fontFamily: "Georgia, serif" }}
+              >
+                M
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <h3
+                    className="text-[22px] font-bold text-gray-900"
+                    style={{ fontFamily: "Georgia, serif" }}
+                  >
+                    Miqdad
+                  </h3>
+                  <span className="rounded-full bg-gold-100 px-2.5 py-0.5 text-[11px] font-semibold text-navy-800">
+                    Founding Advisor
+                  </span>
+                </div>
+                <div className="mt-1 text-[11px] uppercase tracking-[0.14em] text-gray-500">
+                  Hong Kong · Muslim investor · the reason Mizan exists
+                </div>
+                <p className="mt-4 text-[14px] leading-relaxed text-gray-700">
+                  The friend who showed Gordon his halal-app screen two years ago and
+                  said the verdict didn&apos;t match what his scholar would have used.
+                  That moment is why Mizan exists. Provides ongoing methodology
+                  gut-checks — does the engine actually answer the question a real
+                  Muslim investor is asking? Defers all religious authority to
+                  qualified scholars.
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Honest note about what's not yet here */}
           <div className="mt-6 border-l-2 border-gray-300 py-2 pl-5">
             <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
               What&apos;s not yet here
             </div>
             <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-gray-700">
-              Mizan does not yet have a formal Shariah Supervisory Board, a named
-              co-founder, or paid scholar engagements. Until those happen, credibility
-              comes from the primary-source citations on{" "}
+              Mizan does not yet have a formal Shariah Supervisory Board or paid scholar
+              engagements. Until those happen, credibility comes from the primary-source
+              citations on{" "}
               <Link
                 href="/methodology"
                 className="text-navy-700 underline hover:text-navy-900"
@@ -225,7 +267,7 @@ export default function AboutPage() {
             label="Funding status"
             value="Bootstrapped, applying to Cyberport CIP (deadline Aug 3)"
           />
-          <Fact label="Team size" value="1 — Founder, building solo today" />
+          <Fact label="Team" value="Founder (Gordon Louie) + Founding Advisor (Miqdad)" />
         </dl>
       </section>
 
