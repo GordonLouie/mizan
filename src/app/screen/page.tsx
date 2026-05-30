@@ -43,15 +43,27 @@ function ScreenInner() {
   const [scholarId, setScholarId] = useState("aaoifi");
   const [ticker, setTicker] = useState("");
   const [bump, setBump] = useState(0);
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem("mizan.scholarId");
       if (saved && SCHOLAR_PROFILES.some((p) => p.id === saved)) setScholarId(saved);
+      // Welcome banner: show only if user has never dismissed AND never saved a scholar.
+      // Per Miqdad: "if the choosing + explanation pops up over and over itll be annoying"
+      const dismissed = localStorage.getItem("mizan.welcomeDismissed");
+      if (!dismissed && !saved) setShowWelcome(true);
     } catch {}
     const urlTicker = params.get("ticker");
     if (urlTicker) setTicker(urlTicker.toUpperCase());
   }, [params]);
+
+  const dismissWelcome = () => {
+    try {
+      localStorage.setItem("mizan.welcomeDismissed", "true");
+    } catch {}
+    setShowWelcome(false);
+  };
 
   useEffect(() => {
     const onFocus = () => setBump((b) => b + 1);
@@ -108,20 +120,46 @@ function ScreenInner() {
 
         <TickerSearch value={ticker} onChange={(t) => setTicker(t)} autoFocus={!ticker} />
 
-        {/* Quiet contextual line — explains the default without confronting it */}
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-[13px]">
-          <span className="text-gray-700">
-            Currently set to{" "}
-            <span className="font-semibold text-gray-900">{currentScholar?.short ?? "AAOIFI"}</span>
-            {" "}— the gold standard used by Islamic banks across the Middle East. Change anytime ↓
-          </span>
-          <Link
-            href="/methodology"
-            className="text-[12px] font-medium text-navy-700 hover:text-navy-900"
-          >
-            Why these defaults?
-          </Link>
-        </div>
+        {/* First-visit welcome banner — disappears forever after dismiss.
+            Per Miqdad: return users shouldn't see this every visit. */}
+        {showWelcome && (
+          <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-5">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-navy-700">
+              First time on Mizan?
+            </div>
+            <p className="mt-2 text-[14px] leading-relaxed text-gray-800">
+              You&apos;re currently set to <strong>AAOIFI</strong> — the gold standard used by Islamic banks across the Middle East. Most users keep this.
+            </p>
+            <p className="mt-1 text-[13px] leading-relaxed text-gray-600">
+              If you follow a specific scholar (Mufti Taqi Usmani, Ja&apos;fari, the strict view, etc.), set it once and Mizan will remember.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <button
+                onClick={() => {
+                  dismissWelcome();
+                  document
+                    .getElementById("scholar-picker")
+                    ?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }}
+                className="rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700"
+              >
+                Set my scholar →
+              </button>
+              <button
+                onClick={dismissWelcome}
+                className="rounded-md border border-gray-300 bg-white px-4 py-2 text-[13px] font-semibold text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+              >
+                Keep AAOIFI default
+              </button>
+              <Link
+                href="/methodology"
+                className="ml-1 self-center text-[12px] font-medium text-navy-700 hover:text-navy-900"
+              >
+                Why these defaults?
+              </Link>
+            </div>
+          </div>
+        )}
 
         {!ticker && (
           <div>
@@ -133,7 +171,7 @@ function ScreenInner() {
         )}
 
         {/* Scholar picker — demoted to secondary position with clear heading */}
-        <div>
+        <div id="scholar-picker">
           <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500 mb-3">
             Or change your scholar
           </div>
