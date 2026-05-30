@@ -88,8 +88,9 @@ function ScreenInner() {
 
   // ─── EMPTY STATE: no ticker selected ──────────────────────────────────────
   if (!stock) {
+    const currentScholar = SCHOLAR_PROFILES.find((p) => p.id === scholarId);
     return (
-      <div className="space-y-6 pb-16">
+      <div className="space-y-8 pb-16">
         <div className="pt-2">
           <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
             Stock screener
@@ -101,21 +102,45 @@ function ScreenInner() {
             Search a stock
           </h1>
           <p className="mt-2 max-w-xl text-[15px] text-gray-600">
-            Find any ticker; see the verdict under every major scholar.
+            Type any ticker. See the verdict and every threshold the moment you do.
           </p>
         </div>
 
         <TickerSearch value={ticker} onChange={(t) => setTicker(t)} autoFocus={!ticker} />
 
-        {!ticker && <DemoBanner />}
-
-        <ScholarPicker value={scholarId} onChange={setScholarId} />
+        {/* Quiet contextual line — explains the default without confronting it */}
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-[13px]">
+          <span className="text-gray-700">
+            Showing under{" "}
+            <span className="font-semibold text-gray-900">{currentScholar?.short ?? "AAOIFI"}</span>
+            {" "}— the most widely-accepted Sunni framework. Change anytime ↓
+          </span>
+          <Link
+            href="/methodology"
+            className="text-[12px] font-medium text-navy-700 hover:text-navy-900"
+          >
+            Why these defaults?
+          </Link>
+        </div>
 
         {!ticker && (
-          <div className="pt-2">
+          <div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500 mb-3">
+              Try one of these
+            </div>
             <FeaturedTickers onPick={(t) => setTicker(t)} />
           </div>
         )}
+
+        {/* Scholar picker — demoted to secondary position with clear heading */}
+        <div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500 mb-3">
+            Or change your scholar
+          </div>
+          <ScholarPicker value={scholarId} onChange={setScholarId} />
+        </div>
+
+        {!ticker && <DemoBanner />}
 
         {ticker && !stock && (
           <Card>
