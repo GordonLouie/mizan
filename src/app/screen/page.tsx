@@ -161,20 +161,10 @@ function ScreenInner() {
           </div>
         )}
 
-        {!ticker && (
-          <div>
-            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500 mb-3">
-              Try one of these
-            </div>
-            <FeaturedTickers onPick={(t) => setTicker(t)} />
-          </div>
-        )}
+        {!ticker && <FeaturedTickers onPick={(t) => setTicker(t)} />}
 
-        {/* Scholar picker — demoted to secondary position with clear heading */}
+        {/* Scholar picker — its own internal "Scholar" label is the heading. */}
         <div id="scholar-picker">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500 mb-3">
-            Or change your scholar
-          </div>
           <ScholarPicker value={scholarId} onChange={setScholarId} />
         </div>
 
