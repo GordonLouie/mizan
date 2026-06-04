@@ -82,6 +82,7 @@ function CustomInner() {
       label: "Your custom profile",
       short: "Custom",
       blurb: "Your saved thresholds.",
+      sourceLabel: "Custom thresholds — user-defined (you set these)",
       custom: true,
       ...profile,
     }),
