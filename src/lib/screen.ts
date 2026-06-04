@@ -133,6 +133,7 @@ export function screenStock(
     ticker: stock.ticker,
     scholarId: scholar.id,
     scholarLabel: scholar.label,
+    scholarSourceLabel: scholar.sourceLabel,
     verdict,
     sectorPasses: sector.passes,
     sectorReason: sector.reason,

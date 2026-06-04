@@ -79,6 +79,19 @@ export default function ComplianceCard({ stock, result }: Props) {
             </span>
           </div>
         </div>
+
+        {/* Primary source citation — Ibrahim Malik feedback (2026-06-04):
+            "reference where the numbers are coming from, cross check if needed" */}
+        <div className="mt-3 flex flex-wrap items-baseline gap-x-2 text-xs">
+          <span className="font-semibold uppercase tracking-widest text-gray-500">Source</span>
+          <span className="text-gray-700">{result.scholarSourceLabel}</span>
+          <a
+            href="/methodology"
+            className="ml-1 inline-flex items-center text-[11px] font-medium text-navy-700 hover:text-navy-900"
+          >
+            full citation chain →
+          </a>
+        </div>
       </div>
 
       {/* Show the math (collapsed by default) */}

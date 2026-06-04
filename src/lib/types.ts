@@ -50,6 +50,9 @@ export interface ScreeningResult {
   ticker: string;
   scholarId: string;
   scholarLabel: string;
+  /** Primary source attribution for the active scholar's methodology.
+   *  Shown inline on the verdict page (per Ibrahim Malik feedback, 2026-06-04). */
+  scholarSourceLabel: string;
   verdict: Verdict;
   sectorPasses: boolean;
   sectorReason: string;
@@ -63,6 +66,11 @@ export interface ScholarProfile {
   label: string;
   short: string;
   blurb: string;
+  /** Primary source attribution — shown inline on verdict pages so users can
+   *  cross-check the thresholds against the published methodology themselves.
+   *  Direct response to user feedback: "reference where the numbers are coming
+   *  from, cross check if needed" (Ibrahim Malik, CUHK, 2026-06-04). */
+  sourceLabel: string;
   /** Sectors that automatically disqualify a company. */
   excludedSectors: ProhibitedSector[];
   /** Max impermissible-income ratio, % of revenue. null = no cap (i.e. zero-tolerance handled separately). */

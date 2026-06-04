@@ -23,6 +23,7 @@ export const SCHOLAR_PROFILES: ScholarProfile[] = [
     short: "AAOIFI",
     blurb:
       "Default Gulf standard, used by most Islamic banks. Strict on impermissible income, moderate on debt.",
+    sourceLabel: "AAOIFI Shariah Standard No. 21 (Financial Papers — Shares and Bonds)",
     excludedSectors: [
       "alcohol", "gambling", "tobacco", "conventional_finance",
       "weapons", "pork", "adult_entertainment", "non_halal_food",
@@ -40,6 +41,7 @@ export const SCHOLAR_PROFILES: ScholarProfile[] = [
     short: "Mufti Taqi",
     blurb:
       "AAOIFI standards PLUS illiquid assets must be at least 20% of total, AND capital gains must be purified, not just dividends.",
+    sourceLabel: "Mufti Taqi Usmani — published equity-screening rulings (illiquid-asset rule)",
     excludedSectors: [
       "alcohol", "gambling", "tobacco", "conventional_finance",
       "weapons", "pork", "adult_entertainment", "non_halal_food",
@@ -57,6 +59,7 @@ export const SCHOLAR_PROFILES: ScholarProfile[] = [
     short: "DJIM",
     blurb:
       "Most permissive of the major indices. One-third (33%) caps on debt, cash, and receivables.",
+    sourceLabel: "S&P Dow Jones Islamic Market Indices — Index Methodology (Shariah Screening)",
     excludedSectors: [
       "alcohol", "gambling", "tobacco", "conventional_finance",
       "weapons", "pork", "adult_entertainment",
@@ -74,6 +77,7 @@ export const SCHOLAR_PROFILES: ScholarProfile[] = [
     short: "Ja'fari",
     blurb:
       "Shia methodology. Sector exclusions per Ayatollah Sistani's rulings; khums (20%) applies to net annual surplus, treated as capital-gains purification.",
+    sourceLabel: "Ayatollah Sistani — Code of Practice (sistani.org)",
     excludedSectors: [
       "alcohol", "gambling", "tobacco", "conventional_finance",
       "weapons", "pork", "adult_entertainment", "non_halal_food",
@@ -91,6 +95,7 @@ export const SCHOLAR_PROFILES: ScholarProfile[] = [
     short: "Strict",
     blurb:
       "Minority view: any riba exposure is impermissible. No threshold tolerance on debt, interest income, or cash holdings. Almost no public equities pass.",
+    sourceLabel: "Minority scholars holding zero-tolerance on riba exposure",
     excludedSectors: [
       "alcohol", "gambling", "tobacco", "conventional_finance",
       "weapons", "pork", "adult_entertainment", "non_halal_food",
@@ -108,6 +113,7 @@ export const SCHOLAR_PROFILES: ScholarProfile[] = [
     short: "Custom",
     blurb:
       "Set your own thresholds. Defaults shown match AAOIFI; adjust to match your scholar's view.",
+    sourceLabel: "Custom thresholds — user-defined (you set these)",
     excludedSectors: [
       "alcohol", "gambling", "tobacco", "conventional_finance",
       "weapons", "pork", "adult_entertainment", "non_halal_food",
