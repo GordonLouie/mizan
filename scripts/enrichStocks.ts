@@ -154,10 +154,31 @@ async function main() {
     process.exit(1);
   }
 
-  const progress = loadProgress();
-  const remaining = SEED_TICKERS.filter((t) => !(t in progress.done));
+  // ── Build the full ticker list: union of existing stocks.json + SEED_TICKERS.
+  // This ensures we process every ticker the site already serves (so they all
+  // get refreshed with Premium fields), not just SEED_TICKERS.
+  let existingTickers: string[] = [];
+  let existingStocksByTicker: Record<string, StockFundamentals> = {};
+  try {
+    const existing = JSON.parse(readFileSync(OUTPUT_PATH, "utf-8")) as StockFundamentals[];
+    if (Array.isArray(existing)) {
+      existingTickers = existing.map((s) => s.ticker);
+      existingStocksByTicker = Object.fromEntries(existing.map((s) => [s.ticker, s]));
+    }
+  } catch {
+    // No existing file — start fresh from SEED_TICKERS
+  }
 
-  console.log(`Enriching ${SEED_TICKERS.length} tickers (${remaining.length} remaining)…`);
+  const targetTickers = Array.from(
+    new Set([...existingTickers, ...SEED_TICKERS]),
+  );
+
+  const progress = loadProgress();
+  const remaining = targetTickers.filter((t) => !(t in progress.done));
+
+  console.log(
+    `Enriching ${targetTickers.length} tickers (${existingTickers.length} existing + ${SEED_TICKERS.length} seed, ${remaining.length} remaining)…`,
+  );
 
   for (let i = 0; i < remaining.length; i += CONCURRENCY) {
     const batch = remaining.slice(i, i + CONCURRENCY);
@@ -169,41 +190,37 @@ async function main() {
     }
   }
 
-  // Write final stocks.json — successful entries only
-  const stocks = Object.values(progress.done).filter(
-    (s): s is StockFundamentals => s !== null,
-  );
+  // Merge: for any ticker that failed fresh fetch, fall back to existing data
+  // so we never LOSE coverage. New data wins where available.
+  const merged: StockFundamentals[] = [];
+  for (const ticker of targetTickers) {
+    const fresh = progress.done[ticker];
+    if (fresh) {
+      merged.push(fresh);
+    } else if (existingStocksByTicker[ticker]) {
+      merged.push(existingStocksByTicker[ticker]);
+      console.log(`  ↺ ${ticker} — kept existing data (fresh fetch failed)`);
+    }
+  }
 
-  // DEFENSIVE: never overwrite an existing stocks.json with an empty array.
-  // If this run produced zero results (e.g. quota exhausted, all 4xx), leave
-  // the existing data alone so we don't break the site.
-  if (stocks.length === 0) {
-    console.log(`\n⚠  Zero stocks succeeded this run. ${OUTPUT_PATH} is UNCHANGED.`);
-    console.log(`   ${progress.failed.length} tickers failed. Likely FMP quota.`);
-    console.log(`   Wait for quota reset, then rerun.`);
+  // DEFENSIVE: never overwrite with an empty array.
+  if (merged.length === 0) {
+    console.log(`\n⚠  Zero stocks total. ${OUTPUT_PATH} is UNCHANGED.`);
     return;
   }
 
-  // Also defensive: if current file has MORE stocks than this run produced,
-  // don't shrink it. (Run failed partway after a previous successful run.)
-  try {
-    const existing = JSON.parse(readFileSync(OUTPUT_PATH, "utf-8"));
-    if (Array.isArray(existing) && existing.length > stocks.length) {
-      console.log(`\n⚠  Existing ${OUTPUT_PATH} has ${existing.length} stocks; this run produced ${stocks.length}.`);
-      console.log(`   File NOT overwritten. Delete .enrich-progress.json and rerun if you want a full refresh.`);
-      return;
-    }
-  } catch {
-    // ignore — file may be missing or unparseable; we'll write fresh below
-  }
-
   // Sort by market cap descending for stable, readable output
-  stocks.sort((a, b) => b.marketCapUsd - a.marketCapUsd);
+  merged.sort((a, b) => b.marketCapUsd - a.marketCapUsd);
 
-  writeFileSync(OUTPUT_PATH, JSON.stringify(stocks, null, 2));
+  writeFileSync(OUTPUT_PATH, JSON.stringify(merged, null, 2));
 
-  console.log(`\n✓ Wrote ${stocks.length} stocks to ${OUTPUT_PATH}`);
-  console.log(`  ${progress.failed.length} tickers failed (see .enrich-progress.json)`);
+  const withBs = merged.filter((s) => s.balanceSheet).length;
+  const withHist = merged.filter((s) => s.verdictHistory).length;
+  const withEarn = merged.filter((s) => s.nextEarningsDate).length;
+
+  console.log(`\n✓ Wrote ${merged.length} stocks to ${OUTPUT_PATH}`);
+  console.log(`  Premium data: ${withBs} have balance sheet, ${withHist} have verdict history, ${withEarn} have earnings dates`);
+  console.log(`  ${progress.failed.length} tickers failed this run (see .enrich-progress.json)`);
 }
 
 main().catch((err) => {

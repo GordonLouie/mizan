@@ -311,13 +311,9 @@ function ScreenInner() {
         </div>
       </section>
 
-      {/* VERDICT TIMELINE — track record across last 8 quarters.
+      {/* VERDICT TIMELINE — 8-quarter track record across active scholar.
           Direct response to Saifuddin Abbas: "track that over time as well bc
-          balance sheet may look v diff YoY". Shows when a company's halal
-          status has shifted, surfaces next earnings date. */}
-      <VerdictTimeline stock={stock} scholar={scholar} />
-
-      {/* VERDICT TIMELINE — 8-quarter track record (Saifuddin's feedback) */}
+          balance sheet may look v diff YoY." Surfaces next earnings date. */}
       <VerdictTimeline stock={stock} scholar={scholar} />
 
       {/* HALAL CHECKS — collapsed cards by default, expand for math.
