@@ -81,7 +81,7 @@ export default function EarningsWidget({
 
   const rows: EarningsRow[] = useMemo(() => {
     return tickers
-      .map((t) => {
+      .map((t): EarningsRow | null => {
         const stock = findStock(t);
         if (!stock || !stock.nextEarningsDate) return null;
         const result = screenStock(stock, scholar);
@@ -113,7 +113,7 @@ export default function EarningsWidget({
           verdict: result.verdict,
           atRisk,
           riskReason,
-        } satisfies EarningsRow;
+        };
       })
       .filter((r): r is EarningsRow => r !== null)
       .filter((r) => r.daysAway >= -3 && r.daysAway <= 90) // next 90 days
