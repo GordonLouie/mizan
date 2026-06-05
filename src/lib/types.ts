@@ -30,6 +30,57 @@ export interface StockFundamentals {
   sectorFlags: ProhibitedSector[];
   /** Dividend yield, used for purification calc. 0-100. */
   dividendYieldPct: number;
+  /** OPTIONAL: full balance sheet line items, when ingested from primary filings.
+   *  When present, the Annotated Balance Sheet view shows full detail.
+   *  When absent, the view falls back to totals-only with a transparency note. */
+  balanceSheet?: BalanceSheetDetails;
+}
+
+/** Full balance sheet line items for a single reporting period.
+ *  All values in USD millions to match how 10-Q filings are typically reported.
+ *  Sourced from primary filings (SEC 10-Q for US, equivalent abroad). */
+export interface BalanceSheetDetails {
+  /** Reporting period — e.g. "Q1 2026" */
+  quarter: string;
+  /** When the underlying filing was reported, ISO date */
+  reportedDate: string;
+  /** Underlying primary source URL (SEC EDGAR for US) */
+  filingUrl?: string;
+  /** Currency code, default USD */
+  currency: string;
+
+  // --- ASSETS ---
+  cash: number;
+  marketableSecurities: number;
+  longTermMarketableSecurities: number;
+  accountsReceivable: number;
+  inventories: number;
+  otherCurrentAssets: number;
+  propertyPlantEquipment: number;
+  operatingLeaseAssets: number;
+  goodwill: number;
+  intangibleAssets: number;
+  otherNonCurrentAssets: number;
+  /** Other tangible illiquid assets (counted toward Mufti Taqi's illiquid floor) */
+  otherIllidquidTangible?: number;
+  /** Total assets — should equal sum of above */
+  totalAssets: number;
+
+  // --- LIABILITIES ---
+  accountsPayable: number;
+  otherCurrentLiabilities: number;
+  deferredRevenue: number;
+  shortTermDebt: number;
+  commercialPaper: number;
+  longTermDebt: number;
+  otherNonCurrentLiabilities: number;
+  /** Total liabilities */
+  totalLiabilities: number;
+
+  // --- INCOME STATEMENT EXCERPT ---
+  totalRevenueTTM: number;
+  productServicesRevenueTTM: number;
+  interestIncomeTTM: number;
 }
 
 export type Verdict = "pass" | "fail" | "borderline";

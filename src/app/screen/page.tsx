@@ -9,6 +9,7 @@ import { loadCustomProfile } from "@/lib/customProfile";
 import { screenStock } from "@/lib/screen";
 import ScholarPicker from "@/components/ScholarPicker";
 import ComplianceCard from "@/components/ComplianceCard";
+import AnnotatedBalanceSheet from "@/components/AnnotatedBalanceSheet";
 import TickerSearch from "@/components/TickerSearch";
 import FeaturedTickers from "@/components/FeaturedTickers";
 import DemoBanner from "@/components/DemoBanner";
@@ -310,16 +311,23 @@ function ScreenInner() {
         </div>
       </section>
 
-      {/* FULL COMPLIANCE BREAKDOWN — kept from original */}
-      <section>
+      {/* ANNOTATED BALANCE SHEET — replaces old "Full breakdown" panel.
+          Direct response to Ibrahim Malik + Saifuddin Abbas + HKUSTSU brother
+          feedback (Day 7-8). Shows the full balance sheet with line items
+          marked when used in each halal check, math inline, dual sources. */}
+      <AnnotatedBalanceSheet stock={stock} result={result!} scholar={scholar} />
+
+      {/* COMPLIANCE CARD — keep the existing hero + "show the math" pattern
+          available below for users who prefer the compact ratio-bar view. */}
+      <section className="mt-12">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          Full breakdown
+          Compact view
         </div>
         <h2
           className="mt-2 text-[22px] font-bold leading-tight text-gray-900 sm:text-[26px]"
           style={{ fontFamily: "Georgia, serif" }}
         >
-          Every check, every threshold
+          Ratio bars (alternate view)
         </h2>
         <div className="mt-6">
           <ComplianceCard stock={stock} result={result!} />
