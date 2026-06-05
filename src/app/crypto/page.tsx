@@ -34,7 +34,7 @@ export default function CryptoPage() {
       {/* PAGE HEADER */}
       <header className="pt-6">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          Cross-asset · Crypto
+          Reference · Crypto · Early development
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
@@ -47,6 +47,21 @@ export default function CryptoPage() {
           every scholarly view side by side. Mizan summarises published rulings — it does
           not issue them.
         </p>
+
+        {/* Early-development notice — Ibrahim Malik & Saifuddin Abbas feedback (Day 7):
+            crypto verdicts feel less mature than equity screening. Be honest about it. */}
+        <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50/60 p-4">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-800">
+            Early development — methodology evolving
+          </div>
+          <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-gray-700">
+            Mizan&apos;s crypto coverage is less mature than its equity screening. Scholars
+            actively disagree on classification of cryptoassets — and the rulings move faster
+            than they do for public equities. Treat the verdicts here as a starting point for
+            your own scholar conversation, not a substitute. We update quarterly and flag
+            disagreement explicitly.
+          </p>
+        </div>
       </header>
 
       {/* SUMMARY STATS */}

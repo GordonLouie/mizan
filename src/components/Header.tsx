@@ -6,33 +6,37 @@ import { Menu, X, ChevronDown } from "lucide-react";
 
 // Tools dropdown is organised into 3 columns so 13 destinations don't read
 // as a wall of links. Each column has a clear theme.
+// Reorganized after Day 7 feedback (Ibrahim Malik + Saifuddin Abbas + HKUSTSU brother):
+// Two independent users surfaced the same point — focus the core (stock screening +
+// portfolio tracking), demote adjacent features (purification / zakat / crypto / sukuk).
+// These features remain available but are no longer headline navigation items.
 const TOOL_GROUPS: Array<{ heading: string; items: Array<{ href: string; label: string; sub?: string }> }> = [
   {
-    heading: "Explore",
+    heading: "Explore stocks",
     items: [
-      { href: "/discover",  label: "Discover",         sub: "Trending & disagreement" },
+      { href: "/discover",  label: "Discover",         sub: "Trending & where scholars split" },
       { href: "/sectors",   label: "Sectors",          sub: "By industry" },
       { href: "/lists",     label: "Curated lists",    sub: "Editorial collections" },
       { href: "/universe",  label: "Universe",         sub: "Every ticker" },
     ],
   },
   {
-    heading: "Cross-asset",
-    items: [
-      { href: "/crypto",    label: "Crypto",           sub: "Multi-scholar views" },
-      { href: "/sukuk",     label: "Sukuk",            sub: "Islamic bonds" },
-      { href: "/vs",        label: "Compare stocks",   sub: "Side-by-side" },
-    ],
-  },
-  {
-    heading: "Tools",
+    heading: "Your stocks",
     items: [
       { href: "/watchlist",     label: "Watchlist",      sub: "Your saved tickers" },
       { href: "/portfolio",     label: "Portfolio score",sub: "Your compliance %" },
-      { href: "/zakat",         label: "Zakat calculator", sub: "Annual obligation" },
-      { href: "/purification",  label: "Purification",   sub: "Dividend cleansing" },
-      { href: "/ask",           label: "Ask a scholar",  sub: "49 common Q&A" },
+      { href: "/vs",            label: "Compare stocks", sub: "Side-by-side" },
       { href: "/custom",        label: "Custom profile", sub: "Set your thresholds" },
+    ],
+  },
+  {
+    heading: "Reference",
+    items: [
+      { href: "/ask",           label: "Ask a scholar",   sub: "49 common Q&A" },
+      { href: "/zakat",         label: "Zakat calculator", sub: "Annual obligation" },
+      { href: "/purification",  label: "Purification",    sub: "Dividend cleansing" },
+      { href: "/crypto",        label: "Crypto",          sub: "Early development" },
+      { href: "/sukuk",         label: "Sukuk",           sub: "Early development" },
     ],
   },
 ];
