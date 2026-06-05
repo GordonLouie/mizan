@@ -61,7 +61,104 @@ If we ship this well, Mizan becomes the **only halal screener that tracks compli
 - Click expands to full citation with link to primary document
 - TICKET-002 already shipped scholar-level citations; this extends to ratio-level
 
-### F. Alerts / Notifications *(requires auth, Phase 4)*
+### F. Annotated Balance Sheet *(NEW — expanded from "breakdown panel")*
+
+**Design intent:** read like a financial textbook that grades itself. Show the WHOLE balance sheet in its natural sections (Assets → Liabilities → Income statement excerpt). Mark line items used in each halal check with circled numerals (①②③④). After each balance sheet section, show the halal calculation that uses those line items — inline, with full math.
+
+#### Document structure (top to bottom)
+
+1. **Hero verdict** (existing — unchanged)
+2. **Quick-reference source line** (TICKET-002 — unchanged)
+3. **Annotated Balance Sheet** (NEW, replaces "Show the math" collapsible):
+   - Title block: company name, quarter, filing source, currency
+   - `ASSETS` section — current + non-current, with line items
+   - `CHECK #1 — Cash + Securities Ratio` inset box (uses ① items)
+   - `CHECK #2 — Illiquid / Total Assets` inset box (uses ② items)
+   - `LIABILITIES` section
+   - `CHECK #3 — Interest-bearing Debt` inset box (uses ③ items)
+   - `INCOME STATEMENT EXCERPT` (revenue + interest income)
+   - `CHECK #4 — Non-permissible Income` inset box (uses ④ items)
+   - `FINAL VERDICT` summary (all 4 checks under active scholar)
+   - `ALSO TESTED UNDER` (other 5 scholars, brief)
+4. **Multi-scholar comparison table** (existing — unchanged)
+5. **Stock stats snapshot** (existing — moved below)
+
+#### Calculation inset box format (every one of the 4 checks)
+
+```
+── CHECK #N ──   <Ratio name>
+                 under <active scholar>
+
+Line items used  (marked ① above)
+   <item 1>             $X
+   <item 2>             $Y
+                       ─────
+   Total                $Z
+
+Calculation
+   <numerator>       $Z
+   ──────────  =  ──────  =  N.N%
+   <denominator>     $D
+
+Threshold       <≤ or ≥ X%>   (<scholar source ref>)
+Verdict         <PASS / BORDERLINE / FAIL>
+Buffer/short    <N.Npp under/over the threshold>
+
+Data source     SEC Form 10-Q · Note N ↗
+Threshold src   <Specific scholar document + clause> ↗
+```
+
+#### Visual / typography design
+
+| Element | Treatment |
+|---|---|
+| Section headers | Georgia serif, ALL-CAPS, letter-spaced |
+| Line item labels | Georgia serif regular |
+| All numbers | Liberation Mono / monospace, right-aligned columns |
+| Calculations | Monospace with generous spacing — textbook proof feel |
+| Marked line items (①②③④) | Gold underline + small gold circled numeral |
+| Calculation inset boxes | Slightly different background, light border, like textbook example callouts |
+| Sources `↗` icon | Gold, clickable to open primary doc |
+| Page width | Max ~720px desktop for readability |
+| Whitespace between sections | ≥32px |
+| Background | Cream `#F4ECD8` (brand) |
+
+#### Interaction
+- **Hover marked line item**: brief gold highlight on that item AND its calculation block (visual cross-reference)
+- **Click `↗`**: opens SEC filing OR AAOIFI/Mufti Taqi document in new tab
+- **Top of page link**: "Hide breakdown · just show the verdict" (for users in a hurry — collapses to just hero + multi-scholar table)
+- **Bottom of page**: "Open full SEC filing ↗" deep link to EDGAR
+
+#### Mobile UX
+- Same single-column layout (already vertical)
+- Calculation boxes get full width
+- Number columns still right-align where possible
+- Below 480px: math division-line stack converts to vertical key-value:
+  ```
+  Cash + Securities = $163,218
+  Market cap        = $537,420
+  Ratio             = 30.4%
+  ```
+
+#### What this REPLACES on `/screen`
+- The current `RatioBar` grid + "Show the math" collapsible → replaced by full Annotated Balance Sheet
+- `ComplianceCard` keeps hero + meta row + source line (TICKET-002), drops the `<RatioBar>` grid
+
+#### What this addresses
+Direct response to:
+- **Ibrahim Malik:** *"reference where the numbers are coming from, cross check if needed"* + *"proper breakdown on math is really important"*
+- **Saifuddin Abbas:** implied — wants to see the underlying balance sheet to verify
+- **HKUSTSU brother:** scholarly-rigor concern — showing the WHOLE balance sheet with cited line items makes the methodology defensible
+
+#### Data requirements
+ALL needed line items are available on FMP's FREE tier today:
+- `/balance-sheet-statement` — assets, liabilities (all line items shown)
+- `/income-statement` — revenue + interest income
+- `/sec-filings` — links to underlying 10-Q
+
+**No FMP upgrade required to ship this for the current 163-ticker prototype.**
+
+### G. Alerts / Notifications *(requires auth, Phase 4)*
 - Email: *"Your AAPL holding had earnings yesterday — new verdict: still PASS, but illiquid floor now 22% (was 25%)"*
 - *"Your META just flipped from PASS to BORDERLINE under AAOIFI — debt now 31% (was 28%)"*
 
@@ -161,6 +258,7 @@ interface EarningsDate {
 - `<BufferIndicator />` — within `RatioBar`
 - `<SourceTag />` — small clickable citation chip
 - `<EarningsCalendar />` — `/calendar` page main
+- `<BalanceSheetBreakdown />` — collapsible panel showing all line items, math, buffer/shortfall, dual-sourced (data + threshold)
 
 ---
 
@@ -173,11 +271,12 @@ interface EarningsDate {
 - [ ] Re-run `enrichStocks.ts` for full history on existing 163 tickers
 - [ ] New types in `src/lib/types.ts`
 
-### Phase 2 — Read-only UI (Week 2, ~10 hrs)
+### Phase 2 — Read-only UI (Week 2, ~12 hrs)
 - [ ] `<EarningsBadge />`
 - [ ] `<VerdictTimeline />` with Recharts
 - [ ] `<SourceTag />` per-ratio on `RatioBar`
 - [ ] `<BufferIndicator />` distance-to-threshold
+- [ ] **`<BalanceSheetBreakdown />` — full line-item panel with dual sources**
 - [ ] Integrate into `/screen` verdict view
 - [ ] Mobile responsive for new components
 
