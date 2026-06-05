@@ -10,6 +10,7 @@ import { screenStock } from "@/lib/screen";
 import ScholarPicker from "@/components/ScholarPicker";
 import ComplianceCard from "@/components/ComplianceCard";
 import AnnotatedBalanceSheet from "@/components/AnnotatedBalanceSheet";
+import VerdictTimeline from "@/components/VerdictTimeline";
 import TickerSearch from "@/components/TickerSearch";
 import FeaturedTickers from "@/components/FeaturedTickers";
 import DemoBanner from "@/components/DemoBanner";
@@ -310,6 +311,12 @@ function ScreenInner() {
           </table>
         </div>
       </section>
+
+      {/* VERDICT TIMELINE — track record across last 8 quarters.
+          Direct response to Saifuddin Abbas: "track that over time as well bc
+          balance sheet may look v diff YoY". Shows when a company's halal
+          status has shifted, surfaces next earnings date. */}
+      <VerdictTimeline stock={stock} scholar={scholar} />
 
       {/* ANNOTATED BALANCE SHEET — replaces old "Full breakdown" panel.
           Direct response to Ibrahim Malik + Saifuddin Abbas + HKUSTSU brother

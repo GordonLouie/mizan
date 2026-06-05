@@ -30,6 +30,7 @@ import type {
   BalanceSheetDetails,
 } from "@/lib/types";
 import { ExternalLink } from "lucide-react";
+import CalculationCard from "./CalculationCard";
 
 interface Props {
   stock: StockFundamentals;
@@ -187,20 +188,21 @@ function FullBreakdown({
       </BalanceSection>
 
       {/* CHECK #1 — Cash + Securities */}
-      <CalculationBox
+      <CalculationCard
         checkNumber={1}
         title="Cash + Securities Ratio"
         scholarShort={scholar.short}
         lineItems={[
-          { label: "Cash & cash equivalents", value: bs.cash },
-          { label: "Marketable securities", value: bs.marketableSecurities },
-          { label: "Long-term marketable securities", value: bs.longTermMarketableSecurities },
+          { label: "Cash & cash equivalents", value: bs.cash, tooltip: "Money the company can spend immediately — bank deposits, money market funds, very short-term treasury bills." },
+          { label: "Marketable securities", value: bs.marketableSecurities, tooltip: "Short-term investments the company holds that earn interest — typically government bonds, commercial paper, corporate bonds." },
+          { label: "Long-term marketable securities", value: bs.longTermMarketableSecurities, tooltip: "Same as marketable securities but with maturity over 1 year. Still interest-bearing." },
         ]}
         sum={totalCashSec}
         sumLabel="Total cash + securities"
         numeratorLabel="Cash + Securities"
         numerator={totalCashSec}
         denominatorLabel="Market cap (12-mo avg)"
+        denominatorTooltip="Market capitalization = total value of all shares outstanding. We use a 12-month trailing average to smooth out short-term price swings."
         denominator={marketCap}
         ratio={(totalCashSec / marketCap) * 100}
         thresholdValue={scholar.maxCashSecuritiesToMarketCapPct}
@@ -208,19 +210,20 @@ function FullBreakdown({
         verdict={(totalCashSec / marketCap) * 100 <= scholar.maxCashSecuritiesToMarketCapPct ? "pass" : "fail"}
         dataSource="SEC 10-Q · Note 4 (Securities)"
         thresholdSource={`${scholar.sourceLabel}, §3.5.1`}
+        whatThisMeans="Caps how much of a company's value can be held in interest-bearing financial assets — too much suggests the business is more about earning interest than producing real goods/services."
       />
 
-      {/* CHECK #2 — Illiquid Ratio (always show under Mufti Taqi rules; otherwise note "not screened") */}
+      {/* CHECK #2 — Illiquid Ratio (Mufti Taqi rule only) */}
       {scholar.minIlliquidAssetsToTotalAssetsPct !== null && (
-        <CalculationBox
+        <CalculationCard
           checkNumber={2}
           title="Illiquid Assets / Total Assets"
           scholarShort={scholar.short}
           lineItems={[
-            { label: "Property, plant & equipment, net", value: bs.propertyPlantEquipment },
-            { label: "Operating lease right-of-use assets", value: bs.operatingLeaseAssets },
+            { label: "Property, plant & equipment, net", value: bs.propertyPlantEquipment, tooltip: "Tangible business assets — factories, equipment, vehicles, real estate the company uses to operate." },
+            { label: "Operating lease right-of-use assets", value: bs.operatingLeaseAssets, tooltip: "The value of long-term leases — counts as tangible because it represents real physical space the company uses." },
             ...(bs.otherIllidquidTangible
-              ? [{ label: "Other tangible (non-current)", value: bs.otherIllidquidTangible }]
+              ? [{ label: "Other tangible (non-current)", value: bs.otherIllidquidTangible, tooltip: "Other long-term assets that are tangible — equipment in transit, deposits, etc." }]
               : []),
           ]}
           sum={totalIlliquid}
@@ -228,6 +231,7 @@ function FullBreakdown({
           numeratorLabel="Illiquid assets"
           numerator={totalIlliquid}
           denominatorLabel="Total assets"
+          denominatorTooltip="Everything the company owns — current assets like cash plus long-term assets like property."
           denominator={bs.totalAssets}
           ratio={(totalIlliquid / bs.totalAssets) * 100}
           thresholdValue={scholar.minIlliquidAssetsToTotalAssetsPct}
@@ -235,6 +239,7 @@ function FullBreakdown({
           verdict={(totalIlliquid / bs.totalAssets) * 100 >= scholar.minIlliquidAssetsToTotalAssetsPct ? "pass" : "fail"}
           dataSource="SEC 10-Q · Note 5 (Property)"
           thresholdSource={`${scholar.sourceLabel}, §15.4`}
+          whatThisMeans="Mufti Taqi Usmani's unique requirement: at least 20% of the company's total assets must be tangible (real things), not just cash and financial paper. No other halal app implements this."
         />
       )}
 
@@ -257,20 +262,21 @@ function FullBreakdown({
       </BalanceSection>
 
       {/* CHECK #3 — Interest-bearing Debt */}
-      <CalculationBox
+      <CalculationCard
         checkNumber={3}
         title="Interest-bearing Debt Ratio"
         scholarShort={scholar.short}
         lineItems={[
-          { label: "Short-term debt", value: bs.shortTermDebt },
-          { label: "Commercial paper", value: bs.commercialPaper },
-          { label: "Long-term debt", value: bs.longTermDebt },
+          { label: "Short-term debt", value: bs.shortTermDebt, tooltip: "Loans due within the next 12 months." },
+          { label: "Commercial paper", value: bs.commercialPaper, tooltip: "Short-term unsecured debt issued to fund day-to-day operations." },
+          { label: "Long-term debt", value: bs.longTermDebt, tooltip: "Bonds and loans due over 12 months from now." },
         ]}
         sum={totalDebt}
         sumLabel="Total interest-bearing debt"
         numeratorLabel="Debt"
         numerator={totalDebt}
         denominatorLabel="Market cap"
+        denominatorTooltip="Market capitalization = total value of all shares outstanding."
         denominator={marketCap}
         ratio={(totalDebt / marketCap) * 100}
         thresholdValue={scholar.maxDebtToMarketCapPct}
@@ -278,6 +284,7 @@ function FullBreakdown({
         verdict={(totalDebt / marketCap) * 100 <= scholar.maxDebtToMarketCapPct ? "pass" : "fail"}
         dataSource="SEC 10-Q · Note 6 (Long-term Debt)"
         thresholdSource={`${scholar.sourceLabel}, §3.4.2`}
+        whatThisMeans="Caps how much of a company's value comes from interest-bearing loans. Companies that rely heavily on riba (interest-based debt) fail this check even if their business itself is permissible."
       />
 
       {/* ───── INCOME STATEMENT EXCERPT ───── */}
@@ -289,16 +296,17 @@ function FullBreakdown({
       </BalanceSection>
 
       {/* CHECK #4 — Non-permissible income */}
-      <CalculationBox
+      <CalculationCard
         checkNumber={4}
         title="Non-permissible Income Ratio"
         scholarShort={scholar.short}
-        lineItems={[{ label: "Interest income", value: bs.interestIncomeTTM }]}
+        lineItems={[{ label: "Interest income", value: bs.interestIncomeTTM, tooltip: "Money the company earns from lending out cash or holding interest-bearing securities. Considered non-permissible (riba) under most Islamic finance frameworks." }]}
         sum={bs.interestIncomeTTM}
         sumLabel="Total non-permissible income"
         numeratorLabel="Interest income"
         numerator={bs.interestIncomeTTM}
         denominatorLabel="Total revenue"
+        denominatorTooltip="All money the company brought in over the trailing 12 months — from products, services, and any other source."
         denominator={bs.totalRevenueTTM}
         ratio={(bs.interestIncomeTTM / bs.totalRevenueTTM) * 100}
         thresholdValue={scholar.maxImpermissibleIncomePct}
@@ -306,6 +314,7 @@ function FullBreakdown({
         verdict={(bs.interestIncomeTTM / bs.totalRevenueTTM) * 100 <= scholar.maxImpermissibleIncomePct ? "pass" : "fail"}
         dataSource="SEC 10-Q · Note 2 (Income)"
         thresholdSource={`${scholar.sourceLabel}, §3.6`}
+        whatThisMeans="Caps what fraction of company revenue can come from non-permissible sources. If your stock passes but interest income is high, you'd 'purify' your share of that income through charity."
       />
 
       {/* ───── FINAL VERDICT SUMMARY ───── */}
@@ -339,9 +348,9 @@ function SummaryBreakdown({
         </p>
       </div>
 
-      {/* Show the ratios with the same calculation-box visual */}
+      {/* Show the ratios with the same calculation-card visual (no expand — no line items) */}
       {result.ratioChecks.map((check, i) => (
-        <CalculationBox
+        <CalculationCard
           key={i}
           checkNumber={i + 1}
           title={check.label}
@@ -351,7 +360,7 @@ function SummaryBreakdown({
           sumLabel=""
           numeratorLabel={check.label}
           numerator={check.value}
-          denominatorLabel="(as reported in our dataset)"
+          denominatorLabel="(aggregated dataset)"
           denominator={100}
           ratio={check.value}
           thresholdValue={check.threshold ?? 0}
@@ -480,170 +489,6 @@ function GrandTotal({ label, value }: { label: string; value: number }) {
   );
 }
 
-/* ─────────── CalculationBox — the inset textbook example ─────────── */
-function CalculationBox({
-  checkNumber,
-  title,
-  scholarShort,
-  lineItems,
-  sum,
-  sumLabel,
-  numeratorLabel,
-  numerator,
-  denominatorLabel,
-  denominator,
-  ratio,
-  thresholdValue,
-  thresholdDirection,
-  verdict,
-  dataSource,
-  thresholdSource,
-  ratioOnly = false,
-}: {
-  checkNumber: number;
-  title: string;
-  scholarShort: string;
-  lineItems: Array<{ label: string; value: number }>;
-  sum: number;
-  sumLabel: string;
-  numeratorLabel: string;
-  numerator: number;
-  denominatorLabel: string;
-  denominator: number;
-  ratio: number;
-  thresholdValue: number;
-  thresholdDirection: "max" | "min";
-  verdict: "pass" | "fail";
-  dataSource: string;
-  thresholdSource: string;
-  ratioOnly?: boolean;
-}) {
-  const glyph = ["", "①", "②", "③", "④"][checkNumber] || `#${checkNumber}`;
-  const meetsThreshold =
-    thresholdDirection === "max" ? ratio <= thresholdValue : ratio >= thresholdValue;
-  const diff = Math.abs(ratio - thresholdValue);
-  const verdictTone =
-    verdict === "pass"
-      ? "text-emerald-700 border-emerald-200 bg-emerald-50/40"
-      : "text-rose-700 border-rose-200 bg-rose-50/40";
-
-  return (
-    <div className="mx-auto max-w-2xl">
-      <div className="rounded-lg border border-gray-300 bg-white p-6 sm:p-8">
-        {/* Header */}
-        <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-gray-200 pb-3">
-          <div className="flex items-baseline gap-3">
-            <span className="font-mono text-[13px] font-semibold text-gold-600">
-              CHECK {glyph}
-            </span>
-            <h4
-              className="text-[15px] font-semibold text-gray-900"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              {title}
-            </h4>
-          </div>
-          <span className="text-[11px] uppercase tracking-[0.16em] text-gray-500">
-            under {scholarShort}
-          </span>
-        </div>
-
-        {/* Line items */}
-        {lineItems.length > 0 && (
-          <div className="mt-5">
-            <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
-              Line items used (marked {glyph} above)
-            </div>
-            {lineItems.map((li, i) => (
-              <div key={i} className="flex items-baseline gap-3 py-0.5 text-[13px]">
-                <div className="flex-1 text-gray-700">{li.label}</div>
-                <div
-                  className="font-mono tabular-nums text-gray-900"
-                  style={{ minWidth: "6rem", textAlign: "right" }}
-                >
-                  ${fmtUSD(li.value)}
-                </div>
-              </div>
-            ))}
-            <div className="mt-1 flex items-baseline gap-3 border-t border-gray-200 pt-1.5 text-[13px]">
-              <div className="flex-1 font-semibold text-gray-800">{sumLabel}</div>
-              <div
-                className="font-mono font-semibold tabular-nums text-gray-900"
-                style={{ minWidth: "6rem", textAlign: "right" }}
-              >
-                ${fmtUSD(sum)}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Calculation */}
-        {!ratioOnly && (
-          <div className="mt-6">
-            <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
-              Calculation
-            </div>
-            <div
-              className="rounded bg-gray-50 px-5 py-4 font-mono text-[13px] tabular-nums text-gray-900"
-              style={{ fontFamily: "Liberation Mono, Menlo, monospace" }}
-            >
-              <div className="flex items-center justify-center gap-3">
-                <div className="text-center">
-                  <div>{numeratorLabel}</div>
-                  <div className="my-1 border-t border-gray-700">&nbsp;</div>
-                  <div>{denominatorLabel}</div>
-                </div>
-                <div className="text-2xl text-gray-400">=</div>
-                <div className="text-center">
-                  <div>${fmtUSD(numerator)}</div>
-                  <div className="my-1 border-t border-gray-700">&nbsp;</div>
-                  <div>${fmtUSD(denominator)}</div>
-                </div>
-                <div className="text-2xl text-gray-400">=</div>
-                <div className="text-[18px] font-bold">{ratio.toFixed(1)}%</div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Verdict line */}
-        <div className="mt-5 grid grid-cols-1 gap-2 text-[13px] sm:grid-cols-[auto_1fr]">
-          <div className="font-semibold uppercase tracking-[0.14em] text-gray-500">
-            Threshold
-          </div>
-          <div className="text-gray-800">
-            {thresholdDirection === "max" ? "≤" : "≥"} {thresholdValue}%{" "}
-            <span className="text-gray-500">(per {scholarShort})</span>
-          </div>
-
-          <div className="font-semibold uppercase tracking-[0.14em] text-gray-500">
-            Verdict
-          </div>
-          <div className={`inline-block rounded px-2 py-0.5 font-semibold ${verdictTone}`}>
-            {verdict === "pass" ? "✓ PASS" : "✗ FAIL"}
-          </div>
-
-          <div className="font-semibold uppercase tracking-[0.14em] text-gray-500">
-            {meetsThreshold ? "Buffer" : "Shortfall"}
-          </div>
-          <div className="text-gray-700">
-            {diff.toFixed(1)} pp {meetsThreshold ? "to spare" : "over the limit"}
-          </div>
-        </div>
-
-        {/* Sources */}
-        <div className="mt-5 border-t border-gray-200 pt-3 text-[11px] leading-relaxed text-gray-600">
-          <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
-            <span className="font-semibold uppercase tracking-[0.14em]">Data source</span>
-            <span>{dataSource}</span>
-            <span className="font-semibold uppercase tracking-[0.14em]">Threshold src</span>
-            <span>{thresholdSource}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 /* ─────────── Final verdict summary ─────────── */
 function FinalVerdictSummary({

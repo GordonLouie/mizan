@@ -34,6 +34,26 @@ export interface StockFundamentals {
    *  When present, the Annotated Balance Sheet view shows full detail.
    *  When absent, the view falls back to totals-only with a transparency note. */
   balanceSheet?: BalanceSheetDetails;
+  /** OPTIONAL: last 8 quarters of verdict history per scholar.
+   *  When present, the VerdictTimeline component shows the track record.
+   *  When absent, the component shows "historical data being ingested". */
+  verdictHistory?: VerdictHistoryEntry[];
+  /** OPTIONAL: when the company's next earnings report is expected.
+   *  ISO date string, e.g. "2026-07-28". */
+  nextEarningsDate?: string;
+}
+
+/** A single quarter's verdict for a stock, across all scholars.
+ *  When ingested from FMP historical fundamentals, computed at build time. */
+export interface VerdictHistoryEntry {
+  /** Reporting quarter — e.g., "Q2 2026" */
+  quarter: string;
+  /** ISO date the period ended */
+  periodEnd: string;
+  /** Verdict under each scholar, keyed by scholar id */
+  verdictByScholar: Record<string, Verdict>;
+  /** The "deciding" metric that drove a non-PASS verdict (for hover detail) */
+  decidingByScholar: Record<string, string>;
 }
 
 /** Full balance sheet line items for a single reporting period.
