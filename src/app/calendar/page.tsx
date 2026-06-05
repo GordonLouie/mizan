@@ -28,7 +28,7 @@ export default function CalendarPage() {
 
   useEffect(() => {
     setWatchlist(getWatchlist());
-    setPortfolio(loadPortfolio().map((p) => p.ticker));
+    setPortfolio(loadPortfolio().positions.map((p) => p.ticker));
 
     const onWatchlistChange = () => setWatchlist(getWatchlist());
     window.addEventListener("mizan.watchlist.changed", onWatchlistChange);
