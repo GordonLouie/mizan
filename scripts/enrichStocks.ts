@@ -9,15 +9,34 @@
  *   2. npm install -D tsx dotenv     (one-time)
  *   3. npx tsx --env-file=.env.local scripts/enrichStocks.ts
  *
- * Burns ~4 FMP requests per ticker × SEED_TICKERS.length. The free tier is
- * ~250 req/day, so a 500-ticker run takes 2+ days. The script saves
- * progress after each batch and is safely resumable.
+ * Burns ~4 FMP requests per ticker on Free tier.
+ * Burns ~10 FMP requests per ticker on Premium tier (when PREMIUM_FEATURES
+ * is true): adds full balance sheet line items, next earnings date, and
+ * 8-quarter verdict history. Premium's 750/min rate limit handles this
+ * easily — 65 tickers ≈ 650 requests in 1 minute window.
+ *
+ * The script saves progress after each batch and is safely resumable.
  */
 
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join } from "path";
-import { fetchStockFundamentals } from "../src/lib/fmpFetch";
+import {
+  fetchStockFundamentals,
+  fetchBalanceSheetDetails,
+  fetchNextEarningsDate,
+  fetchVerdictHistory,
+} from "../src/lib/fmpFetch";
+import { SCHOLAR_PROFILES } from "../src/lib/scholars";
 import type { StockFundamentals } from "../src/lib/types";
+
+/**
+ * Premium feature toggle. When true, the script fetches additional data
+ * (full balance sheet line items, earnings calendar, 8-quarter verdict
+ * history) for each ticker — requires FMP Premium tier or higher.
+ *
+ * When false, fetches only the basic aggregate ratios (Free tier works).
+ */
+const PREMIUM_FEATURES = process.env.MIZAN_PREMIUM === "true" || true;
 
 // ─── CONFIGURATION ─────────────────────────────────────────────────────────
 
@@ -86,14 +105,39 @@ async function processBatch(
   await Promise.all(
     tickers.map(async (t) => {
       try {
+        // Step 1: basic fundamentals (always)
         const result = await fetchStockFundamentals(t, apiKey);
-        progress.done[t] = result;
         if (!result) {
+          progress.done[t] = null;
           progress.failed.push(t);
           console.log(`  ✗ ${t} — no data returned`);
-        } else {
-          console.log(`  ✓ ${t} — ${result.name}`);
+          return;
         }
+
+        // Step 2: Premium-tier extras (balance sheet detail, earnings, history)
+        if (PREMIUM_FEATURES) {
+          const [bsDetails, nextEarnings, verdictHistory] = await Promise.all([
+            fetchBalanceSheetDetails(t, apiKey).catch(() => null),
+            fetchNextEarningsDate(t, apiKey).catch(() => null),
+            fetchVerdictHistory(
+              t,
+              apiKey,
+              SCHOLAR_PROFILES.filter((s) => s.id !== "custom"),
+            ).catch(() => []),
+          ]);
+
+          if (bsDetails) result.balanceSheet = bsDetails;
+          if (nextEarnings) result.nextEarningsDate = nextEarnings;
+          if (verdictHistory && verdictHistory.length > 0) {
+            result.verdictHistory = verdictHistory;
+          }
+        }
+
+        progress.done[t] = result;
+        const extras = PREMIUM_FEATURES
+          ? ` [bs:${result.balanceSheet ? "✓" : "—"} earn:${result.nextEarningsDate ? "✓" : "—"} hist:${result.verdictHistory?.length ?? 0}q]`
+          : "";
+        console.log(`  ✓ ${t} — ${result.name}${extras}`);
       } catch (err) {
         progress.failed.push(t);
         console.log(`  ✗ ${t} — error: ${(err as Error).message}`);

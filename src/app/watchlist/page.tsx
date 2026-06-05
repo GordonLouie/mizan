@@ -9,6 +9,7 @@ import { getScholar, SCHOLAR_PROFILES } from "@/lib/scholars";
 import { loadCustomProfile } from "@/lib/customProfile";
 import { screenStock } from "@/lib/screen";
 import ScholarPicker from "@/components/ScholarPicker";
+import EarningsWidget from "@/components/EarningsWidget";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import type { StockFundamentals, Verdict, ScreeningResult } from "@/lib/types";
 
@@ -74,6 +75,11 @@ export default function WatchlistPage() {
       <div className="mt-8 sm:max-w-md">
         <ScholarPicker value={scholarId} onChange={setScholarId} />
       </div>
+
+      {/* UPCOMING EARNINGS WIDGET — at-risk flagging for items in watchlist */}
+      {tickers.length > 0 && (
+        <EarningsWidget tickers={tickers} title="Upcoming earnings · your watchlist" />
+      )}
 
       {/* EMPTY STATE OR TABLE */}
       {items.length === 0 ? (

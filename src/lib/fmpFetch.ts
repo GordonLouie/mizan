@@ -10,7 +10,14 @@
  * Required env var: FMP_API_KEY  (loaded from .env.local)
  */
 
-import type { StockFundamentals, ProhibitedSector } from "./types";
+import type {
+  StockFundamentals,
+  ProhibitedSector,
+  BalanceSheetDetails,
+  VerdictHistoryEntry,
+  ScholarProfile,
+  Verdict,
+} from "./types";
 
 const FMP_BASE = "https://financialmodelingprep.com/stable";
 
@@ -223,4 +230,227 @@ export async function fetchStockFundamentals(
 function round(n: number, decimals: number): number {
   const f = Math.pow(10, decimals);
   return Math.round(n * f) / f;
+}
+
+/* ───────────────────────────────────────────────────────────────────────
+   PREMIUM-TIER FUNCTIONS — added after FMP Premium subscription (Day 8)
+   These power the new features: Annotated Balance Sheet line items,
+   Earnings Calendar, and Verdict-Over-Time chart.
+   ─────────────────────────────────────────────────────────────────────── */
+
+/** SEC EDGAR filing URL helper. CIK is fetched from /profile. */
+function secFilingUrlForCIK(cik: string | null): string | undefined {
+  if (!cik) return undefined;
+  const cleanCik = cik.replace(/^0+/, "");
+  return `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${cleanCik}&type=10-Q`;
+}
+
+/** Quarter label from an ISO date — e.g., "2026-03-29" → "Q1 2026". */
+function quarterLabel(isoDate: string): string {
+  const d = new Date(isoDate);
+  const m = d.getMonth() + 1;
+  const q = Math.ceil(m / 3);
+  return `Q${q} ${d.getFullYear()}`;
+}
+
+interface FMPProfileWithCIK extends FMPProfile {
+  cik?: string;
+}
+
+/**
+ * Fetch a single quarter's full balance sheet line items for the
+ * Annotated Balance Sheet view. Premium-tier endpoint.
+ */
+export async function fetchBalanceSheetDetails(
+  ticker: string,
+  apiKey: string,
+): Promise<BalanceSheetDetails | null> {
+  const tk = ticker.toUpperCase().trim();
+
+  const [profileRes, bsRes, incomeRes] = await Promise.all([
+    fmpGet<FMPProfileWithCIK[]>("/profile", tk, apiKey),
+    fmpGet<Record<string, number | string>[]>(
+      "/balance-sheet-statement",
+      tk,
+      apiKey,
+      { period: "quarter", limit: "1" },
+    ),
+    fmpGet<Record<string, number | string>[]>(
+      "/income-statement",
+      tk,
+      apiKey,
+      { period: "quarter", limit: "4" }, // TTM = last 4 quarters
+    ),
+  ]);
+
+  const profile = profileRes?.[0];
+  const bs = bsRes?.[0];
+  if (!profile || !bs) return null;
+
+  const reportedDate = String(bs.date ?? "");
+  const num = (k: string): number => Number(bs[k] ?? 0) / 1_000_000; // to millions
+
+  // TTM = sum of last 4 quarters
+  const ttm = (k: string): number =>
+    (incomeRes ?? []).slice(0, 4).reduce((s, row) => s + Number(row[k] ?? 0), 0) /
+    1_000_000;
+
+  return {
+    quarter: quarterLabel(reportedDate),
+    reportedDate,
+    filingUrl: secFilingUrlForCIK(profile.cik ?? null),
+    currency: "USD",
+    cash: num("cashAndCashEquivalents"),
+    marketableSecurities: num("shortTermInvestments"),
+    longTermMarketableSecurities: num("longTermInvestments"),
+    accountsReceivable: num("netReceivables"),
+    inventories: num("inventory"),
+    otherCurrentAssets: num("otherCurrentAssets"),
+    propertyPlantEquipment: num("propertyPlantEquipmentNet"),
+    operatingLeaseAssets:
+      Number(bs.operatingLeaseRightOfUseAssets ?? 0) / 1_000_000,
+    goodwill: num("goodwill"),
+    intangibleAssets: num("intangibleAssets"),
+    otherNonCurrentAssets: num("otherNonCurrentAssets"),
+    otherIllidquidTangible: 0,
+    totalAssets: num("totalAssets"),
+    accountsPayable: num("accountPayables"),
+    otherCurrentLiabilities: num("otherCurrentLiabilities"),
+    deferredRevenue: num("deferredRevenue"),
+    shortTermDebt: num("shortTermDebt"),
+    commercialPaper: Number(bs.commercialPaper ?? 0) / 1_000_000,
+    longTermDebt: num("longTermDebt"),
+    otherNonCurrentLiabilities: num("otherNonCurrentLiabilities"),
+    totalLiabilities: num("totalLiabilities"),
+    totalRevenueTTM: ttm("revenue"),
+    productServicesRevenueTTM: ttm("revenue"), // FMP doesn't split — best estimate
+    interestIncomeTTM: ttm("interestIncome"),
+  };
+}
+
+interface FMPEarning {
+  date: string;
+  symbol: string;
+  eps?: number | null;
+  epsEstimated?: number | null;
+  revenue?: number | null;
+  fiscalDateEnding?: string;
+}
+
+/**
+ * Fetch the next upcoming earnings date for a single ticker.
+ * Premium-tier endpoint. Returns ISO date or null.
+ */
+export async function fetchNextEarningsDate(
+  ticker: string,
+  apiKey: string,
+): Promise<string | null> {
+  const tk = ticker.toUpperCase().trim();
+  // Pull last 4 entries (mix of past + future); pick first future one.
+  const res = await fmpGet<FMPEarning[]>("/earnings", tk, apiKey, { limit: "4" });
+  if (!res || res.length === 0) return null;
+  const today = new Date().toISOString().slice(0, 10);
+  const future = res
+    .filter((e) => e.date >= today)
+    .sort((a, b) => a.date.localeCompare(b.date));
+  return future[0]?.date ?? null;
+}
+
+/**
+ * Fetch historical quarterly fundamentals (8 quarters back), compute the
+ * verdict under each mainstream scholar for each quarter, and build the
+ * VerdictHistory time series. Premium-tier — pulls 8 balance sheets + 8
+ * income statements per ticker.
+ */
+export async function fetchVerdictHistory(
+  ticker: string,
+  apiKey: string,
+  scholars: ScholarProfile[],
+): Promise<VerdictHistoryEntry[]> {
+  const tk = ticker.toUpperCase().trim();
+
+  const [profileRes, bsRes, incomeRes] = await Promise.all([
+    fmpGet<FMPProfileWithCIK[]>("/profile", tk, apiKey),
+    fmpGet<Record<string, number | string>[]>(
+      "/balance-sheet-statement",
+      tk,
+      apiKey,
+      { period: "quarter", limit: "8" },
+    ),
+    fmpGet<Record<string, number | string>[]>(
+      "/income-statement",
+      tk,
+      apiKey,
+      { period: "quarter", limit: "8" },
+    ),
+  ]);
+
+  const profile = profileRes?.[0];
+  if (!profile || !bsRes || bsRes.length === 0) return [];
+
+  const mktCap = profile.marketCap || 1;
+
+  // Align balance sheets and income statements by date
+  const incomeByDate = new Map<string, Record<string, number | string>>();
+  for (const row of incomeRes ?? []) {
+    incomeByDate.set(String(row.date), row);
+  }
+
+  const history: VerdictHistoryEntry[] = [];
+
+  for (const bs of bsRes.slice(0, 8).reverse()) {
+    const date = String(bs.date ?? "");
+    if (!date) continue;
+    const income = incomeByDate.get(date);
+
+    const num = (k: string): number => Number(bs[k] ?? 0);
+
+    const totalDebt =
+      num("totalDebt") || num("shortTermDebt") + num("longTermDebt");
+    const cashSec =
+      num("cashAndShortTermInvestments") ||
+      num("cashAndCashEquivalents") + num("shortTermInvestments");
+    const totalAssets = num("totalAssets") || 1;
+    const illiquid = num("propertyPlantEquipmentNet") + num("inventory");
+
+    const debtPct = (totalDebt / mktCap) * 100;
+    const cashPct = (cashSec / mktCap) * 100;
+    const illiquidPct = (illiquid / totalAssets) * 100;
+
+    const interestIncome =
+      income && income.interestIncome
+        ? Number(income.interestIncome)
+        : cashSec * RISK_FREE_RATE;
+    const revenue = income && income.revenue ? Number(income.revenue) : 1;
+    const impPct = (interestIncome / revenue) * 100;
+
+    const verdictByScholar: Record<string, Verdict> = {};
+    const decidingByScholar: Record<string, string> = {};
+
+    for (const scholar of scholars) {
+      const failed: string[] = [];
+      if (debtPct > scholar.maxDebtToMarketCapPct) failed.push(`Debt ${debtPct.toFixed(1)}%`);
+      if (cashPct > scholar.maxCashSecuritiesToMarketCapPct) failed.push(`Cash ${cashPct.toFixed(1)}%`);
+      if (impPct > scholar.maxImpermissibleIncomePct) failed.push(`Income ${impPct.toFixed(1)}%`);
+      if (
+        scholar.minIlliquidAssetsToTotalAssetsPct !== null &&
+        illiquidPct < scholar.minIlliquidAssetsToTotalAssetsPct
+      ) {
+        failed.push(`Illiquid ${illiquidPct.toFixed(1)}%`);
+      }
+      verdictByScholar[scholar.id] = failed.length === 0 ? "pass" : "fail";
+      decidingByScholar[scholar.id] = failed.length === 0
+        ? "All checks pass"
+        : `Failed: ${failed.join(", ")}`;
+    }
+
+    history.push({
+      quarter: quarterLabel(date),
+      periodEnd: date,
+      verdictByScholar,
+      decidingByScholar,
+    });
+  }
+
+  return history;
 }

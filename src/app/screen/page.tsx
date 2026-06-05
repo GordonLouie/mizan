@@ -8,8 +8,7 @@ import { getScholar, SCHOLAR_PROFILES } from "@/lib/scholars";
 import { loadCustomProfile } from "@/lib/customProfile";
 import { screenStock } from "@/lib/screen";
 import ScholarPicker from "@/components/ScholarPicker";
-import ComplianceCard from "@/components/ComplianceCard";
-import AnnotatedBalanceSheet from "@/components/AnnotatedBalanceSheet";
+import HalalChecks from "@/components/HalalChecks";
 import VerdictTimeline from "@/components/VerdictTimeline";
 import TickerSearch from "@/components/TickerSearch";
 import FeaturedTickers from "@/components/FeaturedTickers";
@@ -318,28 +317,12 @@ function ScreenInner() {
           status has shifted, surfaces next earnings date. */}
       <VerdictTimeline stock={stock} scholar={scholar} />
 
-      {/* ANNOTATED BALANCE SHEET — replaces old "Full breakdown" panel.
-          Direct response to Ibrahim Malik + Saifuddin Abbas + HKUSTSU brother
-          feedback (Day 7-8). Shows the full balance sheet with line items
-          marked when used in each halal check, math inline, dual sources. */}
-      <AnnotatedBalanceSheet stock={stock} result={result!} scholar={scholar} />
+      {/* VERDICT TIMELINE — 8-quarter track record (Saifuddin's feedback) */}
+      <VerdictTimeline stock={stock} scholar={scholar} />
 
-      {/* COMPLIANCE CARD — keep the existing hero + "show the math" pattern
-          available below for users who prefer the compact ratio-bar view. */}
-      <section className="mt-12">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          Compact view
-        </div>
-        <h2
-          className="mt-2 text-[22px] font-bold leading-tight text-gray-900 sm:text-[26px]"
-          style={{ fontFamily: "Georgia, serif" }}
-        >
-          Ratio bars (alternate view)
-        </h2>
-        <div className="mt-6">
-          <ComplianceCard stock={stock} result={result!} />
-        </div>
-      </section>
+      {/* HALAL CHECKS — collapsed cards by default, expand for math.
+          Lean view. Full balance sheet lives at /balance-sheet/[ticker]. */}
+      <HalalChecks stock={stock} result={result!} scholar={scholar} />
 
       {/* COMPANY STATS */}
       <section>

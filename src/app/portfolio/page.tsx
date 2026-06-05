@@ -9,6 +9,7 @@ import { loadPortfolio, savePortfolio, newPosition, type Position } from "@/lib/
 import { currentPrice } from "@/lib/prices";
 import ScholarPicker from "@/components/ScholarPicker";
 import CurrencyInput from "@/components/CurrencyInput";
+import EarningsWidget from "@/components/EarningsWidget";
 import {
   ProgressRing, DonutChart, DonutLegend, HorizontalBars,
   LineChart, LineLegend, sectorColor,
@@ -210,6 +211,14 @@ export default function PortfolioPage() {
       <div className="mt-8 sm:max-w-md">
         <ScholarPicker value={scholarId} onChange={setScholarId} />
       </div>
+
+      {/* UPCOMING EARNINGS WIDGET — flags at-risk holdings */}
+      {positions.length > 0 && (
+        <EarningsWidget
+          tickers={positions.map((p) => p.ticker)}
+          title="Upcoming earnings · your portfolio"
+        />
+      )}
 
       {/* HERO METRICS */}
       <section className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-4">

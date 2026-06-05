@@ -25,6 +25,7 @@ const TOOL_GROUPS: Array<{ heading: string; items: Array<{ href: string; label: 
     items: [
       { href: "/watchlist",     label: "Watchlist",      sub: "Your saved tickers" },
       { href: "/portfolio",     label: "Portfolio score",sub: "Your compliance %" },
+      { href: "/calendar",      label: "Earnings calendar", sub: "When holdings report next" },
       { href: "/vs",            label: "Compare stocks", sub: "Side-by-side" },
       { href: "/custom",        label: "Custom profile", sub: "Set your thresholds" },
     ],
