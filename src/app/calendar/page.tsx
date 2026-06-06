@@ -18,6 +18,7 @@ import { Calendar as CalendarIcon, Bookmark, BarChart3 } from "lucide-react";
 import { getWatchlist } from "@/lib/watchlist";
 import { loadPortfolio } from "@/lib/portfolio";
 import EarningsWidget from "@/components/EarningsWidget";
+import EarningsCalendarGrid from "@/components/EarningsCalendarGrid";
 
 type FilterMode = "all" | "watchlist" | "portfolio";
 
@@ -130,7 +131,7 @@ export default function CalendarPage() {
             </FilterTab>
           </div>
 
-          {/* WIDGET (reusing the EarningsWidget but uncapped) */}
+          {/* CHRONOLOGICAL LIST */}
           <EarningsWidget
             tickers={tickersToShow}
             title={
@@ -142,6 +143,9 @@ export default function CalendarPage() {
             }
             limit={50}
           />
+
+          {/* VISUAL CALENDAR GRID — at-a-glance month view */}
+          <EarningsCalendarGrid tickers={tickersToShow} />
 
           {/* HONESTY NOTICE */}
           <div className="mt-6 rounded-lg border border-gray-200 bg-gray-50 p-5 text-[13px] leading-relaxed text-gray-700">
