@@ -9,7 +9,7 @@ import { screenStock } from "@/lib/screen";
 import type { Verdict } from "@/lib/types";
 import ScholarPicker from "@/components/ScholarPicker";
 import DemoBanner from "@/components/DemoBanner";
-import { Search, ArrowUpDown } from "lucide-react";
+import { Search, ArrowUpDown, ChevronDown } from "lucide-react";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 
 type SortKey = "verdict" | "ticker" | "name" | "sector" | "marketCap" | "illiquid" | "debt";
@@ -58,6 +58,24 @@ function UniverseInner() {
     () => allStocks.map((s) => ({ stock: s, result: screenStock(s, scholar) })),
     [allStocks, scholar],
   );
+
+  // Scholar comparison row — Miqdad + Toby's "scholar-first" lens.
+  // Show pass count under each scholar so the user sees how the
+  // investable universe expands/contracts based on which scholar they pick.
+  // ("Wow, under Strict only X stocks pass.") Custom is excluded because the
+  // label "Custom" doesn't communicate what threshold is being applied.
+  const scholarStats = useMemo(() => {
+    return SCHOLAR_PROFILES.filter((p) => p.id !== "custom").map((p) => {
+      let pass = 0;
+      for (const s of allStocks) {
+        if (screenStock(s, p).verdict === "pass") pass++;
+      }
+      return { id: p.id, short: p.short, label: p.label, pass, total: allStocks.length };
+    });
+  }, [allStocks]);
+
+  const activeScholarLabel =
+    SCHOLAR_PROFILES.find((p) => p.id === scholarId)?.short ?? "your scholar";
 
   const filtered = useMemo(() => {
     let rows = enriched;
@@ -151,9 +169,14 @@ function UniverseInner() {
         >
           Universe
         </h1>
-        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
-          Every ticker, screened against your scholar. Filter by sector and verdict, sort
-          by any column, click any ticker for the full breakdown.
+        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-gray-600">
+          Under{" "}
+          <span className="font-semibold text-navy-800">{activeScholarLabel}</span>,{" "}
+          <span className="font-semibold text-emerald-700 tabular-nums">{stats.pass}</span>{" "}
+          of{" "}
+          <span className="tabular-nums">{stats.total}</span> stocks pass. Change scholar to
+          see how the investable universe expands or contracts — every other halal app hides
+          this disagreement behind one default.
         </p>
       </header>
 
@@ -172,6 +195,60 @@ function UniverseInner() {
         <StatPlain label="Halal" value={stats.pass.toString()} tone="emerald" />
         <StatPlain label="Doubtful" value={stats.border.toString()} tone="amber" />
         <StatPlain label="Not halal" value={stats.fail.toString()} tone="rose" />
+      </div>
+
+      {/* SCHOLAR COMPARISON ROW — Miqdad + Toby's "scholar-first" lens.
+          See how the investable universe shrinks/expands per scholar. */}
+      <div className="mt-8">
+        <div className="flex items-baseline justify-between">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            Compare scholars
+          </div>
+          <div className="text-[11px] text-gray-400">Tap to switch</div>
+        </div>
+        <div className="mt-3 -mx-1 flex gap-2 overflow-x-auto pb-2">
+          {scholarStats.map((s) => {
+            const active = s.id === scholarId;
+            const pct = s.total > 0 ? Math.round((s.pass / s.total) * 100) : 0;
+            return (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => setScholarId(s.id)}
+                className={
+                  "min-w-[124px] shrink-0 rounded-lg border px-3 py-2.5 text-left transition " +
+                  (active
+                    ? "border-navy-700 bg-navy-50 ring-1 ring-navy-700/10"
+                    : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50")
+                }
+                aria-pressed={active}
+              >
+                <div
+                  className={
+                    "text-[10px] font-semibold uppercase tracking-[0.14em] " +
+                    (active ? "text-navy-700" : "text-gray-500")
+                  }
+                >
+                  {s.short}
+                </div>
+                <div className="mt-1 flex items-baseline gap-1">
+                  <span
+                    className="font-mono text-[20px] font-bold tabular-nums text-emerald-700"
+                    style={{ fontFamily: "Georgia, serif" }}
+                  >
+                    {s.pass}
+                  </span>
+                  <span className="text-[11px] text-gray-500 tabular-nums">
+                    / {s.total}
+                  </span>
+                </div>
+                <div className="mt-0.5 text-[10px] text-gray-500 tabular-nums">
+                  {pct}% pass
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* FILTERS */}
@@ -195,33 +272,39 @@ function UniverseInner() {
           <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
             Sector
           </label>
-          <select
-            value={sector}
-            onChange={(e) => setSector(e.target.value)}
-            className="mt-2 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-[14px] focus:border-navy-700 focus:outline-none focus:ring-2 focus:ring-navy-700/10"
-          >
-            <option value="">All sectors</option>
-            {sectors.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
+          <div className="mt-2 flex items-center gap-2 border-b border-gray-200 px-1 py-2 focus-within:border-navy-700">
+            <select
+              value={sector}
+              onChange={(e) => setSector(e.target.value)}
+              className="w-full appearance-none bg-transparent pr-5 text-[14px] text-gray-900 outline-none"
+            >
+              <option value="">All sectors</option>
+              {sectors.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+            <ChevronDown size={14} className="-ml-5 pointer-events-none text-gray-400" />
+          </div>
         </div>
         <div>
           <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
             Verdict
           </label>
-          <select
-            value={verdictFilter}
-            onChange={(e) => setVerdictFilter(e.target.value as "" | Verdict)}
-            className="mt-2 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-[14px] focus:border-navy-700 focus:outline-none focus:ring-2 focus:ring-navy-700/10"
-          >
-            <option value="">All verdicts</option>
-            <option value="pass">Halal only</option>
-            <option value="borderline">Doubtful only</option>
-            <option value="fail">Not halal only</option>
-          </select>
+          <div className="mt-2 flex items-center gap-2 border-b border-gray-200 px-1 py-2 focus-within:border-navy-700">
+            <select
+              value={verdictFilter}
+              onChange={(e) => setVerdictFilter(e.target.value as "" | Verdict)}
+              className="w-full appearance-none bg-transparent pr-5 text-[14px] text-gray-900 outline-none"
+            >
+              <option value="">All verdicts</option>
+              <option value="pass">Halal only</option>
+              <option value="borderline">Doubtful only</option>
+              <option value="fail">Not halal only</option>
+            </select>
+            <ChevronDown size={14} className="-ml-5 pointer-events-none text-gray-400" />
+          </div>
         </div>
       </div>
 

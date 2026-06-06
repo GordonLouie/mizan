@@ -333,6 +333,15 @@ function ScreenInner() {
         </div>
       </section>
 
+      {/* HALAL ALTERNATIVES — surfaced HIGH on fail. Miqdad: when a stock is
+          ruled out, the next question is always "what should I buy instead?"
+          Was previously buried below the company stats. */}
+      {result!.verdict === "fail" && (
+        <section>
+          <HalalAlternatives failedStock={stock} scholar={scholar} />
+        </section>
+      )}
+
       {/* VERDICT TIMELINE — 8-quarter track record across active scholar.
           Direct response to Saifuddin Abbas: "track that over time as well bc
           balance sheet may look v diff YoY." Surfaces next earnings date. */}
@@ -351,13 +360,6 @@ function ScreenInner() {
           <StockStats stock={stock} />
         </div>
       </section>
-
-      {/* HALAL ALTERNATIVES — only when fail */}
-      {result!.verdict === "fail" && (
-        <section>
-          <HalalAlternatives failedStock={stock} scholar={scholar} />
-        </section>
-      )}
 
       {/* FOOTER ACTIONS */}
       <section className="border-t border-gray-200 pt-8">

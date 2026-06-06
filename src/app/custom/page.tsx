@@ -53,6 +53,23 @@ const DEFAULT: SavedProfile = {
 
 const STORAGE_KEY = "mizan.customProfile";
 
+// Scholar tick-mark builder — for each numeric threshold key, returns the
+// established scholar positions so the slider can render them as notches.
+// Per Miqdad: "make it feel like hotel booking — I want to see where the
+// reference points are, not just the slider." Visual context on each track.
+type NumericKey =
+  | "maxImpermissibleIncomePct"
+  | "maxDebtToMarketCapPct"
+  | "maxCashSecuritiesToMarketCapPct"
+  | "maxReceivablesToMarketCapPct"
+  | "minIlliquidAssetsToTotalAssetsPct";
+
+function scholarTicks(key: NumericKey): { label: string; value: number }[] {
+  return SCHOLAR_PROFILES.filter((p) => p.id !== "custom")
+    .map((p) => ({ label: p.short, value: (p as unknown as Record<string, number | null>)[key] }))
+    .filter((t): t is { label: string; value: number } => typeof t.value === "number");
+}
+
 export default function CustomProfilePage() {
   return (
     <Suspense fallback={<div className="py-8 text-sm text-gray-500">Loading…</div>}>
@@ -180,7 +197,7 @@ function CustomInner() {
             Your screening rules
           </h2>
 
-          <div className="mt-6 space-y-6">
+          <div className="mt-6 space-y-7">
             <Slider
               label="Max impermissible income / revenue"
               value={profile.maxImpermissibleIncomePct}
@@ -188,6 +205,7 @@ function CustomInner() {
               max={10}
               step={0.5}
               unit="%"
+              ticks={scholarTicks("maxImpermissibleIncomePct")}
               onChange={(v) => setProfile((p) => ({ ...p, maxImpermissibleIncomePct: v }))}
             />
             <Slider
@@ -197,6 +215,7 @@ function CustomInner() {
               max={50}
               step={1}
               unit="%"
+              ticks={scholarTicks("maxDebtToMarketCapPct")}
               onChange={(v) => setProfile((p) => ({ ...p, maxDebtToMarketCapPct: v }))}
             />
             <Slider
@@ -206,6 +225,7 @@ function CustomInner() {
               max={50}
               step={1}
               unit="%"
+              ticks={scholarTicks("maxCashSecuritiesToMarketCapPct")}
               onChange={(v) =>
                 setProfile((p) => ({ ...p, maxCashSecuritiesToMarketCapPct: v }))
               }
@@ -217,6 +237,7 @@ function CustomInner() {
               max={50}
               step={1}
               unit="%"
+              ticks={scholarTicks("maxReceivablesToMarketCapPct")}
               onChange={(v) =>
                 setProfile((p) => ({ ...p, maxReceivablesToMarketCapPct: v }))
               }
@@ -228,6 +249,7 @@ function CustomInner() {
               max={50}
               step={1}
               unit="%"
+              ticks={scholarTicks("minIlliquidAssetsToTotalAssetsPct")}
               onChange={(v) =>
                 setProfile((p) => ({ ...p, minIlliquidAssetsToTotalAssetsPct: v }))
               }
@@ -339,6 +361,7 @@ function Slider({
   max,
   step,
   unit,
+  ticks,
   onChange,
 }: {
   label: string;
@@ -347,6 +370,7 @@ function Slider({
   max: number;
   step: number;
   unit: string;
+  ticks?: { label: string; value: number }[];
   onChange: (v: number) => void;
 }) {
   return (
@@ -358,6 +382,7 @@ function Slider({
           {unit}
         </span>
       </div>
+      <ScholarTicks ticks={ticks} min={min} max={max} active={value} />
       <input
         type="range"
         min={min}
@@ -365,7 +390,7 @@ function Slider({
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="mt-2 w-full accent-navy-700"
+        className="mt-1 w-full accent-navy-700"
       />
     </div>
   );
@@ -378,6 +403,7 @@ function OptionalSlider({
   max,
   step,
   unit,
+  ticks,
   onChange,
 }: {
   label: string;
@@ -386,6 +412,7 @@ function OptionalSlider({
   max: number;
   step: number;
   unit: string;
+  ticks?: { label: string; value: number }[];
   onChange: (v: number | null) => void;
 }) {
   const [enabled, setEnabled] = useState(value !== null);
@@ -415,16 +442,78 @@ function OptionalSlider({
         )}
       </div>
       {enabled && value !== null && (
-        <input
-          type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={value}
-          onChange={(e) => onChange(parseFloat(e.target.value))}
-          className="mt-2 w-full accent-navy-700"
-        />
+        <>
+          <ScholarTicks ticks={ticks} min={min} max={max} active={value} />
+          <input
+            type="range"
+            min={min}
+            max={max}
+            step={step}
+            value={value}
+            onChange={(e) => onChange(parseFloat(e.target.value))}
+            className="mt-1 w-full accent-navy-700"
+          />
+        </>
       )}
+    </div>
+  );
+}
+
+/**
+ * Tiny tick-mark row above slider track showing each established scholar's
+ * threshold. Labels stack underneath when there's room; otherwise just notches.
+ */
+function ScholarTicks({
+  ticks,
+  min,
+  max,
+  active,
+}: {
+  ticks?: { label: string; value: number }[];
+  min: number;
+  max: number;
+  active: number;
+}) {
+  if (!ticks || ticks.length === 0) return null;
+  const range = max - min || 1;
+
+  // Group ticks that share the same value so we can show "AAOIFI · Strict"
+  const grouped: { value: number; labels: string[] }[] = [];
+  for (const t of ticks) {
+    const exist = grouped.find((g) => g.value === t.value);
+    if (exist) exist.labels.push(t.label);
+    else grouped.push({ value: t.value, labels: [t.label] });
+  }
+
+  return (
+    <div className="relative mt-3 h-6">
+      {grouped.map((g) => {
+        const leftPct = ((g.value - min) / range) * 100;
+        const matchesActive = Math.abs(g.value - active) < 0.001;
+        return (
+          <div
+            key={g.value}
+            className="absolute top-0 -translate-x-1/2 text-center"
+            style={{ left: `${leftPct}%` }}
+            title={`${g.labels.join(", ")} — ${g.value}%`}
+          >
+            <div
+              className={
+                "mx-auto h-2 w-px " +
+                (matchesActive ? "bg-navy-700" : "bg-gray-300")
+              }
+            />
+            <div
+              className={
+                "mt-0.5 whitespace-nowrap text-[9px] font-medium tracking-wide " +
+                (matchesActive ? "text-navy-700" : "text-gray-400")
+              }
+            >
+              {g.labels.join(" · ")}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

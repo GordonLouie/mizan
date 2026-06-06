@@ -110,6 +110,22 @@ export default function CalculationCard(props: CalculationCardProps) {
     thresholdDirection === "max" ? ratio <= thresholdValue : ratio >= thresholdValue;
   const diff = Math.abs(ratio - thresholdValue);
 
+  // Breach risk — Miqdad: "a stock that's halal today can flip next quarter."
+  // Buffer as % of threshold tells us how close we are to failing. Tiers:
+  //   safe    : buffer ≥ 25% of threshold
+  //   watch   : buffer 10-25%
+  //   near    : buffer < 10% but still passing
+  //   breached: already failed
+  let breach: "safe" | "watch" | "near" | "breached";
+  if (!meetsThreshold) {
+    breach = "breached";
+  } else {
+    const bufferPct = thresholdValue > 0 ? (diff / thresholdValue) * 100 : 100;
+    if (bufferPct >= 25) breach = "safe";
+    else if (bufferPct >= 10) breach = "watch";
+    else breach = "near";
+  }
+
   const verdictTone =
     verdict === "pass"
       ? "text-emerald-700 bg-emerald-50 border-emerald-200"
@@ -177,6 +193,14 @@ export default function CalculationCard(props: CalculationCardProps) {
                 {meetsThreshold ? "to spare" : "over the limit"}
               </span>
             </div>
+
+            {/* Breach risk bar — Miqdad's "is this stable, or about to flip?" */}
+            <BreachRiskBar
+              ratio={ratio}
+              threshold={thresholdValue}
+              direction={thresholdDirection}
+              breach={breach}
+            />
 
             {whatThisMeans && (
               <div className="mt-2 flex items-start gap-1.5 text-[12px] italic text-gray-500">
@@ -364,6 +388,137 @@ function MathFraction({
       <div className="px-2">{numerator}</div>
       <div className="h-px w-full bg-gray-700" />
       <div className="px-2">{denominator}</div>
+    </div>
+  );
+}
+
+/**
+ * BreachRiskBar — horizontal indicator showing where the current ratio sits
+ * relative to the scholar's threshold, with color zones for breach proximity.
+ *
+ * Miqdad feedback (2026-06-06): "Knowing PASS isn't enough — a stock that
+ * barely passes can flip next quarter. I want to see at-a-glance how stable
+ * the pass is." Extends the Stability Score idea to per-ratio level.
+ *
+ * Zones (for max-direction ratios; mirrored for min):
+ *   safe zone     [0% .. 0.75 × threshold]
+ *   watch zone    [0.75 × .. 0.90 × threshold]
+ *   near zone     [0.90 × .. threshold]
+ *   breach zone   [threshold .. scale max]
+ */
+function BreachRiskBar({
+  ratio,
+  threshold,
+  direction,
+  breach,
+}: {
+  ratio: number;
+  threshold: number;
+  direction: "max" | "min";
+  breach: "safe" | "watch" | "near" | "breached";
+}) {
+  // Scale covers up to 1.5× threshold so breach zone is always visible.
+  const scaleMax = Math.max(threshold * 1.5, ratio * 1.1, 5);
+  const thresholdPct = Math.min(100, (threshold / scaleMax) * 100);
+  const ratioPct = Math.min(100, (ratio / scaleMax) * 100);
+
+  const tone =
+    breach === "safe"
+      ? { dot: "bg-emerald-600", label: "Comfortable", labelTone: "text-emerald-700 bg-emerald-50" }
+      : breach === "watch"
+        ? { dot: "bg-emerald-500", label: "Stable", labelTone: "text-emerald-700 bg-emerald-50" }
+        : breach === "near"
+          ? { dot: "bg-amber-500", label: "Near limit", labelTone: "text-amber-700 bg-amber-50" }
+          : { dot: "bg-rose-600", label: "Breached", labelTone: "text-rose-700 bg-rose-50" };
+
+  // For "min" direction (illiquid ratio), we mirror the visualization mentally:
+  // ratios ABOVE threshold pass, below it fail. The scale still works because
+  // the user just reads "marker right of line = pass" or vice versa.
+  const passSideText =
+    direction === "max"
+      ? "← Pass zone | Fail zone →"
+      : "← Fail zone | Pass zone →";
+
+  return (
+    <div className="mt-3">
+      <div className="flex items-center justify-between gap-3">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-gray-500">
+          Breach risk
+        </div>
+        <span
+          className={
+            "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] " +
+            tone.labelTone
+          }
+        >
+          {tone.label}
+        </span>
+      </div>
+
+      <div className="relative mt-2 h-2 overflow-hidden rounded-full bg-gray-100">
+        {direction === "max" ? (
+          <>
+            {/* safe zone */}
+            <div
+              className="absolute top-0 h-full bg-emerald-200/60"
+              style={{ left: "0%", width: `${thresholdPct * 0.75}%` }}
+            />
+            {/* watch zone */}
+            <div
+              className="absolute top-0 h-full bg-emerald-300/70"
+              style={{ left: `${thresholdPct * 0.75}%`, width: `${thresholdPct * 0.15}%` }}
+            />
+            {/* near zone */}
+            <div
+              className="absolute top-0 h-full bg-amber-300/70"
+              style={{ left: `${thresholdPct * 0.9}%`, width: `${thresholdPct * 0.1}%` }}
+            />
+            {/* breach zone */}
+            <div
+              className="absolute top-0 h-full bg-rose-300/70"
+              style={{ left: `${thresholdPct}%`, right: "0%" }}
+            />
+          </>
+        ) : (
+          <>
+            {/* breach (fail) zone on left */}
+            <div
+              className="absolute top-0 h-full bg-rose-300/70"
+              style={{ left: "0%", width: `${thresholdPct}%` }}
+            />
+            {/* near zone */}
+            <div
+              className="absolute top-0 h-full bg-amber-300/70"
+              style={{ left: `${thresholdPct}%`, width: `${thresholdPct * 0.1}%` }}
+            />
+            {/* safe zone */}
+            <div
+              className="absolute top-0 h-full bg-emerald-300/70"
+              style={{ left: `${thresholdPct * 1.1}%`, right: "0%" }}
+            />
+          </>
+        )}
+
+        {/* threshold line */}
+        <div
+          className="absolute top-[-2px] h-3 w-px bg-gray-700"
+          style={{ left: `${thresholdPct}%` }}
+          title={`Threshold ${threshold}%`}
+        />
+
+        {/* current ratio marker */}
+        <div
+          className={"absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow " + tone.dot}
+          style={{ left: `${ratioPct}%` }}
+          title={`Current ${ratio.toFixed(1)}%`}
+        />
+      </div>
+
+      <div className="mt-1 flex justify-between text-[10px] text-gray-400">
+        <span>0%</span>
+        <span className="text-gray-500">{passSideText}</span>
+        <span>{scaleMax.toFixed(0)}%</span>
+      </div>
     </div>
   );
 }
