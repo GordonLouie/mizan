@@ -441,6 +441,7 @@ export default function PortfolioPage() {
             </p>
           </div>
         ) : (
+          <>
           <div className="mb-2 text-[11px] italic text-gray-500 sm:hidden">← Swipe to see more →</div>
           <div className="mt-6 overflow-x-auto">
             <table className="w-full min-w-[720px] border-collapse">
@@ -512,6 +513,7 @@ export default function PortfolioPage() {
               </tbody>
             </table>
           </div>
+          </>
         )}
       </section>
 
