@@ -16,7 +16,20 @@ export default function TickerSearch({ value, onChange, placeholder, autoFocus }
   const [open, setOpen] = useState(false);
   const [highlighted, setHighlighted] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const stocks = listStocks();
+
+  // On mobile, when the input focuses and the iOS keyboard opens, the dropdown
+  // can get hidden behind the keyboard. Scroll the input toward the top of the
+  // viewport so the dropdown below it stays visible.
+  // Toby's bug, 2026-06-06: "1 is clip off 2 is I can't scroll to the bottom"
+  function scrollInputIntoView() {
+    if (typeof window === "undefined") return;
+    if (window.innerWidth >= 640) return; // desktop OK
+    setTimeout(() => {
+      inputRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 250); // wait for keyboard animation
+  }
 
   // Keep input in sync with external value changes (e.g., URL params)
   useEffect(() => {
@@ -90,6 +103,7 @@ export default function TickerSearch({ value, onChange, placeholder, autoFocus }
       <div className="flex items-center gap-2 rounded-md border border-gray-200 bg-gray-50 px-3 py-2 focus-within:border-navy-400 focus-within:bg-white">
         <Search size={16} className="text-gray-400" />
         <input
+          ref={inputRef}
           type="text"
           value={query}
           autoFocus={autoFocus}
@@ -98,7 +112,10 @@ export default function TickerSearch({ value, onChange, placeholder, autoFocus }
             setOpen(true);
             setHighlighted(0);
           }}
-          onFocus={() => setOpen(true)}
+          onFocus={() => {
+            setOpen(true);
+            scrollInputIntoView();
+          }}
           onKeyDown={onKeyDown}
           placeholder={placeholder ?? "Search by ticker or company name (e.g. apple, AAPL, jpmorgan)"}
           className="w-full bg-transparent text-base outline-none"

@@ -81,7 +81,7 @@ function VsInner() {
   }
 
   return (
-    <div className="pb-20">
+    <div className="pb-32">
       {/* PAGE HEADER */}
       <header className="pt-6">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">

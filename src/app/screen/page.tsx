@@ -164,6 +164,28 @@ function ScreenInner() {
 
         {!ticker && <FeaturedTickers onPick={(t) => setTicker(t)} />}
 
+        {/* Universe CTA — discoverability fix (Toby's feedback 2026-06-06):
+            users want to filter a LIST of stocks by scholar, not click into
+            each. /universe does this — make sure they find it. */}
+        {!ticker && (
+          <div className="rounded-lg border border-gray-200 bg-white p-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+            <div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-gray-700">
+                Rather browse than search?
+              </div>
+              <p className="mt-1 text-[13px] text-gray-600">
+                See every stock Mizan covers, filtered by your scholar &amp; verdict.
+              </p>
+            </div>
+            <Link
+              href="/universe"
+              className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700 sm:mt-0 sm:flex-shrink-0"
+            >
+              Browse all stocks <ArrowRight size={14} />
+            </Link>
+          </div>
+        )}
+
         {/* Scholar picker — its own internal "Scholar" label is the heading. */}
         <div id="scholar-picker">
           <ScholarPicker value={scholarId} onChange={setScholarId} />
