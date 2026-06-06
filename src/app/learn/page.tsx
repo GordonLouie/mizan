@@ -134,31 +134,37 @@ export default function LearnPage() {
       {/* SECTION 4 — six scholar profiles */}
       <Section n={4} title="The six scholar profiles Mizan ships">
         <ScholarRow
+          id="aaoifi"
           name="AAOIFI Standard"
           oneLine="Default Gulf framework, used by most Islamic banks."
           who="If you don&apos;t know which scholar you follow, this is the safe default — it&apos;s also what Zoya, Wahed, and Musaffa quietly use."
         />
         <ScholarRow
+          id="taqi_usmani"
           name="Mufti Taqi Usmani"
           oneLine="AAOIFI rules plus a strict illiquid-asset floor and capital-gains purification."
           who="If you&apos;re Hanafi and follow Mufti Taqi&apos;s framework — Mizan is the only app that implements his illiquid-asset rule properly."
         />
         <ScholarRow
+          id="djim"
           name="S&P DJIM"
           oneLine="The most permissive of the major indices — one-third caps instead of 30%."
           who="If you invest in halal index funds like SPUS, this is the framework they screen against."
         />
         <ScholarRow
+          id="jafari"
           name="Ja'fari (Sistani-aligned)"
           oneLine="Shia methodology; khums (20%) applies to net annual surplus."
           who="If you&apos;re Shia and follow Ayatollah Sistani."
         />
         <ScholarRow
+          id="strict"
           name="Strict / zero-tolerance"
           oneLine="Any riba exposure fails. Almost no public equities pass."
           who="If you hold the strict view that any interest exposure makes a stock impermissible."
         />
         <ScholarRow
+          id="custom"
           name="Custom"
           oneLine="Set your own thresholds — pick numbers that match your scholar exactly."
           who="If your scholar isn&apos;t listed or you want to dial things in yourself."
@@ -477,18 +483,27 @@ function Q({ q, children }: { q: string; children: React.ReactNode }) {
   );
 }
 
-/* ───── Scholar row (used in section 4) ───── */
+/* ───── Scholar row (used in section 4) ─────
+   `id` prop wires the row to the homepage scholar cards' hash links:
+   /learn#aaoifi, /learn#taqi_usmani, /learn#djim, /learn#jafari,
+   /learn#strict, /learn#custom. The scroll-mt-24 offsets the sticky
+   header so the row isn't hidden after the jump. */
 function ScholarRow({
+  id,
   name,
   oneLine,
   who,
 }: {
+  id?: string;
   name: string;
   oneLine: string;
   who: string;
 }) {
   return (
-    <div className="mt-4 border-l-2 border-gold-300 py-1 pl-4">
+    <div
+      id={id}
+      className="mt-4 scroll-mt-24 border-l-2 border-gold-300 py-1 pl-4 target:bg-amber-50/40"
+    >
       <div
         className="text-[15px] font-bold text-gray-900"
         style={{ fontFamily: "Georgia, serif" }}
