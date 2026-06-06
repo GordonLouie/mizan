@@ -7,6 +7,7 @@ import TickerSearch from "@/components/TickerSearch";
 import { ArrowRight, GraduationCap, Calculator, Sparkles } from "lucide-react";
 import { CURATED_LISTS } from "@/lib/lists";
 import { listStocks } from "@/lib/data";
+import { SCHOLAR_PROFILES } from "@/lib/scholars";
 
 export default function Home() {
   const router = useRouter();
@@ -27,7 +28,81 @@ export default function Home() {
             <span className="text-gray-500 group-hover:text-navy-700 group-hover:underline">status</span>
           </Link>
         </div>
+      </section>
 
+      {/* 4. THE WEDGE — page anchor moment, only loud element.
+          Lifted ABOVE the search per Tyler's feedback 2026-06-07: "'why mizan?'
+          section is genuinely the best bit of the whole site, if that was the
+          first thing people saw instead of the search bar I think it would
+          land so much better." */}
+      <section className="mx-auto mt-8 max-w-3xl">
+        <div className="text-center">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-600">
+            Why Mizan
+          </div>
+          <h2
+            className="mt-3 text-[28px] font-bold leading-[1.15] text-gray-900 sm:text-[36px]"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            Most apps check one rulebook.<br />Muslims follow many.
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-gray-600">
+            Every major halal app screens against one standard (AAOIFI). Different scholars reach different verdicts on the same stock. Take Amazon:
+          </p>
+        </div>
+
+        {/* FT-print-spread comparison panel */}
+        <div className="mt-10 grid grid-cols-1 overflow-hidden rounded-xl border border-gray-200 sm:grid-cols-2">
+          {/* LEFT: AAOIFI */}
+          <div className="bg-white px-10 py-12">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
+              Under AAOIFI
+            </div>
+            <div
+              className="mt-8 text-[72px] font-bold leading-none text-emerald-700 sm:text-[80px]"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              Halal
+            </div>
+            <div className="mt-10 font-mono text-[12px] text-gray-500">
+              Debt / market cap: <span className="text-gray-900">6.5%</span> · cap 30%
+            </div>
+            <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
+              What Zoya, Wahed, and Musaffa would tell you.
+            </p>
+          </div>
+
+          {/* RIGHT: Mufti Taqi Usmani */}
+          <div className="border-t border-gray-200 bg-white px-10 py-12 sm:border-l sm:border-t-0">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-700">
+              Under Mufti Taqi Usmani
+            </div>
+            <div
+              className="mt-8 text-[72px] font-bold leading-none text-rose-700 sm:text-[80px]"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              Not halal
+            </div>
+            <div className="mt-10 font-mono text-[12px] text-gray-500">
+              Tangible assets: <span className="text-gray-900">12%</span> · floor 20%
+            </div>
+            <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
+              His illiquid-asset rule excludes AMZN. No other app surfaces this.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 text-center">
+          <Link
+            href="/screen?ticker=AMZN"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-navy-700 transition hover:text-navy-900"
+          >
+            See AMZN under all six scholars <ArrowRight size={14} />
+          </Link>
+        </div>
+      </section>
+
+      <section className="mx-auto mt-20 max-w-2xl">
         {/* 2. HERO — centered, max-w-2xl */}
         <div className="mx-auto max-w-2xl text-center">
           <h1
@@ -106,70 +181,61 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 4. THE WEDGE — page anchor moment, only loud element */}
-      <section className="mx-auto mt-28 max-w-3xl">
+      {/* 4b. MEET THE SCHOLARS — Tyler's feedback 2026-06-07: "the '6 scholars'
+          on the homepage, everyone's going to try click it. would be sick if
+          each one was a little card that told you what it means and linked to
+          the learn page." Six small cards, each one-line + link to /learn. */}
+      <section className="mx-auto mt-24 max-w-4xl">
         <div className="text-center">
           <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-600">
-            Why Mizan
+            Six scholars, one screen
           </div>
           <h2
-            className="mt-3 text-[28px] font-bold leading-[1.15] text-gray-900 sm:text-[36px]"
+            className="mt-3 text-[24px] font-bold leading-tight text-gray-900 sm:text-[30px]"
             style={{ fontFamily: "Georgia, serif" }}
           >
-            Most apps check one rulebook.<br />Muslims follow many.
+            Meet the scholars Mizan covers
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-gray-600">
-            Every major halal app screens against one standard (AAOIFI). Different scholars reach different verdicts on the same stock. Take Amazon:
+          <p className="mx-auto mt-3 max-w-xl text-[14px] leading-relaxed text-gray-600">
+            Tap any to read the methodology. Not sure which one to follow? Most
+            American Muslims start with AAOIFI.
           </p>
         </div>
 
-        {/* FT-print-spread comparison panel */}
-        <div className="mt-10 grid grid-cols-1 overflow-hidden rounded-xl border border-gray-200 sm:grid-cols-2">
-          {/* LEFT: AAOIFI */}
-          <div className="bg-white px-10 py-12">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
-              Under AAOIFI
-            </div>
-            <div
-              className="mt-8 text-[72px] font-bold leading-none text-emerald-700 sm:text-[80px]"
-              style={{ fontFamily: "Georgia, serif" }}
+        <div className="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-2 lg:grid-cols-3">
+          {SCHOLAR_PROFILES.filter((p) => p.id !== "custom").map((p) => (
+            <Link
+              key={p.id}
+              href={`/learn#${p.id}`}
+              className="group bg-white p-5 transition hover:bg-navy-50/30"
             >
-              Halal
-            </div>
-            <div className="mt-10 font-mono text-[12px] text-gray-500">
-              Debt / market cap: <span className="text-gray-900">6.5%</span> · cap 30%
-            </div>
-            <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
-              What Zoya, Wahed, and Musaffa would tell you.
-            </p>
-          </div>
-
-          {/* RIGHT: Mufti Taqi Usmani */}
-          <div className="border-t border-gray-200 bg-white px-10 py-12 sm:border-l sm:border-t-0">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-700">
-              Under Mufti Taqi Usmani
-            </div>
-            <div
-              className="mt-8 text-[72px] font-bold leading-none text-rose-700 sm:text-[80px]"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              Not halal
-            </div>
-            <div className="mt-10 font-mono text-[12px] text-gray-500">
-              Tangible assets: <span className="text-gray-900">12%</span> · floor 20%
-            </div>
-            <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
-              His illiquid-asset rule excludes AMZN. No other app surfaces this.
-            </p>
-          </div>
+              <div className="flex items-baseline justify-between gap-2">
+                <h3
+                  className="text-[15px] font-bold text-gray-900 group-hover:text-navy-800"
+                  style={{ fontFamily: "Georgia, serif" }}
+                >
+                  {p.short}
+                </h3>
+                <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-gray-400">
+                  {p.id === "taqi_usmani" ? "Hanafi" : p.id === "jafari" ? "Shia" : p.id === "strict" ? "Minority" : "Sunni"}
+                </span>
+              </div>
+              <p className="mt-2 line-clamp-3 text-[12px] leading-relaxed text-gray-600">
+                {p.blurb}
+              </p>
+              <div className="mt-3 inline-flex items-center gap-1 text-[11px] font-medium text-navy-700 group-hover:text-navy-900">
+                Read the methodology <ArrowRight size={11} />
+              </div>
+            </Link>
+          ))}
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-6 text-center">
           <Link
-            href="/screen?ticker=AMZN"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-navy-700 transition hover:text-navy-900"
+            href="/learn"
+            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-navy-700 transition hover:text-navy-900"
           >
-            See AMZN under all six scholars <ArrowRight size={14} />
+            Full halal-investing primer <ArrowRight size={13} />
           </Link>
         </div>
       </section>

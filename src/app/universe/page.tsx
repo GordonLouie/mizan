@@ -308,8 +308,25 @@ function UniverseInner() {
         </div>
       </div>
 
+      {/* "VIEWING UNDER" CHIP — Tyler's feedback 2026-06-07:
+          "when you switch scholar on the lists page, nothing visibly changes,
+          even just a small 'viewing under: Mufti Taqi' tag would make it
+          obvious the filter actually did something". This pill sits directly
+          above the table so the scholar switch reads as cause-and-effect. */}
+      <div className="mt-8 flex items-center gap-2 text-[12px] text-gray-600">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+          Viewing under
+        </span>
+        <span
+          key={scholarId} /* re-mount on change → triggers the fade animation */
+          className="inline-flex animate-in fade-in slide-in-from-left-1 items-center rounded-full bg-navy-50 px-3 py-1 text-[12px] font-semibold text-navy-800 ring-1 ring-navy-700/15"
+        >
+          {SCHOLAR_PROFILES.find((p) => p.id === scholarId)?.label ?? "your scholar"}
+        </span>
+      </div>
+
       {/* TABLE */}
-      <div className="mt-8 overflow-x-auto">
+      <div className="mt-3 overflow-x-auto">
         <table className="w-full min-w-[720px] border-collapse">
           <thead>
             <tr className="border-b border-gray-200">
@@ -364,7 +381,8 @@ function UniverseInner() {
       </div>
 
       <p className="mt-6 text-[11px] text-gray-500">
-        Showing {filtered.length} of {enriched.length} tickers.
+        Showing {filtered.length} of {enriched.length} tickers under{" "}
+        <span className="font-semibold text-gray-700">{activeScholarLabel}</span>.
       </p>
     </div>
   );

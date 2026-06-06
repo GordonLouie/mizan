@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import CurrencyInput from "@/components/CurrencyInput";
 import { ProgressRing, DonutChart, DonutLegend } from "@/components/Charts";
-import { Heart, Info } from "lucide-react";
+import { Heart, Info, ArrowDown } from "lucide-react";
 
 const NISAB_GOLD_GRAMS = 87.48;
 const NISAB_SILVER_GRAMS = 612.36;
@@ -67,6 +67,19 @@ export default function ZakatPage() {
 
   const nisabProgress = Math.min(200, (netWealth / threshold) * 100);
 
+  // Calculator UX (Tyler's feedback 2026-06-07 + Hong-Kong friend 2026-06-07):
+  //   "the big chart loads before the inputs so it looks broken on first glance"
+  //   "have a calculate button and then auto-scroll to show the zakat"
+  // Inputs come first. Calculate button smooth-scrolls to the result hero.
+  const resultRef = useRef<HTMLDivElement | null>(null);
+  const [calculated, setCalculated] = useState(false);
+  function calculate() {
+    setCalculated(true);
+    setTimeout(() => {
+      resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }
+
   return (
     <div className="pb-20">
       {/* PAGE HEADER */}
@@ -81,111 +94,10 @@ export default function ZakatPage() {
           What do you owe in zakat this year?
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
-          Enter your assets and short-term debts. If your net wealth reaches the nisab
-          threshold, zakat is owed at 2.5%.
+          Enter your assets and short-term debts below, then press Calculate. If your net
+          wealth reaches the nisab threshold, zakat is owed at 2.5%.
         </p>
       </header>
-
-      {/* HERO RESULT — three-column grid with 1px dividers */}
-      <section className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-3">
-        {/* Net wealth */}
-        <div className="bg-white p-7">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
-            Net zakatable wealth
-          </div>
-          <div
-            className="mt-4 text-[34px] font-bold leading-none tabular-nums text-gray-900"
-            style={{ fontFamily: "Georgia, serif" }}
-          >
-            {fmt(netWealth)}
-          </div>
-          <p className="mt-2 font-mono text-[11px] text-gray-500">
-            {fmt(totalAssets)} assets − {fmt(debts)} debts
-          </p>
-
-          {/* Nisab progress */}
-          <div className="mt-7">
-            <div className="flex items-baseline justify-between text-[11px]">
-              <span className="font-semibold uppercase tracking-[0.16em] text-gray-500">
-                Nisab progress
-              </span>
-              <span className="font-mono tabular-nums text-gray-700">
-                {reachesNisab ? "Reached" : `${((netWealth / threshold) * 100).toFixed(0)}%`}
-              </span>
-            </div>
-            <div className="relative mt-2 h-1.5 w-full bg-gray-100">
-              <div
-                className="absolute left-0 top-0 h-full transition-all"
-                style={{
-                  width: `${Math.min(100, nisabProgress)}%`,
-                  backgroundColor: reachesNisab ? "#047857" : "#B45309",
-                }}
-              />
-            </div>
-            <p className="mt-2 text-[11px] text-gray-500">
-              {nisab === "silver" ? `Silver nisab: ${fmt(NISAB_USD_SILVER)}` : `Gold nisab: ${fmt(NISAB_USD_GOLD)}`}
-            </p>
-          </div>
-        </div>
-
-        {/* Center: progress ring */}
-        <div className="flex flex-col items-center justify-center bg-white p-7">
-          <ProgressRing
-            percent={reachesNisab ? 100 : (netWealth / threshold) * 100}
-            size={200}
-            color={reachesNisab ? "#047857" : "#B45309"}
-            label={reachesNisab ? fmt(zakat) : "Below nisab"}
-            sublabel={reachesNisab ? "Zakat owed" : "Not yet obligated"}
-          />
-        </div>
-
-        {/* Right: composition donut */}
-        <div className="flex flex-col items-center justify-center bg-white p-7">
-          {composition.length > 0 ? (
-            <DonutChart
-              segments={composition}
-              size={200}
-              thickness={22}
-              centerLabel={fmt(totalAssets)}
-              centerSublabel="Total assets"
-            />
-          ) : (
-            <div className="text-center text-sm text-gray-500">
-              <p>Enter your assets below</p>
-              <p className="mt-1 text-xs text-gray-400">to see composition</p>
-            </div>
-          )}
-          <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
-            Asset mix
-          </p>
-        </div>
-      </section>
-
-      {/* DONATE CTA — only when zakat is owed */}
-      {reachesNisab && (
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-emerald-200 bg-emerald-50/60 px-6 py-5">
-          <div>
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
-              Zakat owed
-            </div>
-            <div
-              className="mt-1 text-[28px] font-bold leading-none tabular-nums text-emerald-700"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              {fmt(zakat)}
-            </div>
-            <p className="mt-1 text-[11px] text-emerald-700/80">2.5% of {fmt(netWealth)}</p>
-          </div>
-          <a
-            href="https://www.launchgood.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
-          >
-            <Heart size={14} /> Give via LaunchGood
-          </a>
-        </div>
-      )}
 
       {/* INPUTS — two columns */}
       <section className="mt-16">
@@ -340,6 +252,124 @@ export default function ZakatPage() {
           </div>
         </div>
       </section>
+
+      {/* CALCULATE button — Hong-Kong friend feedback: "have a calculate
+          button and then auto-scroll to show the zakat". The numbers below
+          are already reactive; this button gives older users the explicit
+          "now show me the answer" affordance and smooth-scrolls to it. */}
+      <div className="mt-6 flex justify-center">
+        <button
+          type="button"
+          onClick={calculate}
+          className="inline-flex items-center gap-2 rounded-lg bg-navy-800 px-6 py-3 text-[14px] font-semibold text-white shadow-sm transition hover:bg-navy-700"
+        >
+          Calculate my zakat <ArrowDown size={14} />
+        </button>
+      </div>
+
+      {/* HERO RESULT — three-column grid with 1px dividers.
+          Placeholder hint visible until inputs are filled; lives BELOW
+          inputs now per Tyler's "load order looks broken" feedback. */}
+      <section ref={resultRef} className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-3">
+        {/* Net wealth */}
+        <div className="bg-white p-7">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            Net zakatable wealth
+          </div>
+          <div
+            className="mt-4 text-[34px] font-bold leading-none tabular-nums text-gray-900"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            {fmt(netWealth)}
+          </div>
+          <p className="mt-2 font-mono text-[11px] text-gray-500">
+            {fmt(totalAssets)} assets − {fmt(debts)} debts
+          </p>
+
+          {/* Nisab progress */}
+          <div className="mt-7">
+            <div className="flex items-baseline justify-between text-[11px]">
+              <span className="font-semibold uppercase tracking-[0.16em] text-gray-500">
+                Nisab progress
+              </span>
+              <span className="font-mono tabular-nums text-gray-700">
+                {reachesNisab ? "Reached" : `${((netWealth / threshold) * 100).toFixed(0)}%`}
+              </span>
+            </div>
+            <div className="relative mt-2 h-1.5 w-full bg-gray-100">
+              <div
+                className="absolute left-0 top-0 h-full transition-all"
+                style={{
+                  width: `${Math.min(100, nisabProgress)}%`,
+                  backgroundColor: reachesNisab ? "#047857" : "#B45309",
+                }}
+              />
+            </div>
+            <p className="mt-2 text-[11px] text-gray-500">
+              {nisab === "silver" ? `Silver nisab: ${fmt(NISAB_USD_SILVER)}` : `Gold nisab: ${fmt(NISAB_USD_GOLD)}`}
+            </p>
+          </div>
+        </div>
+
+        {/* Center: progress ring */}
+        <div className="flex flex-col items-center justify-center bg-white p-7">
+          <ProgressRing
+            percent={reachesNisab ? 100 : (netWealth / threshold) * 100}
+            size={200}
+            color={reachesNisab ? "#047857" : "#B45309"}
+            label={reachesNisab ? fmt(zakat) : "Below nisab"}
+            sublabel={reachesNisab ? "Zakat owed" : "Not yet obligated"}
+          />
+        </div>
+
+        {/* Right: composition donut */}
+        <div className="flex flex-col items-center justify-center bg-white p-7">
+          {composition.length > 0 ? (
+            <DonutChart
+              segments={composition}
+              size={200}
+              thickness={22}
+              centerLabel={fmt(totalAssets)}
+              centerSublabel="Total assets"
+            />
+          ) : (
+            <div className="text-center text-sm text-gray-500">
+              <p>Enter your assets below</p>
+              <p className="mt-1 text-xs text-gray-400">to see composition</p>
+            </div>
+          )}
+          <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            Asset mix
+          </p>
+        </div>
+      </section>
+
+      {/* DONATE CTA — only when zakat is owed */}
+      {reachesNisab && (
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-emerald-200 bg-emerald-50/60 px-6 py-5">
+          <div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
+              Zakat owed
+            </div>
+            <div
+              className="mt-1 text-[28px] font-bold leading-none tabular-nums text-emerald-700"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              {fmt(zakat)}
+            </div>
+            <p className="mt-1 text-[11px] text-emerald-700/80">2.5% of {fmt(netWealth)}</p>
+          </div>
+          <a
+            href="https://www.launchgood.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800"
+          >
+            <Heart size={14} /> Give via LaunchGood
+          </a>
+        </div>
+      )}
+
 
       {/* COMPOSITION LEGEND + REFERENCE */}
       <section className="mt-16 grid grid-cols-1 gap-6 lg:grid-cols-2">
