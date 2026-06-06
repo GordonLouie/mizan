@@ -206,6 +206,7 @@ function ComparisonGrid({
         >
           {scholarLabel}
         </h2>
+        <div className="mb-2 text-[11px] italic text-gray-500 sm:hidden">← Swipe to see more →</div>
         <div className="mt-6 overflow-x-auto">
           <table className="w-full min-w-[640px] border-collapse">
             <thead>
@@ -295,6 +296,7 @@ function ComparisonGrid({
         >
           How each tradition sees these two
         </h2>
+        <div className="mb-2 text-[11px] italic text-gray-500 sm:hidden">← Swipe to see more →</div>
         <div className="mt-6 overflow-x-auto">
           <table className="w-full min-w-[480px] border-collapse">
             <thead>

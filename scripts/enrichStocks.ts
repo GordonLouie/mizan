@@ -53,30 +53,72 @@ const BATCH_DELAY_MS = 1000;
 // search for. Grouped by region. Add/remove as needed.
 
 const SEED_TICKERS: string[] = [
-  // ── Mega-caps everyone knows (covers all home-page chips, /vs pairs, /discover hardcoded refs) ──
-  "AAPL", "MSFT", "GOOGL", "AMZN", "NVDA", "META", "TSLA", "BRK.B", "V", "MA",
-  "JPM", "BAC", "WFC", "LLY", "UNH", "JNJ", "PFE", "MRK", "ABBV", "AVGO",
+  // ═══════════════════════════════════════════════════════════════════════
+  // EXPANDED LIST — Day 9 (Saturday). Target: S&P 500 mainstays + popular
+  // Muslim-investor names + international ADRs + halal ETFs. ~300 tickers.
+  // Direct response to Ibrahim + Saifuddin's "more stocks" feedback.
+  // ═══════════════════════════════════════════════════════════════════════
 
-  // ── Big consumer + staples (dividend yielders on /discover and curated lists) ──
+  // ── Mega-caps (top home-page chips, /vs pairs, /discover refs) ──
+  "AAPL", "MSFT", "GOOGL", "GOOG", "AMZN", "NVDA", "META", "TSLA", "BRK.B", "V", "MA",
+  "JPM", "BAC", "WFC", "C", "GS", "MS", "BLK", "AXP", "USB", "PNC",
+  "LLY", "UNH", "JNJ", "PFE", "MRK", "ABBV", "AVGO", "TMO", "ABT", "DHR", "BMY",
+  "AMGN", "GILD", "CVS", "CI", "ELV", "HUM", "MDT", "ISRG", "REGN", "VRTX", "BIIB",
+  "ZTS", "BSX", "EW", "SYK", "BDX", "MCK", "COR", "CAH", "HCA", "ANTM",
+
+  // ── Consumer discretionary + staples ──
   "WMT", "PG", "KO", "PEP", "COST", "HD", "MCD", "SBUX", "DIS", "NKE",
+  "LOW", "TGT", "DG", "DLTR", "KR", "TJX", "ROST", "BBY", "AZO", "ORLY",
+  "F", "GM", "RIVN", "LCID", "STLA", "TM", "HMC", "MBG.DE",
+  "BKNG", "ABNB", "MAR", "HLT", "MGM", "CCL", "RCL", "NCLH", "UAL", "DAL", "LUV", "AAL",
+  "PM", "MO", "BTI", "STZ", "DEO", "BUD", "TAP",  // not all halal — let user see
+  "EL", "CL", "KMB", "CHD", "CLX", "ULTA", "LULU", "DECK", "RL", "VFC", "PVH",
+  "YUM", "CMG", "DPZ", "QSR", "WEN", "DRI", "BLMN",
+  "MNST", "KDP", "KHC", "GIS", "K", "CPB", "CAG", "HSY", "MDLZ", "SJM",
 
-  // ── Dividend / income names (linked from /lists "Halal dividend payers") ──
-  "T", "VZ", "CSCO", "INTC", "IBM", "TXN", "QCOM",
+  // ── Communications + Media ──
+  "T", "VZ", "TMUS", "CMCSA", "CHTR", "DISH", "WBD", "PARA",
+  "NFLX", "ROKU", "SPOT", "EA", "TTWO", "ATVI", "RBLX", "U",
+  "SNAP", "PINS", "TWTR", "RDDT", "MTCH",
 
-  // ── Energy (curated list constituents) ──
-  "XOM", "CVX", "COP", "EOG",
+  // ── Tech extended ──
+  "CSCO", "INTC", "IBM", "TXN", "QCOM", "AMD", "TSM", "ASML", "ARM",
+  "ORCL", "CRM", "ADBE", "INTU", "NOW", "SHOP", "SQ", "PYPL", "FIS", "FISV",
+  "PANW", "CRWD", "ZS", "NET", "FTNT", "OKTA", "DDOG", "MDB", "SNOW", "PLTR",
+  "WDAY", "ADSK", "ANSS", "CDNS", "SNPS", "KLAC", "LRCX", "AMAT", "MU", "NXPI",
+  "TEAM", "ZM", "DOCU", "TWLO", "BILL", "ESTC", "GTLB", "PATH", "S",
+  "UBER", "LYFT", "DASH",
 
-  // ── Industrials + materials (curated list) ──
-  "UPS", "UNP", "HON", "CAT", "BA", "GE", "PLD", "NEM",
+  // ── Energy ──
+  "XOM", "CVX", "COP", "EOG", "PSX", "MPC", "VLO", "PXD", "OXY", "HES", "WMB",
+  "KMI", "OKE", "EPD", "ET", "MPLX", "BKR", "HAL", "SLB", "FANG", "DVN",
 
-  // ── Tech extended (popular Muslim investor searches) ──
-  "ORCL", "CRM", "ADBE", "NFLX", "AMD", "TSM", "ASML", "ARM",
+  // ── Industrials + materials ──
+  "UPS", "FDX", "UNP", "CSX", "NSC", "ODFL", "JBHT", "EXPD", "CHRW",
+  "HON", "GE", "RTX", "LMT", "BA", "NOC", "GD", "LHX", "TDG", "HII",
+  "CAT", "DE", "EMR", "ETN", "PH", "ROK", "IR", "DOV", "ITW", "FAST",
+  "PLD", "NEM", "FCX", "LIN", "APD", "ECL", "SHW", "DD", "DOW",
+  "GFS", "STLD", "NUE", "AA", "X",
 
-  // ── International ADRs that come up a lot ──
-  "BABA", "TM", "SAP", "NVO",
+  // ── Real estate + utilities ──
+  "PLD", "AMT", "EQIX", "CCI", "PSA", "O", "WELL", "DLR", "SBAC", "AVB", "EQR",
+  "NEE", "DUK", "SO", "AEP", "EXC", "XEL", "SRE", "WEC", "ED", "PEG",
 
-  // ── Halal-specific ETFs (must work — these are pillars of the product) ──
-  "SPUS", "HLAL", "SPSK",
+  // ── ETFs (US broad-market + halal-specific) ──
+  "SPY", "QQQ", "VOO", "VTI", "IWM", "DIA", "VEA", "VWO",
+  "SPUS", "HLAL", "SPSK", "AMNA", "WSHR", "UMMA",
+
+  // ── International ADRs frequently screened ──
+  "BABA", "JD", "PDD", "BIDU", "NTES", "LI", "XPEV", "NIO",
+  "TM", "SONY", "MUFG", "SMFG",
+  "SAP", "ASML", "NVO", "AZN", "GSK", "UL", "RIO", "BHP", "STM",
+  "INFY", "WIT", "HDB", "IBN", "RDY",
+
+  // ── Hong Kong / Singapore / Malaysia (Mizan's HK home market) ──
+  "9988.HK", "0700.HK", "9618.HK", "1810.HK", "3690.HK",
+
+  // ── Saudi Arabia (Tadawul) — top names ──
+  "2222.SR", "1180.SR", "7010.SR",
 ];
 
 // ─── MAIN ──────────────────────────────────────────────────────────────────

@@ -97,6 +97,7 @@ export default function DiscoverPage() {
           kicker="The differentiator"
           title="Where the scholars split"
         />
+        <div className="mb-2 text-[11px] italic text-gray-500 sm:hidden">← Swipe to see more →</div>
         <div className="mt-6 overflow-x-auto">
           <table className="w-full min-w-[600px] border-collapse">
             <thead>
