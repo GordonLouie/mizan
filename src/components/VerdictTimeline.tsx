@@ -105,11 +105,38 @@ export default function VerdictTimeline({ stock, scholar }: Props) {
       ? `Consistent ${series[0].verdict.toUpperCase()} for all 8 quarters under ${scholar.short}.`
       : `${flips} verdict change${flips > 1 ? "s" : ""} in the last 8 quarters — worth watching.`;
 
+  // Stability Score (Miqdad feedback 2026-06-06): rewards consistency.
+  // Pure pass-only history = 100. Each flip subtracts 15. Each borderline
+  // quarter subtracts 5. Each fail subtracts 8. Floor at 0.
+  let stabilityScore = 100;
+  stabilityScore -= flips * 15;
+  stabilityScore -= borderlineCount * 5;
+  stabilityScore -= failCount * 8;
+  stabilityScore = Math.max(0, Math.min(100, stabilityScore));
+  const stabilityLabel =
+    stabilityScore >= 85 ? "rock-solid" :
+    stabilityScore >= 65 ? "stable" :
+    stabilityScore >= 40 ? "watchful" :
+    "volatile";
+  const stabilityTone =
+    stabilityScore >= 85 ? "text-emerald-700 border-emerald-200 bg-emerald-50" :
+    stabilityScore >= 65 ? "text-emerald-700 border-emerald-200 bg-emerald-50/60" :
+    stabilityScore >= 40 ? "text-amber-700 border-amber-200 bg-amber-50" :
+    "text-rose-700 border-rose-200 bg-rose-50";
+
   return (
     <section className="mt-12 rounded-xl border border-gray-200 bg-white p-6">
       <header>
-        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          Verdict track record · last 8 quarters
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+            Verdict track record · last 8 quarters
+          </div>
+          {/* Stability Score badge — Miqdad's "set it and forget it" idea */}
+          <div className={`inline-flex items-baseline gap-1.5 rounded-md border px-2 py-0.5 text-[11px] ${stabilityTone}`}>
+            <span className="font-mono font-bold tabular-nums">{stabilityScore}</span>
+            <span className="font-semibold uppercase tracking-[0.14em]">{stabilityLabel}</span>
+            <span className="text-[10px] uppercase tracking-[0.12em] opacity-70">stability</span>
+          </div>
         </div>
         <h2
           className="mt-2 text-[20px] font-bold leading-tight text-gray-900 sm:text-[22px]"

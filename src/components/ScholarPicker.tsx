@@ -43,6 +43,31 @@ export default function ScholarPicker({ value, onChange, expanded }: Props) {
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
               {SCHOLAR_PROFILES.map((p: ScholarProfile) => {
                 const selected = p.id === value;
+                // Custom card should navigate to /custom (Miqdad bug 2026-06-06:
+                // clicking Custom card did nothing — only the small "Build your
+                // own" link worked).
+                if (p.id === "custom") {
+                  return (
+                    <Link
+                      key={p.id}
+                      href="/custom"
+                      onClick={() => { onChange(p.id); setOpen(false); }}
+                      className={
+                        "block rounded-md border p-3 text-left transition " +
+                        (selected
+                          ? "border-navy-700 bg-navy-50"
+                          : "border-gray-200 bg-white hover:border-gray-300")
+                      }
+                    >
+                      <div className="flex items-center gap-1.5 text-sm font-semibold text-gray-900">
+                        <Settings size={12} className="text-gold-600" />
+                        {p.short}
+                      </div>
+                      <div className="mt-0.5 text-xs text-gray-500">{p.label}</div>
+                      <div className="mt-1.5 text-xs text-gray-600">{p.blurb}</div>
+                    </Link>
+                  );
+                }
                 return (
                   <button
                     key={p.id}

@@ -6,6 +6,8 @@ import ToastContainer from "@/components/ToastContainer";
 import MobileTabBar from "@/components/MobileTabBar";
 import FeedbackWidget from "@/components/FeedbackWidget";
 import { Analytics } from "@vercel/analytics/next";
+import { Suspense } from "react";
+import PostHogProvider from "@/components/PostHogProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mizaninvesting.com"),
@@ -95,6 +97,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <FeedbackWidget />
         <MobileTabBar />
         <Analytics />
+        <Suspense fallback={null}>
+          <PostHogProvider />
+        </Suspense>
       </body>
     </html>
   );

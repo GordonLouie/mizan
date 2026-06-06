@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 // Tools dropdown is organised into 3 columns so 13 destinations don't read
@@ -45,6 +45,23 @@ const TOOL_GROUPS: Array<{ heading: string; items: Array<{ href: string; label: 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
+  const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Delay closing the Tools dropdown on mouse-leave so users can move the
+  // cursor diagonally toward the menu items without it snapping shut.
+  // Miqdad bug 2026-06-06: "when u move ur cursor to Ask a scholar, Zakat
+  // calculator etc. then it sometimes disappears too quickly"
+  function openTools() {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    setToolsOpen(true);
+  }
+  function scheduleCloseTools() {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = setTimeout(() => setToolsOpen(false), 180);
+  }
 
   return (
     <header className="border-b border-gray-200 bg-white">
@@ -62,7 +79,7 @@ export default function Header() {
           <Link href="/screen" className="hover:text-navy-800">Screen</Link>
           <Link href="/discover" className="hover:text-navy-800">Discover</Link>
           <Link href="/learn" className="hover:text-navy-800">Learn</Link>
-          <div className="relative" onMouseEnter={() => setToolsOpen(true)} onMouseLeave={() => setToolsOpen(false)}>
+          <div className="relative" onMouseEnter={openTools} onMouseLeave={scheduleCloseTools}>
             <button className="inline-flex items-center gap-1 hover:text-navy-800">
               Tools <ChevronDown size={14} className={toolsOpen ? "rotate-180 transition" : "transition"} />
             </button>
