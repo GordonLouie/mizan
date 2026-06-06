@@ -7,6 +7,7 @@ import { loadCustomProfile } from "@/lib/customProfile";
 import { calculatePurification } from "@/lib/purification";
 import ScholarPicker from "@/components/ScholarPicker";
 import DemoBanner from "@/components/DemoBanner";
+import { SelectField } from "@/components/ui";
 
 export default function PurificationPage() {
   const [scholarId, setScholarId] = useState("taqi_usmani");
@@ -84,20 +85,15 @@ export default function PurificationPage() {
 
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="rounded-xl border border-gray-200 bg-white p-4">
-            <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
-              Ticker
-            </label>
-            <select
+            <SelectField
+              label="Ticker"
               value={ticker}
               onChange={(e) => setTicker(e.target.value)}
-              className="mt-2 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm focus:border-navy-700 focus:outline-none focus:ring-2 focus:ring-navy-700/10"
-            >
-              {listStocks().map((s) => (
-                <option key={s.ticker} value={s.ticker}>
-                  {s.ticker} — {s.name}
-                </option>
-              ))}
-            </select>
+              options={listStocks().map((s) => ({
+                value: s.ticker,
+                label: `${s.ticker} — ${s.name}`,
+              }))}
+            />
           </div>
           <div className="rounded-xl border border-gray-200 bg-white p-4">
             <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">

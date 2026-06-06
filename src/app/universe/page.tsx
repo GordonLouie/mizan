@@ -9,7 +9,8 @@ import { screenStock } from "@/lib/screen";
 import type { Verdict } from "@/lib/types";
 import ScholarPicker from "@/components/ScholarPicker";
 import DemoBanner from "@/components/DemoBanner";
-import { Search, ArrowUpDown, ChevronDown } from "lucide-react";
+import { SelectField } from "@/components/ui";
+import { Search, ArrowUpDown } from "lucide-react";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 
 type SortKey = "verdict" | "ticker" | "name" | "sector" | "marketCap" | "illiquid" | "debt";
@@ -268,44 +269,28 @@ function UniverseInner() {
             />
           </div>
         </div>
-        <div>
-          <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
-            Sector
-          </label>
-          <div className="mt-2 flex items-center gap-2 border-b border-gray-200 px-1 py-2 focus-within:border-navy-700">
-            <select
-              value={sector}
-              onChange={(e) => setSector(e.target.value)}
-              className="w-full appearance-none bg-transparent pr-5 text-[14px] text-gray-900 outline-none"
-            >
-              <option value="">All sectors</option>
-              {sectors.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
-            <ChevronDown size={14} className="-ml-5 pointer-events-none text-gray-400" />
-          </div>
-        </div>
-        <div>
-          <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500">
-            Verdict
-          </label>
-          <div className="mt-2 flex items-center gap-2 border-b border-gray-200 px-1 py-2 focus-within:border-navy-700">
-            <select
-              value={verdictFilter}
-              onChange={(e) => setVerdictFilter(e.target.value as "" | Verdict)}
-              className="w-full appearance-none bg-transparent pr-5 text-[14px] text-gray-900 outline-none"
-            >
-              <option value="">All verdicts</option>
-              <option value="pass">Halal only</option>
-              <option value="borderline">Doubtful only</option>
-              <option value="fail">Not halal only</option>
-            </select>
-            <ChevronDown size={14} className="-ml-5 pointer-events-none text-gray-400" />
-          </div>
-        </div>
+        <SelectField
+          label="Sector"
+          value={sector}
+          onChange={(e) => setSector(e.target.value)}
+        >
+          <option value="">All sectors</option>
+          {sectors.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </SelectField>
+        <SelectField
+          label="Verdict"
+          value={verdictFilter}
+          onChange={(e) => setVerdictFilter(e.target.value as "" | Verdict)}
+        >
+          <option value="">All verdicts</option>
+          <option value="pass">Halal only</option>
+          <option value="borderline">Doubtful only</option>
+          <option value="fail">Not halal only</option>
+        </SelectField>
       </div>
 
       {/* "VIEWING UNDER" CHIP — Tyler's feedback 2026-06-07:

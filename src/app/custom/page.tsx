@@ -7,6 +7,7 @@ import { SCHOLAR_PROFILES } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
 import type { ScholarProfile, ProhibitedSector } from "@/lib/types";
 import ComplianceCard from "@/components/ComplianceCard";
+import { SelectField } from "@/components/ui";
 import { Save, RotateCcw, Wand2 } from "lucide-react";
 
 const ALL_SECTORS: { id: ProhibitedSector; label: string }[] = [
@@ -332,20 +333,14 @@ function CustomInner() {
         {/* Live preview */}
         <div className="space-y-4">
           <div className="rounded-xl border border-gray-200 bg-white p-5">
-            <label className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
-              Live preview against
-            </label>
-            <select
+            <SelectField
+              label="Live preview against"
               value={previewTicker}
               onChange={(e) => setPreviewTicker(e.target.value)}
-              className="mt-2 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-[14px] focus:border-navy-700 focus:outline-none focus:ring-2 focus:ring-navy-700/10"
-            >
-              {listStocks().slice(0, 50).map((s) => (
-                <option key={s.ticker} value={s.ticker}>
-                  {s.ticker} — {s.name}
-                </option>
-              ))}
-            </select>
+              options={listStocks()
+                .slice(0, 50)
+                .map((s) => ({ value: s.ticker, label: `${s.ticker} — ${s.name}` }))}
+            />
           </div>
           {stock && result && <ComplianceCard stock={stock} result={result} />}
         </div>

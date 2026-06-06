@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Mail, Send, CheckCircle2, AlertCircle, Newspaper } from "lucide-react";
+import { SelectField } from "@/components/ui";
 
 type FormState = "idle" | "sending" | "sent" | "error";
 
@@ -74,8 +75,7 @@ export default function ContactPage() {
           </div>
 
           <Field label="Topic">
-            <select value={topic} onChange={(e) => setTopic(e.target.value)}
-              className="w-full rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm focus:border-navy-400 focus:bg-white focus:outline-none">
+            <SelectField value={topic} onChange={(e) => setTopic(e.target.value)}>
               <option value="general">General question</option>
               <option value="press">Press inquiry</option>
               <option value="investors">Investor</option>
@@ -84,7 +84,7 @@ export default function ContactPage() {
               <option value="bug">Bug report</option>
               <option value="hardship">Student / hardship discount</option>
               <option value="privacy">Privacy / data</option>
-            </select>
+            </SelectField>
           </Field>
 
           <Field label="Message" required>
