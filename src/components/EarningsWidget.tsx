@@ -20,6 +20,7 @@
 import Link from "next/link";
 import { Calendar, ArrowRight } from "lucide-react";
 import { findStock } from "@/lib/data";
+import CompanyLogo from "@/components/CompanyLogo";
 import { getScholar, SCHOLAR_PROFILES } from "@/lib/scholars";
 import { loadCustomProfile } from "@/lib/customProfile";
 import { screenStock } from "@/lib/screen";
@@ -161,10 +162,11 @@ export default function EarningsWidget({
         <ul className="mt-5 divide-y divide-gray-100">
           {rows.map((row) => (
             <li key={row.stock.ticker} className="py-3">
-              <div className="flex flex-wrap items-baseline justify-between gap-3">
-                <div className="flex items-baseline gap-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <CompanyLogo ticker={row.stock.ticker} size={26} />
                   <span
-                    className={`inline-block h-2.5 w-2.5 rounded-full ${
+                    className={`inline-block h-2 w-2 rounded-full ${
                       TONE_BY_VERDICT[row.verdict].dot
                     }`}
                     aria-hidden

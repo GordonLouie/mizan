@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Search } from "lucide-react";
 import { listStocks } from "@/lib/data";
+import CompanyLogo from "@/components/CompanyLogo";
 
 interface Props {
   value: string;
@@ -133,15 +134,18 @@ export default function TickerSearch({ value, onChange, placeholder, autoFocus }
                 onMouseEnter={() => setHighlighted(i)}
                 onClick={() => pick(m.ticker)}
                 className={
-                  "flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-navy-50 " +
+                  "flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm hover:bg-navy-50 " +
                   (i === highlighted ? "bg-navy-50" : "")
                 }
               >
-                <span>
-                  <span className="font-semibold text-gray-900">{m.ticker}</span>
-                  <span className="ml-2 text-gray-600">{m.name}</span>
+                <span className="flex items-center gap-2.5 min-w-0">
+                  <CompanyLogo ticker={m.ticker} size={26} />
+                  <span className="min-w-0 truncate">
+                    <span className="font-semibold text-gray-900">{m.ticker}</span>
+                    <span className="ml-2 text-gray-600">{m.name}</span>
+                  </span>
                 </span>
-                <span className="text-xs text-gray-400">{m.sector}</span>
+                <span className="shrink-0 text-xs text-gray-400">{m.sector}</span>
               </button>
             </li>
           ))}
