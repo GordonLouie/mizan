@@ -7,7 +7,7 @@ import { SCHOLAR_PROFILES } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
 import type { ScholarProfile, ProhibitedSector } from "@/lib/types";
 import ComplianceCard from "@/components/ComplianceCard";
-import { SelectField } from "@/components/ui";
+import { SelectField, BloombergRibbon } from "@/components/ui";
 import { Save, RotateCcw, Wand2 } from "lucide-react";
 
 const ALL_SECTORS: { id: ProhibitedSector; label: string }[] = [
@@ -148,6 +148,15 @@ function CustomInner() {
 
   return (
     <div className="pb-20">
+      <BloombergRibbon
+        version="v0.4.0"
+        cells={[
+          { label: "Mode", value: "Custom profile" },
+          { label: "Preview", value: previewTicker },
+          { label: "Verdict", value: result?.verdict?.toUpperCase() ?? "—" },
+        ]}
+      />
+
       {/* PAGE HEADER */}
       <header className="pt-6">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">

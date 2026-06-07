@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import CurrencyInput from "@/components/CurrencyInput";
 import { ProgressRing, DonutChart, DonutLegend } from "@/components/Charts";
 import { Heart, Info, ArrowDown } from "lucide-react";
+import { BloombergRibbon } from "@/components/ui";
 
 const NISAB_GOLD_GRAMS = 87.48;
 const NISAB_SILVER_GRAMS = 612.36;
@@ -82,6 +83,15 @@ export default function ZakatPage() {
 
   return (
     <div className="pb-20">
+      <BloombergRibbon
+        version="v0.4.0"
+        cells={[
+          { label: "Net wealth", value: fmt(netWealth) },
+          { label: "Nisab", value: nisab === "silver" ? "Silver" : "Gold" },
+          { label: "Zakat owed", value: reachesNisab ? fmt(zakat) : "—" },
+        ]}
+      />
+
       {/* PAGE HEADER */}
       <header className="pt-6">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">

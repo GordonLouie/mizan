@@ -10,6 +10,7 @@ import { loadCustomProfile } from "@/lib/customProfile";
 import { screenStock } from "@/lib/screen";
 import ScholarPicker from "@/components/ScholarPicker";
 import EarningsWidget from "@/components/EarningsWidget";
+import { BloombergRibbon } from "@/components/ui";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import type { StockFundamentals, Verdict, ScreeningResult } from "@/lib/types";
 
@@ -52,8 +53,21 @@ export default function WatchlistPage() {
       .filter((x): x is { stock: StockFundamentals; result: ScreeningResult } => x !== null);
   }, [tickers, scholar]);
 
+  const passCount = items.filter((x) => x.result.verdict === "pass").length;
+  const failCount = items.filter((x) => x.result.verdict === "fail").length;
+
   return (
     <div className="pb-20">
+      <BloombergRibbon
+        version="v0.4.0"
+        cells={[
+          { label: "Saved", value: items.length },
+          { label: "Pass", value: passCount },
+          { label: "Fail", value: failCount },
+          { label: "Scholar", value: scholar.short },
+        ]}
+      />
+
       {/* PAGE HEADER */}
       <header className="pt-6">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">

@@ -9,7 +9,7 @@ import { screenStock } from "@/lib/screen";
 import type { Verdict } from "@/lib/types";
 import ScholarPicker from "@/components/ScholarPicker";
 import DemoBanner from "@/components/DemoBanner";
-import { SelectField } from "@/components/ui";
+import { SelectField, BloombergRibbon } from "@/components/ui";
 import { Search, ArrowUpDown } from "lucide-react";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 
@@ -159,6 +159,16 @@ function UniverseInner() {
 
   return (
     <div className="pb-20">
+      <BloombergRibbon
+        version="v0.4.0"
+        cells={[
+          { label: "Tickers", value: stats.total },
+          { label: "Pass", value: stats.pass },
+          { label: "Doubtful", value: stats.border },
+          { label: "Fail", value: stats.fail },
+        ]}
+      />
+
       {/* PAGE HEADER */}
       <header className="pt-6">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">

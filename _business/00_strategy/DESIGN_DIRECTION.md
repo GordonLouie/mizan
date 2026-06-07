@@ -191,6 +191,61 @@ Important to mark these so we don't drift:
 
 ---
 
+## Patterns borrowed from collegepilot.app (Toby's site)
+
+Toby ships a polished 21st-flavored aesthetic. We borrow the *patterns*, not the visual style — his SaaS gradient feel is wrong for Mizan, but his structural moves all work in our editorial frame.
+
+### Pattern 1 — Show the product in the marketing
+CollegePilot puts a mock dashboard *inside* its hero — student name "John Smith", real-feeling match scores, actual UI chrome. The visitor sees the product before they sign up.
+
+**For Mizan:** the homepage hero should embed a mock `/screen` verdict card showing a real ticker (AMZN or AAPL) with a real verdict, side-by-side with the search bar. "Here's what you get" beats "here's what we do." Currently we describe Mizan; we should *show* Mizan.
+
+### Pattern 2 — Section template: tag → headline → paragraph → embedded UI mock
+Every feature on CollegePilot follows the same shape:
+
+```
+[SMALL EYEBROW TAG]
+Big bold headline
+One-paragraph explanation
+[an embedded UI mock showing the actual feature]
+```
+
+**For Mizan:** the three home feature cards become three feature *sections*. "Smart screening" with a mock verdict card. "Stability tracking" with a mock 8-quarter timeline. "Halal alternatives" with a mock card showing three suggested tickers. Mirrors the editorial Mizan voice + Bloomberg data exactly.
+
+### Pattern 3 — Stats trio in the hero
+CollegePilot: 50K+ Students · 300+ Colleges · 300+ Activities. Three round numbers, big, in a row, right under the H1.
+
+**For Mizan:** we already have a trust strip with 6 / 342 / 0, but it's buried after the search bar. Move it directly under the H1 like CollegePilot does.
+
+### Pattern 4 — Social-proof logo strip
+CollegePilot rotates 20+ university logos (MIT, Yale, Princeton, etc.) horizontally. Says "we know what these schools want."
+
+**For Mizan:** a "Methodology sources" strip — AAOIFI Standard No. 21, S&P DJIM Index Methodology, sistani.org, published Mufti Taqi rulings, Securitisation Shariah Standard. Editorial badges (small caps, hairline borders), not glossy logos. Same trust-signal, on-brand.
+
+### Pattern 5 — Color-coded badges with quantified scores
+CollegePilot uses Reach / Target / Safety colored badges with % match (Stanford 94%, Berkeley 87%, etc.). Quantified intent.
+
+**For Mizan:** already doing this with verdict pills. Lean into it more — every list should have a percentage or score visible. Universe table should show a "pass confidence" column. Portfolio should show Stability Score on each holding.
+
+### Pattern 6 — Split headline with deliberate line breaks
+CollegePilot: "Your Dream College" / "**Awaits.**" — two lines, the second line is the punchline.
+
+**For Mizan:** the H1 "Is your stock halal?" can keep its question form (more direct than CollegePilot's aspirational tone), but we add a second-line punchline under it in different weight:
+
+```
+Is your stock halal?
+Six scholars, one screen — including the one no other app implements.
+```
+
+The eyebrow above ("PRIVATE BETA") + the punchline below the H1 creates the same visual rhythm.
+
+### Pattern 7 — Bilingual support gestures
+CollegePilot has EN / 中 toggle in the footer. Tiny detail, signals international audience.
+
+**For Mizan:** we won't add Arabic UI yet, but reserve space for it. The brand-trust gesture for an Islamic finance product is to *visibly* respect the source language. Keep this in mind for v4.
+
+---
+
 ## How I'll apply this from here
 
 Every code change I make from now on follows this doc. If you ever feel a page has drifted, say:

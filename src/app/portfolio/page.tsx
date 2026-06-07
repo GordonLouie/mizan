@@ -17,6 +17,7 @@ import {
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import type { Verdict, StockFundamentals, ScreeningResult } from "@/lib/types";
 import { Plus, Trash2, RotateCcw, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { BloombergRibbon } from "@/components/ui";
 
 const VERDICT_COLORS: Record<Verdict, string> = {
   pass: "#047857", borderline: "#B45309", fail: "#BE123C",
@@ -179,6 +180,16 @@ export default function PortfolioPage() {
 
   return (
     <div className="pb-20">
+      <BloombergRibbon
+        version="v0.4.0"
+        cells={[
+          { label: "Positions", value: positions.length },
+          { label: "Value", value: `$${(totalValue / 1000).toFixed(1)}k` },
+          { label: "P/L", value: `${totalGainPct >= 0 ? "+" : ""}${totalGainPct.toFixed(1)}%` },
+          { label: "Halal", value: `${halalPct.toFixed(0)}%` },
+        ]}
+      />
+
       {/* PAGE HEADER */}
       <header className="pt-6">
         <div className="flex flex-wrap items-end justify-between gap-3">

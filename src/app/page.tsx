@@ -9,6 +9,7 @@ import { CURATED_LISTS } from "@/lib/lists";
 import { listStocks, findStock } from "@/lib/data";
 import { SCHOLAR_PROFILES } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
+import { BloombergRibbon } from "@/components/ui";
 
 export default function Home() {
   const router = useRouter();
@@ -18,34 +19,15 @@ export default function Home() {
 
   return (
     <div className="pb-16">
-      {/* 0. BLOOMBERG STATUS RIBBON — thin tabular strip, design-direction
-          locked-in: every Mizan page can carry one of these at the top.
-          Editorial-Georgia is on display below; this is the Bloomberg layer
-          announcing itself. */}
-      <div className="-mx-4 mb-2 border-b border-gray-200 px-4 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 font-mono text-[10px] uppercase tracking-[0.16em] text-gray-500">
-          <div className="flex items-center gap-1.5">
-            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            <span className="text-gray-700">Engine live</span>
-            <span className="text-gray-300">·</span>
-            <span>v0.4.0</span>
-          </div>
-          <div className="flex items-center gap-x-5 gap-y-1 tabular-nums">
-            <span>
-              <span className="text-gray-400">Tickers</span>{" "}
-              <span className="text-gray-900">{tickerCount}</span>
-            </span>
-            <span>
-              <span className="text-gray-400">Scholars</span>{" "}
-              <span className="text-gray-900">6</span>
-            </span>
-            <span>
-              <span className="text-gray-400">Last update</span>{" "}
-              <span className="text-gray-900">Q4 2025</span>
-            </span>
-          </div>
-        </div>
-      </div>
+      {/* Bloomberg status ribbon — reusable across the app. */}
+      <BloombergRibbon
+        version="v0.4.0"
+        cells={[
+          { label: "Tickers", value: tickerCount },
+          { label: "Scholars", value: 6 },
+          { label: "Last update", value: "Q4 2025" },
+        ]}
+      />
 
       {/* 1. STATUS LINE — small whisper, not a banner */}
       <section className="pt-8 sm:pt-12">
@@ -162,7 +144,9 @@ export default function Home() {
       </section>
 
       <section className="mx-auto mt-20 max-w-2xl">
-        {/* 2. HERO — centered, max-w-2xl */}
+        {/* 2. HERO — centered, max-w-2xl.
+            Direction: H1 → punchline subhead → stats trio → search.
+            Adapted from collegepilot.app's hero pattern (see DESIGN_DIRECTION.md). */}
         <div className="mx-auto max-w-2xl text-center">
           <h1
             className="text-[52px] font-bold leading-[1.02] tracking-tight text-gray-900 sm:text-[88px]"
@@ -170,14 +154,38 @@ export default function Home() {
           >
             Is your stock halal?
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-[17px] leading-relaxed text-gray-600">
-            See the verdict under six scholarly methodologies — including Mufti Taqi Usmani&apos;s illiquid-asset rule, the one no other halal app implements.
+
+          {/* Punchline subhead — second line as a structural beat, not flat copy.
+              Adapted from collegepilot's split-headline pattern. */}
+          <p
+            className="mx-auto mt-6 max-w-xl text-[20px] font-medium leading-[1.3] text-gray-800 sm:text-[24px]"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            Six scholars, one screen.
+          </p>
+          <p className="mx-auto mt-3 max-w-xl text-[14px] leading-relaxed text-gray-500">
+            Including Mufti Taqi Usmani&apos;s illiquid-asset rule — the one no other halal app implements.
           </p>
 
-          {/* Show-the-math claim — Tester 2 said this builds trust immediately */}
-          <p className="mx-auto mt-3 max-w-xl text-[13px] leading-relaxed text-gray-500">
-            Every number sourced. Every threshold cited. No black-box scores.
-          </p>
+          {/* Stats trio — lifted directly under the headline like collegepilot does.
+              Bloomberg-style monospace tabular formatting keeps it on-brand. */}
+          <div className="mx-auto mt-10 grid max-w-md grid-cols-3 divide-x divide-gray-200 border-y border-gray-200 py-5 font-mono tabular-nums">
+            <div className="px-2">
+              <div className="text-[24px] font-bold leading-none text-navy-800 sm:text-[28px]"
+                style={{ fontFamily: "Georgia, serif" }}>6</div>
+              <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-500">Scholars</div>
+            </div>
+            <div className="px-2">
+              <div className="text-[24px] font-bold leading-none text-navy-800 sm:text-[28px]"
+                style={{ fontFamily: "Georgia, serif" }}>{tickerCount}</div>
+              <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-500">Tickers</div>
+            </div>
+            <div className="px-2">
+              <div className="text-[24px] font-bold leading-none text-navy-800 sm:text-[28px]"
+                style={{ fontFamily: "Georgia, serif" }}>0</div>
+              <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-500">Black-box scores</div>
+            </div>
+          </div>
 
           {/* Real TickerSearch — wired to router */}
           <div className="mx-auto mt-10 max-w-xl">
@@ -231,14 +239,41 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. HAIRLINE + TRUST STRIP */}
-      <div className="mx-auto mt-20 max-w-xl">
-        <div className="grid grid-cols-3 gap-6 border-t border-gray-200 pt-6 text-center">
-          <TrustStat n="6" label="scholar profiles" />
-          <TrustStat n={listStocks().length.toString()} label="stocks screened" />
-          <TrustStat n="0" label="black-box scores" />
+      {/* 3. METHODOLOGY SOURCES STRIP — collegepilot's "logos of every elite
+          university" pattern, on-brand for Mizan as editorial badges of the
+          actual primary sources. Builds rigor signal without glossy logos. */}
+      <section className="mx-auto mt-20 max-w-4xl">
+        <div className="text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Sourced from
         </div>
-      </div>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 text-[11px] text-gray-600">
+          {[
+            { abbr: "AAOIFI", full: "Standard No. 21" },
+            { abbr: "S&P DJIM", full: "Index Methodology" },
+            { abbr: "Mufti Taqi Usmani", full: "Published rulings" },
+            { abbr: "Sistani.org", full: "Code of Practice" },
+            { abbr: "SEC", full: "10-Q / 10-K filings" },
+          ].map((s) => (
+            <div
+              key={s.abbr}
+              className="inline-flex items-baseline gap-2 rounded-md border border-gray-200 bg-white px-3 py-1.5"
+            >
+              <span
+                className="font-semibold text-navy-800"
+                style={{ fontFamily: "Georgia, serif" }}
+              >
+                {s.abbr}
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-gray-400">
+                {s.full}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p className="mx-auto mt-4 max-w-md text-center text-[11px] italic text-gray-500">
+          Every threshold on Mizan traces back to a published primary source.
+        </p>
+      </section>
 
       {/* 4b. MEET THE SCHOLARS — Tyler's feedback 2026-06-07: "the '6 scholars'
           on the homepage, everyone's going to try click it. would be sick if
@@ -422,17 +457,6 @@ export default function Home() {
 /* ─────────────────────────────────────────────────────────────────────────────
    HELPER COMPONENTS
    ───────────────────────────────────────────────────────────────────────────── */
-
-function TrustStat({ n, label }: { n: string; label: string }) {
-  return (
-    <div>
-      <div className="text-[28px] font-bold leading-none text-navy-800 tabular-nums" style={{ fontFamily: "Georgia, serif" }}>
-        {n}
-      </div>
-      <div className="mt-2 text-[10px] uppercase tracking-[0.16em] text-gray-500">{label}</div>
-    </div>
-  );
-}
 
 function FeatureCard({ icon, title, body, href, cta }: { icon: React.ReactNode; title: string; body: string; href: string; cta: string }) {
   return (

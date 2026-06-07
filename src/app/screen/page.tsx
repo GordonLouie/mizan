@@ -16,7 +16,7 @@ import DemoBanner from "@/components/DemoBanner";
 import HalalAlternatives from "@/components/HalalAlternatives";
 import WatchlistButton from "@/components/WatchlistButton";
 import StockStats from "@/components/StockStats";
-import { Card } from "@/components/ui";
+import { Card, BloombergRibbon } from "@/components/ui";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import { fmtMarketCap } from "@/lib/lists";
 import { ArrowRight, BarChart3 } from "lucide-react";
@@ -211,7 +211,17 @@ function ScreenInner() {
     result!.verdict === "fail" ? "text-rose-700" : "text-amber-700";
 
   return (
-    <div className="space-y-10 pb-16">
+    <div className="pb-16">
+      <BloombergRibbon
+        version="v0.4.0"
+        cells={[
+          { label: "Ticker", value: stock.ticker },
+          { label: "Sector", value: stock.sector },
+          { label: "Scholar", value: scholar.short },
+        ]}
+      />
+
+      <div className="mt-6 space-y-10">
       {/* TICKER + SCHOLAR TOOLBAR */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
         <TickerSearch value={ticker} onChange={(t) => setTicker(t)} />
@@ -390,6 +400,7 @@ function ScreenInner() {
           </Link>
         </div>
       </section>
+      </div>
     </div>
   );
 }
