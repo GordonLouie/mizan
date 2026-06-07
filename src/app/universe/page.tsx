@@ -9,8 +9,9 @@ import { screenStock } from "@/lib/screen";
 import type { Verdict } from "@/lib/types";
 import ScholarPicker from "@/components/ScholarPicker";
 import DemoBanner from "@/components/DemoBanner";
-import { SelectField, BloombergRibbon } from "@/components/ui";
+import { SelectField } from "@/components/ui";
 import { Search, ArrowUpDown } from "lucide-react";
+import CompanyLogo from "@/components/CompanyLogo";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 
 type SortKey = "verdict" | "ticker" | "name" | "sector" | "marketCap" | "illiquid" | "debt";
@@ -159,16 +160,6 @@ function UniverseInner() {
 
   return (
     <div className="pb-20">
-      <BloombergRibbon
-        version="v0.4.0"
-        cells={[
-          { label: "Tickers", value: stats.total },
-          { label: "Pass", value: stats.pass },
-          { label: "Doubtful", value: stats.border },
-          { label: "Fail", value: stats.fail },
-        ]}
-      />
-
       {/* PAGE HEADER */}
       <header className="pt-6">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
@@ -350,8 +341,9 @@ function UniverseInner() {
                 <td className="py-3 pr-4">
                   <Link
                     href={`/screen?ticker=${stock.ticker}`}
-                    className="font-mono text-sm font-semibold text-navy-700 hover:text-navy-900 hover:underline"
+                    className="inline-flex items-center gap-2 font-mono text-sm font-semibold text-navy-700 hover:text-navy-900 hover:underline"
                   >
+                    <CompanyLogo ticker={stock.ticker} size={22} />
                     {stock.ticker}
                   </Link>
                 </td>

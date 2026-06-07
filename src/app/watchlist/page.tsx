@@ -10,7 +10,7 @@ import { loadCustomProfile } from "@/lib/customProfile";
 import { screenStock } from "@/lib/screen";
 import ScholarPicker from "@/components/ScholarPicker";
 import EarningsWidget from "@/components/EarningsWidget";
-import { BloombergRibbon } from "@/components/ui";
+import CompanyLogo from "@/components/CompanyLogo";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import type { StockFundamentals, Verdict, ScreeningResult } from "@/lib/types";
 
@@ -53,21 +53,8 @@ export default function WatchlistPage() {
       .filter((x): x is { stock: StockFundamentals; result: ScreeningResult } => x !== null);
   }, [tickers, scholar]);
 
-  const passCount = items.filter((x) => x.result.verdict === "pass").length;
-  const failCount = items.filter((x) => x.result.verdict === "fail").length;
-
   return (
     <div className="pb-20">
-      <BloombergRibbon
-        version="v0.4.0"
-        cells={[
-          { label: "Saved", value: items.length },
-          { label: "Pass", value: passCount },
-          { label: "Fail", value: failCount },
-          { label: "Scholar", value: scholar.short },
-        ]}
-      />
-
       {/* PAGE HEADER */}
       <header className="pt-6">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
@@ -142,10 +129,15 @@ export default function WatchlistPage() {
                   className={idx !== items.length - 1 ? "border-b border-gray-100" : ""}
                 >
                   <td className="py-3 pr-4">
-                    <div className="font-mono text-sm font-semibold text-gray-900">
-                      {stock.ticker}
+                    <div className="flex items-center gap-2.5">
+                      <CompanyLogo ticker={stock.ticker} size={28} />
+                      <div>
+                        <div className="font-mono text-sm font-semibold text-gray-900">
+                          {stock.ticker}
+                        </div>
+                        <div className="mt-0.5 text-[11px] text-gray-500">{stock.name}</div>
+                      </div>
                     </div>
-                    <div className="mt-0.5 text-[11px] text-gray-500">{stock.name}</div>
                   </td>
                   <td className="hidden py-3 pr-4 text-[12px] text-gray-600 sm:table-cell">
                     {stock.sector}

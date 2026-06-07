@@ -16,7 +16,8 @@ import DemoBanner from "@/components/DemoBanner";
 import HalalAlternatives from "@/components/HalalAlternatives";
 import WatchlistButton from "@/components/WatchlistButton";
 import StockStats from "@/components/StockStats";
-import { Card, BloombergRibbon } from "@/components/ui";
+import { Card } from "@/components/ui";
+import CompanyLogo from "@/components/CompanyLogo";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import { fmtMarketCap } from "@/lib/lists";
 import { ArrowRight, BarChart3 } from "lucide-react";
@@ -211,17 +212,7 @@ function ScreenInner() {
     result!.verdict === "fail" ? "text-rose-700" : "text-amber-700";
 
   return (
-    <div className="pb-16">
-      <BloombergRibbon
-        version="v0.4.0"
-        cells={[
-          { label: "Ticker", value: stock.ticker },
-          { label: "Sector", value: stock.sector },
-          { label: "Scholar", value: scholar.short },
-        ]}
-      />
-
-      <div className="mt-6 space-y-10">
+    <div className="space-y-10 pb-16">
       {/* TICKER + SCHOLAR TOOLBAR */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
         <TickerSearch value={ticker} onChange={(t) => setTicker(t)} />
@@ -233,11 +224,14 @@ function ScreenInner() {
       {/* HERO ROW — company info LEFT, verdict card RIGHT */}
       <section className="grid grid-cols-12 gap-6">
         <div className="col-span-12 lg:col-span-7">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-            {stock.ticker} · {stock.sector}
+          <div className="flex items-center gap-3">
+            <CompanyLogo ticker={stock.ticker} size={42} />
+            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+              {stock.ticker} · {stock.sector}
+            </div>
           </div>
           <h1
-            className="mt-2 text-[32px] font-bold leading-[1.1] text-gray-900 sm:text-[40px]"
+            className="mt-3 text-[32px] font-bold leading-[1.1] text-gray-900 sm:text-[40px]"
             style={{ fontFamily: "Georgia, serif" }}
           >
             {stock.name}
@@ -400,7 +394,6 @@ function ScreenInner() {
           </Link>
         </div>
       </section>
-      </div>
     </div>
   );
 }

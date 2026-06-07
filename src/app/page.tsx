@@ -9,7 +9,8 @@ import { CURATED_LISTS } from "@/lib/lists";
 import { listStocks, findStock } from "@/lib/data";
 import { SCHOLAR_PROFILES } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
-import { BloombergRibbon } from "@/components/ui";
+import CompanyLogo from "@/components/CompanyLogo";
+import EarningsCalendar from "@/components/EarningsCalendar";
 
 export default function Home() {
   const router = useRouter();
@@ -19,16 +20,6 @@ export default function Home() {
 
   return (
     <div className="pb-16">
-      {/* Bloomberg status ribbon — reusable across the app. */}
-      <BloombergRibbon
-        version="v0.4.0"
-        cells={[
-          { label: "Tickers", value: tickerCount },
-          { label: "Scholars", value: 6 },
-          { label: "Last update", value: "Q4 2025" },
-        ]}
-      />
-
       {/* 1. STATUS LINE — small whisper, not a banner */}
       <section className="pt-8 sm:pt-12">
         <div className="mb-12 flex justify-center">
@@ -207,7 +198,7 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Company chips — names, not ticker symbols (more inclusive for casual users) */}
+          {/* Company chips with real logos — Clearbit-sourced, monogram fallback. */}
           <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5 text-xs">
             <span className="mr-1 text-gray-400">Or try</span>
             {[
@@ -221,8 +212,9 @@ export default function Home() {
               <Link
                 key={s.ticker}
                 href={`/screen?ticker=${s.ticker}`}
-                className="rounded-md border border-gray-200 bg-white px-2 py-1 text-[11px] text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+                className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white py-1 pl-1 pr-2 text-[11px] text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
               >
+                <CompanyLogo ticker={s.ticker} size={18} />
                 {s.name}
               </Link>
             ))}
@@ -355,6 +347,15 @@ export default function Home() {
             Full halal-investing primer <ArrowRight size={13} />
           </Link>
         </div>
+      </section>
+
+      {/* 4c. EARNINGS CALENDAR — horizontal-scroll cards. Adapted from the
+          21st.dev economic-calendar pattern (Mizan's editorial+Bloomberg style,
+          not the original SaaS chrome). Surfaces the soon-to-report tickers
+          with their current verdict + stability flag so users see what's
+          about to flip. */}
+      <section className="mx-auto mt-28 max-w-5xl">
+        <EarningsCalendar limit={20} />
       </section>
 
       {/* 5. THREE FEATURE CARDS — gap-px divider trick */}
