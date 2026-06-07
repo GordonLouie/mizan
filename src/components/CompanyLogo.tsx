@@ -1,19 +1,21 @@
 /**
  * CompanyLogo — renders a stock's company logo with a cascading fallback chain:
  *
- *   1. FMP (https://financialmodelingprep.com/image-stock/<TICKER>.png) —
- *      per-ticker, sharp ~256px PNGs served directly. Fast, public, no auth.
- *      Covers the overwhelming majority of US stocks + ETFs.
- *   2. Clearbit (https://logo.clearbit.com/<domain>?size=512) — kept as a
- *      fallback for tickers FMP doesn't cover (international, exotic ETFs).
- *      Reliability has been spotty since the HubSpot acquisition, so it's
- *      no longer primary.
+ *   1. Clearbit (https://logo.clearbit.com/<domain>?size=512) — when the
+ *      ticker has a curated domain mapping (companyDomains.ts). Clearbit
+ *      returns the current, official, high-resolution corporate mark (the
+ *      stylized VISA wordmark, the Berkshire B, etc.) which is consistently
+ *      sharper than the per-ticker raster services. Used FIRST whenever we
+ *      have a mapped domain.
+ *   2. FMP (https://financialmodelingprep.com/image-stock/<TICKER>.png) —
+ *      per-ticker fallback for tickers with no domain mapping OR when
+ *      Clearbit fails. Covers most US tickers but the images can be older /
+ *      lower-quality than the current corporate logo.
  *   3. Google favicons (https://www.google.com/s2/favicons?domain=&sz=128) —
  *      last-resort image. Capped at 128 because larger sizes silently return
  *      Google's question-mark placeholder for many domains, which we have no
  *      way to detect as "broken" (the HTTP request technically succeeds).
- *   4. Monogram pill — final fallback if every image source fails or the
- *      ticker has no mapped domain (long-tail tickers).
+ *   4. Monogram pill — final fallback if every image source fails.
  *
  * The cascade is implemented with chained onError handlers so the browser
  * gracefully degrades without flashing through broken states.
@@ -34,15 +36,16 @@ interface CompanyLogoProps {
   fallbackTone?: "navy" | "neutral";
 }
 
-type Stage = "fmp" | "clearbit" | "favicon" | "monogram";
+type Stage = "clearbit" | "fmp" | "favicon" | "monogram";
 
 /**
- * FMP's image-stock endpoint expects bare US-style tickers (AAPL, AMZN).
- * For international tickers (formats like "1234.HK", "TASI.SR") we skip
- * straight to Clearbit since FMP often 404s on them.
+ * Tickers we'll try against FMP's image-stock endpoint.
+ * US-style alpha tickers (AAPL, AMZN), share-class tickers (BRK.B, BF.B),
+ * and short numeric formats. We exclude anything with an exchange suffix
+ * like ".HK" or ".SR" because FMP frequently 404s on those.
  */
 function isFmpFriendlyTicker(ticker: string): boolean {
-  return /^[A-Z]{1,5}$/.test(ticker);
+  return /^[A-Z]{1,5}(\.[A-Z])?$/.test(ticker);
 }
 
 export default function CompanyLogo({
@@ -53,8 +56,8 @@ export default function CompanyLogo({
 }: CompanyLogoProps) {
   const domain = getDomainForTicker(ticker);
   const [stage, setStage] = useState<Stage>(() => {
-    if (isFmpFriendlyTicker(ticker)) return "fmp";
     if (domain) return "clearbit";
+    if (isFmpFriendlyTicker(ticker)) return "fmp";
     return "monogram";
   });
 
@@ -90,26 +93,33 @@ export default function CompanyLogo({
   }
 
   // Build the source URL for the current stage.
-  // FMP serves per-ticker PNGs around 256px square — sharp at every layout
-  // size we use today. Clearbit's `size` param is capped at 512 for clarity
-  // without bloating bytes. Google's `sz` param is held at 128 since larger
-  // sizes silently return Google's placeholder for many domains.
+  // Clearbit's `size` param is capped at 512 for clarity without bloating
+  // bytes. FMP serves per-ticker PNGs around 256px square. Google's `sz`
+  // param is held at 128 since larger sizes silently return Google's
+  // placeholder for many domains.
   let src: string;
-  if (stage === "fmp") {
-    src = `https://financialmodelingprep.com/image-stock/${ticker}.png`;
-  } else if (stage === "clearbit") {
+  if (stage === "clearbit") {
     src = `https://logo.clearbit.com/${domain}?size=512`;
+  } else if (stage === "fmp") {
+    src = `https://financialmodelingprep.com/image-stock/${ticker}.png`;
   } else {
     src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
   }
 
   function advanceStage() {
-    if (stage === "fmp") {
-      // FMP failed — try Clearbit if we have a domain, else go to favicon
-      // attempt (which needs a domain too), else monogram.
-      setStage(domain ? "clearbit" : "monogram");
-    } else if (stage === "clearbit") {
-      setStage("favicon");
+    if (stage === "clearbit") {
+      // Clearbit failed — try FMP if the ticker shape supports it, else
+      // straight to the favicon image.
+      if (isFmpFriendlyTicker(ticker)) {
+        setStage("fmp");
+      } else if (domain) {
+        setStage("favicon");
+      } else {
+        setStage("monogram");
+      }
+    } else if (stage === "fmp") {
+      // FMP failed — try favicon if we have a domain, else monogram.
+      setStage(domain ? "favicon" : "monogram");
     } else {
       setStage("monogram");
     }
