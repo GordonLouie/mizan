@@ -152,6 +152,12 @@ export const TICKER_DOMAIN: Record<string, string> = {
   "9984.T": "softbank.jp",
   "1180.SR": "alrajhibank.com.sa",
   "1120.SR": "alahli.com",
+  // European dot-tickers — previously fell through to monogram.
+  "NOVO-B.CO": "novonordisk.com",
+  "MC.PA": "lvmh.com",
+  "NESN.SW": "nestle.com",
+  "SAP.DE": "sap.com",
+  "MBG.DE": "mercedes-benz.com",
 
   // Additional common tickers — long tail
   AA: "alcoa.com",
