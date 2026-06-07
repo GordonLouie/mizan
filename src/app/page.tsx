@@ -6,15 +6,47 @@ import { useRouter } from "next/navigation";
 import TickerSearch from "@/components/TickerSearch";
 import { ArrowRight, GraduationCap, Calculator, Sparkles } from "lucide-react";
 import { CURATED_LISTS } from "@/lib/lists";
-import { listStocks } from "@/lib/data";
+import { listStocks, findStock } from "@/lib/data";
 import { SCHOLAR_PROFILES } from "@/lib/scholars";
+import { screenStock } from "@/lib/screen";
 
 export default function Home() {
   const router = useRouter();
   const [_t, setT] = useState("");
 
+  const tickerCount = listStocks().length;
+
   return (
     <div className="pb-16">
+      {/* 0. BLOOMBERG STATUS RIBBON — thin tabular strip, design-direction
+          locked-in: every Mizan page can carry one of these at the top.
+          Editorial-Georgia is on display below; this is the Bloomberg layer
+          announcing itself. */}
+      <div className="-mx-4 mb-2 border-b border-gray-200 px-4 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 font-mono text-[10px] uppercase tracking-[0.16em] text-gray-500">
+          <div className="flex items-center gap-1.5">
+            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            <span className="text-gray-700">Engine live</span>
+            <span className="text-gray-300">·</span>
+            <span>v0.4.0</span>
+          </div>
+          <div className="flex items-center gap-x-5 gap-y-1 tabular-nums">
+            <span>
+              <span className="text-gray-400">Tickers</span>{" "}
+              <span className="text-gray-900">{tickerCount}</span>
+            </span>
+            <span>
+              <span className="text-gray-400">Scholars</span>{" "}
+              <span className="text-gray-900">6</span>
+            </span>
+            <span>
+              <span className="text-gray-400">Last update</span>{" "}
+              <span className="text-gray-900">Q4 2025</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
       {/* 1. STATUS LINE — small whisper, not a banner */}
       <section className="pt-8 sm:pt-12">
         <div className="mb-12 flex justify-center">
@@ -51,21 +83,36 @@ export default function Home() {
           </p>
         </div>
 
-        {/* FT-print-spread comparison panel */}
+        {/* FT-print-spread comparison panel.
+            Direction: editorial-Georgia for the verdict, Bloomberg-mono for the
+            data, tiny "AS OF" caption — a Financial Times spread that runs on
+            a Bloomberg Terminal. See DESIGN_DIRECTION.md. */}
         <div className="mt-10 grid grid-cols-1 overflow-hidden rounded-xl border border-gray-200 sm:grid-cols-2">
           {/* LEFT: AAOIFI */}
           <div className="bg-white px-10 py-12">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
-              Under AAOIFI
+            <div className="flex items-baseline justify-between gap-3">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
+                Under AAOIFI
+              </div>
+              <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-gray-400">
+                AS OF Q4 2025
+              </div>
             </div>
             <div
-              className="mt-8 text-[72px] font-bold leading-none text-emerald-700 sm:text-[80px]"
+              className="mt-8 text-[72px] font-bold leading-none text-emerald-700 sm:text-[88px]"
               style={{ fontFamily: "Georgia, serif" }}
             >
               Halal
             </div>
-            <div className="mt-10 font-mono text-[12px] text-gray-500">
-              Debt / market cap: <span className="text-gray-900">6.5%</span> · cap 30%
+            <div className="mt-10 space-y-1.5 border-t border-gray-100 pt-4 font-mono text-[12px] tabular-nums text-gray-500">
+              <div className="flex justify-between">
+                <span>DEBT / MKT CAP</span>
+                <span className="text-gray-900">6.5%</span>
+              </div>
+              <div className="flex justify-between text-gray-400">
+                <span>Threshold</span>
+                <span>≤ 30%</span>
+              </div>
             </div>
             <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
               What Zoya, Wahed, and Musaffa would tell you.
@@ -74,17 +121,29 @@ export default function Home() {
 
           {/* RIGHT: Mufti Taqi Usmani */}
           <div className="border-t border-gray-200 bg-white px-10 py-12 sm:border-l sm:border-t-0">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-700">
-              Under Mufti Taqi Usmani
+            <div className="flex items-baseline justify-between gap-3">
+              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-700">
+                Under Mufti Taqi Usmani
+              </div>
+              <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-gray-400">
+                AS OF Q4 2025
+              </div>
             </div>
             <div
-              className="mt-8 text-[72px] font-bold leading-none text-rose-700 sm:text-[80px]"
+              className="mt-8 text-[72px] font-bold leading-none text-rose-700 sm:text-[88px]"
               style={{ fontFamily: "Georgia, serif" }}
             >
               Not halal
             </div>
-            <div className="mt-10 font-mono text-[12px] text-gray-500">
-              Tangible assets: <span className="text-gray-900">12%</span> · floor 20%
+            <div className="mt-10 space-y-1.5 border-t border-gray-100 pt-4 font-mono text-[12px] tabular-nums text-gray-500">
+              <div className="flex justify-between">
+                <span>TANGIBLE / TOTAL</span>
+                <span className="text-gray-900">12.0%</span>
+              </div>
+              <div className="flex justify-between text-gray-400">
+                <span>Threshold</span>
+                <span>≥ 20%</span>
+              </div>
             </div>
             <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
               His illiquid-asset rule excludes AMZN. No other app surfaces this.
@@ -106,7 +165,7 @@ export default function Home() {
         {/* 2. HERO — centered, max-w-2xl */}
         <div className="mx-auto max-w-2xl text-center">
           <h1
-            className="text-[42px] font-bold leading-[1.02] tracking-tight text-gray-900 sm:text-[64px]"
+            className="text-[52px] font-bold leading-[1.02] tracking-tight text-gray-900 sm:text-[88px]"
             style={{ fontFamily: "Georgia, serif" }}
           >
             Is your stock halal?
@@ -203,31 +262,54 @@ export default function Home() {
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-2 lg:grid-cols-3">
-          {SCHOLAR_PROFILES.filter((p) => p.id !== "custom").map((p) => (
-            <Link
-              key={p.id}
-              href={`/learn#${p.id}`}
-              className="group bg-white p-5 transition hover:bg-navy-50/30"
-            >
-              <div className="flex items-baseline justify-between gap-2">
-                <h3
-                  className="text-[15px] font-bold text-gray-900 group-hover:text-navy-800"
-                  style={{ fontFamily: "Georgia, serif" }}
-                >
-                  {p.short}
-                </h3>
-                <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-gray-400">
-                  {p.id === "taqi_usmani" ? "Hanafi" : p.id === "jafari" ? "Shia" : p.id === "strict" ? "Minority" : "Sunni"}
-                </span>
-              </div>
-              <p className="mt-2 line-clamp-3 text-[12px] leading-relaxed text-gray-600">
-                {p.blurb}
-              </p>
-              <div className="mt-3 inline-flex items-center gap-1 text-[11px] font-medium text-navy-700 group-hover:text-navy-900">
-                Read the methodology <ArrowRight size={11} />
-              </div>
-            </Link>
-          ))}
+          {SCHOLAR_PROFILES.filter((p) => p.id !== "custom").map((p) => {
+            // Live Bloomberg-style verdict for AAPL under each scholar.
+            // Editorial frame, live data inside — the Mizan signature move.
+            const aapl = findStock("AAPL");
+            const verdict = aapl ? screenStock(aapl, p).verdict : null;
+            const verdictText =
+              verdict === "pass" ? "HALAL"
+              : verdict === "fail" ? "NOT HALAL"
+              : verdict === "borderline" ? "DOUBTFUL"
+              : "—";
+            const verdictTone =
+              verdict === "pass" ? "text-emerald-700"
+              : verdict === "fail" ? "text-rose-700"
+              : verdict === "borderline" ? "text-amber-700"
+              : "text-gray-400";
+            return (
+              <Link
+                key={p.id}
+                href={`/learn#${p.id}`}
+                className="group flex flex-col bg-white p-5 transition hover:bg-navy-50/30"
+              >
+                <div className="flex items-baseline justify-between gap-2">
+                  <h3
+                    className="text-[15px] font-bold text-gray-900 group-hover:text-navy-800"
+                    style={{ fontFamily: "Georgia, serif" }}
+                  >
+                    {p.short}
+                  </h3>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-gray-400">
+                    {p.id === "taqi_usmani" ? "Hanafi" : p.id === "jafari" ? "Shia" : p.id === "strict" ? "Minority" : "Sunni"}
+                  </span>
+                </div>
+                <p className="mt-2 line-clamp-3 text-[12px] leading-relaxed text-gray-600">
+                  {p.blurb}
+                </p>
+
+                {/* Bloomberg ticker tape — live AAPL verdict under this scholar */}
+                <div className="mt-4 flex items-baseline justify-between border-t border-gray-100 pt-3 font-mono text-[10px] uppercase tracking-[0.12em] tabular-nums">
+                  <span className="text-gray-400">AAPL · ruling</span>
+                  <span className={"font-bold " + verdictTone}>{verdictText}</span>
+                </div>
+
+                <div className="mt-3 inline-flex items-center gap-1 text-[11px] font-medium text-navy-700 group-hover:text-navy-900">
+                  Read the methodology <ArrowRight size={11} />
+                </div>
+              </Link>
+            );
+          })}
         </div>
 
         <div className="mt-6 text-center">
