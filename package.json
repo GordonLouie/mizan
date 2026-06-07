@@ -14,12 +14,14 @@
     "@tailwindcss/typography": "^0.5.19",
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.40.0",
     "lucide-react": "^0.460.0",
     "marked": "^18.0.4",
     "next": "^15.5.18",
     "posthog-js": "^1.381.0",
     "react": "^19.0.0-rc-66855b96-20241106",
-    "react-dom": "^19.0.0-rc-66855b96-20241106"
+    "react-dom": "^19.0.0-rc-66855b96-20241106",
+    "react-use-measure": "^2.1.7"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",

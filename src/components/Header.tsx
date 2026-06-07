@@ -1,56 +1,60 @@
+/**
+ * Header — floating pill.
+ *
+ * Sticky, centered, rounded-full chrome that hovers above the page content.
+ * Replaces the old full-width bar. Uses the new MizanWordmark for the brand
+ * mark (no icon — just the name on a navy block, McKinsey-style).
+ *
+ * Tools mega-menu and mobile drawer are preserved from the previous header.
+ */
+
 "use client";
 
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, ArrowRight } from "lucide-react";
+import MizanWordmark from "@/components/MizanWordmark";
 
-// Tools dropdown is organised into 3 columns so 13 destinations don't read
-// as a wall of links. Each column has a clear theme.
-// Reorganized after Day 7 feedback (Ibrahim Malik + Saifuddin Abbas + HKUSTSU brother):
-// Two independent users surfaced the same point — focus the core (stock screening +
-// portfolio tracking), demote adjacent features (purification / zakat / crypto / sukuk).
-// These features remain available but are no longer headline navigation items.
-const TOOL_GROUPS: Array<{ heading: string; items: Array<{ href: string; label: string; sub?: string }> }> = [
+const TOOL_GROUPS: Array<{
+  heading: string;
+  items: Array<{ href: string; label: string; sub?: string }>;
+}> = [
   {
     heading: "Explore stocks",
     items: [
-      { href: "/discover",  label: "Discover",         sub: "Trending & where scholars split" },
-      { href: "/sectors",   label: "Sectors",          sub: "By industry" },
-      { href: "/lists",     label: "Curated lists",    sub: "Editorial collections" },
-      { href: "/universe",  label: "Universe",         sub: "Every ticker" },
+      { href: "/discover", label: "Discover", sub: "Trending & where scholars split" },
+      { href: "/sectors", label: "Sectors", sub: "By industry" },
+      { href: "/lists", label: "Curated lists", sub: "Editorial collections" },
+      { href: "/universe", label: "Universe", sub: "Every ticker" },
     ],
   },
   {
     heading: "Your stocks",
     items: [
-      { href: "/watchlist",     label: "Watchlist",      sub: "Your saved tickers" },
-      { href: "/portfolio",     label: "Portfolio score",sub: "Your compliance %" },
-      { href: "/calendar",      label: "Earnings calendar", sub: "When holdings report next" },
-      { href: "/vs",            label: "Compare stocks", sub: "Side-by-side" },
-      { href: "/custom",        label: "Custom profile", sub: "Set your thresholds" },
+      { href: "/watchlist", label: "Watchlist", sub: "Your saved tickers" },
+      { href: "/portfolio", label: "Portfolio score", sub: "Your compliance %" },
+      { href: "/calendar", label: "Earnings calendar", sub: "When holdings report next" },
+      { href: "/vs", label: "Compare stocks", sub: "Side-by-side" },
+      { href: "/custom", label: "Custom profile", sub: "Set your thresholds" },
     ],
   },
   {
     heading: "Reference",
     items: [
-      { href: "/ask",           label: "Ask a scholar",   sub: "49 common Q&A" },
-      { href: "/zakat",         label: "Zakat calculator", sub: "Annual obligation" },
-      { href: "/purification",  label: "Purification",    sub: "Dividend cleansing" },
-      { href: "/crypto",        label: "Crypto",          sub: "Early development" },
-      { href: "/sukuk",         label: "Sukuk",           sub: "Early development" },
+      { href: "/ask", label: "Ask a scholar", sub: "49 common Q&A" },
+      { href: "/zakat", label: "Zakat calculator", sub: "Annual obligation" },
+      { href: "/purification", label: "Purification", sub: "Dividend cleansing" },
+      { href: "/crypto", label: "Crypto", sub: "Early development" },
+      { href: "/sukuk", label: "Sukuk", sub: "Early development" },
     ],
   },
 ];
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Delay closing the Tools dropdown on mouse-leave so users can move the
-  // cursor diagonally toward the menu items without it snapping shut.
-  // Miqdad bug 2026-06-06: "when u move ur cursor to Ask a scholar, Zakat
-  // calculator etc. then it sometimes disappears too quickly"
   function openTools() {
     if (closeTimerRef.current) {
       clearTimeout(closeTimerRef.current);
@@ -64,98 +68,117 @@ export default function Header() {
   }
 
   return (
-    <header className="border-b border-gray-200 bg-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-2.5">
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-navy-800">
-            <MizanScale />
-          </span>
-          <span className="text-xl font-bold tracking-tight text-navy-800" style={{ fontFamily: "Georgia, serif" }}>
-            Mizan
-          </span>
-        </Link>
+    <>
+      {/* Spacer so page content doesn't slide under the floating header */}
+      <div aria-hidden className="h-20" />
 
-        <nav className="hidden items-center gap-8 text-sm font-medium text-gray-700 md:flex">
-          <Link href="/screen" className="hover:text-navy-800">Screen</Link>
-          <Link href="/discover" className="hover:text-navy-800">Discover</Link>
-          <Link href="/learn" className="hover:text-navy-800">Learn</Link>
-          <div className="relative" onMouseEnter={openTools} onMouseLeave={scheduleCloseTools}>
-            <button className="inline-flex items-center gap-1 hover:text-navy-800">
-              Tools <ChevronDown size={14} className={toolsOpen ? "rotate-180 transition" : "transition"} />
-            </button>
-            {toolsOpen && (
-              <div className="absolute right-0 top-full z-20 mt-1 grid w-[640px] grid-cols-3 gap-x-6 gap-y-1 rounded-xl border border-gray-200 bg-white p-5 shadow-lg">
-                {TOOL_GROUPS.map((group) => (
-                  <div key={group.heading}>
-                    <div className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
-                      {group.heading}
+      <header className="fixed inset-x-0 top-3 z-40 px-3 sm:top-4 sm:px-6">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 px-3 py-2 shadow-[0_8px_30px_-12px_rgba(31,58,95,0.18)] backdrop-blur-md sm:px-4">
+          {/* Brand mark — McKinsey-style wordmark on navy block */}
+          <Link href="/" aria-label="Mizan home" className="inline-flex shrink-0">
+            <MizanWordmark height={28} asLink={false} />
+          </Link>
+
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-7 text-[14px] font-medium text-gray-700 md:flex">
+            <Link href="/screen" className="hover:text-navy-800">Screen</Link>
+            <Link href="/discover" className="hover:text-navy-800">Discover</Link>
+            <Link href="/learn" className="hover:text-navy-800">Learn</Link>
+            <div
+              className="relative"
+              onMouseEnter={openTools}
+              onMouseLeave={scheduleCloseTools}
+            >
+              <button className="inline-flex items-center gap-1 hover:text-navy-800">
+                Tools
+                <ChevronDown
+                  size={14}
+                  className={toolsOpen ? "rotate-180 transition" : "transition"}
+                />
+              </button>
+              {toolsOpen && (
+                <div className="absolute right-0 top-full z-20 mt-2 grid w-[640px] grid-cols-3 gap-x-6 gap-y-1 rounded-xl border border-gray-200 bg-white p-5 shadow-lg">
+                  {TOOL_GROUPS.map((group) => (
+                    <div key={group.heading}>
+                      <div className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+                        {group.heading}
+                      </div>
+                      <div className="space-y-0.5">
+                        {group.items.map((t) => (
+                          <Link
+                            key={t.href}
+                            href={t.href}
+                            className="block rounded-md px-2 py-1.5 transition hover:bg-gray-50"
+                          >
+                            <div className="text-sm font-medium text-gray-900">{t.label}</div>
+                            {t.sub && (
+                              <div className="text-[11px] text-gray-500">{t.sub}</div>
+                            )}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
-                    <div className="space-y-0.5">
-                      {group.items.map((t) => (
-                        <Link
-                          key={t.href}
-                          href={t.href}
-                          className="block rounded-md px-2 py-1.5 transition hover:bg-gray-50"
-                        >
-                          <div className="text-sm font-medium text-gray-900">{t.label}</div>
-                          {t.sub && (
-                            <div className="text-[11px] text-gray-500">{t.sub}</div>
-                          )}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </nav>
-
-        <button className="md:hidden" onClick={() => setOpen((o) => !o)} aria-label={open ? "Close menu" : "Open menu"}>
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </div>
-
-      {open && (
-        <div className="border-t border-gray-100 bg-white px-6 py-4 md:hidden">
-          <div className="flex flex-col gap-1 text-sm">
-            <Link href="/screen"   onClick={() => setOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Screen</Link>
-            <Link href="/discover" onClick={() => setOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Discover</Link>
-            <Link href="/learn"    onClick={() => setOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Learn</Link>
-
-            {TOOL_GROUPS.map((group) => (
-              <div key={group.heading} className="mt-3">
-                <div className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
-                  {group.heading}
+                  ))}
                 </div>
-                {group.items.map((t) => (
-                  <Link
-                    key={t.href}
-                    href={t.href}
-                    onClick={() => setOpen(false)}
-                    className="block rounded-md px-2 py-1.5 text-gray-700 hover:bg-gray-50"
-                  >
-                    {t.label}
-                  </Link>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </header>
-  );
-}
+              )}
+            </div>
+          </nav>
 
-function MizanScale() {
-  return (
-    <svg viewBox="0 0 32 32" width="20" height="20" aria-hidden="true">
-      <rect x="6" y="14" width="20" height="1.6" rx="0.8" fill="#E8C547" />
-      <rect x="15.2" y="7" width="1.6" height="7" rx="0.8" fill="#E8C547" />
-      <circle cx="16" cy="7" r="1.8" fill="#E8C547" />
-      <path d="M 7 18 Q 10 23 13 18 Z" fill="#FFFFFF" />
-      <path d="M 19 17 Q 22 21 25 17 Z" fill="#FFFFFF" opacity="0.7" />
-      <rect x="13" y="24" width="6" height="1.6" rx="0.4" fill="#E8C547" />
-    </svg>
+          {/* Right: dark pill CTA on desktop, hamburger on mobile */}
+          <Link
+            href="/screen"
+            className="hidden items-center gap-1.5 rounded-full bg-navy-900 px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition hover:bg-navy-800 md:inline-flex"
+          >
+            Try a stock
+            <ArrowRight size={14} />
+          </Link>
+
+          <button
+            className="rounded-full p-2 text-gray-700 hover:bg-gray-100 md:hidden"
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+
+        {/* Mobile drawer */}
+        {mobileOpen && (
+          <div className="mx-auto mt-2 max-w-5xl rounded-2xl border border-gray-200 bg-white p-4 shadow-lg md:hidden">
+            <div className="flex flex-col gap-1 text-sm">
+              <Link href="/screen" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Screen</Link>
+              <Link href="/discover" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Discover</Link>
+              <Link href="/learn" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Learn</Link>
+
+              {TOOL_GROUPS.map((group) => (
+                <div key={group.heading} className="mt-3">
+                  <div className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+                    {group.heading}
+                  </div>
+                  {group.items.map((t) => (
+                    <Link
+                      key={t.href}
+                      href={t.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="block rounded-md px-2 py-1.5 text-gray-700 hover:bg-gray-50"
+                    >
+                      {t.label}
+                    </Link>
+                  ))}
+                </div>
+              ))}
+
+              <Link
+                href="/screen"
+                onClick={() => setMobileOpen(false)}
+                className="mt-3 inline-flex items-center justify-center gap-1.5 rounded-full bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white"
+              >
+                Try a stock <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+        )}
+      </header>
+    </>
   );
 }

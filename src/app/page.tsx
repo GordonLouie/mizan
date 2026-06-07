@@ -11,6 +11,8 @@ import { SCHOLAR_PROFILES } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
 import CompanyLogo from "@/components/CompanyLogo";
 import EarningsCalendar from "@/components/EarningsCalendar";
+import CompanyLogoMarquee from "@/components/CompanyLogoMarquee";
+import ScrollDashboardHero from "@/components/ScrollDashboardHero";
 
 export default function Home() {
   const router = useRouter();
@@ -231,6 +233,18 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 2b. COMPANY LOGO MARQUEE — auto-scrolling row of covered tickers.
+          A "we cover these" beat right after the hero CTA, before the
+          methodology rigor strip. Adapted infinite-slider with edge blur. */}
+      <section className="mt-14">
+        <div className="text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Covering {tickerCount}+ tickers
+        </div>
+        <div className="mt-4">
+          <CompanyLogoMarquee />
+        </div>
+      </section>
+
       {/* 3. METHODOLOGY SOURCES STRIP — collegepilot's "logos of every elite
           university" pattern, on-brand for Mizan as editorial badges of the
           actual primary sources. Builds rigor signal without glossy logos. */}
@@ -266,6 +280,11 @@ export default function Home() {
           Every threshold on Mizan traces back to a published primary source.
         </p>
       </section>
+
+      {/* 3b. SCROLL-IN PRODUCT REVEAL — the tilting card showing the multi-
+          scholar verdict table. Mizan's actual interface appears with a 3D
+          scroll-driven animation. Built on ContainerScroll. */}
+      <ScrollDashboardHero ticker="AMZN" />
 
       {/* 4b. MEET THE SCHOLARS — Tyler's feedback 2026-06-07: "the '6 scholars'
           on the homepage, everyone's going to try click it. would be sick if
