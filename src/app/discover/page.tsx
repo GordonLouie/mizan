@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight, TrendingUp, Scale, PiggyBank, BarChart3, Layers } from "lucide-react";
+import CompanyLogo from "@/components/CompanyLogo";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    HARDCODED DATA — standalone preview
@@ -124,9 +125,7 @@ export default function DiscoverPage() {
                       href={`/screen?ticker=${row.ticker}`}
                       className="group flex items-center gap-3"
                     >
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 font-mono text-xs font-bold text-gray-700">
-                        {row.ticker.slice(0, 2)}
-                      </div>
+                      <CompanyLogo ticker={row.ticker} size={36} />
                       <div>
                         <div className="font-mono text-sm font-semibold text-gray-900 group-hover:text-navy-700">
                           {row.ticker}
@@ -285,9 +284,7 @@ function StockCard({
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 font-mono text-xs font-bold text-gray-700">
-            {ticker.slice(0, 2)}
-          </div>
+          <CompanyLogo ticker={ticker} size={40} />
           <div>
             <div className="font-mono text-sm font-semibold text-gray-900 group-hover:text-navy-700">
               {ticker}

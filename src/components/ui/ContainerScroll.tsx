@@ -1,10 +1,11 @@
 /**
- * ContainerScroll — scroll-driven 3D card reveal.
+ * ContainerScroll — scroll-driven iPad reveal.
  *
- * As the user scrolls into the container, the inner card rotates from
- * a tilted angle to flat, scales slightly, and the title translates up.
- * Adapted from a 21st.dev community pattern (Aceternity UI) and tuned
- * for Mizan's editorial chrome: navy border, off-white inner bg.
+ * As the user scrolls into the container, the device rotates from a tilted
+ * angle to flat and scales slightly. The chrome is rendered to look like
+ * an actual iPad: matte aluminium frame, fine inner bezel, camera notch,
+ * subtle screen glare. The inner content area is cream so the embedded
+ * Mizan UI sits naturally inside it.
  */
 
 "use client";
@@ -29,22 +30,24 @@ export function ContainerScroll({ titleComponent, children }: ContainerScrollPro
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const rotate = useTransform(scrollYProgress, [0, 1], [22, 0]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [20, 0]);
   const scale = useTransform(
     scrollYProgress,
     [0, 1],
-    isMobile ? [0.75, 0.95] : [1.04, 1],
+    isMobile ? [0.72, 0.94] : [1.02, 1],
   );
-  const translate = useTransform(scrollYProgress, [0, 1], [0, -90]);
+  const translate = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   return (
     <div
       ref={containerRef}
-      className="relative flex h-[60rem] items-center justify-center p-2 md:h-[80rem] md:p-20"
+      className="relative flex h-[60rem] items-center justify-center px-4 sm:px-8 md:h-[80rem] md:px-12"
     >
-      <div className="relative w-full py-10 md:py-40" style={{ perspective: "1000px" }}>
+      <div className="relative w-full py-10 md:py-32" style={{ perspective: "1200px" }}>
         <Header translate={translate}>{titleComponent}</Header>
-        <Card rotate={rotate} scale={scale}>{children}</Card>
+        <Device rotate={rotate} scale={scale}>
+          {children}
+        </Device>
       </div>
     </div>
   );
@@ -60,14 +63,23 @@ function Header({
   return (
     <motion.div
       style={{ translateY: translate }}
-      className="mx-auto max-w-5xl text-center"
+      className="mx-auto max-w-3xl px-4 text-center"
     >
       {children}
     </motion.div>
   );
 }
 
-function Card({
+/**
+ * iPad-style chrome. Layers from outside in:
+ *   1. Matte aluminium body — dark charcoal with a faint vertical gradient
+ *   2. Fine inner bezel ring — slightly lighter to suggest reflectivity
+ *   3. Black bezel — the actual screen border
+ *   4. Cream content area where Mizan's UI lives
+ *   5. Front camera dot at top center
+ *   6. Subtle glare overlay across the top of the screen
+ */
+function Device({
   rotate,
   scale,
   children,
@@ -82,12 +94,53 @@ function Card({
         rotateX: rotate,
         scale,
         boxShadow:
-          "0 0 #0000004d, 0 9px 20px #0000001f, 0 37px 37px #00000017, 0 84px 50px #00000010, 0 149px 60px #00000004",
+          "0 1px 0 rgba(255,255,255,0.04) inset, " +
+          "0 30px 60px -20px rgba(0,0,0,0.45), " +
+          "0 80px 120px -30px rgba(0,0,0,0.30), " +
+          "0 0 0 1px rgba(0,0,0,0.5)",
+        background:
+          "linear-gradient(180deg, #2a2c2f 0%, #1a1c1e 50%, #232527 100%)",
       }}
-      className="-mt-12 mx-auto h-[30rem] w-full max-w-5xl rounded-[30px] border-4 border-navy-800/80 bg-navy-900 p-2 shadow-2xl md:h-[40rem] md:p-4"
+      className="relative mx-auto mt-10 aspect-[16/10.5] w-full max-w-5xl rounded-[36px] p-[10px] md:p-[14px]"
     >
-      <div className="h-full w-full overflow-hidden rounded-2xl bg-[#FAF7F0]">
-        {children}
+      {/* Camera dot */}
+      <div
+        aria-hidden
+        className="absolute left-1/2 top-[8px] z-20 -translate-x-1/2 rounded-full bg-black md:top-[10px]"
+        style={{
+          width: 7,
+          height: 7,
+          boxShadow:
+            "inset 0 0 0 1px rgba(255,255,255,0.06), 0 0 6px rgba(0,0,0,0.4)",
+        }}
+      />
+
+      {/* Inner reflective ring */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-[6px] rounded-[30px]"
+        style={{
+          boxShadow:
+            "inset 0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.06)",
+        }}
+      />
+
+      {/* Black bezel */}
+      <div className="h-full w-full overflow-hidden rounded-[26px] bg-black p-[6px] md:p-[8px]">
+        {/* Screen content area */}
+        <div className="relative h-full w-full overflow-hidden rounded-[20px] bg-[#FAF7F0]">
+          {children}
+
+          {/* Soft top-glare overlay — keep below content scroll, above bg */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-1/3"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 100%)",
+            }}
+          />
+        </div>
       </div>
     </motion.div>
   );

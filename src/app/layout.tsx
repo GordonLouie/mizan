@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
-import Onboarding from "@/components/Onboarding";
 import ToastContainer from "@/components/ToastContainer";
 import MobileTabBar from "@/components/MobileTabBar";
 import FeedbackWidget from "@/components/FeedbackWidget";
@@ -92,7 +91,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </p>
           </div>
         </footer>
-        <Onboarding />
         <ToastContainer />
         <FeedbackWidget />
         <MobileTabBar />

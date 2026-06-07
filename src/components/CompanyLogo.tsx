@@ -70,10 +70,13 @@ export default function CompanyLogo({
   }
 
   // Image sources by stage
+  // Higher-resolution sources: clearbit returns proper logo SVGs/PNGs;
+  // Google favicon at sz=256 is the largest non-tiled response and reads
+  // sharp at the bigger marquee sizes we render at.
   const src =
     stage === "clearbit"
-      ? `https://logo.clearbit.com/${domain}`
-      : `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+      ? `https://logo.clearbit.com/${domain}?size=256`
+      : `https://www.google.com/s2/favicons?domain=${domain}&sz=256`;
 
   // eslint-disable-next-line @next/next/no-img-element
   return (
