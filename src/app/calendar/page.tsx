@@ -132,11 +132,9 @@ export default function CalendarPage() {
             </FilterTab>
           </div>
 
-          {/* HORIZONTAL "WHO REPORTS NEXT" RAIL — sits ABOVE the chronological
-              list and visual grid. Scoped to the active filter so it always
-              reflects the user's own stocks (watchlist + portfolio), and
-              styled with the cream wash + gold eyebrow to feel deliberate
-              rather than tacked-on. */}
+          {/* 14-DAY RADAR — "Who reports next" is now purely about urgency:
+              the next ~2 weeks of reporters, scoped to the active filter.
+              Anything beyond 14 days is the calendar grid's job. */}
           <section
             className="relative mt-10 overflow-hidden rounded-2xl border border-gray-200 px-4 py-7 sm:px-7 sm:py-9"
             style={{
@@ -144,20 +142,23 @@ export default function CalendarPage() {
                 "linear-gradient(180deg, rgba(250,247,240,1) 0%, rgba(250,247,240,0.55) 70%, rgba(255,255,255,1) 100%)",
             }}
           >
-            <EarningsCalendar tickers={tickersToShow} limit={24} />
+            <EarningsCalendar
+              tickers={tickersToShow}
+              limit={24}
+              maxDaysAway={14}
+            />
           </section>
 
-          {/* CHRONOLOGICAL LIST */}
+          {/* AT-RISK FIRST FEED — same data, different question. Sorted so
+              the holdings whose ratios are closest to flipping land at the
+              top. This is Mizan's real differentiator — not "what reports
+              next" but "what's about to break." */}
           <div className="mt-10">
             <EarningsWidget
               tickers={tickersToShow}
-              title={
-                filter === "all"
-                  ? "All upcoming earnings"
-                  : filter === "watchlist"
-                    ? "Watchlist earnings"
-                    : "Portfolio earnings"
-              }
+              title="At risk first"
+              subtitle="ratios closest to threshold, top of list"
+              sortMode="at-risk-first"
               limit={50}
             />
           </div>

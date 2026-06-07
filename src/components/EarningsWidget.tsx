@@ -34,6 +34,17 @@ interface Props {
   title?: string;
   /** Max number of earnings to show (default 8) */
   limit?: number;
+  /**
+   * Row ordering.
+   *   - "date" (default): chronological, most-imminent first.
+   *   - "at-risk-first": at-risk rows top of list, sorted by ratio buffer
+   *     ascending (most fragile first), then everything else by date.
+   *     Used on /calendar so the page leads with the stocks most likely to
+   *     flip — Mizan's actual differentiator.
+   */
+  sortMode?: "date" | "at-risk-first";
+  /** Subtitle next to the title; defaults to "next 90 days". */
+  subtitle?: string;
 }
 
 interface EarningsRow {
@@ -45,6 +56,8 @@ interface EarningsRow {
   atRisk: boolean;
   /** Plain-English why it's at risk */
   riskReason?: string;
+  /** Smallest buffer to any threshold (used for at-risk-first sort) */
+  smallestBuffer: number;
 }
 
 const TONE_BY_VERDICT: Record<Verdict, { dot: string; label: string; text: string }> = {
@@ -63,6 +76,8 @@ export default function EarningsWidget({
   tickers,
   title = "Upcoming earnings",
   limit = 8,
+  sortMode = "date",
+  subtitle = "next 90 days",
 }: Props) {
   const [scholarId, setScholarId] = useState("aaoifi");
 
@@ -81,7 +96,7 @@ export default function EarningsWidget({
   );
 
   const rows: EarningsRow[] = useMemo(() => {
-    return tickers
+    const built = tickers
       .map((t): EarningsRow | null => {
         const stock = findStock(t);
         if (!stock || !stock.nextEarningsDate) return null;
@@ -114,13 +129,26 @@ export default function EarningsWidget({
           verdict: result.verdict,
           atRisk,
           riskReason,
+          smallestBuffer: closestRatio ? closestRatio.buffer : Infinity,
         };
       })
       .filter((r): r is EarningsRow => r !== null)
-      .filter((r) => r.daysAway >= -3 && r.daysAway <= 90) // next 90 days
-      .sort((a, b) => a.daysAway - b.daysAway)
-      .slice(0, limit);
-  }, [tickers, scholar, limit]);
+      .filter((r) => r.daysAway >= -3 && r.daysAway <= 90); // next 90 days
+
+    const sorted =
+      sortMode === "at-risk-first"
+        ? built.sort((a, b) => {
+            // At-risk rows first (sorted by smallest buffer = most fragile)
+            if (a.atRisk && !b.atRisk) return -1;
+            if (b.atRisk && !a.atRisk) return 1;
+            if (a.atRisk && b.atRisk) return a.smallestBuffer - b.smallestBuffer;
+            // Both safe → fall back to chronological
+            return a.daysAway - b.daysAway;
+          })
+        : built.sort((a, b) => a.daysAway - b.daysAway);
+
+    return sorted.slice(0, limit);
+  }, [tickers, scholar, limit, sortMode]);
 
   if (tickers.length === 0) {
     return null;
@@ -137,7 +165,7 @@ export default function EarningsWidget({
           >
             {title}
           </h3>
-          <span className="text-[11px] text-gray-500">next 90 days</span>
+          <span className="text-[11px] text-gray-500">{subtitle}</span>
         </div>
         <Link
           href="/calendar"

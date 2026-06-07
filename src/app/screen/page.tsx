@@ -20,7 +20,7 @@ import { Card } from "@/components/ui";
 import CompanyLogo from "@/components/CompanyLogo";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import { fmtMarketCap } from "@/lib/lists";
-import { ArrowRight, BarChart3 } from "lucide-react";
+import { ArrowRight, BarChart3, CheckCircle2, XCircle, AlertCircle, Share2 } from "lucide-react";
 
 export default function ScreenPage() {
   return (
@@ -88,6 +88,13 @@ function ScreenInner() {
   const scholarsAgree = allVerdicts.length > 0 &&
     allVerdicts.every((v) => v.verdict === allVerdicts[0].verdict);
 
+  // Vote tally across scholars — used in the "3 of 5 say halal" summary.
+  const verdictCounts = useMemo(() => {
+    const counts = { pass: 0, fail: 0, borderline: 0 };
+    for (const v of allVerdicts) counts[v.verdict]++;
+    return counts;
+  }, [allVerdicts]);
+
   // ─── EMPTY STATE: no ticker selected ──────────────────────────────────────
   if (!stock) {
     const currentScholar = SCHOLAR_PROFILES.find((p) => p.id === scholarId);
@@ -101,10 +108,16 @@ function ScreenInner() {
             className="mt-3 text-[32px] font-bold leading-tight text-gray-900 sm:text-[40px]"
             style={{ fontFamily: "Georgia, serif" }}
           >
-            Search a stock
+            Is your stock halal?
           </h1>
-          <p className="mt-2 max-w-xl text-[15px] text-gray-600">
-            Type any ticker. See the verdict and every threshold the moment you do.
+          <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-gray-600">
+            Search any ticker. See it under every scholar — including Mufti Taqi
+            Usmani&apos;s illiquid-asset rule that no other halal app implements.
+            {currentScholar && (
+              <>
+                {" "}You&apos;re currently set to <strong className="text-navy-800">{currentScholar.short}</strong>.
+              </>
+            )}
           </p>
         </div>
 
@@ -189,8 +202,14 @@ function ScreenInner() {
             <Stat label="Cash+sec/cap" value={`${stock.cashSecuritiesToMarketCapPct.toFixed(1)}%`} />
             <Stat label="Illiq assets" value={`${stock.illiquidAssetsToTotalAssetsPct.toFixed(0)}%`} />
           </div>
-          <div className="mt-5">
+          <div className="mt-5 flex flex-wrap items-center gap-2">
             <WatchlistButton ticker={stock.ticker} />
+            <ShareVerdictButton
+              ticker={stock.ticker}
+              name={stock.name}
+              scholarShort={scholar.short}
+              verdictLabel={VERDICT_LABEL[result!.verdict]}
+            />
           </div>
         </div>
 
@@ -200,11 +219,14 @@ function ScreenInner() {
             <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
               Under {scholar.short}
             </div>
-            <div
-              className={`mt-3 text-[56px] font-bold leading-none ${verdictColor}`}
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              {VERDICT_LABEL[result!.verdict]}
+            <div className="mt-3 flex items-center gap-3">
+              <VerdictIcon verdict={result!.verdict} />
+              <div
+                className={`text-[56px] font-bold leading-none ${verdictColor}`}
+                style={{ fontFamily: "Georgia, serif" }}
+              >
+                {VERDICT_LABEL[result!.verdict]}
+              </div>
             </div>
             <p className="mt-4 text-[13px] leading-relaxed text-gray-600">
               {result!.sectorPasses
@@ -237,6 +259,33 @@ function ScreenInner() {
             ? `Every mainstream methodology reaches the same verdict on ${stock.ticker}.`
             : `Same stock, different rulebooks. Click any row to make it your active scholar.`}
         </p>
+
+        {/* Vote tally — fast scan: "3 of 5 say halal." */}
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px]">
+          {verdictCounts.pass > 0 && (
+            <span className="inline-flex items-center gap-1.5 text-emerald-700">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              <span className="font-semibold tabular-nums">{verdictCounts.pass}</span>
+              <span className="text-gray-600">
+                of {allVerdicts.length} say halal
+              </span>
+            </span>
+          )}
+          {verdictCounts.fail > 0 && (
+            <span className="inline-flex items-center gap-1.5 text-rose-700">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-rose-500" />
+              <span className="font-semibold tabular-nums">{verdictCounts.fail}</span>
+              <span className="text-gray-600">say not halal</span>
+            </span>
+          )}
+          {verdictCounts.borderline > 0 && (
+            <span className="inline-flex items-center gap-1.5 text-amber-700">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-500" />
+              <span className="font-semibold tabular-nums">{verdictCounts.borderline}</span>
+              <span className="text-gray-600">borderline</span>
+            </span>
+          )}
+        </div>
 
         <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 bg-white">
           <table className="w-full">
@@ -351,6 +400,74 @@ function Stat({ label, value }: { label: string; value: string }) {
       <span className="text-[11px] uppercase tracking-[0.14em] text-gray-500">{label}</span>
       <span className="font-mono text-sm font-semibold text-gray-900">{value}</span>
     </div>
+  );
+}
+
+/**
+ * Verdict icon for the hero card — instant visual cue before the user reads
+ * the prose explanation. Matches the verdict color used for the wordmark.
+ */
+function VerdictIcon({ verdict }: { verdict: "pass" | "fail" | "borderline" }) {
+  if (verdict === "pass") {
+    return <CheckCircle2 size={44} className="shrink-0 text-emerald-600" strokeWidth={1.5} />;
+  }
+  if (verdict === "fail") {
+    return <XCircle size={44} className="shrink-0 text-rose-600" strokeWidth={1.5} />;
+  }
+  return <AlertCircle size={44} className="shrink-0 text-amber-600" strokeWidth={1.5} />;
+}
+
+/**
+ * ShareVerdictButton — uses navigator.share when available (mobile), copies
+ * a pre-formatted message to clipboard on desktop. The shared text is
+ * specifically designed to feel like something a Muslim friend would forward:
+ * the verdict + scholar + link, no marketing fluff.
+ */
+function ShareVerdictButton({
+  ticker,
+  name,
+  scholarShort,
+  verdictLabel,
+}: {
+  ticker: string;
+  name: string;
+  scholarShort: string;
+  verdictLabel: string;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleShare() {
+    const url = `https://mizaninvesting.com/screen?ticker=${ticker}`;
+    const text = `${ticker} (${name}) under ${scholarShort}: ${verdictLabel}.\nSee all 6 scholars on Mizan: ${url}`;
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share({
+          title: `${ticker} — ${verdictLabel} under ${scholarShort}`,
+          text,
+          url,
+        });
+        return;
+      }
+    } catch {
+      // Fall through to clipboard
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {}
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleShare}
+      className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-3 py-1.5 text-[13px] font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+      aria-label="Share verdict"
+    >
+      <Share2 size={13} />
+      {copied ? "Copied" : "Share verdict"}
+    </button>
   );
 }
 

@@ -34,6 +34,13 @@ interface EarningsCalendarProps {
   scholarId?: string;
   /** Max cards rendered. Default 24 (4-5 weeks of common reporters). */
   limit?: number;
+  /**
+   * Hard cap on how many days out a card can be (radar mode). When set,
+   * anything reporting beyond this is excluded, even if it would fit
+   * under `limit`. Used by /calendar to scope this rail to "next ~2 weeks"
+   * while the chronological widget and month grid handle longer horizons.
+   */
+  maxDaysAway?: number;
   /** Anchor className for the outer wrapper. */
   className?: string;
 }
@@ -130,6 +137,7 @@ export default function EarningsCalendar({
   tickers,
   scholarId = "aaoifi",
   limit = 24,
+  maxDaysAway,
   className,
 }: EarningsCalendarProps) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -156,9 +164,10 @@ export default function EarningsCalendar({
         };
       })
       .filter((c) => c.daysAway >= -1) // hide stale dates (allow 1 day grace)
+      .filter((c) => (maxDaysAway === undefined ? true : c.daysAway <= maxDaysAway))
       .sort((a, b) => a.daysAway - b.daysAway)
       .slice(0, limit);
-  }, [tickers, scholar, limit]);
+  }, [tickers, scholar, limit, maxDaysAway]);
 
   function updateScrollState() {
     const el = scrollRef.current;
@@ -193,7 +202,9 @@ export default function EarningsCalendar({
           (className ?? "")
         }
       >
-        No upcoming earnings in this set.
+        {maxDaysAway !== undefined
+          ? `Nothing reporting in the next ${maxDaysAway} days.`
+          : "No upcoming earnings in this set."}
       </div>
     );
   }
