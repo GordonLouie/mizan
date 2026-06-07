@@ -69,14 +69,17 @@ export default function CompanyLogo({
     );
   }
 
-  // Image sources by stage
-  // Higher-resolution sources: clearbit returns proper logo SVGs/PNGs;
-  // Google favicon at sz=256 is the largest non-tiled response and reads
-  // sharp at the bigger marquee sizes we render at.
+  // HD source sizing.
+  // We always request at least 3x the rendered size (and never below 256) so
+  // the image stays sharp on retina/HiDPI screens regardless of how large the
+  // logo is laid out on the page. Clearbit serves PNGs up to ~512px nicely;
+  // Google's favicon service caps higher than its old 64px default — sz=512
+  // returns the largest available raster reliably.
+  const requestedPx = Math.max(256, size * 3);
   const src =
     stage === "clearbit"
-      ? `https://logo.clearbit.com/${domain}?size=256`
-      : `https://www.google.com/s2/favicons?domain=${domain}&sz=256`;
+      ? `https://logo.clearbit.com/${domain}?size=${requestedPx}`
+      : `https://www.google.com/s2/favicons?domain=${domain}&sz=${requestedPx}`;
 
   // eslint-disable-next-line @next/next/no-img-element
   return (
@@ -86,6 +89,8 @@ export default function CompanyLogo({
       alt={`${ticker} logo`}
       width={size}
       height={size}
+      loading="lazy"
+      decoding="async"
       onError={() => setStage(stage === "clearbit" ? "favicon" : "monogram")}
       className={
         "inline-block shrink-0 rounded-md bg-white object-contain ring-1 ring-gray-100 " +

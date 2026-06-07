@@ -19,6 +19,7 @@ import { getWatchlist } from "@/lib/watchlist";
 import { loadPortfolio } from "@/lib/portfolio";
 import EarningsWidget from "@/components/EarningsWidget";
 import EarningsCalendarGrid from "@/components/EarningsCalendarGrid";
+import EarningsCalendar from "@/components/EarningsCalendar";
 
 type FilterMode = "all" | "watchlist" | "portfolio";
 
@@ -131,18 +132,35 @@ export default function CalendarPage() {
             </FilterTab>
           </div>
 
+          {/* HORIZONTAL "WHO REPORTS NEXT" RAIL — sits ABOVE the chronological
+              list and visual grid. Scoped to the active filter so it always
+              reflects the user's own stocks (watchlist + portfolio), and
+              styled with the cream wash + gold eyebrow to feel deliberate
+              rather than tacked-on. */}
+          <section
+            className="relative mt-10 overflow-hidden rounded-2xl border border-gray-200 px-4 py-7 sm:px-7 sm:py-9"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(250,247,240,1) 0%, rgba(250,247,240,0.55) 70%, rgba(255,255,255,1) 100%)",
+            }}
+          >
+            <EarningsCalendar tickers={tickersToShow} limit={24} />
+          </section>
+
           {/* CHRONOLOGICAL LIST */}
-          <EarningsWidget
-            tickers={tickersToShow}
-            title={
-              filter === "all"
-                ? "All upcoming earnings"
-                : filter === "watchlist"
-                  ? "Watchlist earnings"
-                  : "Portfolio earnings"
-            }
-            limit={50}
-          />
+          <div className="mt-10">
+            <EarningsWidget
+              tickers={tickersToShow}
+              title={
+                filter === "all"
+                  ? "All upcoming earnings"
+                  : filter === "watchlist"
+                    ? "Watchlist earnings"
+                    : "Portfolio earnings"
+              }
+              limit={50}
+            />
+          </div>
 
           {/* VISUAL CALENDAR GRID — at-a-glance month view */}
           <EarningsCalendarGrid tickers={tickersToShow} />

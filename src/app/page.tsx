@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Homepage — v4 layout.
+ * Homepage — v5 layout (slimmed).
  *
  * Order:
  *   1. Status line whisper
@@ -11,12 +11,14 @@
  *   5. Soft gradient transition into the iPad
  *   6. ScrollDashboardHero — iPad showing real /screen content
  *   7. MethodologyBubble — primary-source rigor signal
- *   8. WhyChooseUs — 3-tab section
- *   9. The "Why Mizan" wedge — moved here as supporting proof
- *  10. EarningsCalendar — live block
- *  11. GetStartedSteps — 3-step conversion
- *  12. Curated lists
- *  13. What Mizan is / isn't
+ *   8. GetStartedSteps — 3-step conversion
+ *   9. Curated lists
+ *  10. What Mizan is / isn't
+ *
+ * Removed in v5:
+ *   - WhyChooseUs ("Built for the way Muslims actually invest.")
+ *   - "Why Mizan" Amazon wedge ("Most apps check one rulebook…")
+ *   - EarningsCalendar block (lives on /calendar now)
  */
 
 import { useState } from "react";
@@ -30,9 +32,7 @@ import CompanyLogo from "@/components/CompanyLogo";
 import CompanyLogoMarquee from "@/components/CompanyLogoMarquee";
 import ScrollDashboardHero from "@/components/ScrollDashboardHero";
 import MethodologyBubble from "@/components/MethodologyBubble";
-import WhyChooseUs from "@/components/WhyChooseUs";
 import GetStartedSteps from "@/components/GetStartedSteps";
-import EarningsCalendar from "@/components/EarningsCalendar";
 
 export default function Home() {
   const router = useRouter();
@@ -196,111 +196,7 @@ export default function Home() {
       {/* 5. METHODOLOGY BUBBLE */}
       <MethodologyBubble />
 
-      {/* 6. WHY CHOOSE US */}
-      <WhyChooseUs />
-
-      {/* 7. WHY MIZAN WEDGE — supporting proof, now AFTER the iPad demo.
-          The Amazon comparison lands as evidence backing up the multi-scholar
-          claim, not as the opening line. */}
-      <section className="mx-auto mt-32 max-w-3xl px-4 sm:px-6">
-        <div className="text-center">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-600">
-            Why Mizan
-          </div>
-          <h2
-            className="mt-3 text-[28px] font-bold leading-[1.15] text-gray-900 sm:text-[36px]"
-            style={{ fontFamily: "Georgia, serif" }}
-          >
-            Most apps check one rulebook.
-            <br />
-            Muslims follow many.
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-gray-600">
-            Different scholars reach different verdicts on the same stock. Take
-            Amazon:
-          </p>
-        </div>
-
-        <div className="mt-10 grid grid-cols-1 overflow-hidden rounded-xl border border-gray-200 sm:grid-cols-2">
-          {/* LEFT */}
-          <div className="bg-white px-10 py-12">
-            <div className="flex items-baseline justify-between gap-3">
-              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
-                Under AAOIFI
-              </div>
-              <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-gray-400">
-                AS OF Q4 2025
-              </div>
-            </div>
-            <div
-              className="mt-8 text-[72px] font-bold leading-none text-emerald-700 sm:text-[88px]"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              Halal
-            </div>
-            <div className="mt-10 space-y-1.5 border-t border-gray-100 pt-4 font-mono text-[12px] tabular-nums text-gray-500">
-              <div className="flex justify-between">
-                <span>DEBT / MKT CAP</span>
-                <span className="text-gray-900">6.5%</span>
-              </div>
-              <div className="flex justify-between text-gray-400">
-                <span>Threshold</span>
-                <span>≤ 30%</span>
-              </div>
-            </div>
-            <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
-              What Zoya, Wahed, and Musaffa would tell you.
-            </p>
-          </div>
-
-          {/* RIGHT */}
-          <div className="border-t border-gray-200 bg-white px-10 py-12 sm:border-l sm:border-t-0">
-            <div className="flex items-baseline justify-between gap-3">
-              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-rose-700">
-                Under Mufti Taqi Usmani
-              </div>
-              <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-gray-400">
-                AS OF Q4 2025
-              </div>
-            </div>
-            <div
-              className="mt-8 text-[72px] font-bold leading-none text-rose-700 sm:text-[88px]"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              Not halal
-            </div>
-            <div className="mt-10 space-y-1.5 border-t border-gray-100 pt-4 font-mono text-[12px] tabular-nums text-gray-500">
-              <div className="flex justify-between">
-                <span>TANGIBLE / TOTAL</span>
-                <span className="text-gray-900">12.0%</span>
-              </div>
-              <div className="flex justify-between text-gray-400">
-                <span>Threshold</span>
-                <span>≥ 20%</span>
-              </div>
-            </div>
-            <p className="mt-5 text-[13px] leading-relaxed text-gray-500">
-              His illiquid-asset rule excludes AMZN. No other app surfaces this.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-8 text-center">
-          <Link
-            href="/screen?ticker=AMZN"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-navy-700 transition hover:text-navy-900"
-          >
-            See AMZN under all six scholars <ArrowRight size={14} />
-          </Link>
-        </div>
-      </section>
-
-      {/* 8. EARNINGS CALENDAR */}
-      <section className="mx-auto mt-32 max-w-5xl px-4 sm:px-6">
-        <EarningsCalendar limit={20} />
-      </section>
-
-      {/* 9. GET STARTED */}
+      {/* 6. GET STARTED */}
       <GetStartedSteps />
 
       {/* 10. CURATED LISTS */}
