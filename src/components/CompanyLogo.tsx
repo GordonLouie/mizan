@@ -1,17 +1,18 @@
 /**
- * CompanyLogo — renders a stock's company logo from Clearbit when we have a
- * mapped domain, falls back to a monogram pill (ticker on a navy chip) when
- * we don't or when the image 404s.
+ * CompanyLogo — renders a stock's company logo with a cascading fallback chain:
  *
- * Why we did it this way:
- *   - Clearbit's logo CDN works without auth and is reliable for well-known
- *     public companies.
- *   - 342 tickers in the universe is too many to maintain a full
- *     domain map for — heavy-display tickers are mapped, the long tail
- *     gracefully degrades to an editorial monogram that still looks on-brand.
+ *   1. Clearbit (https://logo.clearbit.com/<domain>) — proper brand logos when
+ *      they're available. Often returns the real corporate mark (the Microsoft
+ *      4-square, Apple's apple, etc.) but reliability has been spotty since
+ *      Clearbit was acquired by HubSpot.
+ *   2. Google favicons (https://www.google.com/s2/favicons?domain=&sz=128) —
+ *      always works for any domain. The visual is the company's website
+ *      favicon, which for major companies IS their brand mark, just smaller.
+ *   3. Monogram pill — final fallback if both image sources fail or if the
+ *      ticker has no mapped domain (long-tail tickers).
  *
- * Sizing: pass `size` in pixels (defaults to 24). Component takes care of
- * the chip framing in either mode.
+ * The cascade is implemented with two onError handlers so the browser
+ * gracefully degrades without flashing through broken states.
  */
 
 "use client";
@@ -29,6 +30,8 @@ interface CompanyLogoProps {
   fallbackTone?: "navy" | "neutral";
 }
 
+type Stage = "clearbit" | "favicon" | "monogram";
+
 export default function CompanyLogo({
   ticker,
   size = 24,
@@ -36,25 +39,17 @@ export default function CompanyLogo({
   fallbackTone = "navy",
 }: CompanyLogoProps) {
   const domain = getDomainForTicker(ticker);
-  const [failed, setFailed] = useState(false);
-
-  const useFallback = !domain || failed;
+  const [stage, setStage] = useState<Stage>(domain ? "clearbit" : "monogram");
 
   const fallbackBg =
     fallbackTone === "navy"
       ? "bg-navy-800 text-white"
       : "bg-gray-100 text-gray-700";
 
-  // Two-letter monogram from ticker. Strip suffixes like ".HK" / ".SR" / ".L".
-  const monogram = ticker
-    .replace(/\..*$/, "")
-    .slice(0, 2)
-    .toUpperCase();
+  // Two-letter monogram — strip suffixes like ".HK" / ".SR" / ".L".
+  const monogram = ticker.replace(/\..*$/, "").slice(0, 2).toUpperCase();
 
-  // Sub-tag for the monogram so users still know what they're looking at
-  // for tickers we don't have a domain for. Visually small but legible.
-
-  if (useFallback) {
+  if (stage === "monogram" || !domain) {
     return (
       <span
         className={
@@ -74,14 +69,21 @@ export default function CompanyLogo({
     );
   }
 
+  // Image sources by stage
+  const src =
+    stage === "clearbit"
+      ? `https://logo.clearbit.com/${domain}`
+      : `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+
   // eslint-disable-next-line @next/next/no-img-element
   return (
     <img
-      src={`https://logo.clearbit.com/${domain}`}
+      key={stage} /* re-mount on stage change so onError re-fires for the new src */
+      src={src}
       alt={`${ticker} logo`}
       width={size}
       height={size}
-      onError={() => setFailed(true)}
+      onError={() => setStage(stage === "clearbit" ? "favicon" : "monogram")}
       className={
         "inline-block shrink-0 rounded-md bg-white object-contain ring-1 ring-gray-100 " +
         (className ?? "")
