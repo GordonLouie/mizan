@@ -30,7 +30,6 @@ import { CURATED_LISTS } from "@/lib/lists";
 import { listStocks } from "@/lib/data";
 import CompanyLogo from "@/components/CompanyLogo";
 import CompanyLogoMarquee from "@/components/CompanyLogoMarquee";
-import ScrollDashboardHero from "@/components/ScrollDashboardHero";
 import MethodologyBubble from "@/components/MethodologyBubble";
 import GetStartedSteps from "@/components/GetStartedSteps";
 
@@ -68,13 +67,7 @@ export default function Home() {
           Is your stock halal?
         </h1>
 
-        <p
-          className="mx-auto mt-6 max-w-xl text-[20px] font-medium leading-[1.3] text-gray-800 sm:text-[24px]"
-          style={{ fontFamily: "Georgia, serif" }}
-        >
-          Six scholars, one screen.
-        </p>
-        <p className="mx-auto mt-3 max-w-xl text-[14px] leading-relaxed text-gray-500">
+        <p className="mx-auto mt-6 max-w-xl text-[14px] leading-relaxed text-gray-500">
           Including Mufti Taqi Usmani&apos;s illiquid-asset rule — the one no
           other halal app implements.
         </p>
@@ -179,24 +172,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. SOFT GRADIENT TRANSITION INTO IPAD.
-          The iPad sits on a cream → soft-blue wash so it doesn't float on
-          a blank canvas. The gradient is the section background; the iPad
-          renders above it. */}
-      <div
-        className="relative -mt-10"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(250,247,240,0) 0%, rgba(228,236,248,0.45) 35%, rgba(228,236,248,0.7) 60%, rgba(228,236,248,0.2) 100%)",
-        }}
-      >
-        <ScrollDashboardHero ticker="AMZN" />
-      </div>
-
-      {/* 5. METHODOLOGY BUBBLE */}
+      {/* 4. METHODOLOGY BUBBLE */}
       <MethodologyBubble />
 
-      {/* 6. GET STARTED */}
+      {/* 5. GET STARTED */}
       <GetStartedSteps />
 
       {/* 10. CURATED LISTS */}
