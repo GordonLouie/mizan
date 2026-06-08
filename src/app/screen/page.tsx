@@ -155,12 +155,11 @@ function ScreenInner() {
         {!ticker && <DemoBanner />}
 
         {ticker && !stock && (
-          <Card>
-            <p className="text-sm text-amber-800">
-              <strong>{ticker}</strong> isn&apos;t in Mizan&apos;s current sample dataset.
-              The prototype ships with {stocks.length} representative tickers; production version supports any listed equity.
-            </p>
-          </Card>
+          <TickerNotFound
+            ticker={ticker}
+            covered={stocks.length}
+            onPick={(t) => setTicker(t)}
+          />
         )}
       </div>
     );
@@ -415,6 +414,78 @@ function VerdictIcon({ verdict }: { verdict: "pass" | "fail" | "borderline" }) {
     return <XCircle size={44} className="shrink-0 text-rose-600" strokeWidth={1.5} />;
   }
   return <AlertCircle size={44} className="shrink-0 text-amber-600" strokeWidth={1.5} />;
+}
+
+/**
+ * TickerNotFound — replaces the old "isn't in our sample dataset" dead end.
+ *
+ * Three jobs in order of importance:
+ *   1. Acknowledge honestly (you don't have it)
+ *   2. Keep them engaged (show what you DO have, with one-tap suggestions)
+ *   3. Capture intent (mailto request so we can track demand + reply manually)
+ *
+ * This single change turns the highest-bounce moment on the site into
+ * an engagement loop. Direct response to Ibrahim Malik's "more stocks is
+ * the most important" — until coverage catches up, mitigate the gap.
+ */
+function TickerNotFound({
+  ticker,
+  covered,
+  onPick,
+}: {
+  ticker: string;
+  covered: number;
+  onPick: (ticker: string) => void;
+}) {
+  const mailtoSubject = encodeURIComponent(`Mizan ticker request: ${ticker}`);
+  const mailtoBody = encodeURIComponent(
+    `Hi Gordon,\n\nI tried to screen ${ticker} on Mizan but it's not in the universe yet. Could you add it?\n\nThanks.`,
+  );
+  const mailtoHref = `mailto:hello@mizaninvesting.com?subject=${mailtoSubject}&body=${mailtoBody}`;
+
+  return (
+    <div className="space-y-6">
+      <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-5">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-800">
+          Not in the universe yet
+        </div>
+        <h2
+          className="mt-2 text-[20px] font-bold leading-tight text-gray-900"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          {ticker} isn&apos;t covered — yet.
+        </h2>
+        <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-gray-700">
+          Mizan covers {covered} tickers today and is expanding weekly toward
+          the full Russell 3000 + major international names. The fastest way
+          to get {ticker} prioritised is to ask for it directly.
+        </p>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <a
+            href={mailtoHref}
+            className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700"
+          >
+            Request {ticker} <ArrowRight size={13} />
+          </a>
+          <Link
+            href="/universe"
+            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2 text-[13px] font-semibold text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+          >
+            Browse what&apos;s covered <ArrowRight size={13} />
+          </Link>
+        </div>
+      </div>
+
+      <div>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          Or try one of these instead
+        </div>
+        <div className="mt-4">
+          <FeaturedTickers onPick={onPick} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 /**
