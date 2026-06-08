@@ -10,13 +10,13 @@
   "theme_color": "#1F3A5F",
   "icons": [
     {
-      "src": "/logo_mark.svg",
+      "src": "/favicon.svg?v=3",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/favicon.svg",
+      "src": "/favicon.svg?v=3",
       "sizes": "32x32",
       "type": "image/svg+xml",
       "purpose": "any"

@@ -23,9 +23,11 @@ export const metadata: Metadata = {
   publisher: "Mizan",
   manifest: "/manifest.webmanifest",
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
-    shortcut: "/favicon.svg",
-    apple: "/logo_mark.svg",
+    // Cache buster on every icon URL — browsers cache favicons aggressively
+    // and won't refetch on simple SVG changes. Bump ?v=N when the mark changes.
+    icon: [{ url: "/favicon.svg?v=3", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg?v=3",
+    apple: "/favicon.svg?v=3",
   },
   openGraph: {
     title: "Mizan — halal investing, calibrated to your conscience.",
