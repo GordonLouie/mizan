@@ -1145,9 +1145,9 @@
     "sector": "Technology",
     "marketCapUsd": 2153270901600,
     "impermissibleIncomePct": 2.45,
-    "debtToMarketCapPct": 49.44,
-    "cashSecuritiesToMarketCapPct": 145.28,
-    "receivablesToMarketCapPct": 13.1,
+    "debtToMarketCapPct": 1.56,
+    "cashSecuritiesToMarketCapPct": 5.22,
+    "receivablesToMarketCapPct": 0.53,
     "illiquidAssetsToTotalAssetsPct": 51,
     "sectorFlags": [],
     "dividendYieldPct": 0.96,
@@ -1156,178 +1156,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1046179&type=10-Q",
       "currency": "USD",
-      "cash": 3034972.331,
-      "marketableSecurities": 347887.811,
-      "longTermMarketableSecurities": 166530.529,
-      "accountsReceivable": 362925.518,
-      "inventories": 311385.805,
-      "otherCurrentAssets": 207406.578,
-      "propertyPlantEquipment": 3953813.102,
-      "operatingLeaseAssets": 0,
-      "goodwill": 5973.962,
-      "intangibleAssets": 18749.22,
-      "otherNonCurrentAssets": 249408.783,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 8659053.639,
-      "accountsPayable": 99834.194,
-      "otherCurrentLiabilities": 885899.011,
-      "deferredRevenue": 50414.358,
-      "shortTermDebt": 159807.813,
-      "commercialPaper": 0,
-      "longTermDebt": 900820.459,
-      "otherNonCurrentLiabilities": 75881.965,
-      "totalLiabilities": 2727963.567,
-      "totalRevenueTTM": 4113789.591,
-      "productServicesRevenueTTM": 4113789.591,
-      "interestIncomeTTM": 101273.1
+      "cash": 96073.8,
+      "marketableSecurities": 11012.6,
+      "longTermMarketableSecurities": 5271.6,
+      "accountsReceivable": 11488.6,
+      "inventories": 9857.1,
+      "otherCurrentAssets": 6565.6,
+      "propertyPlantEquipment": 125160.3,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 189.1,
+      "intangibleAssets": 593.5,
+      "otherNonCurrentAssets": 7895.2,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 274107.4,
+      "accountsPayable": 3160.3,
+      "otherCurrentLiabilities": 28043.7,
+      "deferredRevenue": 1595.9,
+      "shortTermDebt": 5058.8,
+      "commercialPaper": 0.0,
+      "longTermDebt": 28516.0,
+      "otherNonCurrentLiabilities": 2402.1,
+      "totalLiabilities": 86355.3,
+      "totalRevenueTTM": 130224.4,
+      "productServicesRevenueTTM": 130224.4,
+      "interestIncomeTTM": 3205.9,
+      "reportingCurrency": "TWD",
+      "fxRateToUsd": 31.59
     },
     "nextEarningsDate": "2026-07-16",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 47.6%, Cash 96.8%",
-          "taqi_usmani": "Failed: Debt 47.6%, Cash 96.8%",
-          "djim": "Failed: Debt 47.6%, Cash 96.8%",
-          "jafari": "Failed: Debt 47.6%, Cash 96.8%",
-          "strict": "Failed: Debt 47.6%, Cash 96.8%, Income 3.1%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 47.5%, Cash 100.4%",
-          "taqi_usmani": "Failed: Debt 47.5%, Cash 100.4%",
-          "djim": "Failed: Debt 47.5%, Cash 100.4%",
-          "jafari": "Failed: Debt 47.5%, Cash 100.4%",
-          "strict": "Failed: Debt 47.5%, Cash 100.4%, Income 3.0%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 48.6%, Cash 115.4%",
-          "taqi_usmani": "Failed: Debt 48.6%, Cash 115.4%",
-          "djim": "Failed: Debt 48.6%, Cash 115.4%",
-          "jafari": "Failed: Debt 48.6%, Cash 115.4%",
-          "strict": "Failed: Debt 48.6%, Cash 115.4%, Income 2.8%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 47.2%, Cash 128.3%",
-          "taqi_usmani": "Failed: Debt 47.2%, Cash 128.3%",
-          "djim": "Failed: Debt 47.2%, Cash 128.3%",
-          "jafari": "Failed: Debt 47.2%, Cash 128.3%",
-          "strict": "Failed: Debt 47.2%, Cash 128.3%, Income 3.0%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 42.5%, Cash 124.6%",
-          "taqi_usmani": "Failed: Debt 42.5%, Cash 124.6%",
-          "djim": "Failed: Debt 42.5%, Cash 124.6%",
-          "jafari": "Failed: Debt 42.5%, Cash 124.6%",
-          "strict": "Failed: Debt 42.5%, Cash 124.6%, Income 2.7%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 44.1%, Cash 127.8%",
-          "taqi_usmani": "Failed: Debt 44.1%, Cash 127.8%",
-          "djim": "Failed: Debt 44.1%, Cash 127.8%",
-          "jafari": "Failed: Debt 44.1%, Cash 127.8%",
-          "strict": "Failed: Debt 44.1%, Cash 127.8%, Income 2.3%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 49.4%, Cash 145.3%",
-          "taqi_usmani": "Failed: Debt 49.4%, Cash 145.3%",
-          "djim": "Failed: Debt 49.4%, Cash 145.3%",
-          "jafari": "Failed: Debt 49.4%, Cash 145.3%",
-          "strict": "Failed: Debt 49.4%, Cash 145.3%, Income 2.5%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 50.8%, Cash 157.1%",
-          "taqi_usmani": "Failed: Debt 50.8%, Cash 157.1%",
-          "djim": "Failed: Debt 50.8%, Cash 157.1%",
-          "jafari": "Failed: Debt 50.8%, Cash 157.1%",
-          "strict": "Failed: Debt 50.8%, Cash 157.1%, Income 2.3%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "AVGO",
@@ -3848,9 +3705,9 @@
     "sector": "Communication Services",
     "marketCapUsd": 514657570633,
     "impermissibleIncomePct": 2.27,
-    "debtToMarketCapPct": 79.02,
-    "cashSecuritiesToMarketCapPct": 84.33,
-    "receivablesToMarketCapPct": 9.71,
+    "debtToMarketCapPct": 11.2,
+    "cashSecuritiesToMarketCapPct": 39.59,
+    "receivablesToMarketCapPct": 1.66,
     "illiquidAssetsToTotalAssetsPct": 9,
     "sectorFlags": [],
     "dividendYieldPct": 0.77,
@@ -3859,178 +3716,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1293451&type=10-Q",
       "currency": "USD",
-      "cash": 224525.324,
-      "marketableSecurities": 241041.41,
-      "longTermMarketableSecurities": 916030.085,
-      "accountsReceivable": 57898.955,
-      "inventories": 579.826,
-      "otherCurrentAssets": 120474.379,
-      "propertyPlantEquipment": 188033.122,
-      "operatingLeaseAssets": 0,
-      "goodwill": 0,
-      "intangibleAssets": 198264.766,
-      "otherNonCurrentAssets": 67293.736,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 2043728.69,
-      "accountsPayable": 141218.615,
-      "otherCurrentLiabilities": 90299.495,
-      "deferredRevenue": 140791.217,
-      "shortTermDebt": 59981.149,
-      "commercialPaper": 0,
-      "longTermDebt": 330990.22,
-      "otherNonCurrentLiabilities": 14377.105,
-      "totalLiabilities": 836626.744,
-      "totalRevenueTTM": 763323.085,
-      "productServicesRevenueTTM": 763323.085,
-      "interestIncomeTTM": 20331.039
+      "cash": 33115.8,
+      "marketableSecurities": 35551.8,
+      "longTermMarketableSecurities": 135107.7,
+      "accountsReceivable": 8539.7,
+      "inventories": 85.5,
+      "otherCurrentAssets": 17769.1,
+      "propertyPlantEquipment": 27733.5,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 0.0,
+      "intangibleAssets": 29242.6,
+      "otherNonCurrentAssets": 9925.3,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 301434.9,
+      "accountsPayable": 20828.7,
+      "otherCurrentLiabilities": 13318.5,
+      "deferredRevenue": 20765.7,
+      "shortTermDebt": 8846.8,
+      "commercialPaper": 0.0,
+      "longTermDebt": 48818.6,
+      "otherNonCurrentLiabilities": 2120.5,
+      "totalLiabilities": 123396.3,
+      "totalRevenueTTM": 112584.5,
+      "productServicesRevenueTTM": 112584.5,
+      "interestIncomeTTM": 2998.7,
+      "reportingCurrency": "CNY",
+      "fxRateToUsd": 6.78
     },
     "nextEarningsDate": "2026-08-12",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 70.8%, Cash 71.6%",
-          "taqi_usmani": "Failed: Debt 70.8%, Cash 71.6%, Illiquid 5.7%",
-          "djim": "Failed: Debt 70.8%, Cash 71.6%",
-          "jafari": "Failed: Debt 70.8%, Cash 71.6%",
-          "strict": "Failed: Debt 70.8%, Cash 71.6%, Income 2.4%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 67.9%, Cash 70.0%",
-          "taqi_usmani": "Failed: Debt 67.9%, Cash 70.0%, Illiquid 6.4%",
-          "djim": "Failed: Debt 67.9%, Cash 70.0%",
-          "jafari": "Failed: Debt 67.9%, Cash 70.0%",
-          "strict": "Failed: Debt 67.9%, Cash 70.0%, Income 0.6%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 69.6%, Cash 66.7%",
-          "taqi_usmani": "Failed: Debt 69.6%, Cash 66.7%, Illiquid 7.3%",
-          "djim": "Failed: Debt 69.6%, Cash 66.7%",
-          "jafari": "Failed: Debt 69.6%, Cash 66.7%",
-          "strict": "Failed: Debt 69.6%, Cash 66.7%, Income 0.4%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 78.6%, Cash 73.4%",
-          "taqi_usmani": "Failed: Debt 78.6%, Cash 73.4%, Illiquid 6.4%",
-          "djim": "Failed: Debt 78.6%, Cash 73.4%",
-          "jafari": "Failed: Debt 78.6%, Cash 73.4%",
-          "strict": "Failed: Debt 78.6%, Cash 73.4%, Income 0.3%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 80.1%, Cash 73.9%",
-          "taqi_usmani": "Failed: Debt 80.1%, Cash 73.9%, Illiquid 7.9%",
-          "djim": "Failed: Debt 80.1%, Cash 73.9%",
-          "jafari": "Failed: Debt 80.1%, Cash 73.9%",
-          "strict": "Failed: Debt 80.1%, Cash 73.9%, Income 2.2%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 79.5%, Cash 82.0%",
-          "taqi_usmani": "Failed: Debt 79.5%, Cash 82.0%, Illiquid 8.1%",
-          "djim": "Failed: Debt 79.5%, Cash 82.0%",
-          "jafari": "Failed: Debt 79.5%, Cash 82.0%",
-          "strict": "Failed: Debt 79.5%, Cash 82.0%, Income 2.2%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 79.0%, Cash 84.3%",
-          "taqi_usmani": "Failed: Debt 79.0%, Cash 84.3%, Illiquid 8.7%",
-          "djim": "Failed: Debt 79.0%, Cash 84.3%",
-          "jafari": "Failed: Debt 79.0%, Cash 84.3%",
-          "strict": "Failed: Debt 79.0%, Cash 84.3%, Income 4.2%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 78.5%, Cash 90.5%",
-          "taqi_usmani": "Failed: Debt 78.5%, Cash 90.5%, Illiquid 9.2%",
-          "djim": "Failed: Debt 78.5%, Cash 90.5%",
-          "jafari": "Failed: Debt 78.5%, Cash 90.5%",
-          "strict": "Failed: Debt 78.5%, Cash 90.5%, Income 2.0%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "INTC",
@@ -7881,7 +7595,7 @@
   },
   {
     "ticker": "NESN.SW",
-    "name": "Nestlé",
+    "name": "Nestl\u00e9",
     "sector": "Consumer Staples",
     "marketCapUsd": 300000000000,
     "impermissibleIncomePct": 1.5,
@@ -8278,9 +7992,9 @@
     "sector": "Consumer Cyclical",
     "marketCapUsd": 282514943915,
     "impermissibleIncomePct": 8.55,
-    "debtToMarketCapPct": 91.69,
-    "cashSecuritiesToMarketCapPct": 126.57,
-    "receivablesToMarketCapPct": 0,
+    "debtToMarketCapPct": 13.52,
+    "cashSecuritiesToMarketCapPct": 52.83,
+    "receivablesToMarketCapPct": 0.0,
     "illiquidAssetsToTotalAssetsPct": 15,
     "sectorFlags": [],
     "dividendYieldPct": 1.68,
@@ -8289,178 +8003,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1577552&type=10-Q",
       "currency": "USD",
-      "cash": 172919.777,
-      "marketableSecurities": 184671.723,
-      "longTermMarketableSecurities": 654292.26,
-      "accountsReceivable": 0,
-      "inventories": 0,
-      "otherCurrentAssets": 250896.466,
-      "propertyPlantEquipment": 281643.206,
-      "operatingLeaseAssets": 0,
-      "goodwill": 246454.119,
-      "intangibleAssets": 16919.574,
-      "otherNonCurrentAssets": 94641.219,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 1902438.344,
-      "accountsPayable": 358548.91,
-      "otherCurrentLiabilities": 235.119,
-      "deferredRevenue": 77125.879,
-      "shortTermDebt": 28118.592,
-      "commercialPaper": 0,
-      "longTermDebt": 230906.403,
-      "otherNonCurrentLiabilities": 24094.676,
-      "totalLiabilities": 780374.616,
-      "totalRevenueTTM": 1023670,
-      "productServicesRevenueTTM": 1023670,
-      "interestIncomeTTM": 87512
+      "cash": 25504.4,
+      "marketableSecurities": 27237.7,
+      "longTermMarketableSecurities": 96503.3,
+      "accountsReceivable": 0.0,
+      "inventories": 0.0,
+      "otherCurrentAssets": 37005.4,
+      "propertyPlantEquipment": 41540.3,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 36350.2,
+      "intangibleAssets": 2495.5,
+      "otherNonCurrentAssets": 13958.9,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 280595.6,
+      "accountsPayable": 52883.3,
+      "otherCurrentLiabilities": 34.7,
+      "deferredRevenue": 11375.5,
+      "shortTermDebt": 4147.3,
+      "commercialPaper": 0.0,
+      "longTermDebt": 34057.0,
+      "otherNonCurrentLiabilities": 3553.8,
+      "totalLiabilities": 115099.5,
+      "totalRevenueTTM": 150983.8,
+      "productServicesRevenueTTM": 150983.8,
+      "interestIncomeTTM": 12907.4,
+      "reportingCurrency": "CNY",
+      "fxRateToUsd": 6.78
     },
     "nextEarningsDate": "2026-08-28",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 73.6%, Cash 175.3%, Income 8.1%",
-          "taqi_usmani": "Failed: Debt 73.6%, Cash 175.3%, Income 8.1%, Illiquid 10.9%",
-          "djim": "Failed: Debt 73.6%, Cash 175.3%, Income 8.1%",
-          "jafari": "Failed: Debt 73.6%, Cash 175.3%, Income 8.1%",
-          "strict": "Failed: Debt 73.6%, Cash 175.3%, Income 8.1%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 71.5%, Cash 153.6%, Income 7.9%",
-          "taqi_usmani": "Failed: Debt 71.5%, Cash 153.6%, Income 7.9%, Illiquid 11.8%",
-          "djim": "Failed: Debt 71.5%, Cash 153.6%, Income 7.9%",
-          "jafari": "Failed: Debt 71.5%, Cash 153.6%, Income 7.9%",
-          "strict": "Failed: Debt 71.5%, Cash 153.6%, Income 7.9%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 81.9%, Cash 175.7%",
-          "taqi_usmani": "Failed: Debt 81.9%, Cash 175.7%, Illiquid 12.2%",
-          "djim": "Failed: Debt 81.9%, Cash 175.7%",
-          "jafari": "Failed: Debt 81.9%, Cash 175.7%",
-          "strict": "Failed: Debt 81.9%, Cash 175.7%, Income 4.0%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 88.0%, Cash 164.5%, Income 7.9%",
-          "taqi_usmani": "Failed: Debt 88.0%, Cash 164.5%, Income 7.9%, Illiquid 14.9%",
-          "djim": "Failed: Debt 88.0%, Cash 164.5%, Income 7.9%",
-          "jafari": "Failed: Debt 88.0%, Cash 164.5%, Income 7.9%",
-          "strict": "Failed: Debt 88.0%, Cash 164.5%, Income 7.9%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 82.2%, Cash 147.4%, Income 7.0%",
-          "taqi_usmani": "Failed: Debt 82.2%, Cash 147.4%, Income 7.0%, Illiquid 12.0%",
-          "djim": "Failed: Debt 82.2%, Cash 147.4%, Income 7.0%",
-          "jafari": "Failed: Debt 82.2%, Cash 147.4%, Income 7.0%",
-          "strict": "Failed: Debt 82.2%, Cash 147.4%, Income 7.0%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 99.7%, Cash 132.2%, Income 8.1%",
-          "taqi_usmani": "Failed: Debt 99.7%, Cash 132.2%, Income 8.1%, Illiquid 13.1%",
-          "djim": "Failed: Debt 99.7%, Cash 132.2%, Income 8.1%",
-          "jafari": "Failed: Debt 99.7%, Cash 132.2%, Income 8.1%",
-          "strict": "Failed: Debt 99.7%, Cash 132.2%, Income 8.1%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 93.1%, Cash 134.8%, Income 5.7%",
-          "taqi_usmani": "Failed: Debt 93.1%, Cash 134.8%, Income 5.7%, Illiquid 13.5%",
-          "djim": "Failed: Debt 93.1%, Cash 134.8%, Income 5.7%",
-          "jafari": "Failed: Debt 93.1%, Cash 134.8%, Income 5.7%",
-          "strict": "Failed: Debt 93.1%, Cash 134.8%, Income 5.7%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 91.7%, Cash 126.6%, Income 13.9%",
-          "taqi_usmani": "Failed: Debt 91.7%, Cash 126.6%, Income 13.9%, Illiquid 14.8%",
-          "djim": "Failed: Debt 91.7%, Cash 126.6%, Income 13.9%",
-          "jafari": "Failed: Debt 91.7%, Cash 126.6%, Income 13.9%",
-          "strict": "Failed: Debt 91.7%, Cash 126.6%, Income 13.9%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "QQQ",
@@ -10004,9 +9575,9 @@
     "sector": "Consumer Cyclical",
     "marketCapUsd": 230899377265,
     "impermissibleIncomePct": 1.17,
-    "debtToMarketCapPct": 18792.97,
-    "cashSecuritiesToMarketCapPct": 5506.52,
-    "receivablesToMarketCapPct": 7616.23,
+    "debtToMarketCapPct": 117.28,
+    "cashSecuritiesToMarketCapPct": 148.28,
+    "receivablesToMarketCapPct": 47.53,
     "illiquidAssetsToTotalAssetsPct": 22,
     "sectorFlags": [],
     "dividendYieldPct": 3.08,
@@ -10015,178 +9586,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1094517&type=10-Q",
       "currency": "USD",
-      "cash": 12714528.903,
-      "marketableSecurities": 0,
-      "longTermMarketableSecurities": 42148544.871,
-      "accountsReceivable": 17585828.306,
-      "inventories": 5157267.338,
-      "otherCurrentAssets": 7552191.671,
-      "propertyPlantEquipment": 18046529.817,
-      "operatingLeaseAssets": 0,
-      "goodwill": 1398795.612,
-      "intangibleAssets": 0,
-      "otherNonCurrentAssets": 818306.807,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 105979999.039,
-      "accountsPayable": 5882347.552,
-      "otherCurrentLiabilities": 9496304.2,
-      "deferredRevenue": 0,
-      "shortTermDebt": 17657356.195,
-      "commercialPaper": 0,
-      "longTermDebt": 25735502.167,
-      "otherNonCurrentLiabilities": 3704371.096,
-      "totalLiabilities": 64782020.128,
-      "totalRevenueTTM": 51159311.039,
-      "productServicesRevenueTTM": 51159311.039,
-      "interestIncomeTTM": 599737.513
+      "cash": 79346.8,
+      "marketableSecurities": 0.0,
+      "longTermMarketableSecurities": 263033.9,
+      "accountsReceivable": 109746.8,
+      "inventories": 32184.6,
+      "otherCurrentAssets": 47130.5,
+      "propertyPlantEquipment": 112621.9,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 8729.4,
+      "intangibleAssets": 0.0,
+      "otherNonCurrentAssets": 5106.8,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 661382.9,
+      "accountsPayable": 36709.6,
+      "otherCurrentLiabilities": 59263.0,
+      "deferredRevenue": 0.0,
+      "shortTermDebt": 110193.2,
+      "commercialPaper": 0.0,
+      "longTermDebt": 160606.0,
+      "otherNonCurrentLiabilities": 23117.6,
+      "totalLiabilities": 404281.2,
+      "totalRevenueTTM": 319266.8,
+      "productServicesRevenueTTM": 319266.8,
+      "interestIncomeTTM": 3742.7,
+      "reportingCurrency": "JPY",
+      "fxRateToUsd": 160.24
     },
     "nextEarningsDate": "2026-08-06",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 16853.6%, Cash 5901.3%",
-          "taqi_usmani": "Failed: Debt 16853.6%, Cash 5901.3%",
-          "djim": "Failed: Debt 16853.6%, Cash 5901.3%",
-          "jafari": "Failed: Debt 16853.6%, Cash 5901.3%",
-          "strict": "Failed: Debt 16853.6%, Cash 5901.3%, Income 1.5%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 15812.8%, Cash 6089.7%",
-          "taqi_usmani": "Failed: Debt 15812.8%, Cash 6089.7%",
-          "djim": "Failed: Debt 15812.8%, Cash 6089.7%",
-          "jafari": "Failed: Debt 15812.8%, Cash 6089.7%",
-          "strict": "Failed: Debt 15812.8%, Cash 6089.7%, Income 0.8%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 17141.5%, Cash 6011.9%",
-          "taqi_usmani": "Failed: Debt 17141.5%, Cash 6011.9%",
-          "djim": "Failed: Debt 17141.5%, Cash 6011.9%",
-          "jafari": "Failed: Debt 17141.5%, Cash 6011.9%",
-          "strict": "Failed: Debt 17141.5%, Cash 6011.9%, Income 1.2%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 16800.8%, Cash 6894.0%",
-          "taqi_usmani": "Failed: Debt 16800.8%, Cash 6894.0%",
-          "djim": "Failed: Debt 16800.8%, Cash 6894.0%",
-          "jafari": "Failed: Debt 16800.8%, Cash 6894.0%",
-          "strict": "Failed: Debt 16800.8%, Cash 6894.0%, Income 1.0%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 16649.6%, Cash 6916.5%",
-          "taqi_usmani": "Failed: Debt 16649.6%, Cash 6916.5%",
-          "djim": "Failed: Debt 16649.6%, Cash 6916.5%",
-          "jafari": "Failed: Debt 16649.6%, Cash 6916.5%",
-          "strict": "Failed: Debt 16649.6%, Cash 6916.5%, Income 1.3%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 17264.8%, Cash 7327.1%",
-          "taqi_usmani": "Failed: Debt 17264.8%, Cash 7327.1%",
-          "djim": "Failed: Debt 17264.8%, Cash 7327.1%",
-          "jafari": "Failed: Debt 17264.8%, Cash 7327.1%",
-          "strict": "Failed: Debt 17264.8%, Cash 7327.1%, Income 1.1%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 18257.5%, Cash 3431.9%",
-          "taqi_usmani": "Failed: Debt 18257.5%, Cash 3431.9%",
-          "djim": "Failed: Debt 18257.5%, Cash 3431.9%",
-          "jafari": "Failed: Debt 18257.5%, Cash 3431.9%",
-          "strict": "Failed: Debt 18257.5%, Cash 3431.9%, Income 1.0%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 18793.0%, Cash 5506.5%",
-          "taqi_usmani": "Failed: Debt 18793.0%, Cash 5506.5%",
-          "djim": "Failed: Debt 18793.0%, Cash 5506.5%",
-          "jafari": "Failed: Debt 18793.0%, Cash 5506.5%",
-          "strict": "Failed: Debt 18793.0%, Cash 5506.5%, Income 1.3%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "QCOM",
@@ -10574,9 +10002,9 @@
     "sector": "Financial Services",
     "marketCapUsd": 224736016629,
     "impermissibleIncomePct": 64.93,
-    "debtToMarketCapPct": 35012.23,
-    "cashSecuritiesToMarketCapPct": 58632.86,
-    "receivablesToMarketCapPct": 0,
+    "debtToMarketCapPct": 218.5,
+    "cashSecuritiesToMarketCapPct": 1067.39,
+    "receivablesToMarketCapPct": 0.0,
     "illiquidAssetsToTotalAssetsPct": 0,
     "sectorFlags": [],
     "dividendYieldPct": 2.93,
@@ -10585,178 +10013,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=67088&type=10-Q",
       "currency": "USD",
-      "cash": 91600350.42,
-      "marketableSecurities": 0,
-      "longTermMarketableSecurities": 292785336.279,
-      "accountsReceivable": 0,
-      "inventories": 0,
-      "otherCurrentAssets": 0,
-      "propertyPlantEquipment": 1423451.085,
-      "operatingLeaseAssets": 0,
-      "goodwill": 513683.309,
-      "intangibleAssets": 1450787.134,
-      "otherNonCurrentAssets": 45682314.236,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 433604040.1,
-      "accountsPayable": 0,
-      "otherCurrentLiabilities": 0,
-      "deferredRevenue": 0,
-      "shortTermDebt": 50509410.751,
-      "commercialPaper": 0,
-      "longTermDebt": 28175679.923,
-      "otherNonCurrentLiabilities": 330518653.263,
-      "totalLiabilities": 409756891.671,
-      "totalRevenueTTM": 13206662.734,
-      "productServicesRevenueTTM": 13206662.734,
-      "interestIncomeTTM": 8765905.256
+      "cash": 571644.7,
+      "marketableSecurities": 0.0,
+      "longTermMarketableSecurities": 1827167.6,
+      "accountsReceivable": 0.0,
+      "inventories": 0.0,
+      "otherCurrentAssets": 0.0,
+      "propertyPlantEquipment": 8883.2,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 3205.7,
+      "intangibleAssets": 9053.8,
+      "otherNonCurrentAssets": 285086.8,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 2705966.3,
+      "accountsPayable": 0.0,
+      "otherCurrentLiabilities": 0.0,
+      "deferredRevenue": 0.0,
+      "shortTermDebt": 315211.0,
+      "commercialPaper": 0.0,
+      "longTermDebt": 175834.2,
+      "otherNonCurrentLiabilities": 2062647.6,
+      "totalLiabilities": 2557144.9,
+      "totalRevenueTTM": 82418.0,
+      "productServicesRevenueTTM": 82418.0,
+      "interestIncomeTTM": 54704.9,
+      "reportingCurrency": "JPY",
+      "fxRateToUsd": 160.24
     },
     "nextEarningsDate": "2026-08-04",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 37547.7%, Cash 47840.0%, Income 71.9%",
-          "taqi_usmani": "Failed: Debt 37547.7%, Cash 47840.0%, Income 71.9%, Illiquid 0.3%",
-          "djim": "Failed: Debt 37547.7%, Cash 47840.0%, Income 71.9%",
-          "jafari": "Failed: Debt 37547.7%, Cash 47840.0%, Income 71.9%",
-          "strict": "Failed: Debt 37547.7%, Cash 47840.0%, Income 71.9%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 38383.8%, Cash 48057.5%, Income 64.2%",
-          "taqi_usmani": "Failed: Debt 38383.8%, Cash 48057.5%, Income 64.2%, Illiquid 0.3%",
-          "djim": "Failed: Debt 38383.8%, Cash 48057.5%, Income 64.2%",
-          "jafari": "Failed: Debt 38383.8%, Cash 48057.5%, Income 64.2%",
-          "strict": "Failed: Debt 38383.8%, Cash 48057.5%, Income 64.2%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 39837.8%, Cash 47512.0%, Income 67.6%",
-          "taqi_usmani": "Failed: Debt 39837.8%, Cash 47512.0%, Income 67.6%, Illiquid 0.3%",
-          "djim": "Failed: Debt 39837.8%, Cash 47512.0%, Income 67.6%",
-          "jafari": "Failed: Debt 39837.8%, Cash 47512.0%, Income 67.6%",
-          "strict": "Failed: Debt 39837.8%, Cash 47512.0%, Income 67.6%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 39780.5%, Cash 68567.2%, Income 68.6%",
-          "taqi_usmani": "Failed: Debt 39780.5%, Cash 68567.2%, Income 68.6%, Illiquid 0.3%",
-          "djim": "Failed: Debt 39780.5%, Cash 68567.2%, Income 68.6%",
-          "jafari": "Failed: Debt 39780.5%, Cash 68567.2%, Income 68.6%",
-          "strict": "Failed: Debt 39780.5%, Cash 68567.2%, Income 68.6%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 36923.0%, Cash 46811.3%, Income 68.5%",
-          "taqi_usmani": "Failed: Debt 36923.0%, Cash 46811.3%, Income 68.5%, Illiquid 0.3%",
-          "djim": "Failed: Debt 36923.0%, Cash 46811.3%, Income 68.5%",
-          "jafari": "Failed: Debt 36923.0%, Cash 46811.3%, Income 68.5%",
-          "strict": "Failed: Debt 36923.0%, Cash 46811.3%, Income 68.5%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 34500.6%, Cash 41866.6%, Income 66.3%",
-          "taqi_usmani": "Failed: Debt 34500.6%, Cash 41866.6%, Income 66.3%, Illiquid 0.3%",
-          "djim": "Failed: Debt 34500.6%, Cash 41866.6%, Income 66.3%",
-          "jafari": "Failed: Debt 34500.6%, Cash 41866.6%, Income 66.3%",
-          "strict": "Failed: Debt 34500.6%, Cash 41866.6%, Income 66.3%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 33686.4%, Cash 54757.5%, Income 66.3%",
-          "taqi_usmani": "Failed: Debt 33686.4%, Cash 54757.5%, Income 66.3%, Illiquid 0.3%",
-          "djim": "Failed: Debt 33686.4%, Cash 54757.5%, Income 66.3%",
-          "jafari": "Failed: Debt 33686.4%, Cash 54757.5%, Income 66.3%",
-          "strict": "Failed: Debt 33686.4%, Cash 54757.5%, Income 66.3%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 35012.2%, Cash 40759.1%, Income 64.8%",
-          "taqi_usmani": "Failed: Debt 35012.2%, Cash 40759.1%, Income 64.8%, Illiquid 0.3%",
-          "djim": "Failed: Debt 35012.2%, Cash 40759.1%, Income 64.8%",
-          "jafari": "Failed: Debt 35012.2%, Cash 40759.1%, Income 64.8%",
-          "strict": "Failed: Debt 35012.2%, Cash 40759.1%, Income 64.8%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "7203.T",
@@ -12121,9 +11406,9 @@
     "sector": "Healthcare",
     "marketCapUsd": 190904859211,
     "impermissibleIncomePct": 0.41,
-    "debtToMarketCapPct": 68.6,
-    "cashSecuritiesToMarketCapPct": 14.12,
-    "receivablesToMarketCapPct": 39.65,
+    "debtToMarketCapPct": 11.81,
+    "cashSecuritiesToMarketCapPct": 1.93,
+    "receivablesToMarketCapPct": 8.09,
     "illiquidAssetsToTotalAssetsPct": 48,
     "sectorFlags": [],
     "dividendYieldPct": 3.6,
@@ -12132,178 +11417,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=353278&type=10-Q",
       "currency": "USD",
-      "cash": 21127,
-      "marketableSecurities": 499,
-      "longTermMarketableSecurities": 2241,
-      "accountsReceivable": 100268,
-      "inventories": 51352,
-      "otherCurrentAssets": 4071,
-      "propertyPlantEquipment": 219974,
-      "operatingLeaseAssets": 0,
-      "goodwill": 19877,
-      "intangibleAssets": 110033,
-      "otherNonCurrentAssets": 5992,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 559221,
-      "accountsPayable": 134053,
-      "otherCurrentLiabilities": 47746,
-      "deferredRevenue": 0,
-      "shortTermDebt": 27210,
-      "commercialPaper": 0,
-      "longTermDebt": 119172,
-      "otherNonCurrentLiabilities": 6818,
-      "totalLiabilities": 356156,
-      "totalRevenueTTM": 327800,
-      "productServicesRevenueTTM": 327800,
-      "interestIncomeTTM": 15651
+      "cash": 3255.3,
+      "marketableSecurities": 76.9,
+      "longTermMarketableSecurities": 345.3,
+      "accountsReceivable": 15449.6,
+      "inventories": 7912.5,
+      "otherCurrentAssets": 627.3,
+      "propertyPlantEquipment": 33894.3,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 3062.7,
+      "intangibleAssets": 16954.2,
+      "otherNonCurrentAssets": 923.3,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 86166.6,
+      "accountsPayable": 20655.3,
+      "otherCurrentLiabilities": 7356.9,
+      "deferredRevenue": 0.0,
+      "shortTermDebt": 4192.6,
+      "commercialPaper": 0.0,
+      "longTermDebt": 18362.4,
+      "otherNonCurrentLiabilities": 1050.5,
+      "totalLiabilities": 54877.7,
+      "totalRevenueTTM": 50508.5,
+      "productServicesRevenueTTM": 50508.5,
+      "interestIncomeTTM": 2411.6,
+      "reportingCurrency": "DKK",
+      "fxRateToUsd": 6.49
     },
     "nextEarningsDate": "2026-08-05",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "pass",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "All checks pass",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 4.3%, Cash 4.7%, Income 1.4%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 39.2%",
-          "taqi_usmani": "Failed: Cash 39.2%",
-          "djim": "Failed: Cash 39.2%",
-          "jafari": "Failed: Cash 39.2%",
-          "strict": "Failed: Debt 29.8%, Cash 39.2%, Income 1.9%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 53.8%",
-          "taqi_usmani": "Failed: Debt 53.8%",
-          "djim": "Failed: Debt 53.8%",
-          "jafari": "Failed: Debt 53.8%",
-          "strict": "Failed: Debt 53.8%, Cash 13.8%, Income 4.6%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 62.2%",
-          "taqi_usmani": "Failed: Debt 62.2%",
-          "djim": "Failed: Debt 62.2%",
-          "jafari": "Failed: Debt 62.2%",
-          "strict": "Failed: Debt 62.2%, Cash 21.8%, Income 4.4%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 52.0%, Income 6.9%",
-          "taqi_usmani": "Failed: Debt 52.0%, Income 6.9%",
-          "djim": "Failed: Debt 52.0%, Income 6.9%",
-          "jafari": "Failed: Debt 52.0%, Income 6.9%",
-          "strict": "Failed: Debt 52.0%, Cash 9.9%, Income 6.9%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 53.0%",
-          "taqi_usmani": "Failed: Debt 53.0%",
-          "djim": "Failed: Debt 53.0%",
-          "jafari": "Failed: Debt 53.0%",
-          "strict": "Failed: Debt 53.0%, Cash 17.1%, Income 2.4%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 68.6%",
-          "taqi_usmani": "Failed: Debt 68.6%",
-          "djim": "Failed: Debt 68.6%",
-          "jafari": "Failed: Debt 68.6%",
-          "strict": "Failed: Debt 68.6%, Cash 14.1%, Income 3.1%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 76.7%, Income 6.3%",
-          "taqi_usmani": "Failed: Debt 76.7%, Income 6.3%",
-          "djim": "Failed: Debt 76.7%, Income 6.3%",
-          "jafari": "Failed: Debt 76.7%, Income 6.3%",
-          "strict": "Failed: Debt 76.7%, Cash 11.3%, Income 6.3%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "9988.HK",
@@ -18221,9 +17363,9 @@
     "sector": "Technology",
     "marketCapUsd": 128910018441,
     "impermissibleIncomePct": 0.61,
-    "debtToMarketCapPct": 1300.84,
-    "cashSecuritiesToMarketCapPct": 1720.94,
-    "receivablesToMarketCapPct": 1419.45,
+    "debtToMarketCapPct": 5.52,
+    "cashSecuritiesToMarketCapPct": 13.09,
+    "receivablesToMarketCapPct": 8.86,
     "illiquidAssetsToTotalAssetsPct": 20,
     "sectorFlags": [],
     "dividendYieldPct": 0.73,
@@ -18232,178 +17374,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=313838&type=10-Q",
       "currency": "USD",
-      "cash": 2218459.278,
-      "marketableSecurities": 0,
-      "longTermMarketableSecurities": 485806.927,
-      "accountsReceivable": 1829817.955,
-      "inventories": 1232674.227,
-      "otherCurrentAssets": 694845.648,
-      "propertyPlantEquipment": 1986729.568,
-      "operatingLeaseAssets": 0,
-      "goodwill": 1681166.011,
-      "intangibleAssets": 3232150.843,
-      "otherNonCurrentAssets": 1826629.185,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 15751511.925,
-      "accountsPayable": 2250283.71,
-      "otherCurrentLiabilities": 1697298.679,
-      "deferredRevenue": 596913.735,
-      "shortTermDebt": 313105.125,
-      "commercialPaper": 0,
-      "longTermDebt": 827968.531,
-      "otherNonCurrentLiabilities": 570433.381,
-      "totalLiabilities": 7200998.063,
-      "totalRevenueTTM": 12602444.128,
-      "productServicesRevenueTTM": 12602444.128,
-      "interestIncomeTTM": 100008.71
+      "cash": 13844.6,
+      "marketableSecurities": 0.0,
+      "longTermMarketableSecurities": 3031.7,
+      "accountsReceivable": 11419.2,
+      "inventories": 7692.7,
+      "otherCurrentAssets": 4336.3,
+      "propertyPlantEquipment": 12398.5,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 10491.6,
+      "intangibleAssets": 20170.7,
+      "otherNonCurrentAssets": 11399.3,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 98299.5,
+      "accountsPayable": 14043.2,
+      "otherCurrentLiabilities": 10592.2,
+      "deferredRevenue": 3725.1,
+      "shortTermDebt": 1954.0,
+      "commercialPaper": 0.0,
+      "longTermDebt": 5167.1,
+      "otherNonCurrentLiabilities": 3559.9,
+      "totalLiabilities": 44938.8,
+      "totalRevenueTTM": 78647.3,
+      "productServicesRevenueTTM": 78647.3,
+      "interestIncomeTTM": 624.1,
+      "reportingCurrency": "JPY",
+      "fxRateToUsd": 160.24
     },
     "nextEarningsDate": "2026-08-06",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 3237.2%, Cash 1564.7%",
-          "taqi_usmani": "Failed: Debt 3237.2%, Cash 1564.7%, Illiquid 11.1%",
-          "djim": "Failed: Debt 3237.2%, Cash 1564.7%",
-          "jafari": "Failed: Debt 3237.2%, Cash 1564.7%",
-          "strict": "Failed: Debt 3237.2%, Cash 1564.7%, Income 2.1%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 3156.3%, Cash 1734.0%",
-          "taqi_usmani": "Failed: Debt 3156.3%, Cash 1734.0%, Illiquid 11.1%",
-          "djim": "Failed: Debt 3156.3%, Cash 1734.0%",
-          "jafari": "Failed: Debt 3156.3%, Cash 1734.0%",
-          "strict": "Failed: Debt 3156.3%, Cash 1734.0%, Income 1.1%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 3396.2%, Cash 2385.9%",
-          "taqi_usmani": "Failed: Debt 3396.2%, Cash 2385.9%, Illiquid 9.6%",
-          "djim": "Failed: Debt 3396.2%, Cash 2385.9%",
-          "jafari": "Failed: Debt 3396.2%, Cash 2385.9%",
-          "strict": "Failed: Debt 3396.2%, Cash 2385.9%, Income 1.0%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 3256.7%, Cash 2675.0%",
-          "taqi_usmani": "Failed: Debt 3256.7%, Cash 2675.0%, Illiquid 9.5%",
-          "djim": "Failed: Debt 3256.7%, Cash 2675.0%",
-          "jafari": "Failed: Debt 3256.7%, Cash 2675.0%",
-          "strict": "Failed: Debt 3256.7%, Cash 2675.0%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 1250.0%, Cash 1262.3%",
-          "taqi_usmani": "Failed: Debt 1250.0%, Cash 1262.3%, Illiquid 9.5%",
-          "djim": "Failed: Debt 1250.0%, Cash 1262.3%",
-          "jafari": "Failed: Debt 1250.0%, Cash 1262.3%",
-          "strict": "Failed: Debt 1250.0%, Cash 1262.3%, Income 2.0%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 1243.9%, Cash 1180.9%",
-          "taqi_usmani": "Failed: Debt 1243.9%, Cash 1180.9%, Illiquid 9.7%",
-          "djim": "Failed: Debt 1243.9%, Cash 1180.9%",
-          "jafari": "Failed: Debt 1243.9%, Cash 1180.9%",
-          "strict": "Failed: Debt 1243.9%, Cash 1180.9%, Income 1.0%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 1285.3%, Cash 1619.7%",
-          "taqi_usmani": "Failed: Debt 1285.3%, Cash 1619.7%",
-          "djim": "Failed: Debt 1285.3%, Cash 1619.7%",
-          "jafari": "Failed: Debt 1285.3%, Cash 1619.7%",
-          "strict": "Failed: Debt 1285.3%, Cash 1619.7%, Income 0.4%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 1300.8%, Cash 1720.9%",
-          "taqi_usmani": "Failed: Debt 1300.8%, Cash 1720.9%",
-          "djim": "Failed: Debt 1300.8%, Cash 1720.9%",
-          "jafari": "Failed: Debt 1300.8%, Cash 1720.9%",
-          "strict": "Failed: Debt 1300.8%, Cash 1720.9%, Income 2.9%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "BKNG",
@@ -19365,9 +18364,9 @@
     "sector": "Financial Services",
     "marketCapUsd": 120077813793,
     "impermissibleIncomePct": 70.36,
-    "debtToMarketCapPct": 4803.84,
-    "cashSecuritiesToMarketCapPct": 2546.27,
-    "receivablesToMarketCapPct": 0,
+    "debtToMarketCapPct": 50.22,
+    "cashSecuritiesToMarketCapPct": 396.24,
+    "receivablesToMarketCapPct": 0.0,
     "illiquidAssetsToTotalAssetsPct": 0,
     "sectorFlags": [],
     "dividendYieldPct": 5.49,
@@ -19376,178 +18375,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1144967&type=10-Q",
       "currency": "USD",
-      "cash": 3057507.536,
-      "marketableSecurities": 0,
-      "longTermMarketableSecurities": 42452573.848,
-      "accountsReceivable": 0,
-      "inventories": 0,
-      "otherCurrentAssets": 0,
-      "propertyPlantEquipment": 161651.009,
-      "operatingLeaseAssets": 0,
-      "goodwill": 0,
-      "intangibleAssets": 0,
-      "otherNonCurrentAssets": 2437016.002,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 48108748.395,
-      "accountsPayable": 0,
-      "otherCurrentLiabilities": 0,
-      "deferredRevenue": 0,
-      "shortTermDebt": 0,
-      "commercialPaper": 0,
-      "longTermDebt": 5768341.396,
-      "otherNonCurrentLiabilities": 36376418.322,
-      "totalLiabilities": 42144759.718,
-      "totalRevenueTTM": 5001311.74,
-      "productServicesRevenueTTM": 5001311.74,
-      "interestIncomeTTM": 3520258.909
+      "cash": 31965.6,
+      "marketableSecurities": 0.0,
+      "longTermMarketableSecurities": 443832.5,
+      "accountsReceivable": 0.0,
+      "inventories": 0.0,
+      "otherCurrentAssets": 0.0,
+      "propertyPlantEquipment": 1690.0,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 0.0,
+      "intangibleAssets": 0.0,
+      "otherNonCurrentAssets": 25478.5,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 502966.5,
+      "accountsPayable": 0.0,
+      "otherCurrentLiabilities": 0.0,
+      "deferredRevenue": 0.0,
+      "shortTermDebt": 0.0,
+      "commercialPaper": 0.0,
+      "longTermDebt": 60306.8,
+      "otherNonCurrentLiabilities": 380307.6,
+      "totalLiabilities": 440614.3,
+      "totalRevenueTTM": 52287.6,
+      "productServicesRevenueTTM": 52287.6,
+      "interestIncomeTTM": 36803.5,
+      "reportingCurrency": "INR",
+      "fxRateToUsd": 95.65
     },
     "nextEarningsDate": "2026-07-17",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 5607.6%, Cash 1591.5%, Income 69.7%",
-          "taqi_usmani": "Failed: Debt 5607.6%, Cash 1591.5%, Income 69.7%, Illiquid 0.3%",
-          "djim": "Failed: Debt 5607.6%, Cash 1591.5%, Income 69.7%",
-          "jafari": "Failed: Debt 5607.6%, Cash 1591.5%, Income 69.7%",
-          "strict": "Failed: Debt 5607.6%, Cash 1591.5%, Income 69.7%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 6313.4%, Cash 6647.7%, Income 85.1%",
-          "taqi_usmani": "Failed: Debt 6313.4%, Cash 6647.7%, Income 85.1%, Illiquid 0.3%",
-          "djim": "Failed: Debt 6313.4%, Cash 6647.7%, Income 85.1%",
-          "jafari": "Failed: Debt 6313.4%, Cash 6647.7%, Income 85.1%",
-          "strict": "Failed: Debt 6313.4%, Cash 6647.7%, Income 85.1%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 5442.1%, Cash 1924.9%, Income 75.8%",
-          "taqi_usmani": "Failed: Debt 5442.1%, Cash 1924.9%, Income 75.8%, Illiquid 0.3%",
-          "djim": "Failed: Debt 5442.1%, Cash 1924.9%, Income 75.8%",
-          "jafari": "Failed: Debt 5442.1%, Cash 1924.9%, Income 75.8%",
-          "strict": "Failed: Debt 5442.1%, Cash 1924.9%, Income 75.8%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 6208.7%, Cash 7658.6%, Income 106.3%",
-          "taqi_usmani": "Failed: Debt 6208.7%, Cash 7658.6%, Income 106.3%, Illiquid 0.7%",
-          "djim": "Failed: Debt 6208.7%, Cash 7658.6%, Income 106.3%",
-          "jafari": "Failed: Debt 6208.7%, Cash 7658.6%, Income 106.3%",
-          "strict": "Failed: Debt 6208.7%, Cash 7658.6%, Income 106.3%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 4993.5%, Cash 1787.3%, Income 65.7%",
-          "taqi_usmani": "Failed: Debt 4993.5%, Cash 1787.3%, Income 65.7%, Illiquid 0.3%",
-          "djim": "Failed: Debt 4993.5%, Cash 1787.3%, Income 65.7%",
-          "jafari": "Failed: Debt 4993.5%, Cash 1787.3%, Income 65.7%",
-          "strict": "Failed: Debt 4993.5%, Cash 1787.3%, Income 65.7%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 4992.7%, Cash 1474.5%, Income 73.4%",
-          "taqi_usmani": "Failed: Debt 4992.7%, Cash 1474.5%, Income 73.4%, Illiquid 0.3%",
-          "djim": "Failed: Debt 4992.7%, Cash 1474.5%, Income 73.4%",
-          "jafari": "Failed: Debt 4992.7%, Cash 1474.5%, Income 73.4%",
-          "strict": "Failed: Debt 4992.7%, Cash 1474.5%, Income 73.4%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 57.1%, Income 68.6%",
-          "taqi_usmani": "Failed: Debt 57.1%, Income 68.6%, Illiquid 0.3%",
-          "djim": "Failed: Debt 57.1%, Income 68.6%",
-          "jafari": "Failed: Debt 57.1%, Income 68.6%",
-          "strict": "Failed: Debt 57.1%, Cash 17.8%, Income 68.6%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 4803.8%, Cash 2546.3%, Income 74.6%",
-          "taqi_usmani": "Failed: Debt 4803.8%, Cash 2546.3%, Income 74.6%, Illiquid 0.3%",
-          "djim": "Failed: Debt 4803.8%, Cash 2546.3%, Income 74.6%",
-          "jafari": "Failed: Debt 4803.8%, Cash 2546.3%, Income 74.6%",
-          "strict": "Failed: Debt 4803.8%, Cash 2546.3%, Income 74.6%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "PDD",
@@ -19555,9 +18411,9 @@
     "sector": "Consumer Cyclical",
     "marketCapUsd": 119438235679,
     "impermissibleIncomePct": 5.92,
-    "debtToMarketCapPct": 4.51,
-    "cashSecuritiesToMarketCapPct": 415.66,
-    "receivablesToMarketCapPct": 12.83,
+    "debtToMarketCapPct": 0.31,
+    "cashSecuritiesToMarketCapPct": 63.02,
+    "receivablesToMarketCapPct": 1.91,
     "illiquidAssetsToTotalAssetsPct": 1,
     "sectorFlags": [],
     "dividendYieldPct": 0,
@@ -19566,178 +18422,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1737806&type=10-Q",
       "currency": "USD",
-      "cash": 198509.848,
-      "marketableSecurities": 311860.929,
-      "longTermMarketableSecurities": 0,
-      "accountsReceivable": 15468.015,
-      "inventories": 0,
-      "otherCurrentAssets": 8712.34,
-      "propertyPlantEquipment": 5731.514,
-      "operatingLeaseAssets": 0,
-      "goodwill": 0,
-      "intangibleAssets": 14.944,
-      "otherNonCurrentAssets": 94823.536,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 635322.372,
-      "accountsPayable": 108743.355,
-      "otherCurrentLiabilities": 96107.722,
-      "deferredRevenue": 3507.85,
-      "shortTermDebt": 2492.656,
-      "commercialPaper": 0,
-      "longTermDebt": 0,
-      "otherNonCurrentLiabilities": 0,
-      "totalLiabilities": 213476.741,
-      "totalRevenueTTM": 441760.057,
-      "productServicesRevenueTTM": 441760.057,
-      "interestIncomeTTM": 24732.545
+      "cash": 29278.7,
+      "marketableSecurities": 45997.2,
+      "longTermMarketableSecurities": 0.0,
+      "accountsReceivable": 2281.4,
+      "inventories": 0.0,
+      "otherCurrentAssets": 1285.0,
+      "propertyPlantEquipment": 845.4,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 0.0,
+      "intangibleAssets": 2.2,
+      "otherNonCurrentAssets": 13985.8,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 93705.4,
+      "accountsPayable": 16038.8,
+      "otherCurrentLiabilities": 14175.2,
+      "deferredRevenue": 517.4,
+      "shortTermDebt": 367.6,
+      "commercialPaper": 0.0,
+      "longTermDebt": 0.0,
+      "otherNonCurrentLiabilities": 0.0,
+      "totalLiabilities": 31486.2,
+      "totalRevenueTTM": 65156.4,
+      "productServicesRevenueTTM": 65156.4,
+      "interestIncomeTTM": 3647.9,
+      "reportingCurrency": "CNY",
+      "fxRateToUsd": 6.78
     },
     "nextEarningsDate": "2026-08-24",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 238.6%, Income 5.0%",
-          "taqi_usmani": "Failed: Cash 238.6%, Income 5.0%, Illiquid 1.2%",
-          "djim": "Failed: Cash 238.6%, Income 5.0%",
-          "jafari": "Failed: Cash 238.6%, Income 5.0%",
-          "strict": "Failed: Debt 8.2%, Cash 238.6%, Income 5.0%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 258.3%, Income 5.5%",
-          "taqi_usmani": "Failed: Cash 258.3%, Income 5.5%, Illiquid 1.2%",
-          "djim": "Failed: Cash 258.3%, Income 5.5%",
-          "jafari": "Failed: Cash 258.3%, Income 5.5%",
-          "strict": "Failed: Debt 8.6%, Cash 258.3%, Income 5.5%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 277.6%",
-          "taqi_usmani": "Failed: Cash 277.6%, Illiquid 1.5%",
-          "djim": "Failed: Cash 277.6%",
-          "jafari": "Failed: Cash 277.6%",
-          "strict": "Failed: Debt 8.9%, Cash 277.6%, Income 4.7%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 305.2%",
-          "taqi_usmani": "Failed: Cash 305.2%, Illiquid 1.2%",
-          "djim": "Failed: Cash 305.2%",
-          "jafari": "Failed: Cash 305.2%",
-          "strict": "Failed: Debt 9.4%, Cash 305.2%, Income 0.2%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 324.1%, Income 10.0%",
-          "taqi_usmani": "Failed: Cash 324.1%, Income 10.0%, Illiquid 0.1%",
-          "djim": "Failed: Cash 324.1%, Income 10.0%",
-          "jafari": "Failed: Cash 324.1%, Income 10.0%",
-          "strict": "Failed: Debt 9.2%, Cash 324.1%, Income 10.0%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 354.8%, Income 7.9%",
-          "taqi_usmani": "Failed: Cash 354.8%, Income 7.9%, Illiquid 1.0%",
-          "djim": "Failed: Cash 354.8%, Income 7.9%",
-          "jafari": "Failed: Cash 354.8%, Income 7.9%",
-          "strict": "Failed: Debt 8.9%, Cash 354.8%, Income 7.9%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 415.7%, Income 5.1%",
-          "taqi_usmani": "Failed: Cash 415.7%, Income 5.1%, Illiquid 1.0%",
-          "djim": "Failed: Cash 415.7%, Income 5.1%",
-          "jafari": "Failed: Cash 415.7%, Income 5.1%",
-          "strict": "Failed: Debt 4.5%, Cash 415.7%, Income 5.1%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 427.3%",
-          "taqi_usmani": "Failed: Cash 427.3%, Illiquid 0.9%",
-          "djim": "Failed: Cash 427.3%",
-          "jafari": "Failed: Cash 427.3%",
-          "strict": "Failed: Debt 4.3%, Cash 427.3%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "LOW",
@@ -23967,9 +22680,9 @@
     "sector": "Financial Services",
     "marketCapUsd": 92916012335,
     "impermissibleIncomePct": 62.55,
-    "debtToMarketCapPct": 2370.57,
-    "cashSecuritiesToMarketCapPct": 2851.83,
-    "receivablesToMarketCapPct": 0,
+    "debtToMarketCapPct": 24.78,
+    "cashSecuritiesToMarketCapPct": 312.84,
+    "receivablesToMarketCapPct": 0.0,
     "illiquidAssetsToTotalAssetsPct": 1,
     "sectorFlags": [],
     "dividendYieldPct": 0.91,
@@ -23978,178 +22691,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1103838&type=10-Q",
       "currency": "USD",
-      "cash": 2649807.2,
-      "marketableSecurities": 0,
-      "longTermMarketableSecurities": 25153778.5,
-      "accountsReceivable": 0,
-      "inventories": 0,
-      "otherCurrentAssets": 0,
-      "propertyPlantEquipment": 174203.4,
-      "operatingLeaseAssets": 0,
-      "goodwill": 105500.5,
-      "intangibleAssets": 0,
-      "otherNonCurrentAssets": 1061690.1,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 29144979.7,
-      "accountsPayable": 0,
-      "otherCurrentLiabilities": 18300201.2,
-      "deferredRevenue": 0,
-      "shortTermDebt": 0,
-      "commercialPaper": 0,
-      "longTermDebt": 2202642.8,
-      "otherNonCurrentLiabilities": 4846422,
-      "totalLiabilities": 25349266,
-      "totalRevenueTTM": 3128267.255,
-      "productServicesRevenueTTM": 3128267.255,
-      "interestIncomeTTM": 1956203.172
+      "cash": 27703.2,
+      "marketableSecurities": 0.0,
+      "longTermMarketableSecurities": 262977.3,
+      "accountsReceivable": 0.0,
+      "inventories": 0.0,
+      "otherCurrentAssets": 0.0,
+      "propertyPlantEquipment": 1821.3,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 1103.0,
+      "intangibleAssets": 0.0,
+      "otherNonCurrentAssets": 11099.7,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 304704.4,
+      "accountsPayable": 0.0,
+      "otherCurrentLiabilities": 191324.6,
+      "deferredRevenue": 0.0,
+      "shortTermDebt": 0.0,
+      "commercialPaper": 0.0,
+      "longTermDebt": 23028.2,
+      "otherNonCurrentLiabilities": 50668.3,
+      "totalLiabilities": 265021.1,
+      "totalRevenueTTM": 32705.4,
+      "productServicesRevenueTTM": 32705.4,
+      "interestIncomeTTM": 20451.7,
+      "reportingCurrency": "INR",
+      "fxRateToUsd": 95.65
     },
     "nextEarningsDate": "2026-07-17",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 2217.4%, Cash 1447.6%, Income 66.3%",
-          "taqi_usmani": "Failed: Debt 2217.4%, Cash 1447.6%, Income 66.3%, Illiquid 0.6%",
-          "djim": "Failed: Debt 2217.4%, Cash 1447.6%, Income 66.3%",
-          "jafari": "Failed: Debt 2217.4%, Cash 1447.6%, Income 66.3%",
-          "strict": "Failed: Debt 2217.4%, Cash 1447.6%, Income 66.3%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 2365.2%, Cash 1769.2%, Income 63.5%",
-          "taqi_usmani": "Failed: Debt 2365.2%, Cash 1769.2%, Income 63.5%, Illiquid 0.6%",
-          "djim": "Failed: Debt 2365.2%, Cash 1769.2%, Income 63.5%",
-          "jafari": "Failed: Debt 2365.2%, Cash 1769.2%, Income 63.5%",
-          "strict": "Failed: Debt 2365.2%, Cash 1769.2%, Income 63.5%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 2335.5%, Cash 1856.6%, Income 63.0%",
-          "taqi_usmani": "Failed: Debt 2335.5%, Cash 1856.6%, Income 63.0%, Illiquid 0.6%",
-          "djim": "Failed: Debt 2335.5%, Cash 1856.6%, Income 63.0%",
-          "jafari": "Failed: Debt 2335.5%, Cash 1856.6%, Income 63.0%",
-          "strict": "Failed: Debt 2335.5%, Cash 1856.6%, Income 63.0%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 2191.8%, Cash 2564.7%, Income 60.7%",
-          "taqi_usmani": "Failed: Debt 2191.8%, Cash 2564.7%, Income 60.7%, Illiquid 0.6%",
-          "djim": "Failed: Debt 2191.8%, Cash 2564.7%, Income 60.7%",
-          "jafari": "Failed: Debt 2191.8%, Cash 2564.7%, Income 60.7%",
-          "strict": "Failed: Debt 2191.8%, Cash 2564.7%, Income 60.7%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 2315.5%, Cash 2118.3%, Income 65.8%",
-          "taqi_usmani": "Failed: Debt 2315.5%, Cash 2118.3%, Income 65.8%, Illiquid 0.6%",
-          "djim": "Failed: Debt 2315.5%, Cash 2118.3%, Income 65.8%",
-          "jafari": "Failed: Debt 2315.5%, Cash 2118.3%, Income 65.8%",
-          "strict": "Failed: Debt 2315.5%, Cash 2118.3%, Income 65.8%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 2316.5%, Cash 1803.4%, Income 63.3%",
-          "taqi_usmani": "Failed: Debt 2316.5%, Cash 1803.4%, Income 63.3%, Illiquid 0.6%",
-          "djim": "Failed: Debt 2316.5%, Cash 1803.4%, Income 63.3%",
-          "jafari": "Failed: Debt 2316.5%, Cash 1803.4%, Income 63.3%",
-          "strict": "Failed: Debt 2316.5%, Cash 1803.4%, Income 63.3%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 2318.6%, Cash 157.5%, Income 62.9%",
-          "taqi_usmani": "Failed: Debt 2318.6%, Cash 157.5%, Income 62.9%, Illiquid 0.0%",
-          "djim": "Failed: Debt 2318.6%, Cash 157.5%, Income 62.9%",
-          "jafari": "Failed: Debt 2318.6%, Cash 157.5%, Income 62.9%",
-          "strict": "Failed: Debt 2318.6%, Cash 157.5%, Income 62.9%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 2370.6%, Cash 2851.8%, Income 58.6%",
-          "taqi_usmani": "Failed: Debt 2370.6%, Cash 2851.8%, Income 58.6%, Illiquid 0.6%",
-          "djim": "Failed: Debt 2370.6%, Cash 2851.8%, Income 58.6%",
-          "jafari": "Failed: Debt 2370.6%, Cash 2851.8%, Income 58.6%",
-          "strict": "Failed: Debt 2370.6%, Cash 2851.8%, Income 58.6%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "UPS",
@@ -25676,9 +24246,9 @@
     "sector": "Financial Services",
     "marketCapUsd": 88398616097,
     "impermissibleIncomePct": 70.78,
-    "debtToMarketCapPct": 66360.3,
-    "cashSecuritiesToMarketCapPct": 102748.19,
-    "receivablesToMarketCapPct": 0,
+    "debtToMarketCapPct": 414.13,
+    "cashSecuritiesToMarketCapPct": 2051.72,
+    "receivablesToMarketCapPct": 0.0,
     "illiquidAssetsToTotalAssetsPct": 0,
     "sectorFlags": [],
     "dividendYieldPct": 2.85,
@@ -25687,178 +24257,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1022837&type=10-Q",
       "currency": "USD",
-      "cash": 74053627.99,
-      "marketableSecurities": 0,
-      "longTermMarketableSecurities": 216572373.335,
-      "accountsReceivable": 0,
-      "inventories": 0,
-      "otherCurrentAssets": 0,
-      "propertyPlantEquipment": 1079334.037,
-      "operatingLeaseAssets": 0,
-      "goodwill": 243438.273,
-      "intangibleAssets": 912590.967,
-      "otherNonCurrentAssets": 36964498.892,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 329935952.908,
-      "accountsPayable": 0,
-      "otherCurrentLiabilities": 0,
-      "deferredRevenue": 0,
-      "shortTermDebt": 32853808.128,
-      "commercialPaper": 0,
-      "longTermDebt": 25807778.287,
-      "otherNonCurrentLiabilities": 254623840.23,
-      "totalLiabilities": 313933692.139,
-      "totalRevenueTTM": 15422452.446,
-      "productServicesRevenueTTM": 15422452.446,
-      "interestIncomeTTM": 10778256.186
+      "cash": 462142.0,
+      "marketableSecurities": 0.0,
+      "longTermMarketableSecurities": 1351550.0,
+      "accountsReceivable": 0.0,
+      "inventories": 0.0,
+      "otherCurrentAssets": 0.0,
+      "propertyPlantEquipment": 6735.7,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 1519.2,
+      "intangibleAssets": 5695.2,
+      "otherNonCurrentAssets": 230682.1,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 2059011.2,
+      "accountsPayable": 0.0,
+      "otherCurrentLiabilities": 0.0,
+      "deferredRevenue": 0.0,
+      "shortTermDebt": 205028.8,
+      "commercialPaper": 0.0,
+      "longTermDebt": 161057.0,
+      "otherNonCurrentLiabilities": 1589015.5,
+      "totalLiabilities": 1959146.9,
+      "totalRevenueTTM": 96246.0,
+      "productServicesRevenueTTM": 96246.0,
+      "interestIncomeTTM": 67263.2,
+      "reportingCurrency": "JPY",
+      "fxRateToUsd": 160.24
     },
     "nextEarningsDate": "2026-07-30",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 64161.1%, Cash 87225.7%, Income 147.8%",
-          "taqi_usmani": "Failed: Debt 64161.1%, Cash 87225.7%, Income 147.8%, Illiquid 0.3%",
-          "djim": "Failed: Debt 64161.1%, Cash 87225.7%, Income 147.8%",
-          "jafari": "Failed: Debt 64161.1%, Cash 87225.7%, Income 147.8%",
-          "strict": "Failed: Debt 64161.1%, Cash 87225.7%, Income 147.8%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 62532.8%, Cash 110473.6%, Income 67.0%",
-          "taqi_usmani": "Failed: Debt 62532.8%, Cash 110473.6%, Income 67.0%, Illiquid 0.3%",
-          "djim": "Failed: Debt 62532.8%, Cash 110473.6%, Income 67.0%",
-          "jafari": "Failed: Debt 62532.8%, Cash 110473.6%, Income 67.0%",
-          "strict": "Failed: Debt 62532.8%, Cash 110473.6%, Income 67.0%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 64932.4%, Cash 84326.7%, Income 73.4%",
-          "taqi_usmani": "Failed: Debt 64932.4%, Cash 84326.7%, Income 73.4%, Illiquid 0.3%",
-          "djim": "Failed: Debt 64932.4%, Cash 84326.7%, Income 73.4%",
-          "jafari": "Failed: Debt 64932.4%, Cash 84326.7%, Income 73.4%",
-          "strict": "Failed: Debt 64932.4%, Cash 84326.7%, Income 73.4%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 65948.7%, Cash 117391.8%, Income 74.3%",
-          "taqi_usmani": "Failed: Debt 65948.7%, Cash 117391.8%, Income 74.3%, Illiquid 0.3%",
-          "djim": "Failed: Debt 65948.7%, Cash 117391.8%, Income 74.3%",
-          "jafari": "Failed: Debt 65948.7%, Cash 117391.8%, Income 74.3%",
-          "strict": "Failed: Debt 65948.7%, Cash 117391.8%, Income 74.3%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 62929.6%, Cash 93980.3%, Income 74.0%",
-          "taqi_usmani": "Failed: Debt 62929.6%, Cash 93980.3%, Income 74.0%, Illiquid 0.3%",
-          "djim": "Failed: Debt 62929.6%, Cash 93980.3%, Income 74.0%",
-          "jafari": "Failed: Debt 62929.6%, Cash 93980.3%, Income 74.0%",
-          "strict": "Failed: Debt 62929.6%, Cash 93980.3%, Income 74.0%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 65969.9%, Cash 96093.9%, Income 67.9%",
-          "taqi_usmani": "Failed: Debt 65969.9%, Cash 96093.9%, Income 67.9%, Illiquid 0.3%",
-          "djim": "Failed: Debt 65969.9%, Cash 96093.9%, Income 67.9%",
-          "jafari": "Failed: Debt 65969.9%, Cash 96093.9%, Income 67.9%",
-          "strict": "Failed: Debt 65969.9%, Cash 96093.9%, Income 67.9%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 65286.1%, Cash 95670.0%, Income 67.2%",
-          "taqi_usmani": "Failed: Debt 65286.1%, Cash 95670.0%, Income 67.2%, Illiquid 0.3%",
-          "djim": "Failed: Debt 65286.1%, Cash 95670.0%, Income 67.2%",
-          "jafari": "Failed: Debt 65286.1%, Cash 95670.0%, Income 67.2%",
-          "strict": "Failed: Debt 65286.1%, Cash 95670.0%, Income 67.2%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 66360.3%, Cash 83772.4%, Income 76.7%",
-          "taqi_usmani": "Failed: Debt 66360.3%, Cash 83772.4%, Income 76.7%, Illiquid 0.3%",
-          "djim": "Failed: Debt 66360.3%, Cash 83772.4%, Income 76.7%",
-          "jafari": "Failed: Debt 66360.3%, Cash 83772.4%, Income 76.7%",
-          "strict": "Failed: Debt 66360.3%, Cash 83772.4%, Income 76.7%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "WMB",
@@ -29682,9 +28109,9 @@
     "sector": "Technology",
     "marketCapUsd": 76278580986,
     "impermissibleIncomePct": 4.1,
-    "debtToMarketCapPct": 8.38,
-    "cashSecuritiesToMarketCapPct": 218.98,
-    "receivablesToMarketCapPct": 7,
+    "debtToMarketCapPct": 2.12,
+    "cashSecuritiesToMarketCapPct": 33.63,
+    "receivablesToMarketCapPct": 1.26,
     "illiquidAssetsToTotalAssetsPct": 4,
     "sectorFlags": [
       "gambling"
@@ -29695,178 +28122,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1110646&type=10-Q",
       "currency": "USD",
-      "cash": 50815.211,
-      "marketableSecurities": 120088.626,
-      "longTermMarketableSecurities": 3045,
-      "accountsReceivable": 6492.901,
-      "inventories": 546.03,
-      "otherCurrentAssets": 10715.869,
-      "propertyPlantEquipment": 8311.363,
-      "operatingLeaseAssets": 0,
-      "goodwill": 0,
-      "intangibleAssets": 4014.831,
-      "otherNonCurrentAssets": 24472.684,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 231397.045,
-      "accountsPayable": 780.921,
-      "otherCurrentLiabilities": 0,
-      "deferredRevenue": 21811.53,
-      "shortTermDebt": 10955.46,
-      "commercialPaper": 0,
-      "longTermDebt": 0,
-      "otherNonCurrentLiabilities": 1377.929,
-      "totalLiabilities": 62047.582,
-      "totalRevenueTTM": 114388.543,
-      "productServicesRevenueTTM": 114388.543,
-      "interestIncomeTTM": 4449.549
+      "cash": 7494.9,
+      "marketableSecurities": 17712.2,
+      "longTermMarketableSecurities": 449.1,
+      "accountsReceivable": 957.7,
+      "inventories": 80.5,
+      "otherCurrentAssets": 1580.5,
+      "propertyPlantEquipment": 1225.9,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 0.0,
+      "intangibleAssets": 592.2,
+      "otherNonCurrentAssets": 3609.5,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 34129.4,
+      "accountsPayable": 115.2,
+      "otherCurrentLiabilities": 0.0,
+      "deferredRevenue": 3217.0,
+      "shortTermDebt": 1615.8,
+      "commercialPaper": 0.0,
+      "longTermDebt": 0.0,
+      "otherNonCurrentLiabilities": 203.2,
+      "totalLiabilities": 9151.6,
+      "totalRevenueTTM": 16871.5,
+      "productServicesRevenueTTM": 16871.5,
+      "interestIncomeTTM": 656.3,
+      "reportingCurrency": "CNY",
+      "fxRateToUsd": 6.78
     },
     "nextEarningsDate": "2026-08-13",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 161.1%",
-          "taqi_usmani": "Failed: Cash 161.1%, Illiquid 4.7%",
-          "djim": "Failed: Cash 161.1%",
-          "jafari": "Failed: Cash 161.1%",
-          "strict": "Failed: Debt 17.8%, Cash 161.1%, Income 4.7%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 162.5%",
-          "taqi_usmani": "Failed: Cash 162.5%, Illiquid 4.8%",
-          "djim": "Failed: Cash 162.5%",
-          "jafari": "Failed: Cash 162.5%",
-          "strict": "Failed: Debt 14.5%, Cash 162.5%, Income 4.9%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 180.4%",
-          "taqi_usmani": "Failed: Cash 180.4%, Illiquid 4.6%",
-          "djim": "Failed: Cash 180.4%",
-          "jafari": "Failed: Cash 180.4%",
-          "strict": "Failed: Debt 16.8%, Cash 180.4%, Income 4.4%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 183.7%",
-          "taqi_usmani": "Failed: Cash 183.7%, Illiquid 4.5%",
-          "djim": "Failed: Cash 183.7%",
-          "jafari": "Failed: Cash 183.7%",
-          "strict": "Failed: Debt 12.9%, Cash 183.7%, Income 3.7%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 192.3%",
-          "taqi_usmani": "Failed: Cash 192.3%, Illiquid 4.3%",
-          "djim": "Failed: Cash 192.3%",
-          "jafari": "Failed: Cash 192.3%",
-          "strict": "Failed: Debt 14.8%, Cash 192.3%, Income 3.4%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 195.5%",
-          "taqi_usmani": "Failed: Cash 195.5%, Illiquid 4.3%",
-          "djim": "Failed: Cash 195.5%",
-          "jafari": "Failed: Cash 195.5%",
-          "strict": "Failed: Debt 9.6%, Cash 195.5%, Income 3.3%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 219.0%, Income 6.1%",
-          "taqi_usmani": "Failed: Cash 219.0%, Income 6.1%, Illiquid 4.1%",
-          "djim": "Failed: Cash 219.0%, Income 6.1%",
-          "jafari": "Failed: Cash 219.0%, Income 6.1%",
-          "strict": "Failed: Debt 8.4%, Cash 219.0%, Income 6.1%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 224.1%",
-          "taqi_usmani": "Failed: Cash 224.1%, Illiquid 3.8%",
-          "djim": "Failed: Cash 224.1%",
-          "jafari": "Failed: Cash 224.1%",
-          "strict": "Failed: Debt 14.4%, Cash 224.1%, Income 2.9%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "VLO",
@@ -30829,197 +29113,6 @@
           "djim": "All checks pass",
           "jafari": "All checks pass",
           "strict": "Failed: Debt 15.7%, Cash 5.0%, Income 4.7%"
-        }
-      }
-    ]
-  },
-  {
-    "ticker": "ATVI",
-    "name": "Activision Blizzard, Inc.",
-    "sector": "Technology",
-    "marketCapUsd": 74289468671,
-    "impermissibleIncomePct": 2.19,
-    "debtToMarketCapPct": 4.86,
-    "cashSecuritiesToMarketCapPct": 16.14,
-    "receivablesToMarketCapPct": 1.62,
-    "illiquidAssetsToTotalAssetsPct": 1,
-    "sectorFlags": [
-      "gambling"
-    ],
-    "dividendYieldPct": 0.61,
-    "balanceSheet": {
-      "quarter": "Q2 2023",
-      "reportedDate": "2023-06-30",
-      "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=718877&type=10-Q",
-      "currency": "USD",
-      "cash": 10770,
-      "marketableSecurities": 2314,
-      "longTermMarketableSecurities": 0,
-      "accountsReceivable": 1035,
-      "inventories": 0,
-      "otherCurrentAssets": 1377,
-      "propertyPlantEquipment": 204,
-      "operatingLeaseAssets": 0,
-      "goodwill": 9929,
-      "intangibleAssets": 1121,
-      "otherNonCurrentAssets": 479,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 28518,
-      "accountsPayable": 225,
-      "otherCurrentLiabilities": 1220,
-      "deferredRevenue": 1877,
-      "shortTermDebt": 0,
-      "commercialPaper": 0,
-      "longTermDebt": 3612,
-      "otherNonCurrentLiabilities": 759,
-      "totalLiabilities": 7725,
-      "totalRevenueTTM": 8706,
-      "productServicesRevenueTTM": 8706,
-      "interestIncomeTTM": 324
-    },
-    "verdictHistory": [
-      {
-        "quarter": "Q3 2021",
-        "periodEnd": "2021-09-30",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "fail",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "Failed: Illiquid 0.7%",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 4.9%, Cash 13.1%, Income 0.0%"
-        }
-      },
-      {
-        "quarter": "Q4 2021",
-        "periodEnd": "2021-12-31",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "fail",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "Failed: Illiquid 0.7%",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 4.9%, Cash 14.0%, Income 0.0%"
-        }
-      },
-      {
-        "quarter": "Q1 2022",
-        "periodEnd": "2022-03-31",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "fail",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "Failed: Illiquid 0.7%",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 4.9%, Cash 14.8%, Income 0.1%"
-        }
-      },
-      {
-        "quarter": "Q2 2022",
-        "periodEnd": "2022-06-30",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "fail",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "Failed: Illiquid 0.7%",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 4.9%, Cash 14.1%, Income 1.0%"
-        }
-      },
-      {
-        "quarter": "Q3 2022",
-        "periodEnd": "2022-09-30",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "fail",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "Failed: Illiquid 0.7%",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 4.9%, Cash 14.4%, Income 2.9%"
-        }
-      },
-      {
-        "quarter": "Q4 2022",
-        "periodEnd": "2022-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Income 20.6%",
-          "taqi_usmani": "Failed: Income 20.6%, Illiquid 0.7%",
-          "djim": "Failed: Income 20.6%",
-          "jafari": "Failed: Income 20.6%",
-          "strict": "Failed: Debt 4.9%, Cash 16.1%, Income 20.6%"
-        }
-      },
-      {
-        "quarter": "Q1 2023",
-        "periodEnd": "2023-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Income 5.3%",
-          "taqi_usmani": "Failed: Income 5.3%, Illiquid 0.7%",
-          "djim": "Failed: Income 5.3%",
-          "jafari": "Failed: Income 5.3%",
-          "strict": "Failed: Debt 4.9%, Cash 16.8%, Income 5.3%"
-        }
-      },
-      {
-        "quarter": "Q2 2023",
-        "periodEnd": "2023-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Income 6.7%",
-          "taqi_usmani": "Failed: Income 6.7%, Illiquid 0.7%",
-          "djim": "Failed: Income 6.7%",
-          "jafari": "Failed: Income 6.7%",
-          "strict": "Failed: Debt 4.9%, Cash 17.6%, Income 6.7%"
         }
       }
     ]
@@ -41496,9 +39589,9 @@
     "sector": "Communication Services",
     "marketCapUsd": 41380061778,
     "impermissibleIncomePct": 0.95,
-    "debtToMarketCapPct": 234.6,
-    "cashSecuritiesToMarketCapPct": 278.56,
-    "receivablesToMarketCapPct": 33.19,
+    "debtToMarketCapPct": 4.65,
+    "cashSecuritiesToMarketCapPct": 14.29,
+    "receivablesToMarketCapPct": 0.77,
     "illiquidAssetsToTotalAssetsPct": 8,
     "sectorFlags": [],
     "dividendYieldPct": 0,
@@ -41507,178 +39600,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1329099&type=10-Q",
       "currency": "USD",
-      "cash": 4419.675,
-      "marketableSecurities": 12585.333,
-      "longTermMarketableSecurities": 23081.7,
-      "accountsReceivable": 2163.805,
-      "inventories": 0,
-      "otherCurrentAssets": 3310.124,
-      "propertyPlantEquipment": 5124.055,
-      "operatingLeaseAssets": 0,
-      "goodwill": 5324.542,
-      "intangibleAssets": 3631.192,
-      "otherNonCurrentAssets": 4674.445,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 65077.155,
-      "accountsPayable": 5714.803,
-      "otherCurrentLiabilities": 2154.251,
-      "deferredRevenue": 81.932,
-      "shortTermDebt": 4186.619,
-      "commercialPaper": 0,
-      "longTermDebt": 8869.604,
-      "otherNonCurrentLiabilities": 287.484,
-      "totalLiabilities": 22758.171,
-      "totalRevenueTTM": 45376.412005,
-      "productServicesRevenueTTM": 45376.412005,
-      "interestIncomeTTM": 1112.955292
+      "cash": 651.9,
+      "marketableSecurities": 1856.2,
+      "longTermMarketableSecurities": 3404.4,
+      "accountsReceivable": 319.1,
+      "inventories": 0.0,
+      "otherCurrentAssets": 488.2,
+      "propertyPlantEquipment": 755.8,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 785.3,
+      "intangibleAssets": 535.6,
+      "otherNonCurrentAssets": 689.4,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 9598.4,
+      "accountsPayable": 842.9,
+      "otherCurrentLiabilities": 317.7,
+      "deferredRevenue": 12.1,
+      "shortTermDebt": 617.5,
+      "commercialPaper": 0.0,
+      "longTermDebt": 1308.2,
+      "otherNonCurrentLiabilities": 42.4,
+      "totalLiabilities": 3356.7,
+      "totalRevenueTTM": 6692.7,
+      "productServicesRevenueTTM": 6692.7,
+      "interestIncomeTTM": 164.2,
+      "reportingCurrency": "CNY",
+      "fxRateToUsd": 6.78
     },
     "nextEarningsDate": "2026-08-19",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 200.1%, Cash 363.4%, Income 5.9%",
-          "taqi_usmani": "Failed: Debt 200.1%, Cash 363.4%, Income 5.9%, Illiquid 9.6%",
-          "djim": "Failed: Debt 200.1%, Cash 363.4%, Income 5.9%",
-          "jafari": "Failed: Debt 200.1%, Cash 363.4%, Income 5.9%",
-          "strict": "Failed: Debt 200.1%, Cash 363.4%, Income 5.9%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 186.9%, Cash 321.0%, Income 5.6%",
-          "taqi_usmani": "Failed: Debt 186.9%, Cash 321.0%, Income 5.6%, Illiquid 9.7%",
-          "djim": "Failed: Debt 186.9%, Cash 321.0%, Income 5.6%",
-          "jafari": "Failed: Debt 186.9%, Cash 321.0%, Income 5.6%",
-          "strict": "Failed: Debt 186.9%, Cash 321.0%, Income 5.6%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 191.7%, Cash 308.0%, Income 5.9%",
-          "taqi_usmani": "Failed: Debt 191.7%, Cash 308.0%, Income 5.9%, Illiquid 11.0%",
-          "djim": "Failed: Debt 191.7%, Cash 308.0%, Income 5.9%",
-          "jafari": "Failed: Debt 191.7%, Cash 308.0%, Income 5.9%",
-          "strict": "Failed: Debt 191.7%, Cash 308.0%, Income 5.9%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 246.6%, Cash 342.6%, Income 8.2%",
-          "taqi_usmani": "Failed: Debt 246.6%, Cash 342.6%, Income 8.2%, Illiquid 9.2%",
-          "djim": "Failed: Debt 246.6%, Cash 342.6%, Income 8.2%",
-          "jafari": "Failed: Debt 246.6%, Cash 342.6%, Income 8.2%",
-          "strict": "Failed: Debt 246.6%, Cash 342.6%, Income 8.2%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 221.9%, Cash 299.3%, Income 6.0%",
-          "taqi_usmani": "Failed: Debt 221.9%, Cash 299.3%, Income 6.0%, Illiquid 9.6%",
-          "djim": "Failed: Debt 221.9%, Cash 299.3%, Income 6.0%",
-          "jafari": "Failed: Debt 221.9%, Cash 299.3%, Income 6.0%",
-          "strict": "Failed: Debt 221.9%, Cash 299.3%, Income 6.0%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 235.0%, Cash 301.6%, Income 6.2%",
-          "taqi_usmani": "Failed: Debt 235.0%, Cash 301.6%, Income 6.2%, Illiquid 7.6%",
-          "djim": "Failed: Debt 235.0%, Cash 301.6%, Income 6.2%",
-          "jafari": "Failed: Debt 235.0%, Cash 301.6%, Income 6.2%",
-          "strict": "Failed: Debt 235.0%, Cash 301.6%, Income 6.2%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 234.6%, Cash 278.6%, Income 6.3%",
-          "taqi_usmani": "Failed: Debt 234.6%, Cash 278.6%, Income 6.3%, Illiquid 7.8%",
-          "djim": "Failed: Debt 234.6%, Cash 278.6%, Income 6.3%",
-          "jafari": "Failed: Debt 234.6%, Cash 278.6%, Income 6.3%",
-          "strict": "Failed: Debt 234.6%, Cash 278.6%, Income 6.3%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 32.9%, Cash 41.1%",
-          "taqi_usmani": "Failed: Debt 32.9%, Cash 41.1%, Illiquid 7.9%",
-          "djim": "Failed: Cash 41.1%",
-          "jafari": "Failed: Cash 41.1%",
-          "strict": "Failed: Debt 32.9%, Cash 41.1%, Income 0.9%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "CCI",
@@ -41866,195 +39816,6 @@
           "djim": "Failed: Debt 59.8%",
           "jafari": "Failed: Debt 59.8%",
           "strict": "Failed: Debt 59.8%, Cash 0.1%, Income 0.3%"
-        }
-      }
-    ]
-  },
-  {
-    "ticker": "TWTR",
-    "name": "Twitter, Inc. (delisted)",
-    "sector": "Communication Services",
-    "marketCapUsd": 41093709770,
-    "impermissibleIncomePct": 0.7,
-    "debtToMarketCapPct": 13.5,
-    "cashSecuritiesToMarketCapPct": 15.58,
-    "receivablesToMarketCapPct": 2.96,
-    "illiquidAssetsToTotalAssetsPct": 23,
-    "sectorFlags": [],
-    "dividendYieldPct": 0.2,
-    "balanceSheet": {
-      "quarter": "Q2 2022",
-      "reportedDate": "2022-06-30",
-      "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1418091&type=10-Q",
-      "currency": "USD",
-      "cash": 2680.596,
-      "marketableSecurities": 3440.147,
-      "longTermMarketableSecurities": 0,
-      "accountsReceivable": 1009.695,
-      "inventories": 0,
-      "otherCurrentAssets": 180.247,
-      "propertyPlantEquipment": 3547.755,
-      "operatingLeaseAssets": 0,
-      "goodwill": 1303.438,
-      "intangibleAssets": 52.643,
-      "otherNonCurrentAssets": 403.97,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 13579.287,
-      "accountsPayable": 153.092,
-      "otherCurrentLiabilities": 441.48,
-      "deferredRevenue": 130.524,
-      "shortTermDebt": 187.982,
-      "commercialPaper": 0,
-      "longTermDebt": 5246.849,
-      "otherNonCurrentLiabilities": 59.111,
-      "totalLiabilities": 7646.806,
-      "totalRevenueTTM": 5228.681,
-      "productServicesRevenueTTM": 5228.681,
-      "interestIncomeTTM": 37.037
-    },
-    "verdictHistory": [
-      {
-        "quarter": "Q3 2020",
-        "periodEnd": "2020-09-30",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "fail",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "Failed: Illiquid 17.0%",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 8.8%, Cash 18.7%, Income 1.8%"
-        }
-      },
-      {
-        "quarter": "Q4 2020",
-        "periodEnd": "2020-12-31",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "fail",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "Failed: Illiquid 18.1%",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 10.9%, Cash 18.2%, Income 1.0%"
-        }
-      },
-      {
-        "quarter": "Q1 2021",
-        "periodEnd": "2021-03-31",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "fail",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "Failed: Illiquid 17.5%",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 15.3%, Cash 21.4%, Income 1.1%"
-        }
-      },
-      {
-        "quarter": "Q2 2021",
-        "periodEnd": "2021-06-30",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "fail",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "Failed: Illiquid 19.8%",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 15.7%, Cash 20.9%, Income 0.8%"
-        }
-      },
-      {
-        "quarter": "Q3 2021",
-        "periodEnd": "2021-09-30",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "pass",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "All checks pass",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 13.3%, Cash 18.0%, Income 0.6%"
-        }
-      },
-      {
-        "quarter": "Q4 2021",
-        "periodEnd": "2021-12-31",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "pass",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "All checks pass",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 13.5%, Cash 15.6%, Income 0.5%"
-        }
-      },
-      {
-        "quarter": "Q1 2022",
-        "periodEnd": "2022-03-31",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "pass",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "All checks pass",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 16.1%, Cash 15.2%, Income 0.7%"
-        }
-      },
-      {
-        "quarter": "Q2 2022",
-        "periodEnd": "2022-06-30",
-        "verdictByScholar": {
-          "aaoifi": "pass",
-          "taqi_usmani": "pass",
-          "djim": "pass",
-          "jafari": "pass",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "All checks pass",
-          "taqi_usmani": "All checks pass",
-          "djim": "All checks pass",
-          "jafari": "All checks pass",
-          "strict": "Failed: Debt 16.3%, Cash 14.9%, Income 1.2%"
         }
       }
     ]
@@ -42257,9 +40018,9 @@
     "sector": "Consumer Cyclical",
     "marketCapUsd": 39609179833,
     "impermissibleIncomePct": 0.69,
-    "debtToMarketCapPct": 270.58,
-    "cashSecuritiesToMarketCapPct": 569.34,
-    "receivablesToMarketCapPct": 74.46,
+    "debtToMarketCapPct": 31.12,
+    "cashSecuritiesToMarketCapPct": 118.6,
+    "receivablesToMarketCapPct": 9.81,
     "illiquidAssetsToTotalAssetsPct": 33,
     "sectorFlags": [],
     "dividendYieldPct": 3.63,
@@ -42268,178 +40029,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1549802&type=10-Q",
       "currency": "USD",
-      "cash": 114938.132,
-      "marketableSecurities": 99929.395,
-      "longTermMarketableSecurities": 103636.499,
-      "accountsReceivable": 26337.27,
-      "inventories": 102884.318,
-      "otherCurrentAssets": 19210.984,
-      "propertyPlantEquipment": 130411.129,
-      "operatingLeaseAssets": 0,
-      "goodwill": 26192.811,
-      "intangibleAssets": 7425.165,
-      "otherNonCurrentAssets": 46580.384,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 683161.039,
-      "accountsPayable": 186515.81,
-      "otherCurrentLiabilities": 54511.653,
-      "deferredRevenue": 41673.778,
-      "shortTermDebt": 21139.754,
-      "commercialPaper": 0,
-      "longTermDebt": 62421.999,
-      "otherNonCurrentLiabilities": 1153.675,
-      "totalLiabilities": 403479.48,
-      "totalRevenueTTM": 1321787.658,
-      "productServicesRevenueTTM": 1321787.658,
-      "interestIncomeTTM": 0
+      "cash": 16952.5,
+      "marketableSecurities": 14738.8,
+      "longTermMarketableSecurities": 15285.6,
+      "accountsReceivable": 3884.6,
+      "inventories": 15174.7,
+      "otherCurrentAssets": 2833.5,
+      "propertyPlantEquipment": 19234.7,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 3863.2,
+      "intangibleAssets": 1095.2,
+      "otherNonCurrentAssets": 6870.3,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 100761.2,
+      "accountsPayable": 27509.7,
+      "otherCurrentLiabilities": 8040.1,
+      "deferredRevenue": 6146.6,
+      "shortTermDebt": 3118.0,
+      "commercialPaper": 0.0,
+      "longTermDebt": 9206.8,
+      "otherNonCurrentLiabilities": 170.2,
+      "totalLiabilities": 59510.2,
+      "totalRevenueTTM": 194953.9,
+      "productServicesRevenueTTM": 194953.9,
+      "interestIncomeTTM": 0.0,
+      "reportingCurrency": "CNY",
+      "fxRateToUsd": 6.78
     },
     "nextEarningsDate": "2026-08-13",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 217.6%, Cash 509.7%",
-          "taqi_usmani": "Failed: Debt 217.6%, Cash 509.7%",
-          "djim": "Failed: Debt 217.6%, Cash 509.7%",
-          "jafari": "Failed: Debt 217.6%, Cash 509.7%",
-          "strict": "Failed: Debt 217.6%, Cash 509.7%, Income 2.8%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 222.2%, Cash 481.9%",
-          "taqi_usmani": "Failed: Debt 222.2%, Cash 481.9%",
-          "djim": "Failed: Debt 222.2%, Cash 481.9%",
-          "jafari": "Failed: Debt 222.2%, Cash 481.9%",
-          "strict": "Failed: Debt 222.2%, Cash 481.9%, Income 2.9%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 226.6%, Cash 590.8%",
-          "taqi_usmani": "Failed: Debt 226.6%, Cash 590.8%",
-          "djim": "Failed: Debt 226.6%, Cash 590.8%",
-          "jafari": "Failed: Debt 226.6%, Cash 590.8%",
-          "strict": "Failed: Debt 226.6%, Cash 590.8%, Income 2.7%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 220.7%, Cash 490.2%",
-          "taqi_usmani": "Failed: Debt 220.7%, Cash 490.2%",
-          "djim": "Failed: Debt 220.7%, Cash 490.2%",
-          "jafari": "Failed: Debt 220.7%, Cash 490.2%",
-          "strict": "Failed: Debt 220.7%, Cash 490.2%, Income 2.6%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 254.5%, Cash 539.9%",
-          "taqi_usmani": "Failed: Debt 254.5%, Cash 539.9%",
-          "djim": "Failed: Debt 254.5%, Cash 539.9%",
-          "jafari": "Failed: Debt 254.5%, Cash 539.9%",
-          "strict": "Failed: Debt 254.5%, Cash 539.9%, Income 2.4%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 283.0%, Cash 500.6%",
-          "taqi_usmani": "Failed: Debt 283.0%, Cash 500.6%",
-          "djim": "Failed: Debt 283.0%, Cash 500.6%",
-          "jafari": "Failed: Debt 283.0%, Cash 500.6%",
-          "strict": "Failed: Debt 283.0%, Cash 500.6%, Income 2.7%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 270.6%, Cash 569.3%",
-          "taqi_usmani": "Failed: Debt 270.6%, Cash 569.3%",
-          "djim": "Failed: Debt 270.6%, Cash 569.3%",
-          "jafari": "Failed: Debt 270.6%, Cash 569.3%",
-          "strict": "Failed: Debt 270.6%, Cash 569.3%, Income 2.6%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 271.7%, Cash 542.5%",
-          "taqi_usmani": "Failed: Debt 271.7%, Cash 542.5%",
-          "djim": "Failed: Debt 271.7%, Cash 542.5%",
-          "jafari": "Failed: Debt 271.7%, Cash 542.5%",
-          "strict": "Failed: Debt 271.7%, Cash 542.5%, Income 2.7%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "PEG",
@@ -44349,9 +41967,9 @@
     "sector": "Consumer Cyclical",
     "marketCapUsd": 34643973036,
     "impermissibleIncomePct": 0.82,
-    "debtToMarketCapPct": 39078.45,
-    "cashSecuritiesToMarketCapPct": 14688.86,
-    "receivablesToMarketCapPct": 12546.14,
+    "debtToMarketCapPct": 243.87,
+    "cashSecuritiesToMarketCapPct": 257.68,
+    "receivablesToMarketCapPct": 78.3,
     "illiquidAssetsToTotalAssetsPct": 36,
     "sectorFlags": [],
     "dividendYieldPct": 5.87,
@@ -44360,178 +41978,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=715153&type=10-Q",
       "currency": "USD",
-      "cash": 5088803.682,
-      "marketableSecurities": 0,
-      "longTermMarketableSecurities": 9215695.408,
-      "accountsReceivable": 4346481.008,
-      "inventories": 2542144.091,
-      "otherCurrentAssets": 1154030.61,
-      "propertyPlantEquipment": 9671942.683,
-      "operatingLeaseAssets": 0,
-      "goodwill": 788163.636,
-      "intangibleAssets": 0,
-      "otherNonCurrentAssets": 545042.733,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 33654620.387,
-      "accountsPayable": 1789325.089,
-      "otherCurrentLiabilities": 3323486.269,
-      "deferredRevenue": 0,
-      "shortTermDebt": 5026418.275,
-      "commercialPaper": 0,
-      "longTermDebt": 8511909.151,
-      "otherNonCurrentLiabilities": 2012883.512,
-      "totalLiabilities": 21453860.162,
-      "totalRevenueTTM": 22000002.228,
-      "productServicesRevenueTTM": 22000002.228,
-      "interestIncomeTTM": 181245.919
+      "cash": 31757.4,
+      "marketableSecurities": 0.0,
+      "longTermMarketableSecurities": 57511.8,
+      "accountsReceivable": 27124.8,
+      "inventories": 15864.6,
+      "otherCurrentAssets": 7201.9,
+      "propertyPlantEquipment": 60359.1,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 4918.6,
+      "intangibleAssets": 0.0,
+      "otherNonCurrentAssets": 3401.4,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 210026.3,
+      "accountsPayable": 11166.5,
+      "otherCurrentLiabilities": 20740.7,
+      "deferredRevenue": 0.0,
+      "shortTermDebt": 31368.1,
+      "commercialPaper": 0.0,
+      "longTermDebt": 53119.8,
+      "otherNonCurrentLiabilities": 12561.7,
+      "totalLiabilities": 133885.8,
+      "totalRevenueTTM": 137294.1,
+      "productServicesRevenueTTM": 137294.1,
+      "interestIncomeTTM": 1131.1,
+      "reportingCurrency": "JPY",
+      "fxRateToUsd": 160.24
     },
     "nextEarningsDate": "2026-08-05",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 31901.7%, Cash 14923.5%",
-          "taqi_usmani": "Failed: Debt 31901.7%, Cash 14923.5%",
-          "djim": "Failed: Debt 31901.7%, Cash 14923.5%",
-          "jafari": "Failed: Debt 31901.7%, Cash 14923.5%",
-          "strict": "Failed: Debt 31901.7%, Cash 14923.5%, Income 0.9%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 30264.9%, Cash 14338.7%",
-          "taqi_usmani": "Failed: Debt 30264.9%, Cash 14338.7%",
-          "djim": "Failed: Debt 30264.9%, Cash 14338.7%",
-          "jafari": "Failed: Debt 30264.9%, Cash 14338.7%",
-          "strict": "Failed: Debt 30264.9%, Cash 14338.7%, Income 0.9%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 34245.1%, Cash 15080.7%",
-          "taqi_usmani": "Failed: Debt 34245.1%, Cash 15080.7%, Illiquid 18.2%",
-          "djim": "Failed: Debt 34245.1%, Cash 15080.7%",
-          "jafari": "Failed: Debt 34245.1%, Cash 15080.7%",
-          "strict": "Failed: Debt 34245.1%, Cash 15080.7%, Income 0.9%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 12764.8%, Cash 13674.2%",
-          "taqi_usmani": "Failed: Debt 12764.8%, Cash 13674.2%",
-          "djim": "Failed: Debt 12764.8%, Cash 13674.2%",
-          "jafari": "Failed: Debt 12764.8%, Cash 13674.2%",
-          "strict": "Failed: Debt 12764.8%, Cash 13674.2%, Income 0.8%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 12764.8%, Cash 13674.2%",
-          "taqi_usmani": "Failed: Debt 12764.8%, Cash 13674.2%",
-          "djim": "Failed: Debt 12764.8%, Cash 13674.2%",
-          "jafari": "Failed: Debt 12764.8%, Cash 13674.2%",
-          "strict": "Failed: Debt 12764.8%, Cash 13674.2%, Income 0.7%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Cash 13977.4%",
-          "taqi_usmani": "Failed: Cash 13977.4%",
-          "djim": "Failed: Cash 13977.4%",
-          "jafari": "Failed: Cash 13977.4%",
-          "strict": "Failed: Cash 13977.4%, Income 0.8%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 39102.9%, Cash 14532.3%",
-          "taqi_usmani": "Failed: Debt 39102.9%, Cash 14532.3%, Illiquid 17.4%",
-          "djim": "Failed: Debt 39102.9%, Cash 14532.3%",
-          "jafari": "Failed: Debt 39102.9%, Cash 14532.3%",
-          "strict": "Failed: Debt 39102.9%, Cash 14532.3%, Income 0.9%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 39078.4%, Cash 14688.9%",
-          "taqi_usmani": "Failed: Debt 39078.4%, Cash 14688.9%",
-          "djim": "Failed: Debt 39078.4%, Cash 14688.9%",
-          "jafari": "Failed: Debt 39078.4%, Cash 14688.9%",
-          "strict": "Failed: Debt 39078.4%, Cash 14688.9%, Income 0.9%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "UAL",
@@ -46245,7 +43720,7 @@
   },
   {
     "ticker": "EL",
-    "name": "The Estée Lauder Companies Inc.",
+    "name": "The Est\u00e9e Lauder Companies Inc.",
     "sector": "Consumer Defensive",
     "marketCapUsd": 30196215861,
     "impermissibleIncomePct": 0.8,
@@ -50620,9 +48095,9 @@
     "sector": "Technology",
     "marketCapUsd": 22029766305,
     "impermissibleIncomePct": 3.06,
-    "debtToMarketCapPct": 921.07,
-    "cashSecuritiesToMarketCapPct": 2465.91,
-    "receivablesToMarketCapPct": 1081.74,
+    "debtToMarketCapPct": 8.38,
+    "cashSecuritiesToMarketCapPct": 27.88,
+    "receivablesToMarketCapPct": 11.31,
     "illiquidAssetsToTotalAssetsPct": 8,
     "sectorFlags": [],
     "dividendYieldPct": 5.58,
@@ -50631,178 +48106,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1123799&type=10-Q",
       "currency": "USD",
-      "cash": 105555,
-      "marketableSecurities": 437680,
-      "longTermMarketableSecurities": 44220,
-      "accountsReceivable": 238305,
-      "inventories": 517,
-      "otherCurrentAssets": 44297,
-      "propertyPlantEquipment": 110074,
-      "operatingLeaseAssets": 0,
-      "goodwill": 387399,
-      "intangibleAssets": 29176,
-      "otherNonCurrentAssets": 16797,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 1419262,
-      "accountsPayable": 94924,
-      "otherCurrentLiabilities": 58632,
-      "deferredRevenue": 25434,
-      "shortTermDebt": 174621,
-      "commercialPaper": 0,
-      "longTermDebt": 1962,
-      "otherNonCurrentLiabilities": 82598,
-      "totalLiabilities": 531385,
-      "totalRevenueTTM": 926240,
-      "productServicesRevenueTTM": 926240,
-      "interestIncomeTTM": 28367
+      "cash": 1103.6,
+      "marketableSecurities": 4575.8,
+      "longTermMarketableSecurities": 462.3,
+      "accountsReceivable": 2491.4,
+      "inventories": 5.4,
+      "otherCurrentAssets": 463.1,
+      "propertyPlantEquipment": 1150.8,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 4050.2,
+      "intangibleAssets": 305.0,
+      "otherNonCurrentAssets": 175.6,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 14838.1,
+      "accountsPayable": 992.4,
+      "otherCurrentLiabilities": 613.0,
+      "deferredRevenue": 265.9,
+      "shortTermDebt": 1825.6,
+      "commercialPaper": 0.0,
+      "longTermDebt": 20.5,
+      "otherNonCurrentLiabilities": 863.5,
+      "totalLiabilities": 5555.5,
+      "totalRevenueTTM": 9683.6,
+      "productServicesRevenueTTM": 9683.6,
+      "interestIncomeTTM": 296.6,
+      "reportingCurrency": "INR",
+      "fxRateToUsd": 95.65
     },
     "nextEarningsDate": "2026-07-16",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 766.7%, Cash 2043.7%",
-          "taqi_usmani": "Failed: Debt 766.7%, Cash 2043.7%, Illiquid 8.6%",
-          "djim": "Failed: Debt 766.7%, Cash 2043.7%",
-          "jafari": "Failed: Debt 766.7%, Cash 2043.7%",
-          "strict": "Failed: Debt 766.7%, Cash 2043.7%, Income 2.6%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 875.3%, Cash 2323.7%",
-          "taqi_usmani": "Failed: Debt 875.3%, Cash 2323.7%, Illiquid 8.1%",
-          "djim": "Failed: Debt 875.3%, Cash 2323.7%",
-          "jafari": "Failed: Debt 875.3%, Cash 2323.7%",
-          "strict": "Failed: Debt 875.3%, Cash 2323.7%, Income 2.9%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 878.6%, Cash 2550.5%",
-          "taqi_usmani": "Failed: Debt 878.6%, Cash 2550.5%, Illiquid 7.7%",
-          "djim": "Failed: Debt 878.6%, Cash 2550.5%",
-          "jafari": "Failed: Debt 878.6%, Cash 2550.5%",
-          "strict": "Failed: Debt 878.6%, Cash 2550.5%, Income 3.4%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 871.7%, Cash 2416.6%",
-          "taqi_usmani": "Failed: Debt 871.7%, Cash 2416.6%, Illiquid 8.3%",
-          "djim": "Failed: Debt 871.7%, Cash 2416.6%",
-          "jafari": "Failed: Debt 871.7%, Cash 2416.6%",
-          "strict": "Failed: Debt 871.7%, Cash 2416.6%, Income 3.3%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 720.6%, Cash 2408.9%",
-          "taqi_usmani": "Failed: Debt 720.6%, Cash 2408.9%, Illiquid 8.2%",
-          "djim": "Failed: Debt 720.6%, Cash 2408.9%",
-          "jafari": "Failed: Debt 720.6%, Cash 2408.9%",
-          "strict": "Failed: Debt 720.6%, Cash 2408.9%, Income 3.3%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 733.7%, Cash 2316.2%",
-          "taqi_usmani": "Failed: Debt 733.7%, Cash 2316.2%, Illiquid 8.2%",
-          "djim": "Failed: Debt 733.7%, Cash 2316.2%",
-          "jafari": "Failed: Debt 733.7%, Cash 2316.2%",
-          "strict": "Failed: Debt 733.7%, Cash 2316.2%, Income 3.1%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 899.0%, Cash 2599.9%",
-          "taqi_usmani": "Failed: Debt 899.0%, Cash 2599.9%, Illiquid 7.8%",
-          "djim": "Failed: Debt 899.0%, Cash 2599.9%",
-          "jafari": "Failed: Debt 899.0%, Cash 2599.9%",
-          "strict": "Failed: Debt 899.0%, Cash 2599.9%, Income 2.9%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 921.1%, Cash 2465.9%",
-          "taqi_usmani": "Failed: Debt 921.1%, Cash 2465.9%, Illiquid 7.8%",
-          "djim": "Failed: Debt 921.1%, Cash 2465.9%",
-          "jafari": "Failed: Debt 921.1%, Cash 2465.9%",
-          "strict": "Failed: Debt 921.1%, Cash 2465.9%, Income 3.0%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "CHRW",
@@ -51760,9 +49092,9 @@
     "sector": "Consumer Cyclical",
     "marketCapUsd": 20601280209,
     "impermissibleIncomePct": 0.79,
-    "debtToMarketCapPct": 223.03,
-    "cashSecuritiesToMarketCapPct": 146.33,
-    "receivablesToMarketCapPct": 27.48,
+    "debtToMarketCapPct": 267.36,
+    "cashSecuritiesToMarketCapPct": 240.53,
+    "receivablesToMarketCapPct": 44.65,
     "illiquidAssetsToTotalAssetsPct": 33,
     "sectorFlags": [],
     "dividendYieldPct": 8.6,
@@ -51771,178 +49103,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1605484&type=10-Q",
       "currency": "USD",
-      "cash": 31950,
-      "marketableSecurities": 1987,
-      "longTermMarketableSecurities": 9173,
-      "accountsReceivable": 8003,
-      "inventories": 24960,
-      "otherCurrentAssets": 22434,
-      "propertyPlantEquipment": 44912,
-      "operatingLeaseAssets": 0,
-      "goodwill": 29766,
-      "intangibleAssets": 15533,
-      "otherNonCurrentAssets": 12054,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 207417,
-      "accountsPayable": 33898,
-      "otherCurrentLiabilities": 35109,
-      "deferredRevenue": 0,
-      "shortTermDebt": 17328,
-      "commercialPaper": 0,
-      "longTermDebt": 30591,
-      "otherNonCurrentLiabilities": 28295,
-      "totalLiabilities": 146471,
-      "totalRevenueTTM": 290289.681,
-      "productServicesRevenueTTM": 290289.681,
-      "interestIncomeTTM": 1540.30882
+      "cash": 36724.1,
+      "marketableSecurities": 2283.9,
+      "longTermMarketableSecurities": 10543.7,
+      "accountsReceivable": 9198.9,
+      "inventories": 28689.7,
+      "otherCurrentAssets": 25786.2,
+      "propertyPlantEquipment": 51623.0,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 34213.8,
+      "intangibleAssets": 17854.0,
+      "otherNonCurrentAssets": 13855.2,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 238410.3,
+      "accountsPayable": 38963.2,
+      "otherCurrentLiabilities": 40355.2,
+      "deferredRevenue": 0.0,
+      "shortTermDebt": 19917.2,
+      "commercialPaper": 0.0,
+      "longTermDebt": 35162.1,
+      "otherNonCurrentLiabilities": 32523.0,
+      "totalLiabilities": 168357.5,
+      "totalRevenueTTM": 333666.3,
+      "productServicesRevenueTTM": 333666.3,
+      "interestIncomeTTM": 1770.5,
+      "reportingCurrency": "EUR",
+      "fxRateToUsd": 0.87
     },
     "nextEarningsDate": "2026-07-30",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2022",
-        "periodEnd": "2022-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 136.7%, Cash 235.2%, Income 193812000000.0%",
-          "taqi_usmani": "Failed: Debt 136.7%, Cash 235.2%, Income 193812000000.0%",
-          "djim": "Failed: Debt 136.7%, Cash 235.2%, Income 193812000000.0%",
-          "jafari": "Failed: Debt 136.7%, Cash 235.2%, Income 193812000000.0%",
-          "strict": "Failed: Debt 136.7%, Cash 235.2%, Income 193812000000.0%"
-        }
-      },
-      {
-        "quarter": "Q4 2022",
-        "periodEnd": "2022-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 131.8%, Cash 244.0%",
-          "taqi_usmani": "Failed: Debt 131.8%, Cash 244.0%",
-          "djim": "Failed: Debt 131.8%, Cash 244.0%",
-          "jafari": "Failed: Debt 131.8%, Cash 244.0%",
-          "strict": "Failed: Debt 131.8%, Cash 244.0%, Income 1.0%"
-        }
-      },
-      {
-        "quarter": "Q4 2023",
-        "periodEnd": "2023-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 143.0%, Cash 235.0%",
-          "taqi_usmani": "Failed: Debt 143.0%, Cash 235.0%",
-          "djim": "Failed: Debt 143.0%, Cash 235.0%",
-          "jafari": "Failed: Debt 143.0%, Cash 235.0%",
-          "strict": "Failed: Debt 143.0%, Cash 235.0%, Income 1.8%"
-        }
-      },
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 156.2%, Cash 191.9%",
-          "taqi_usmani": "Failed: Debt 156.2%, Cash 191.9%",
-          "djim": "Failed: Debt 156.2%, Cash 191.9%",
-          "jafari": "Failed: Debt 156.2%, Cash 191.9%",
-          "strict": "Failed: Debt 156.2%, Cash 191.9%, Income 1.5%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 180.7%, Cash 180.0%",
-          "taqi_usmani": "Failed: Debt 180.7%, Cash 180.0%",
-          "djim": "Failed: Debt 180.7%, Cash 180.0%",
-          "jafari": "Failed: Debt 180.7%, Cash 180.0%",
-          "strict": "Failed: Debt 180.7%, Cash 180.0%, Income 1.2%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 198.0%, Cash 158.6%",
-          "taqi_usmani": "Failed: Debt 198.0%, Cash 158.6%",
-          "djim": "Failed: Debt 198.0%, Cash 158.6%",
-          "jafari": "Failed: Debt 198.0%, Cash 158.6%",
-          "strict": "Failed: Debt 198.0%, Cash 158.6%, Income 3.4%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 223.0%, Cash 146.3%",
-          "taqi_usmani": "Failed: Debt 223.0%, Cash 146.3%",
-          "djim": "Failed: Debt 223.0%, Cash 146.3%",
-          "jafari": "Failed: Debt 223.0%, Cash 146.3%",
-          "strict": "Failed: Debt 223.0%, Cash 146.3%, Income 0.5%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 232.6%, Cash 164.7%",
-          "taqi_usmani": "Failed: Debt 232.6%, Cash 164.7%",
-          "djim": "Failed: Debt 232.6%, Cash 164.7%",
-          "jafari": "Failed: Debt 232.6%, Cash 164.7%",
-          "strict": "Failed: Debt 232.6%, Cash 164.7%, Income 3.6%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "RIVN",
@@ -53850,9 +51039,9 @@
     "sector": "Consumer Cyclical",
     "marketCapUsd": 15152617839,
     "impermissibleIncomePct": 1.52,
-    "debtToMarketCapPct": 246.71,
-    "cashSecuritiesToMarketCapPct": 256.91,
-    "receivablesToMarketCapPct": 60.44,
+    "debtToMarketCapPct": 33.74,
+    "cashSecuritiesToMarketCapPct": 49.24,
+    "receivablesToMarketCapPct": 4.28,
     "illiquidAssetsToTotalAssetsPct": 27,
     "sectorFlags": [],
     "dividendYieldPct": 0,
@@ -53861,178 +51050,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1810997&type=10-Q",
       "currency": "USD",
-      "cash": 19822.725,
-      "marketableSecurities": 17293.179,
-      "longTermMarketableSecurities": 13465.914,
-      "accountsReceivable": 4395.072,
-      "inventories": 13242.214,
-      "otherCurrentAssets": 5687.965,
-      "propertyPlantEquipment": 18539.404,
-      "operatingLeaseAssets": 0,
-      "goodwill": 0,
-      "intangibleAssets": 4104.654,
-      "otherNonCurrentAssets": 3884.957,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 100436.085,
-      "accountsPayable": 13028.559,
-      "otherCurrentLiabilities": 12646.486,
-      "deferredRevenue": 1746.558,
-      "shortTermDebt": 25686.908,
-      "commercialPaper": 0,
-      "longTermDebt": 8971.193,
-      "otherNonCurrentLiabilities": 1690.501,
-      "totalLiabilities": 72082.753,
-      "totalRevenueTTM": 73556.917711,
-      "productServicesRevenueTTM": 73556.917711,
-      "interestIncomeTTM": 1123.964803
+      "cash": 2923.7,
+      "marketableSecurities": 2550.6,
+      "longTermMarketableSecurities": 1986.1,
+      "accountsReceivable": 648.2,
+      "inventories": 1953.1,
+      "otherCurrentAssets": 838.9,
+      "propertyPlantEquipment": 2734.4,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 0.0,
+      "intangibleAssets": 605.4,
+      "otherNonCurrentAssets": 573.0,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 14813.6,
+      "accountsPayable": 1921.6,
+      "otherCurrentLiabilities": 1865.3,
+      "deferredRevenue": 257.6,
+      "shortTermDebt": 3788.6,
+      "commercialPaper": 0.0,
+      "longTermDebt": 1323.2,
+      "otherNonCurrentLiabilities": 249.3,
+      "totalLiabilities": 10631.7,
+      "totalRevenueTTM": 10849.1,
+      "productServicesRevenueTTM": 10849.1,
+      "interestIncomeTTM": 165.8,
+      "reportingCurrency": "CNY",
+      "fxRateToUsd": 6.78
     },
     "nextEarningsDate": "2026-08-18",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 101.0%, Cash 185.7%",
-          "taqi_usmani": "Failed: Debt 101.0%, Cash 185.7%",
-          "djim": "Failed: Debt 101.0%, Cash 185.7%",
-          "jafari": "Failed: Debt 101.0%, Cash 185.7%",
-          "strict": "Failed: Debt 101.0%, Cash 185.7%, Income 4.4%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 101.7%, Cash 159.4%",
-          "taqi_usmani": "Failed: Debt 101.7%, Cash 159.4%",
-          "djim": "Failed: Debt 101.7%, Cash 159.4%",
-          "jafari": "Failed: Debt 101.7%, Cash 159.4%",
-          "strict": "Failed: Debt 101.7%, Cash 159.4%, Income 3.1%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 105.2%, Cash 215.9%",
-          "taqi_usmani": "Failed: Debt 105.2%, Cash 215.9%",
-          "djim": "Failed: Debt 105.2%, Cash 215.9%",
-          "jafari": "Failed: Debt 105.2%, Cash 215.9%",
-          "strict": "Failed: Debt 105.2%, Cash 215.9%, Income 1.9%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 116.8%, Cash 221.9%",
-          "taqi_usmani": "Failed: Debt 116.8%, Cash 221.9%",
-          "djim": "Failed: Debt 116.8%, Cash 221.9%",
-          "jafari": "Failed: Debt 116.8%, Cash 221.9%",
-          "strict": "Failed: Debt 116.8%, Cash 221.9%, Income 1.8%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 202.4%, Cash 223.5%",
-          "taqi_usmani": "Failed: Debt 202.4%, Cash 223.5%",
-          "djim": "Failed: Debt 202.4%, Cash 223.5%",
-          "jafari": "Failed: Debt 202.4%, Cash 223.5%",
-          "strict": "Failed: Debt 202.4%, Cash 223.5%, Income 1.7%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 229.0%, Cash 229.0%",
-          "taqi_usmani": "Failed: Debt 229.0%, Cash 229.0%",
-          "djim": "Failed: Debt 229.0%, Cash 229.0%",
-          "jafari": "Failed: Debt 229.0%, Cash 229.0%",
-          "strict": "Failed: Debt 229.0%, Cash 229.0%, Income 1.5%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 246.7%, Cash 256.9%",
-          "taqi_usmani": "Failed: Debt 246.7%, Cash 256.9%",
-          "djim": "Failed: Debt 246.7%, Cash 256.9%",
-          "jafari": "Failed: Debt 246.7%, Cash 256.9%",
-          "strict": "Failed: Debt 246.7%, Cash 256.9%, Income 1.2%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 272.9%, Cash 244.9%",
-          "taqi_usmani": "Failed: Debt 272.9%, Cash 244.9%",
-          "djim": "Failed: Debt 272.9%, Cash 244.9%",
-          "jafari": "Failed: Debt 272.9%, Cash 244.9%",
-          "strict": "Failed: Debt 272.9%, Cash 244.9%, Income 2.0%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "BBY",
@@ -54420,9 +51466,9 @@
     "sector": "Consumer Cyclical",
     "marketCapUsd": 14341437013,
     "impermissibleIncomePct": 3.71,
-    "debtToMarketCapPct": 124.3,
-    "cashSecuritiesToMarketCapPct": 706.37,
-    "receivablesToMarketCapPct": 0.84,
+    "debtToMarketCapPct": 11.78,
+    "cashSecuritiesToMarketCapPct": 97.51,
+    "receivablesToMarketCapPct": 0.13,
     "illiquidAssetsToTotalAssetsPct": 26,
     "sectorFlags": [],
     "dividendYieldPct": 0,
@@ -54431,178 +51477,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1791706&type=10-Q",
       "currency": "USD",
-      "cash": 42710.459,
-      "marketableSecurities": 50101.82,
-      "longTermMarketableSecurities": 2005.785,
-      "accountsReceivable": 128.523,
-      "inventories": 7008.016,
-      "otherCurrentAssets": 5261.557,
-      "propertyPlantEquipment": 30282.855,
-      "operatingLeaseAssets": 0,
-      "goodwill": 5.464,
-      "intangibleAssets": 1167.7,
-      "otherNonCurrentAssets": 1777.209,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 144025.613,
-      "accountsPayable": 35841.436,
-      "otherCurrentLiabilities": 11067.481,
-      "deferredRevenue": 1390.625,
-      "shortTermDebt": 7680.136,
-      "commercialPaper": 0,
-      "longTermDebt": 3773.713,
-      "otherNonCurrentLiabilities": 6471.83,
-      "totalLiabilities": 73682.416,
-      "totalRevenueTTM": 108980.076088,
-      "productServicesRevenueTTM": 108980.076088,
-      "interestIncomeTTM": 1365.985558
+      "cash": 6299.5,
+      "marketableSecurities": 7389.6,
+      "longTermMarketableSecurities": 295.8,
+      "accountsReceivable": 19.0,
+      "inventories": 1033.6,
+      "otherCurrentAssets": 776.0,
+      "propertyPlantEquipment": 4466.5,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 0.8,
+      "intangibleAssets": 172.2,
+      "otherNonCurrentAssets": 262.1,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 21242.7,
+      "accountsPayable": 5286.3,
+      "otherCurrentLiabilities": 1632.4,
+      "deferredRevenue": 205.1,
+      "shortTermDebt": 1132.8,
+      "commercialPaper": 0.0,
+      "longTermDebt": 556.6,
+      "otherNonCurrentLiabilities": 954.5,
+      "totalLiabilities": 10867.6,
+      "totalRevenueTTM": 16073.8,
+      "productServicesRevenueTTM": 16073.8,
+      "interestIncomeTTM": 201.5,
+      "reportingCurrency": "CNY",
+      "fxRateToUsd": 6.78
     },
     "nextEarningsDate": "2026-08-27",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 107.8%, Cash 678.1%",
-          "taqi_usmani": "Failed: Debt 107.8%, Cash 678.1%",
-          "djim": "Failed: Debt 107.8%, Cash 678.1%",
-          "jafari": "Failed: Debt 107.8%, Cash 678.1%",
-          "strict": "Failed: Debt 107.8%, Cash 678.1%, Income 1.2%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 109.4%, Cash 742.9%, Income 9.9%",
-          "taqi_usmani": "Failed: Debt 109.4%, Cash 742.9%, Income 9.9%",
-          "djim": "Failed: Debt 109.4%, Cash 742.9%, Income 9.9%",
-          "jafari": "Failed: Debt 109.4%, Cash 742.9%, Income 9.9%",
-          "strict": "Failed: Debt 109.4%, Cash 742.9%, Income 9.9%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 114.0%, Cash 786.6%",
-          "taqi_usmani": "Failed: Debt 114.0%, Cash 786.6%",
-          "djim": "Failed: Debt 114.0%, Cash 786.6%",
-          "jafari": "Failed: Debt 114.0%, Cash 786.6%",
-          "strict": "Failed: Debt 114.0%, Cash 786.6%, Income 0.9%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 114.0%, Cash 771.7%",
-          "taqi_usmani": "Failed: Debt 114.0%, Cash 771.7%",
-          "djim": "Failed: Debt 114.0%, Cash 771.7%",
-          "jafari": "Failed: Debt 114.0%, Cash 771.7%",
-          "strict": "Failed: Debt 114.0%, Cash 771.7%, Income 2.0%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 118.0%, Cash 745.5%",
-          "taqi_usmani": "Failed: Debt 118.0%, Cash 745.5%",
-          "djim": "Failed: Debt 118.0%, Cash 745.5%",
-          "jafari": "Failed: Debt 118.0%, Cash 745.5%",
-          "strict": "Failed: Debt 118.0%, Cash 745.5%, Income 1.6%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 124.8%, Cash 688.1%",
-          "taqi_usmani": "Failed: Debt 124.8%, Cash 688.1%",
-          "djim": "Failed: Debt 124.8%, Cash 688.1%",
-          "jafari": "Failed: Debt 124.8%, Cash 688.1%",
-          "strict": "Failed: Debt 124.8%, Cash 688.1%, Income 1.7%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 124.3%, Cash 706.4%, Income 14.3%",
-          "taqi_usmani": "Failed: Debt 124.3%, Cash 706.4%, Income 14.3%",
-          "djim": "Failed: Debt 124.3%, Cash 706.4%, Income 14.3%",
-          "jafari": "Failed: Debt 124.3%, Cash 706.4%, Income 14.3%",
-          "strict": "Failed: Debt 124.3%, Cash 706.4%, Income 14.3%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 123.2%, Cash 647.2%",
-          "taqi_usmani": "Failed: Debt 123.2%, Cash 647.2%",
-          "djim": "Failed: Debt 123.2%, Cash 647.2%",
-          "jafari": "Failed: Debt 123.2%, Cash 647.2%",
-          "strict": "Failed: Debt 123.2%, Cash 647.2%, Income 1.7%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "PINS",
@@ -55180,9 +52083,9 @@
     "sector": "Consumer Cyclical",
     "marketCapUsd": 12681558848,
     "impermissibleIncomePct": 0.87,
-    "debtToMarketCapPct": 206.97,
-    "cashSecuritiesToMarketCapPct": 361.19,
-    "receivablesToMarketCapPct": 137.87,
+    "debtToMarketCapPct": 17.07,
+    "cashSecuritiesToMarketCapPct": 39.79,
+    "receivablesToMarketCapPct": 20.39,
     "illiquidAssetsToTotalAssetsPct": 37,
     "sectorFlags": [],
     "dividendYieldPct": 0,
@@ -55191,178 +52094,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1736541&type=10-Q",
       "currency": "USD",
-      "cash": 8827.507,
-      "marketableSecurities": 22938.157,
-      "longTermMarketableSecurities": 2450.24,
-      "accountsReceivable": 17535.534,
-      "inventories": 8579.71,
-      "otherCurrentAssets": 21459.343,
-      "propertyPlantEquipment": 36734.38,
-      "operatingLeaseAssets": 0,
-      "goodwill": 0,
-      "intangibleAssets": 225.013,
-      "otherNonCurrentAssets": 7445.125,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 126195.009,
-      "accountsPayable": 53969.73,
-      "otherCurrentLiabilities": 0,
-      "deferredRevenue": 0,
-      "shortTermDebt": 6285.443,
-      "commercialPaper": 0,
-      "longTermDebt": 8389.485,
-      "otherNonCurrentLiabilities": 14876.258,
-      "totalLiabilities": 111701.285,
-      "totalRevenueTTM": 100507.190899,
-      "productServicesRevenueTTM": 100507.190899,
-      "interestIncomeTTM": 702.5898
+      "cash": 1302.0,
+      "marketableSecurities": 3383.2,
+      "longTermMarketableSecurities": 361.4,
+      "accountsReceivable": 2586.4,
+      "inventories": 1265.4,
+      "otherCurrentAssets": 3165.1,
+      "propertyPlantEquipment": 5418.1,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 0.0,
+      "intangibleAssets": 33.2,
+      "otherNonCurrentAssets": 1098.1,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 18612.8,
+      "accountsPayable": 7960.1,
+      "otherCurrentLiabilities": 0.0,
+      "deferredRevenue": 0.0,
+      "shortTermDebt": 927.1,
+      "commercialPaper": 0.0,
+      "longTermDebt": 1237.4,
+      "otherNonCurrentLiabilities": 2194.1,
+      "totalLiabilities": 16475.1,
+      "totalRevenueTTM": 14824.1,
+      "productServicesRevenueTTM": 14824.1,
+      "interestIncomeTTM": 103.6,
+      "reportingCurrency": "CNY",
+      "fxRateToUsd": 6.78
     },
     "nextEarningsDate": "2026-09-01",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 261.2%, Cash 286.0%",
-          "taqi_usmani": "Failed: Debt 261.2%, Cash 286.0%",
-          "djim": "Failed: Debt 261.2%, Cash 286.0%",
-          "jafari": "Failed: Debt 261.2%, Cash 286.0%",
-          "strict": "Failed: Debt 261.2%, Cash 286.0%, Income 2.1%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 267.2%, Cash 292.9%",
-          "taqi_usmani": "Failed: Debt 267.2%, Cash 292.9%",
-          "djim": "Failed: Debt 267.2%, Cash 292.9%",
-          "jafari": "Failed: Debt 267.2%, Cash 292.9%",
-          "strict": "Failed: Debt 267.2%, Cash 292.9%, Income 1.7%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 266.7%, Cash 174.2%",
-          "taqi_usmani": "Failed: Debt 266.7%, Cash 174.2%",
-          "djim": "Failed: Debt 266.7%, Cash 174.2%",
-          "jafari": "Failed: Debt 266.7%, Cash 174.2%",
-          "strict": "Failed: Debt 266.7%, Cash 174.2%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 239.4%, Cash 155.5%",
-          "taqi_usmani": "Failed: Debt 239.4%, Cash 155.5%",
-          "djim": "Failed: Debt 239.4%, Cash 155.5%",
-          "jafari": "Failed: Debt 239.4%, Cash 155.5%",
-          "strict": "Failed: Debt 239.4%, Cash 155.5%, Income 1.4%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 244.2%, Cash 140.4%",
-          "taqi_usmani": "Failed: Debt 244.2%, Cash 140.4%",
-          "djim": "Failed: Debt 244.2%, Cash 140.4%",
-          "jafari": "Failed: Debt 244.2%, Cash 140.4%",
-          "strict": "Failed: Debt 244.2%, Cash 140.4%, Income 0.6%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 218.0%, Cash 190.1%",
-          "taqi_usmani": "Failed: Debt 218.0%, Cash 190.1%",
-          "djim": "Failed: Debt 218.0%, Cash 190.1%",
-          "jafari": "Failed: Debt 218.0%, Cash 190.1%",
-          "strict": "Failed: Debt 218.0%, Cash 190.1%, Income 1.6%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 207.0%, Cash 361.2%",
-          "taqi_usmani": "Failed: Debt 207.0%, Cash 361.2%",
-          "djim": "Failed: Debt 207.0%, Cash 361.2%",
-          "jafari": "Failed: Debt 207.0%, Cash 361.2%",
-          "strict": "Failed: Debt 207.0%, Cash 361.2%, Income 0.4%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 209.5%, Cash 250.5%",
-          "taqi_usmani": "Failed: Debt 209.5%, Cash 250.5%",
-          "djim": "Failed: Debt 209.5%, Cash 250.5%",
-          "jafari": "Failed: Debt 209.5%, Cash 250.5%",
-          "strict": "Failed: Debt 209.5%, Cash 250.5%, Income 0.5%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "X",
@@ -56515,9 +53275,9 @@
     "sector": "Healthcare",
     "marketCapUsd": 11021654351,
     "impermissibleIncomePct": 2.34,
-    "debtToMarketCapPct": 687.83,
-    "cashSecuritiesToMarketCapPct": 780.97,
-    "receivablesToMarketCapPct": 900.18,
+    "debtToMarketCapPct": 7.19,
+    "cashSecuritiesToMarketCapPct": 9.69,
+    "receivablesToMarketCapPct": 9.41,
     "illiquidAssetsToTotalAssetsPct": 33,
     "sectorFlags": [],
     "dividendYieldPct": 0.65,
@@ -56526,178 +53286,35 @@
       "reportedDate": "2026-03-31",
       "filingUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1135951&type=10-Q",
       "currency": "USD",
-      "cash": 15063.755,
-      "marketableSecurities": 71011.764,
-      "longTermMarketableSecurities": 16043.958,
-      "accountsReceivable": 99215.136,
-      "inventories": 75015.892,
-      "otherCurrentAssets": 35690.16,
-      "propertyPlantEquipment": 113634.898,
-      "operatingLeaseAssets": 0,
-      "goodwill": 12637.753,
-      "intangibleAssets": 102979.115,
-      "otherNonCurrentAssets": 4592.25,
-      "otherIllidquidTangible": 0,
-      "totalAssets": 567876.508,
-      "accountsPayable": 32749.552,
-      "otherCurrentLiabilities": 63425.976,
-      "deferredRevenue": 0,
-      "shortTermDebt": 63848.443,
-      "commercialPaper": 0,
-      "longTermDebt": 11961.413,
-      "otherNonCurrentLiabilities": 3481.68,
-      "totalLiabilities": 194951.533,
-      "totalRevenueTTM": 337102.39246,
-      "productServicesRevenueTTM": 337102.39246,
-      "interestIncomeTTM": 6641.640215
+      "cash": 157.5,
+      "marketableSecurities": 742.4,
+      "longTermMarketableSecurities": 167.7,
+      "accountsReceivable": 1037.3,
+      "inventories": 784.3,
+      "otherCurrentAssets": 373.1,
+      "propertyPlantEquipment": 1188.0,
+      "operatingLeaseAssets": 0.0,
+      "goodwill": 132.1,
+      "intangibleAssets": 1076.6,
+      "otherNonCurrentAssets": 48.0,
+      "otherIllidquidTangible": 0.0,
+      "totalAssets": 5937.0,
+      "accountsPayable": 342.4,
+      "otherCurrentLiabilities": 663.1,
+      "deferredRevenue": 0.0,
+      "shortTermDebt": 667.5,
+      "commercialPaper": 0.0,
+      "longTermDebt": 125.1,
+      "otherNonCurrentLiabilities": 36.4,
+      "totalLiabilities": 2038.2,
+      "totalRevenueTTM": 3524.3,
+      "productServicesRevenueTTM": 3524.3,
+      "interestIncomeTTM": 69.4,
+      "reportingCurrency": "INR",
+      "fxRateToUsd": 95.65
     },
     "nextEarningsDate": "2026-07-22",
-    "verdictHistory": [
-      {
-        "quarter": "Q2 2024",
-        "periodEnd": "2024-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 278.3%, Cash 858.5%",
-          "taqi_usmani": "Failed: Debt 278.3%, Cash 858.5%",
-          "djim": "Failed: Debt 278.3%, Cash 858.5%",
-          "jafari": "Failed: Debt 278.3%, Cash 858.5%",
-          "strict": "Failed: Debt 278.3%, Cash 858.5%, Income 1.0%"
-        }
-      },
-      {
-        "quarter": "Q3 2024",
-        "periodEnd": "2024-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 440.4%, Cash 572.3%",
-          "taqi_usmani": "Failed: Debt 440.4%, Cash 572.3%",
-          "djim": "Failed: Debt 440.4%, Cash 572.3%",
-          "jafari": "Failed: Debt 440.4%, Cash 572.3%",
-          "strict": "Failed: Debt 440.4%, Cash 572.3%, Income 0.8%"
-        }
-      },
-      {
-        "quarter": "Q4 2024",
-        "periodEnd": "2024-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 463.5%, Cash 536.9%",
-          "taqi_usmani": "Failed: Debt 463.5%, Cash 536.9%",
-          "djim": "Failed: Debt 463.5%, Cash 536.9%",
-          "jafari": "Failed: Debt 463.5%, Cash 536.9%",
-          "strict": "Failed: Debt 463.5%, Cash 536.9%, Income 0.8%"
-        }
-      },
-      {
-        "quarter": "Q1 2025",
-        "periodEnd": "2025-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 424.3%, Cash 525.4%",
-          "taqi_usmani": "Failed: Debt 424.3%, Cash 525.4%",
-          "djim": "Failed: Debt 424.3%, Cash 525.4%",
-          "jafari": "Failed: Debt 424.3%, Cash 525.4%",
-          "strict": "Failed: Debt 424.3%, Cash 525.4%, Income 0.7%"
-        }
-      },
-      {
-        "quarter": "Q2 2025",
-        "periodEnd": "2025-06-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 441.3%, Cash 605.1%",
-          "taqi_usmani": "Failed: Debt 441.3%, Cash 605.1%",
-          "djim": "Failed: Debt 441.3%, Cash 605.1%",
-          "jafari": "Failed: Debt 441.3%, Cash 605.1%",
-          "strict": "Failed: Debt 441.3%, Cash 605.1%, Income 1.3%"
-        }
-      },
-      {
-        "quarter": "Q3 2025",
-        "periodEnd": "2025-09-30",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 531.1%, Cash 633.4%",
-          "taqi_usmani": "Failed: Debt 531.1%, Cash 633.4%",
-          "djim": "Failed: Debt 531.1%, Cash 633.4%",
-          "jafari": "Failed: Debt 531.1%, Cash 633.4%",
-          "strict": "Failed: Debt 531.1%, Cash 633.4%, Income 1.9%"
-        }
-      },
-      {
-        "quarter": "Q4 2025",
-        "periodEnd": "2025-12-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 614.5%, Cash 749.3%",
-          "taqi_usmani": "Failed: Debt 614.5%, Cash 749.3%",
-          "djim": "Failed: Debt 614.5%, Cash 749.3%",
-          "jafari": "Failed: Debt 614.5%, Cash 749.3%",
-          "strict": "Failed: Debt 614.5%, Cash 749.3%, Income 2.4%"
-        }
-      },
-      {
-        "quarter": "Q1 2026",
-        "periodEnd": "2026-03-31",
-        "verdictByScholar": {
-          "aaoifi": "fail",
-          "taqi_usmani": "fail",
-          "djim": "fail",
-          "jafari": "fail",
-          "strict": "fail"
-        },
-        "decidingByScholar": {
-          "aaoifi": "Failed: Debt 687.8%, Cash 781.0%",
-          "taqi_usmani": "Failed: Debt 687.8%, Cash 781.0%",
-          "djim": "Failed: Debt 687.8%, Cash 781.0%",
-          "jafari": "Failed: Debt 687.8%, Cash 781.0%",
-          "strict": "Failed: Debt 687.8%, Cash 781.0%, Income 2.2%"
-        }
-      }
-    ]
+    "verdictHistory": []
   },
   {
     "ticker": "WYNN",

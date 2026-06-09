@@ -210,6 +210,44 @@ export default function CalculationCard(props: CalculationCardProps) {
           </div>
         </div>
 
+        {/* ─── ALWAYS-VISIBLE CITATION STRIP ────────────────────────
+            Per-ratio primary-source links, surfaced on the page itself
+            (not buried behind the expand). Direct response to Ibrahim
+            Malik's ask: "reference where the numbers are coming from,
+            cross-check if needed." */}
+        {(thresholdSourceUrl || dataSourceUrl || thresholdSource) && (
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-gray-100 px-6 py-2.5 text-[11px] text-gray-500">
+            <span className="font-semibold uppercase tracking-[0.14em] text-gray-400">
+              Source
+            </span>
+            {thresholdSourceUrl ? (
+              <a
+                href={thresholdSourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-0.5 text-navy-700 hover:text-navy-900 hover:underline"
+              >
+                {thresholdSource} <ExternalLink size={9} />
+              </a>
+            ) : (
+              <span>{thresholdSource}</span>
+            )}
+            {dataSourceUrl && (
+              <>
+                <span className="text-gray-300">·</span>
+                <a
+                  href={dataSourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-0.5 text-navy-700 hover:text-navy-900 hover:underline"
+                >
+                  {dataSource} <ExternalLink size={9} />
+                </a>
+              </>
+            )}
+          </div>
+        )}
+
         {/* ─── EXPAND / COLLAPSE TOGGLE ─────────────────────────── */}
         {!ratioOnly && (
           <>

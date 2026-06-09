@@ -107,7 +107,9 @@ function DetailChecks({
         thresholdDirection="max"
         verdict={(totalCashSec / marketCap) * 100 <= scholar.maxCashSecuritiesToMarketCapPct ? "pass" : "fail"}
         dataSource="SEC 10-Q · Note 4 (Securities)"
+        dataSourceUrl={bs.filingUrl}
         thresholdSource={`${scholar.sourceLabel}, §3.5.1`}
+        thresholdSourceUrl={scholar.sourceUrl ?? undefined}
         whatThisMeans="Caps how much of a company's value sits in interest-bearing financial assets."
       />
 
@@ -135,7 +137,9 @@ function DetailChecks({
           thresholdDirection="min"
           verdict={(totalIlliquid / bs.totalAssets) * 100 >= scholar.minIlliquidAssetsToTotalAssetsPct ? "pass" : "fail"}
           dataSource="SEC 10-Q · Note 5 (Property)"
+          dataSourceUrl={bs.filingUrl}
           thresholdSource={`${scholar.sourceLabel}, §15.4`}
+          thresholdSourceUrl={scholar.sourceUrl ?? undefined}
           whatThisMeans="Mufti Taqi's requirement: ≥20% of total assets must be tangible. Unique to Mizan."
         />
       )}
@@ -161,7 +165,9 @@ function DetailChecks({
         thresholdDirection="max"
         verdict={(totalDebt / marketCap) * 100 <= scholar.maxDebtToMarketCapPct ? "pass" : "fail"}
         dataSource="SEC 10-Q · Note 6 (Long-term Debt)"
+        dataSourceUrl={bs.filingUrl}
         thresholdSource={`${scholar.sourceLabel}, §3.4.2`}
+        thresholdSourceUrl={scholar.sourceUrl ?? undefined}
         whatThisMeans="Caps how much company value is funded by interest-bearing loans (riba)."
       />
 
@@ -182,7 +188,9 @@ function DetailChecks({
         thresholdDirection="max"
         verdict={(bs.interestIncomeTTM / bs.totalRevenueTTM) * 100 <= scholar.maxImpermissibleIncomePct ? "pass" : "fail"}
         dataSource="SEC 10-Q · Note 2 (Income)"
+        dataSourceUrl={bs.filingUrl}
         thresholdSource={`${scholar.sourceLabel}, §3.6`}
+        thresholdSourceUrl={scholar.sourceUrl ?? undefined}
         whatThisMeans="Caps what fraction of revenue can come from non-permissible sources."
       />
     </div>
@@ -217,6 +225,7 @@ function SummaryChecks({
           verdict={check.passes ? "pass" : "fail"}
           dataSource="Aggregated fundamentals"
           thresholdSource={`${scholar.sourceLabel}`}
+          thresholdSourceUrl={scholar.sourceUrl ?? undefined}
           ratioOnly
         />
       ))}

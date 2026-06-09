@@ -68,6 +68,12 @@ export interface BalanceSheetDetails {
   filingUrl?: string;
   /** Currency code, default USD */
   currency: string;
+  /** When the filing was reported in a non-USD currency, the original
+   *  reporting currency (e.g. "JPY"). Line items above are FX-normalized to
+   *  USD millions; this records what they were converted from. */
+  reportingCurrency?: string;
+  /** FX rate (local units per 1 USD) used to normalize this balance sheet. */
+  fxRateToUsd?: number;
 
   // --- ASSETS ---
   cash: number;
@@ -142,6 +148,10 @@ export interface ScholarProfile {
    *  Direct response to user feedback: "reference where the numbers are coming
    *  from, cross check if needed" (Ibrahim Malik, CUHK, 2026-06-04). */
   sourceLabel: string;
+  /** Canonical URL for the published methodology, so the inline per-ratio
+   *  citations on verdict pages link straight to the primary source. null when
+   *  no single canonical document exists (e.g. the minority "strict" view). */
+  sourceUrl?: string | null;
   /** Sectors that automatically disqualify a company. */
   excludedSectors: ProhibitedSector[];
   /** Max impermissible-income ratio, % of revenue. null = no cap (i.e. zero-tolerance handled separately). */

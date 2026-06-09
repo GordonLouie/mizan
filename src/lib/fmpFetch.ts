@@ -53,6 +53,38 @@ interface FMPBalanceSheet {
   shortTermDebt: number;
   longTermDebt: number;
   totalDebt: number;
+  reportedCurrency?: string;
+}
+
+/**
+ * FX normalization. FMP returns each company's balance sheet in its OWN
+ * reporting currency, but marketCap is in USD. Dividing a local-currency
+ * numerator by a USD market cap produced absurd ratios (Toyota debt = 18,793%
+ * of market cap). We convert every monetary balance-sheet figure to USD first.
+ *
+ * Rates are local units per 1 USD, snapshot June 2026 — REFRESH periodically
+ * (e.g. before a big ingestion run). Unknown currencies fall back to 1.0 and
+ * log a warning so you know to add them.
+ *   Sources: ECB euro reference rates; MTFX historical USD/JPY etc.
+ */
+const FX_PER_USD: Record<string, number> = {
+  USD: 1,
+  JPY: 160.24, CNY: 6.78, HKD: 7.82, TWD: 31.59, KRW: 1370,
+  INR: 95.65, SGD: 1.34, EUR: 0.87, GBP: 0.79, CHF: 0.81,
+  DKK: 6.49, SEK: 9.6, NOK: 10.2, CAD: 1.37, AUD: 1.5,
+  BRL: 5.4, MXN: 18.5, SAR: 3.75, AED: 3.67, ZAR: 18.3,
+  ILS: 3.7, THB: 35.5, IDR: 16200, MYR: 4.5, PHP: 57,
+};
+
+/** Returns local-units-per-USD for a currency code; 1.0 if USD/unknown. */
+function fxPerUsd(currency: string | undefined | null): number {
+  if (!currency || currency === "USD") return 1;
+  const rate = FX_PER_USD[currency.toUpperCase()];
+  if (!rate) {
+    console.warn(`[fx] No FX rate for "${currency}" — leaving values unconverted. Add it to FX_PER_USD.`);
+    return 1;
+  }
+  return rate;
 }
 
 interface FMPIncome {
@@ -172,22 +204,26 @@ export async function fetchStockFundamentals(
   const income = incomeRes?.[0];
   const ratios = ratiosRes?.[0];
 
-  const mktCap = profile.marketCap || 1; // avoid divide-by-zero
+  const mktCap = profile.marketCap || 1; // avoid divide-by-zero (USD)
   const totalAssets = bs.totalAssets || 1;
+
+  // FMP reports the balance sheet in the company's own currency; marketCap is
+  // USD. Convert local-currency numerators to USD before dividing by mktCap.
+  const fx = fxPerUsd(bs.reportedCurrency);
 
   // ── Debt ratio ──
   const totalDebt =
     bs.totalDebt ?? ((bs.shortTermDebt ?? 0) + (bs.longTermDebt ?? 0));
-  const debtToMarketCapPct = (totalDebt / mktCap) * 100;
+  const debtToMarketCapPct = (totalDebt / fx / mktCap) * 100;
 
   // ── Cash + securities ratio ──
   const cashAndSecurities =
     bs.cashAndShortTermInvestments ??
     (bs.cashAndCashEquivalents ?? 0) + (bs.shortTermInvestments ?? 0);
-  const cashSecuritiesToMarketCapPct = (cashAndSecurities / mktCap) * 100;
+  const cashSecuritiesToMarketCapPct = (cashAndSecurities / fx / mktCap) * 100;
 
   // ── Receivables ratio ──
-  const receivablesToMarketCapPct = ((bs.netReceivables ?? 0) / mktCap) * 100;
+  const receivablesToMarketCapPct = ((bs.netReceivables ?? 0) / fx / mktCap) * 100;
 
   // ── Illiquid assets ratio ──
   const illiquid = (bs.propertyPlantEquipmentNet ?? 0) + (bs.inventory ?? 0);
@@ -288,18 +324,26 @@ export async function fetchBalanceSheetDetails(
   if (!profile || !bs) return null;
 
   const reportedDate = String(bs.date ?? "");
-  const num = (k: string): number => Number(bs[k] ?? 0) / 1_000_000; // to millions
+  // FMP reports in the company's own currency; normalize everything to USD
+  // millions so the line items, totals, and ratios are all in one unit.
+  const reportedCurrency = String(bs.reportedCurrency ?? "USD").toUpperCase();
+  const fx = fxPerUsd(reportedCurrency);
+  const num = (k: string): number => Number(bs[k] ?? 0) / 1_000_000 / fx; // → USD millions
 
-  // TTM = sum of last 4 quarters
+  // TTM = sum of last 4 quarters, converted to USD millions
   const ttm = (k: string): number =>
     (incomeRes ?? []).slice(0, 4).reduce((s, row) => s + Number(row[k] ?? 0), 0) /
-    1_000_000;
+    1_000_000 /
+    fx;
 
   return {
     quarter: quarterLabel(reportedDate),
     reportedDate,
     filingUrl: secFilingUrlForCIK(profile.cik ?? null),
     currency: "USD",
+    ...(reportedCurrency !== "USD"
+      ? { reportingCurrency: reportedCurrency, fxRateToUsd: fx }
+      : {}),
     cash: num("cashAndCashEquivalents"),
     marketableSecurities: num("shortTermInvestments"),
     longTermMarketableSecurities: num("longTermInvestments"),
@@ -404,6 +448,9 @@ export async function fetchVerdictHistory(
     const income = incomeByDate.get(date);
 
     const num = (k: string): number => Number(bs[k] ?? 0);
+    // Convert local-currency balance-sheet figures to USD before dividing by
+    // the USD market cap (per-quarter currency, same fix as the other paths).
+    const fx = fxPerUsd(bs.reportedCurrency != null ? String(bs.reportedCurrency) : "USD");
 
     const totalDebt =
       num("totalDebt") || num("shortTermDebt") + num("longTermDebt");
@@ -413,8 +460,8 @@ export async function fetchVerdictHistory(
     const totalAssets = num("totalAssets") || 1;
     const illiquid = num("propertyPlantEquipmentNet") + num("inventory");
 
-    const debtPct = (totalDebt / mktCap) * 100;
-    const cashPct = (cashSec / mktCap) * 100;
+    const debtPct = (totalDebt / fx / mktCap) * 100;
+    const cashPct = (cashSec / fx / mktCap) * 100;
     const illiquidPct = (illiquid / totalAssets) * 100;
 
     const interestIncome =

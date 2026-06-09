@@ -14,3 +14,8 @@ test3.txt
 
 # Enrichment script working file
 .enrich-progress.json
+
+# Data-fix backups
+*.bak
+
+*.fixed

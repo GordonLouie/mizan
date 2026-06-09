@@ -1,9 +1,15 @@
 /**
  * CompanyLogo — renders a stock's company logo with a cascading fallback chain:
  *
+ *   0. Self-hosted (/logos/<TICKER>.png) — tried FIRST for every ticker.
+ *      Populated by `node scripts/fetch_logos.mjs`, served from Vercel's CDN,
+ *      so it loads instantly and never depends on a third-party staying up.
+ *      This is the primary path; the network sources below are only used for
+ *      tickers that haven't been downloaded yet.
  *   1. Clearbit (https://logo.clearbit.com/<domain>?size=512) — when the
- *      ticker has a curated domain mapping (companyDomains.ts). Clearbit
- *      returns the current, official, high-resolution corporate mark.
+ *      ticker has a curated domain mapping (companyDomains.ts). NOTE: Clearbit's
+ *      free logo API has become unreliable, which is why self-hosting is now
+ *      the primary path rather than this.
  *   2. FMP (https://financialmodelingprep.com/image-stock/<TICKER>.png) —
  *      per-ticker fallback. Covers most US tickers.
  *   3. Google favicons (https://www.google.com/s2/favicons?domain=&sz=128) —
@@ -36,7 +42,7 @@ interface CompanyLogoProps {
   fallbackTone?: "navy" | "neutral";
 }
 
-type Stage = "clearbit" | "fmp" | "favicon" | "monogram";
+type Stage = "local" | "clearbit" | "fmp" | "favicon" | "monogram";
 
 /**
  * Tickers we'll try against FMP's image-stock endpoint.
@@ -54,11 +60,9 @@ export default function CompanyLogo({
   fallbackTone = "navy",
 }: CompanyLogoProps) {
   const domain = getDomainForTicker(ticker);
-  const [stage, setStage] = useState<Stage>(() => {
-    if (domain) return "clearbit";
-    if (isFmpFriendlyTicker(ticker)) return "fmp";
-    return "monogram";
-  });
+  // Always try the self-hosted logo first. If the file isn't there yet, the
+  // <img> onError advances down the same network cascade as before.
+  const [stage, setStage] = useState<Stage>("local");
   const [imgLoaded, setImgLoaded] = useState(false);
 
   // Reset the loaded flag when the stage advances so the new img has to
@@ -109,7 +113,10 @@ export default function CompanyLogo({
 
   // Build the source URL for the current image stage.
   let src: string;
-  if (stage === "clearbit") {
+  if (stage === "local") {
+    // Encode so tickers with dots/class suffixes resolve to the right file.
+    src = `/logos/${encodeURIComponent(ticker)}.png`;
+  } else if (stage === "clearbit") {
     src = `https://logo.clearbit.com/${domain}?size=512`;
   } else if (stage === "fmp") {
     src = `https://financialmodelingprep.com/image-stock/${ticker}.png`;
@@ -118,7 +125,16 @@ export default function CompanyLogo({
   }
 
   function advanceStage() {
-    if (stage === "clearbit") {
+    if (stage === "local") {
+      // Self-hosted file missing — fall into the network cascade.
+      if (domain) {
+        setStage("clearbit");
+      } else if (isFmpFriendlyTicker(ticker)) {
+        setStage("fmp");
+      } else {
+        setStage("monogram");
+      }
+    } else if (stage === "clearbit") {
       if (isFmpFriendlyTicker(ticker)) {
         setStage("fmp");
       } else if (domain) {
