@@ -55,7 +55,7 @@ export default function ComplianceCard({ stock, result }: Props) {
         </div>
 
         {/* The verdict word */}
-        <div className={`mt-8 text-6xl font-bold leading-none sm:text-7xl ${colors.text}`} style={{ fontFamily: "Georgia, serif" }}>
+        <div className={`mt-8 text-6xl font-bold leading-none sm:text-7xl ${colors.text}`} style={{ fontFamily: "var(--font-display)" }}>
           {VERDICT_LABEL[result.verdict]}
         </div>
         <p className="mt-5 max-w-xl text-sm leading-6 text-gray-700">

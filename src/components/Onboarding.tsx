@@ -35,7 +35,7 @@ export default function Onboarding() {
         </button>
 
         <div className="text-xs font-medium uppercase tracking-wide text-gold-600">Welcome</div>
-        <h2 className="mt-1 text-2xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+        <h2 className="mt-1 text-2xl font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
           Halal investing, made clear.
         </h2>
         <p className="mt-3 text-sm leading-6 text-gray-700">

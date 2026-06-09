@@ -38,7 +38,7 @@ export function PageHeader({ kicker, title, description, action }: PageHeaderPro
         )}
         <h1
           className="mt-2 text-[34px] font-bold leading-[1.05] text-gray-900 sm:text-[42px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {title}
         </h1>
@@ -67,7 +67,7 @@ export function SubHead({
     <div className="mb-5">
       <h2
         className="text-lg font-bold text-gray-900"
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
       </h2>

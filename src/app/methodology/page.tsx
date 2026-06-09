@@ -130,7 +130,7 @@ export default function MethodologyPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           How Mizan screens stocks
         </h1>
@@ -201,7 +201,7 @@ export default function MethodologyPage() {
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <h3
                     className="text-[22px] font-bold leading-tight text-gray-900"
-                    style={{ fontFamily: "Georgia, serif" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     {p.label}
                   </h3>
@@ -299,7 +299,7 @@ export default function MethodologyPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Why scholars disagree on AMZN
         </h2>
@@ -419,7 +419,7 @@ function SectionHead({ kicker, title }: { kicker: string; title: string }) {
       </div>
       <h2
         className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
       </h2>

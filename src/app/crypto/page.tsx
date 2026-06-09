@@ -38,7 +38,7 @@ export default function CryptoPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Crypto compliance
         </h1>
@@ -88,7 +88,7 @@ export default function CryptoPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           How to read this page
         </h2>
@@ -121,7 +121,7 @@ export default function CryptoPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           What every scholar says
         </h2>
@@ -148,7 +148,7 @@ export default function CryptoPage() {
                   </div>
                   <div
                     className="mt-1 font-mono text-[16px] font-bold text-gray-900 tabular-nums"
-                    style={{ fontFamily: "Georgia, serif" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     {fmtMarketCap(asset.marketCapUsd)}
                   </div>
@@ -204,7 +204,7 @@ export default function CryptoPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           And why
         </h2>
@@ -277,7 +277,7 @@ function Stat({
       </div>
       <div
         className={`mt-1 text-[22px] font-bold leading-none tabular-nums ${cls}`}
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>

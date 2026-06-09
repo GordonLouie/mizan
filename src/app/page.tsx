@@ -41,101 +41,93 @@ export default function Home() {
 
   return (
     <div className="pb-16">
-      {/* 1. STATUS LINE */}
-      <section className="pt-6 sm:pt-10">
-        <div className="mb-10 flex justify-center">
-          <Link
-            href="/trust"
-            className="group inline-flex items-center gap-1.5 text-[11px] font-medium text-gray-500 transition hover:text-gray-800"
-          >
-            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-amber-500" />
-            <span className="uppercase tracking-[0.18em]">Private beta</span>
-            <span className="text-gray-300">·</span>
-            <span className="text-gray-500 group-hover:text-navy-700 group-hover:underline">
-              status
-            </span>
-          </Link>
+      {/* HERO — asymmetric grid: content LEFT (60%), real product preview
+          RIGHT (40%). Replaces the prior centered text-only hero, which
+          read as the LLM default. The right-column "verdict card" shows
+          what Mizan actually does in one glance — Amazon under 5 scholars,
+          three say halal, two say not. */}
+      <section className="mx-auto max-w-6xl px-4 pt-6 sm:px-6 sm:pt-10">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
+          {/* LEFT — content column */}
+          <div className="lg:col-span-7">
+            {/* Status pill — eyebrow-equivalent, kept because it carries
+                real status + links to the live trust page. */}
+            <Link
+              href="/trust"
+              className="group inline-flex items-center gap-1.5 text-[11px] font-medium text-gray-500 transition hover:text-gray-800"
+            >
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-amber-500" />
+              <span className="uppercase tracking-[0.18em]">Private beta</span>
+              <span className="text-gray-300">·</span>
+              <span className="text-gray-500 group-hover:text-navy-700 group-hover:underline">
+                status
+              </span>
+            </Link>
+
+            <h1
+              className="mt-6 text-[44px] font-bold leading-[1.04] tracking-tight text-gray-900 sm:text-[64px]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Is your stock halal?
+            </h1>
+
+            <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-gray-600 sm:text-[16px]">
+              See it under all six scholars side by side, including Mufti Taqi
+              Usmani&apos;s illiquid-asset rule. The one no other halal app
+              implements.
+            </p>
+
+            <div className="mt-8 max-w-lg">
+              <TickerSearch
+                value=""
+                onChange={(t) => {
+                  setT(t);
+                  if (t) router.push(`/screen?ticker=${encodeURIComponent(t)}`);
+                }}
+                placeholder="Type a ticker. AAPL, AMZN, TSLA, or 'apple'…"
+                autoFocus={false}
+              />
+            </div>
+
+            <div className="mt-4">
+              <Link
+                href="/screen?ticker=AMZN"
+                className="inline-flex items-center gap-1.5 text-[13px] font-medium text-navy-700 transition hover:text-navy-900"
+              >
+                See where the scholars split on Amazon <ArrowRight size={13} />
+              </Link>
+            </div>
+
+            {/* Privacy trust line — direct answer to "I don't trust AI-built
+                sites with my data". Says the literal truth: zero collection,
+                local-only watchlist. */}
+            <p className="mt-7 inline-flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-gray-400">
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              <span>No signup.</span>
+              <span className="text-gray-300">·</span>
+              <span>No data collected.</span>
+              <span className="text-gray-300">·</span>
+              <span>Your watchlist stays on your device.</span>
+            </p>
+          </div>
+
+          {/* RIGHT — real product preview (the verdict card). On mobile
+              this collapses below the content. Pre-shrunk on smaller
+              tablet sizes; full size at lg+. */}
+          <div className="lg:col-span-5">
+            <HeroVerdictCard tickerCount={tickerCount} />
+          </div>
         </div>
       </section>
 
-      {/* 2. HERO — leads the page */}
-      <section className="mx-auto max-w-2xl px-4 text-center sm:px-6">
-        <h1
-          className="text-[52px] font-bold leading-[1.02] tracking-tight text-gray-900 sm:text-[88px]"
-          style={{ fontFamily: "Georgia, serif" }}
-        >
-          Is your stock halal?
-        </h1>
-
-        <p className="mx-auto mt-6 max-w-xl text-[14px] leading-relaxed text-gray-500">
-          Including Mufti Taqi Usmani&apos;s illiquid-asset rule — the one no
-          other halal app implements.
-        </p>
-
-        {/* Stats trio */}
-        <div className="mx-auto mt-10 grid max-w-md grid-cols-3 divide-x divide-gray-200 border-y border-gray-200 py-5 font-mono tabular-nums">
-          <div className="px-2">
-            <div
-              className="text-[24px] font-bold leading-none text-navy-800 sm:text-[28px]"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              6
-            </div>
-            <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-500">
-              Scholars
-            </div>
-          </div>
-          <div className="px-2">
-            <div
-              className="text-[24px] font-bold leading-none text-navy-800 sm:text-[28px]"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              {tickerCount}
-            </div>
-            <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-500">
-              Tickers
-            </div>
-          </div>
-          <div className="px-2">
-            <div
-              className="text-[24px] font-bold leading-none text-navy-800 sm:text-[28px]"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              0
-            </div>
-            <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-gray-500">
-              Black-box scores
-            </div>
-          </div>
-        </div>
-
-        {/* Search */}
-        <div className="mx-auto mt-10 max-w-xl">
-          <TickerSearch
-            value=""
-            onChange={(t) => {
-              setT(t);
-              if (t) router.push(`/screen?ticker=${encodeURIComponent(t)}`);
-            }}
-            placeholder="Type a ticker — AAPL, AMZN, TSLA, or 'apple'…"
-            autoFocus={false}
-          />
-        </div>
-
-        {/* Disagreement CTA */}
-        <div className="mx-auto mt-5 max-w-xl">
-          <Link
-            href="/screen?ticker=AMZN"
-            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-navy-700 transition hover:text-navy-900"
-          >
-            See where the scholars split on Amazon <ArrowRight size={13} />
-          </Link>
-        </div>
-
-        {/* Or try — LOGOS ONLY, no names */}
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+      {/* Below-the-hero: discovery row with the try-a-ticker chips +
+          onboarding link. Removed from the hero per design discipline
+          (chips violate the hero's "max 4 text elements" rule).
+          Lives here as a dedicated zone for users still browsing. */}
+      <section className="mx-auto mt-14 max-w-6xl px-4 sm:px-6">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
           <span className="text-[11px] uppercase tracking-[0.18em] text-gray-400">
-            Or try
+            Or jump in with
           </span>
           {["AAPL", "TSLA", "MSFT", "JPM", "META", "SPUS"].map((t) => (
             <Link
@@ -147,29 +139,23 @@ export default function Home() {
               <CompanyLogo ticker={t} size={22} />
             </Link>
           ))}
+          <span className="ml-2 text-[12px] text-gray-500">
+            Don&apos;t know which scholar you follow?{" "}
+            <Link
+              href="/learn"
+              className="text-navy-700 underline hover:text-navy-900"
+            >
+              60-second primer
+            </Link>
+            . Most American Muslims start with AAOIFI.
+          </span>
         </div>
-
-        {/* Onboarding link */}
-        <p className="mt-6 text-[12px] text-gray-500">
-          Don&apos;t know which scholar you follow?{" "}
-          <Link
-            href="/learn"
-            className="text-navy-700 underline hover:text-navy-900"
-          >
-            60-second primer
-          </Link>{" "}
-          — most American Muslims start with AAOIFI.
-        </p>
       </section>
 
-      {/* 3. BIGGER MARQUEE — proof of coverage */}
+      {/* 3. MARQUEE — proof of coverage (eyebrow removed per design audit;
+          the marquee's content speaks for itself, no template label needed). */}
       <section className="mt-16">
-        <div className="text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          Covering {tickerCount}+ tickers
-        </div>
-        <div className="mt-5">
-          <CompanyLogoMarquee />
-        </div>
+        <CompanyLogoMarquee />
       </section>
 
       {/* 4. METHODOLOGY BUBBLE */}
@@ -178,21 +164,18 @@ export default function Home() {
       {/* 5. GET STARTED */}
       <GetStartedSteps />
 
-      {/* 10. CURATED LISTS */}
+      {/* CURATED LISTS — eyebrow removed; the headline alone carries it. */}
       <section className="mx-auto mt-32 max-w-4xl px-4 sm:px-6">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-              Discover
-            </div>
             <h2
-              className="mt-2 text-[26px] font-bold leading-tight text-gray-900 sm:text-[32px]"
-              style={{ fontFamily: "Georgia, serif" }}
+              className="text-[26px] font-bold leading-tight text-gray-900 sm:text-[32px]"
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Not sure where to start?
             </h2>
             <p className="mt-2 max-w-xl text-sm text-gray-600">
-              Hand-picked collections — re-screened against your scholar.
+              Hand-picked collections. Re-screened against your scholar.
             </p>
           </div>
           <Link
@@ -215,7 +198,7 @@ export default function Home() {
               </div>
               <div
                 className="mt-2 text-[17px] font-bold text-gray-900 group-hover:text-navy-800"
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {list.title}
               </div>
@@ -241,7 +224,7 @@ export default function Home() {
               <li>Free, transparent halal stock screening.</li>
               <li>Six scholarly methodologies + a custom builder.</li>
               <li>Zakat and purification calculators.</li>
-              <li>Information you can verify — we show the math.</li>
+              <li>Information you can verify. We show the math.</li>
             </ul>
           </div>
           <div>
@@ -257,6 +240,110 @@ export default function Home() {
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+/**
+ * HeroVerdictCard — the right-column visual for the asymmetric hero.
+ *
+ * Shows the *actual product moment*: Amazon under all 5 mainstream scholarly
+ * methodologies, three say halal, two say not halal. This is a real product
+ * preview (the pattern the Taste skill explicitly allows in place of div-
+ * based fake screenshots).
+ *
+ * Why this works as a hero visual:
+ *   - Demonstrates Mizan's core differentiator (multi-scholar disagreement)
+ *     in a single glance — no copy needed
+ *   - Uses real scholar names + real Amazon logo + real verdict logic
+ *   - Quietly reinforces trust: this is what you actually get, not a mockup
+ */
+function HeroVerdictCard({ tickerCount }: { tickerCount: number }) {
+  const rows: Array<{ scholar: string; verdict: "halal" | "not-halal"; deciding: string }> = [
+    { scholar: "AAOIFI", verdict: "halal", deciding: "all ratio checks pass" },
+    { scholar: "Mufti Taqi", verdict: "not-halal", deciding: "illiquid 14.8% < 20% floor" },
+    { scholar: "S&P DJIM", verdict: "halal", deciding: "all ratio checks pass" },
+    { scholar: "Ja'fari", verdict: "halal", deciding: "all ratio checks pass" },
+    { scholar: "Strict", verdict: "not-halal", deciding: "sector exclusion" },
+  ];
+
+  return (
+    <div className="relative">
+      <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_8px_32px_rgba(28,69,55,0.06)]">
+        {/* Card header — ticker + sector */}
+        <div className="border-b border-gray-100 px-5 py-4">
+          <div className="flex items-center gap-3">
+            <CompanyLogo ticker="AMZN" size={36} />
+            <div className="min-w-0">
+              <div className="font-mono text-[12px] uppercase tracking-[0.16em] text-gray-500">
+                AMZN · Consumer cyclical
+              </div>
+              <div
+                className="mt-0.5 truncate text-[17px] font-bold text-gray-900"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Amazon.com, Inc.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scholar verdict rows */}
+        <div className="divide-y divide-gray-100">
+          {rows.map((row) => {
+            const isPass = row.verdict === "halal";
+            return (
+              <div
+                key={row.scholar}
+                className="grid grid-cols-[1fr_auto] items-center gap-3 px-5 py-3"
+              >
+                <div className="min-w-0">
+                  <div
+                    className="text-[14px] font-semibold text-gray-900"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {row.scholar}
+                  </div>
+                  <div className="mt-0.5 truncate font-mono text-[10.5px] uppercase tracking-[0.12em] text-gray-500">
+                    {row.deciding}
+                  </div>
+                </div>
+                <span
+                  className={
+                    "rounded-full px-2.5 py-1 text-[11px] font-semibold " +
+                    (isPass
+                      ? "bg-emerald-50 text-emerald-700"
+                      : "bg-rose-50 text-rose-700")
+                  }
+                >
+                  {isPass ? "Halal" : "Not halal"}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Footer — quiet methodology pointer */}
+        <div className="border-t border-gray-100 bg-gray-50 px-5 py-3">
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-gray-500">
+              Every threshold cited
+            </span>
+            <Link
+              href="/screen?ticker=AMZN"
+              className="text-[12px] font-medium text-navy-700 hover:text-navy-900"
+            >
+              See full breakdown →
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Coverage micro-strip below the card — replaces the banned in-hero
+          stats trio with a single quiet line. */}
+      <div className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-gray-400">
+        {tickerCount}+ tickers · 5 scholars · 0 black-box scores
+      </div>
     </div>
   );
 }

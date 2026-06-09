@@ -19,7 +19,7 @@ export default function ListsIndex() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Hand-picked halal collections
         </h1>
@@ -53,7 +53,7 @@ export default function ListsIndex() {
 
               <h2
                 className="mt-3 text-[22px] font-bold leading-tight text-gray-900 group-hover:text-navy-800 sm:text-[26px]"
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {list.title}
               </h2>
@@ -127,7 +127,7 @@ function MiniStat({
       </div>
       <div
         className={`mt-1 text-[18px] font-bold leading-none tabular-nums ${cls}`}
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>

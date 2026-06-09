@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Type system — Forest brand.
+   Display = sans serif (Geist Display first if installed, then graceful
+   system stack). Serif is reserved for the MizanWordmark ONLY.
+   This single CSS variable powers every display headline across the site
+   via `font-family: var(--font-display)` in component styles.
+*/
+:root {
+  --font-display:
+    "Geist", "Geist Display",
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
 html, body { height: 100%; }
 body {
   background: #fafbfc;

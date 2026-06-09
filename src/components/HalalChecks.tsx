@@ -38,7 +38,7 @@ export default function HalalChecks({ stock, result, scholar }: Props) {
         </div>
         <h2
           className="mt-2 text-[22px] font-bold leading-tight text-gray-900 sm:text-[26px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Every check, every threshold
         </h2>

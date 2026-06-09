@@ -2,16 +2,19 @@
 // Every page imports from here; nothing else should hardcode colors/spacing.
 
 export const COLOR = {
-  // Brand
-  navy:        "#1F3A5F",
-  navyDark:    "#162A44",
-  navyLight:   "#264464",
-  navy50:      "#F3F6FA",
-  navy100:     "#E3EBF3",
-  navy200:     "#C4D4E3",
-  gold:        "#B8860B",
-  goldLight:   "#E8C547",
-  gold50:      "#FFFAEB",
+  // Brand — Forest palette (replaces the prior warm navy + brass gold which
+  // was in the Taste skill's banned "premium-consumer cream + gold" list).
+  // Token names kept as `navy` and `gold` for compatibility; values are now
+  // deep forest green and muted amber.
+  navy:        "#1C4537", // forest 800 (primary brand)
+  navyDark:    "#14322A", // forest 900
+  navyLight:   "#26543F", // forest 700
+  navy50:      "#F1F7F3", // forest 50
+  navy100:     "#DCEBE1", // forest 100
+  navy200:     "#B8D6C4", // forest 200
+  gold:        "#A87620", // amber 600
+  goldLight:   "#C89030", // amber 500
+  gold50:      "#FBF6EB",
 
   // Neutrals
   ink:         "#0F172A",

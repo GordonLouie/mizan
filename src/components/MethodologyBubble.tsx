@@ -49,7 +49,7 @@ export default function MethodologyBubble() {
         </span>
         <h2
           className="mt-6 text-[36px] font-bold leading-[1.05] text-gray-900 sm:text-[52px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Sourced from the documents that actually rule.
         </h2>
@@ -83,7 +83,7 @@ export default function MethodologyBubble() {
             </span>
             <div
               className="mt-3 text-[13px] font-bold text-gray-900"
-              style={{ fontFamily: "Georgia, serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               {s.label}
             </div>

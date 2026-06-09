@@ -68,7 +68,7 @@ export default function DiscoverPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] tracking-tight text-gray-900"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Find your next halal investment
         </h1>
@@ -218,7 +218,7 @@ export default function DiscoverPage() {
               <div>
                 <div
                   className="text-base font-bold text-gray-900 group-hover:text-navy-700"
-                  style={{ fontFamily: "Georgia, serif" }}
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
                   {tile.title}
                 </div>
@@ -254,7 +254,7 @@ function SectionHeader({
       </div>
       <h2
         className="mt-2 text-[24px] font-bold leading-tight text-gray-900"
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
       </h2>

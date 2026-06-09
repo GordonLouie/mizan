@@ -106,7 +106,7 @@ function ScreenInner() {
           </div>
           <h1
             className="mt-3 text-[32px] font-bold leading-tight text-gray-900 sm:text-[40px]"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Is your stock halal?
           </h1>
@@ -191,7 +191,7 @@ function ScreenInner() {
           </div>
           <h1
             className="mt-3 text-[32px] font-bold leading-[1.1] text-gray-900 sm:text-[40px]"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {stock.name}
           </h1>
@@ -222,7 +222,7 @@ function ScreenInner() {
               <VerdictIcon verdict={result!.verdict} />
               <div
                 className={`text-[56px] font-bold leading-none ${verdictColor}`}
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {VERDICT_LABEL[result!.verdict]}
               </div>
@@ -249,7 +249,7 @@ function ScreenInner() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {scholarsAgree ? "All five scholars agree." : "The scholars disagree."}
         </h2>
@@ -451,7 +451,7 @@ function TickerNotFound({
         </div>
         <h2
           className="mt-2 text-[20px] font-bold leading-tight text-gray-900"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {ticker} isn&apos;t covered — yet.
         </h2>

@@ -155,7 +155,7 @@ function CustomInner() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Build your custom scholar profile
         </h1>
@@ -193,7 +193,7 @@ function CustomInner() {
           </div>
           <h2
             className="mt-2 text-[18px] font-bold text-gray-900"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Your screening rules
           </h2>

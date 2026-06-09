@@ -147,7 +147,7 @@ export default function CalculationCard(props: CalculationCardProps) {
               </span>
               <h3
                 className="text-[16px] font-semibold text-gray-900"
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {title}
               </h3>
@@ -164,7 +164,7 @@ export default function CalculationCard(props: CalculationCardProps) {
           <div className="flex flex-col items-center justify-center rounded-lg bg-gray-50 px-6 py-4 sm:min-w-[140px]">
             <div
               className={`text-[40px] font-bold leading-none ${ratioTone}`}
-              style={{ fontFamily: "Georgia, serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               {ratio.toFixed(1)}%
             </div>
@@ -302,7 +302,7 @@ export default function CalculationCard(props: CalculationCardProps) {
                     </div>
                     <div
                       className={`text-[22px] font-bold ${ratioTone}`}
-                      style={{ fontFamily: "Georgia, serif" }}
+                      style={{ fontFamily: "var(--font-display)" }}
                     >
                       {ratio.toFixed(1)}%
                     </div>

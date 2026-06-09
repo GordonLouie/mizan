@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   icons: {
     // Cache buster on every icon URL — browsers cache favicons aggressively
     // and won't refetch on simple SVG changes. Bump ?v=N when the mark changes.
-    icon: [{ url: "/favicon.svg?v=3", type: "image/svg+xml" }],
-    shortcut: "/favicon.svg?v=3",
-    apple: "/favicon.svg?v=3",
+    icon: [{ url: "/favicon.svg?v=4", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg?v=4",
+    apple: "/favicon.svg?v=4",
   },
   openGraph: {
     title: "Mizan — halal investing, calibrated to your conscience.",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1F3A5F",
+  themeColor: "#1C4537",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -70,7 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="mx-auto max-w-6xl px-6 py-8 text-sm text-gray-500">
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <div className="flex items-center gap-2">
-                <span className="font-bold text-navy-800" style={{ fontFamily: "Georgia, serif" }}>Mizan</span>
+                <span className="font-bold text-navy-800" style={{ fontFamily: "var(--font-display)" }}>Mizan</span>
                 <span className="text-xs text-gray-400">·</span>
                 <span className="text-xs">halal investing, calibrated</span>
               </div>

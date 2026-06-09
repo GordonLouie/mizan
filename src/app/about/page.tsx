@@ -16,7 +16,7 @@ export default function AboutPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Why this exists
         </h1>
@@ -33,7 +33,7 @@ export default function AboutPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           I&apos;m not Muslim. Here&apos;s why I&apos;m building this.
         </h2>
@@ -93,7 +93,7 @@ export default function AboutPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Four operating principles
         </h2>
@@ -129,7 +129,7 @@ export default function AboutPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Who&apos;s behind this
         </h2>
@@ -140,7 +140,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap items-start gap-5">
               <div
                 className="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-full bg-navy-800 text-4xl font-bold text-gold-500"
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 G
               </div>
@@ -148,7 +148,7 @@ export default function AboutPage() {
                 <div className="flex flex-wrap items-baseline gap-2">
                   <h3
                     className="text-[22px] font-bold text-gray-900"
-                    style={{ fontFamily: "Georgia, serif" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     Gordon Louie
                   </h3>
@@ -184,7 +184,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap items-start gap-5">
               <div
                 className="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-full bg-navy-800 text-4xl font-bold text-gold-500"
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 M
               </div>
@@ -192,7 +192,7 @@ export default function AboutPage() {
                 <div className="flex flex-wrap items-baseline gap-2">
                   <h3
                     className="text-[22px] font-bold text-gray-900"
-                    style={{ fontFamily: "Georgia, serif" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     Miqdad
                   </h3>
@@ -247,7 +247,7 @@ export default function AboutPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Facts on file
         </h2>
@@ -278,7 +278,7 @@ export default function AboutPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Direct lines
         </h2>
@@ -324,7 +324,7 @@ function Principle({ n, title, body }: { n: string; title: string; body: string 
       <div>
         <h3
           className="text-[16px] font-bold leading-tight text-gray-900"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {title}
         </h3>

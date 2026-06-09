@@ -59,7 +59,7 @@ export default function AnnotatedBalanceSheet({ stock, result, scholar }: Props)
           </div>
           <h2
             className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {stock.name} — {bs ? bs.quarter : "Latest period"}
           </h2>
@@ -391,7 +391,7 @@ function BalanceSection({
       <div className="border-t border-gray-300 pt-1">
         <h3
           className="text-[11px] font-semibold uppercase tracking-[0.22em] text-gray-700"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {title}
         </h3>
@@ -475,7 +475,7 @@ function GrandTotal({ label, value }: { label: string; value: number }) {
     <div className="mt-4 flex items-baseline gap-3 border-y-2 border-double border-gray-700 py-2">
       <div
         className="flex-1 text-[13px] font-bold uppercase tracking-[0.18em] text-gray-900"
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {label}
       </div>
@@ -511,7 +511,7 @@ function FinalVerdictSummary({
       </div>
       <div
         className={`mt-3 text-[40px] font-bold leading-none ${tone}`}
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {result.verdict === "pass" ? "Halal" : result.verdict === "fail" ? "Not halal" : "Borderline"}
       </div>

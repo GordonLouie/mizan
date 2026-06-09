@@ -84,7 +84,7 @@ export default function FeedbackWidget() {
                   <div className="text-[11px] font-semibold uppercase tracking-widest text-amber-700">
                     Send feedback
                   </div>
-                  <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+                  <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
                     Tell the founder what's broken
                   </h3>
                   <p className="mt-1 text-xs text-gray-500">

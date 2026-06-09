@@ -8,15 +8,15 @@ export default function NotFound() {
       <div className="mx-auto h-20 w-20">
         <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="text-navy-800">
           <rect width="64" height="64" rx="14" fill="currentColor"/>
-          <rect x="12" y="28" width="40" height="3" rx="1.5" fill="#E8C547"/>
-          <rect x="30" y="14" width="3" height="14" rx="1.5" fill="#E8C547"/>
-          <circle cx="32" cy="14" r="3.5" fill="#E8C547"/>
+          <rect x="12" y="28" width="40" height="3" rx="1.5" fill="#C89030"/>
+          <rect x="30" y="14" width="3" height="14" rx="1.5" fill="#C89030"/>
+          <circle cx="32" cy="14" r="3.5" fill="#C89030"/>
           <path d="M 14 36 Q 20 46 26 36 Z" fill="#FFFFFF"/>
           <path d="M 38 35 Q 44 43 50 35 Z" fill="#FFFFFF" opacity="0.7"/>
-          <rect x="26" y="48" width="12" height="3" rx="1" fill="#E8C547"/>
+          <rect x="26" y="48" width="12" height="3" rx="1" fill="#C89030"/>
         </svg>
       </div>
-      <h1 className="mt-6 text-2xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+      <h1 className="mt-6 text-2xl font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
         That page is out of balance.
       </h1>
       <p className="mt-3 text-sm text-gray-600">

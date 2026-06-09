@@ -28,7 +28,7 @@ export default function StockStats({ stock }: Props) {
         <div className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
           Company stats
         </div>
-        <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+        <h3 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
           {stock.name} at a glance
         </h3>
         <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -134,7 +134,7 @@ function Stat({
       </div>
       <div
         className={`mt-1 text-xl font-bold ${valueCls}`}
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>

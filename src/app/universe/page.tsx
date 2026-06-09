@@ -167,7 +167,7 @@ function UniverseInner() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Universe
         </h1>
@@ -236,7 +236,7 @@ function UniverseInner() {
                 <div className="mt-1 flex items-baseline gap-1">
                   <span
                     className="font-mono text-[20px] font-bold tabular-nums text-emerald-700"
-                    style={{ fontFamily: "Georgia, serif" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     {s.pass}
                   </span>
@@ -396,7 +396,7 @@ function StatPlain({
       </div>
       <div
         className={`mt-1 text-[22px] font-bold leading-none tabular-nums ${cls}`}
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>

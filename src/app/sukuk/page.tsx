@@ -22,7 +22,7 @@ export default function SukukPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Sukuk — Islamic bonds
         </h1>
@@ -40,7 +40,7 @@ export default function SukukPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Bonds without the interest
         </h2>
@@ -70,7 +70,7 @@ export default function SukukPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           How sukuk actually work
         </h2>
@@ -85,7 +85,7 @@ export default function SukukPage() {
               <div className="flex items-baseline justify-between gap-3">
                 <h3
                   className="text-[18px] font-bold text-gray-900"
-                  style={{ fontFamily: "Georgia, serif" }}
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
                   {s.name}
                 </h3>
@@ -113,7 +113,7 @@ export default function SukukPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Accessible sukuk vehicles
         </h2>
@@ -182,7 +182,7 @@ export default function SukukPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Notable issuances
         </h2>
@@ -289,7 +289,7 @@ function Stat({
       </div>
       <div
         className={`mt-1 text-[18px] font-bold leading-none tabular-nums ${cls}`}
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>

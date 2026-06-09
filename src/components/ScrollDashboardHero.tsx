@@ -72,7 +72,7 @@ export default function ScrollDashboardHero({
             </div>
             <h2
               className="mt-5 text-[40px] font-bold leading-[0.95] text-gray-900 sm:text-[64px]"
-              style={{ fontFamily: "Georgia, serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Six scholars.
               <br />
@@ -138,7 +138,7 @@ function ScreenSnapshot({
             </div>
             <h1
               className="mt-3 text-[24px] font-bold leading-[1.1] text-gray-900 sm:text-[32px]"
-              style={{ fontFamily: "Georgia, serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               {stock.name}
             </h1>
@@ -167,7 +167,7 @@ function ScreenSnapshot({
                   "mt-2 text-[42px] font-bold leading-none sm:text-[52px] " +
                   VERDICT_TEXT[activeVerdict]
                 }
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {VERDICT_LABEL[activeVerdict]}
               </div>
@@ -193,7 +193,7 @@ function ScreenSnapshot({
           </div>
           <h3
             className="mt-1.5 text-[20px] font-bold leading-tight text-gray-900 sm:text-[24px]"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             The scholars disagree.
           </h3>
@@ -212,7 +212,7 @@ function ScreenSnapshot({
                 >
                   <div
                     className="text-[13px] font-semibold text-gray-900"
-                    style={{ fontFamily: "Georgia, serif" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     {row.short}
                   </div>

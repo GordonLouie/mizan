@@ -219,7 +219,7 @@ export default function EarningsCalendar({
           </div>
           <h3
             className="mt-2 text-[22px] font-bold leading-tight text-gray-900 sm:text-[26px]"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Who reports next
           </h3>

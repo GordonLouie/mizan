@@ -15,11 +15,11 @@ const NISAB_USD_GOLD = NISAB_GOLD_GRAMS * GOLD_PRICE_USD_PER_GRAM;
 const NISAB_USD_SILVER = NISAB_SILVER_GRAMS * SILVER_PRICE_USD_PER_GRAM;
 
 const COLORS = {
-  cash: "#1F3A5F",
+  cash: "#1C4537",
   savings: "#5E89AF",
   stocks: "#B8860B",
   crypto: "#7C5BBA",
-  gold: "#E8C547",
+  gold: "#C89030",
   silver: "#94A3B8",
   other: "#C97A4A",
 };
@@ -89,7 +89,7 @@ export default function ZakatPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           What do you owe in zakat this year?
         </h1>
@@ -106,7 +106,7 @@ export default function ZakatPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Enter what you hold
         </h2>
@@ -278,7 +278,7 @@ export default function ZakatPage() {
           </div>
           <div
             className="mt-4 text-[34px] font-bold leading-none tabular-nums text-gray-900"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {fmt(netWealth)}
           </div>
@@ -353,7 +353,7 @@ export default function ZakatPage() {
             </div>
             <div
               className="mt-1 text-[28px] font-bold leading-none tabular-nums text-emerald-700"
-              style={{ fontFamily: "Georgia, serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               {fmt(zakat)}
             </div>
@@ -380,7 +380,7 @@ export default function ZakatPage() {
             </div>
             <h3
               className="mt-2 text-[18px] font-bold leading-tight text-gray-900"
-              style={{ fontFamily: "Georgia, serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Where your wealth sits
             </h3>

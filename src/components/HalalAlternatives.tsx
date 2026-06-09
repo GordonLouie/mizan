@@ -21,7 +21,7 @@ export default function HalalAlternatives({ failedStock, scholar }: Props) {
     <Card padded={false} className="overflow-hidden">
       <div className="border-b border-gray-100 px-6 py-5 sm:px-8">
         <div className="text-[11px] font-semibold uppercase tracking-widest text-emerald-700">Halal alternatives</div>
-        <h2 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+        <h2 className="mt-1 text-lg font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
           Stocks in {failedStock.sector.toLowerCase()} that pass under {scholar.short}
         </h2>
         <p className="mt-1 text-sm text-gray-600">

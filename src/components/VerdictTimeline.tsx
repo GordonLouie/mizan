@@ -63,7 +63,7 @@ export default function VerdictTimeline({ stock, scholar }: Props) {
           </div>
           <h2
             className="mt-2 text-[20px] font-bold leading-tight text-gray-900 sm:text-[22px]"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             How has {stock.name}&apos;s halal status changed over time?
           </h2>
@@ -140,7 +140,7 @@ export default function VerdictTimeline({ stock, scholar }: Props) {
         </div>
         <h2
           className="mt-2 text-[20px] font-bold leading-tight text-gray-900 sm:text-[22px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           How has {stock.name}&apos;s halal status changed over time?
         </h2>
@@ -248,13 +248,13 @@ function DetailPanel({
           </span>
           <div
             className="mt-1 text-[16px] font-bold text-gray-900"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {entry.quarter}{" "}
             <span className="font-normal text-gray-500">({entry.periodEnd})</span>
           </div>
         </div>
-        <div className={`text-[14px] font-bold ${tone.text}`} style={{ fontFamily: "Georgia, serif" }}>
+        <div className={`text-[14px] font-bold ${tone.text}`} style={{ fontFamily: "var(--font-display)" }}>
           {entry.verdict === "pass" ? "✓ PASS" : entry.verdict === "fail" ? "✗ FAIL" : "◐ BORDERLINE"}{" "}
           <span className="text-[11px] font-normal text-gray-500">under {scholar.short}</span>
         </div>

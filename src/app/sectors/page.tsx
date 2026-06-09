@@ -35,7 +35,7 @@ export default function SectorsIndex() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Sectors
         </h1>
@@ -78,7 +78,7 @@ export default function SectorsIndex() {
                     <div className="flex items-baseline justify-between gap-3">
                       <h3
                         className="text-[17px] font-bold text-gray-900 group-hover:text-navy-800"
-                        style={{ fontFamily: "Georgia, serif" }}
+                        style={{ fontFamily: "var(--font-display)" }}
                       >
                         {s.sector}
                       </h3>
@@ -149,7 +149,7 @@ function StatPlain({
       </div>
       <div
         className={`mt-1 text-[22px] font-bold leading-none tabular-nums ${cls}`}
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>

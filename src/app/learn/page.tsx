@@ -24,7 +24,7 @@ export default function LearnPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Halal stock screening, explained from scratch.
         </h1>
@@ -414,7 +414,7 @@ export default function LearnPage() {
       <div className="mt-16 rounded-2xl border border-gray-200 bg-gray-50 p-8 sm:p-10">
         <h2
           className="text-[22px] font-bold leading-tight text-gray-900 sm:text-[24px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Ready to screen your first stock?
         </h2>
@@ -459,7 +459,7 @@ function Section({
         </span>
         <h2
           className="text-[22px] font-bold leading-tight text-gray-900 sm:text-[26px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {title}
         </h2>
@@ -506,7 +506,7 @@ function ScholarRow({
     >
       <div
         className="text-[15px] font-bold text-gray-900"
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {name}
       </div>
@@ -532,7 +532,7 @@ function NumberedItem({
       <div>
         <div
           className="text-[15px] font-bold text-gray-900"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {title}
         </div>

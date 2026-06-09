@@ -51,7 +51,7 @@ export function SectionHeader({ kicker, title, description, action }: SectionHea
             {kicker}
           </div>
         )}
-        <h2 className="mt-1.5 text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+        <h2 className="mt-1.5 text-xl font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
           {title}
         </h2>
         {description && <p className="mt-1.5 max-w-prose text-sm leading-relaxed text-gray-600">{description}</p>}

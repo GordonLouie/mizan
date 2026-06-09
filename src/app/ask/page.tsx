@@ -68,7 +68,7 @@ export default function AskPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Ask a scholar
         </h1>
@@ -176,7 +176,7 @@ export default function AskPage() {
           </div>
           <h2
             className="mt-4 text-[22px] font-bold leading-tight text-gray-900 sm:text-[26px]"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {active.q}
           </h2>

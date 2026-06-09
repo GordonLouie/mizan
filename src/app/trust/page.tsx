@@ -25,7 +25,7 @@ export default function TrustPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Everything you need to evaluate Mizan
         </h1>
@@ -314,7 +314,7 @@ export default function TrustPage() {
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           The founder reads every substantive email
         </h2>
@@ -346,7 +346,7 @@ function SectionHead({ title }: { title: string }) {
   return (
     <h2
       className="text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-      style={{ fontFamily: "Georgia, serif" }}
+      style={{ fontFamily: "var(--font-display)" }}
     >
       {title}
     </h2>

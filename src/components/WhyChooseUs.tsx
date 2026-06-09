@@ -65,7 +65,7 @@ export default function WhyChooseUs() {
           </div>
           <h2
             className="mt-4 text-[34px] font-bold leading-[1.05] text-gray-900 sm:text-[44px]"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Built for the way Muslims actually invest.
           </h2>
@@ -100,7 +100,7 @@ export default function WhyChooseUs() {
                   </span>
                   <span
                     className="text-[15px] font-semibold"
-                    style={{ fontFamily: "Georgia, serif" }}
+                    style={{ fontFamily: "var(--font-display)" }}
                   >
                     {t.label}
                   </span>
@@ -114,7 +114,7 @@ export default function WhyChooseUs() {
         <div className="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8">
           <h3
             className="text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {current.headline}
           </h3>
@@ -156,7 +156,7 @@ function previewCTA(tab: TabKey): string {
 function TabPreview({ tab }: { tab: TabKey }) {
   if (tab === "multi-scholar") {
     return (
-      <div className="overflow-hidden rounded-lg border border-gray-200 bg-[#FAF7F0]">
+      <div className="overflow-hidden rounded-lg border border-gray-200 bg-[#F5F6F3]">
         <div className="grid grid-cols-[1fr_auto] gap-3 border-b border-gray-100 bg-white/60 px-4 py-2 font-mono text-[9px] uppercase tracking-[0.18em] text-gray-500">
           <span>Scholar</span>
           <span>AMZN verdict</span>
@@ -172,7 +172,7 @@ function TabPreview({ tab }: { tab: TabKey }) {
             <div key={r.name} className="grid grid-cols-[1fr_auto] items-center gap-3 px-4 py-2.5">
               <div
                 className="text-[13px] font-semibold text-gray-900"
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {r.name}
               </div>
@@ -195,7 +195,7 @@ function TabPreview({ tab }: { tab: TabKey }) {
 
   if (tab === "show-the-math") {
     return (
-      <div className="rounded-lg border border-gray-200 bg-[#FAF7F0] px-4 py-4 font-mono text-[11px] leading-relaxed text-gray-700">
+      <div className="rounded-lg border border-gray-200 bg-[#F5F6F3] px-4 py-4 font-mono text-[11px] leading-relaxed text-gray-700">
         <div className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-500">
           Check 1 · Cash + securities ratio
         </div>
@@ -219,7 +219,7 @@ function TabPreview({ tab }: { tab: TabKey }) {
 
   // stability
   return (
-    <div className="rounded-lg border border-gray-200 bg-[#FAF7F0] p-4">
+    <div className="rounded-lg border border-gray-200 bg-[#F5F6F3] p-4">
       <div className="flex items-baseline justify-between">
         <div className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-500">
           AAPL · 8-quarter verdict track

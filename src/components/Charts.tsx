@@ -3,11 +3,12 @@
 import React from "react";
 
 // ───── Color palette ─────
-const NAVY = "#1F3A5F";
-const NAVY_LIGHT = "#5E89AF";
-const NAVY_50 = "#F3F6FA";
-const GOLD = "#B8860B";
-const GOLD_LIGHT = "#E8C547";
+// Forest replacements (token names kept for compatibility).
+const NAVY = "#1C4537";       // forest 800
+const NAVY_LIGHT = "#5F9D7E"; // forest 400
+const NAVY_50 = "#F1F7F3";    // forest 50
+const GOLD = "#A87620";       // amber 600
+const GOLD_LIGHT = "#C89030"; // amber 500
 const EMERALD = "#16A34A";
 const ROSE = "#DC2626";
 const AMBER = "#D97706";
@@ -15,21 +16,22 @@ const INK = "#0F172A";
 const MUTED = "#64748B";
 const HAIR = "#E2E8F0";
 
-// Sector palette — coordinated, not rainbow
+// Sector palette — coordinated, not rainbow. Updated to harmonise with the
+// Forest brand (warm earths + cool greens + muted blues, no AI-purple).
 export const SECTOR_COLORS: Record<string, string> = {
-  Technology: "#1F3A5F",
-  Healthcare: "#0EA5A4",
-  "Financial Services": "#7B7E8A",
-  "Consumer Discretionary": "#C97A4A",
-  "Consumer Staples": "#A36F4E",
-  Energy: "#B8860B",
-  Industrials: "#5E89AF",
-  "Communication Services": "#7C5BBA",
+  Technology: "#1C4537",            // forest primary
+  Healthcare: "#0E7C5A",            // teal-green
+  "Financial Services": "#7B7E8A",  // neutral slate
+  "Consumer Discretionary": "#B85C3F", // terracotta
+  "Consumer Staples": "#A36F4E",    // clay
+  Energy: "#A87620",                // amber
+  Industrials: "#5F9D7E",           // forest mid
+  "Communication Services": "#5A6E8F", // muted blue
   Utilities: "#4A6E4A",
   Materials: "#9C7B5A",
   "Real Estate": "#A07060",
-  Automotive: "#3D6C95",
-  ETF: "#264464",
+  Automotive: "#3D6C95",            // muted blue
+  ETF: "#26543F",                   // forest 700
   Other: "#94A3B8",
 };
 
@@ -82,7 +84,7 @@ export function ProgressRing({
           return (
             <div
               className="font-bold text-gray-900 tabular-nums text-center"
-              style={{ fontFamily: "Georgia, serif", fontSize, lineHeight: 1.05 }}
+              style={{ fontFamily: "var(--font-display)", fontSize, lineHeight: 1.05 }}
             >
               {text}
             </div>
@@ -148,7 +150,7 @@ export function DonutChart({
       {(centerLabel || centerSublabel) && (
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
           {centerLabel && (
-            <div className="font-bold text-gray-900 tabular-nums" style={{ fontFamily: "Georgia, serif", fontSize: size * 0.16 }}>
+            <div className="font-bold text-gray-900 tabular-nums" style={{ fontFamily: "var(--font-display)", fontSize: size * 0.16 }}>
               {centerLabel}
             </div>
           )}

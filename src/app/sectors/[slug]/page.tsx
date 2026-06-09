@@ -54,7 +54,7 @@ export default function SectorDetailPage({ params }: PageProps) {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {sectorName}
         </h1>
@@ -230,7 +230,7 @@ function StatPlain({
       </div>
       <div
         className={`mt-1 text-[22px] font-bold leading-none tabular-nums ${cls}`}
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>

@@ -52,7 +52,7 @@ export default function PurificationPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Cleanse your dividend income
         </h1>
@@ -78,7 +78,7 @@ export default function PurificationPage() {
         </div>
         <h2
           className="mt-2 text-[22px] font-bold leading-tight text-gray-900 sm:text-[26px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Your holding
         </h2>
@@ -128,7 +128,7 @@ export default function PurificationPage() {
           </div>
           <h2
             className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             What to donate
           </h2>
@@ -201,7 +201,7 @@ function Stat({
       </div>
       <div
         className={`mt-2 text-[26px] font-bold leading-none tabular-nums ${valueClass}`}
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>

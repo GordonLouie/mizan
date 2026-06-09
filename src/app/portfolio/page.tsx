@@ -189,7 +189,7 @@ export default function PortfolioPage() {
             </div>
             <h1
               className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-              style={{ fontFamily: "Georgia, serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Your halal investing dashboard
             </h1>
@@ -229,7 +229,7 @@ export default function PortfolioPage() {
           </div>
           <div
             className="mt-2 text-[28px] font-bold leading-none tabular-nums text-gray-900"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {fmtMoneyShort(totalValue)}
           </div>
@@ -253,7 +253,7 @@ export default function PortfolioPage() {
           </div>
           <div
             className="mt-2 text-[28px] font-bold leading-none tabular-nums text-gray-900"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {fmtMoneyShort(totalCost)}
           </div>
@@ -279,7 +279,7 @@ export default function PortfolioPage() {
           <div
             className="mt-2 text-[28px] font-bold leading-none tabular-nums"
             style={{
-              fontFamily: "Georgia, serif",
+              fontFamily: "var(--font-display)",
               color:
                 halalPct >= 85 ? "#047857" : halalPct >= 60 ? "#B45309" : "#BE123C",
             }}
@@ -299,7 +299,7 @@ export default function PortfolioPage() {
             </div>
             <h2
               className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-              style={{ fontFamily: "Georgia, serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Your portfolio vs benchmarks
             </h2>
@@ -326,7 +326,7 @@ export default function PortfolioPage() {
           <LineChart
             labels={performance.labels}
             series={[
-              { label: "Your portfolio", color: "#1F3A5F", data: performance.portfolio, bold: true },
+              { label: "Your portfolio", color: "#1C4537", data: performance.portfolio, bold: true },
               { label: "S&P 500 (SPY)", color: "#94A3B8", data: performance.spy },
               { label: "Halal S&P 500 (SPUS)", color: "#B8860B", data: performance.spus },
             ]}
@@ -334,7 +334,7 @@ export default function PortfolioPage() {
           <div className="mt-5 border-t border-gray-100 pt-4">
             <LineLegend
               series={[
-                { label: "Your portfolio", color: "#1F3A5F", data: [], bold: true },
+                { label: "Your portfolio", color: "#1C4537", data: [], bold: true },
                 { label: "S&P 500 (SPY)", color: "#94A3B8", data: [] },
                 { label: "Halal S&P 500 (SPUS)", color: "#B8860B", data: [] },
               ]}
@@ -351,7 +351,7 @@ export default function PortfolioPage() {
           </div>
           <h3
             className="mt-2 text-[18px] font-bold text-gray-900"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             By holding
           </h3>
@@ -383,7 +383,7 @@ export default function PortfolioPage() {
           </div>
           <h3
             className="mt-2 text-[18px] font-bold text-gray-900"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             By industry
           </h3>
@@ -406,7 +406,7 @@ export default function PortfolioPage() {
             </div>
             <h2
               className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-              style={{ fontFamily: "Georgia, serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Every position, scored
             </h2>
@@ -533,7 +533,7 @@ export default function PortfolioPage() {
               </div>
               <h2
                 className="mt-2 text-[22px] font-bold leading-tight text-gray-900 sm:text-[26px]"
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 Add, edit, remove positions
               </h2>

@@ -122,7 +122,7 @@ export default function EarningsCalendarGrid({ tickers }: Props) {
         </div>
         <h2
           className="mt-2 text-[22px] font-bold leading-tight text-gray-900 sm:text-[24px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           At a glance
         </h2>
@@ -187,7 +187,7 @@ function MonthGrid({
       <header className="mb-3 flex items-baseline justify-between">
         <h3
           className="text-[14px] font-bold text-gray-900"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {MONTH_NAMES[month]} {year}
         </h3>

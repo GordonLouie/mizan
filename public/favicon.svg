@@ -1,23 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#264464"/>
-      <stop offset="1" stop-color="#1F3A5F"/>
+      <stop offset="0" stop-color="#26543F"/>
+      <stop offset="1" stop-color="#1C4537"/>
     </linearGradient>
   </defs>
-  <!-- Navy rounded square — matches Mizan mark -->
+  <!-- Forest rounded square — matches new Mizan palette -->
   <rect width="32" height="32" rx="6" fill="url(#bg)"/>
-  <!-- Serif M in white — Georgia-style to echo the Mizan wordmark -->
+  <!-- Sans M in white — Geist Display-style, weight 800 -->
   <text
     x="16"
     y="23"
     text-anchor="middle"
-    font-family="Georgia, 'Times New Roman', serif"
+    font-family="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
     font-size="22"
-    font-weight="700"
+    font-weight="800"
     fill="#FFFFFF"
     letter-spacing="-0.5"
   >M</text>
-  <!-- Gold accent bar — subtle echo of the balance beam from the full logo -->
-  <rect x="9" y="26" width="14" height="1.5" rx="0.75" fill="#E8C547"/>
+  <!-- Amber accent bar — subtle echo of the brand accent -->
+  <rect x="9" y="26" width="14" height="1.5" rx="0.75" fill="#C89030"/>
 </svg>

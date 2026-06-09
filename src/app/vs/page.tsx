@@ -89,7 +89,7 @@ function VsInner() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Compare two stocks
         </h1>
@@ -202,7 +202,7 @@ function ComparisonGrid({
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {scholarLabel}
         </h2>
@@ -292,7 +292,7 @@ function ComparisonGrid({
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           How each tradition sees these two
         </h2>
@@ -368,13 +368,13 @@ function Hero({ stock, result }: { stock: StockFundamentals; result: ScreeningRe
       </div>
       <div
         className="mt-0.5 text-[15px] text-gray-700"
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {stock.name}
       </div>
       <div
         className={`mt-6 text-[44px] font-bold leading-none sm:text-[56px] ${color}`}
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {VERDICT_LABEL[result.verdict]}
       </div>

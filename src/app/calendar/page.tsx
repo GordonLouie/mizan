@@ -55,7 +55,7 @@ export default function CalendarPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           When your stocks report next
         </h1>
@@ -75,7 +75,7 @@ export default function CalendarPage() {
           </div>
           <h3
             className="text-[20px] font-bold text-gray-900"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Nothing in your watchlist or portfolio yet
           </h3>

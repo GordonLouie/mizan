@@ -47,7 +47,7 @@ export default function GetStartedSteps() {
         </div>
         <h2
           className="mt-4 text-[34px] font-bold leading-[1.05] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Three steps to clarity.
         </h2>
@@ -66,7 +66,7 @@ export default function GetStartedSteps() {
             <div className="flex items-center justify-between">
               <span
                 className="text-[40px] font-bold leading-none text-gold-600"
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {s.num}
               </span>
@@ -76,7 +76,7 @@ export default function GetStartedSteps() {
             </div>
             <h3
               className="mt-6 text-[18px] font-bold text-gray-900"
-              style={{ fontFamily: "Georgia, serif" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               {s.title}
             </h3>

@@ -68,7 +68,7 @@ export default function BalanceSheetPage() {
           </Link>
         </div>
         <div className="mt-10 rounded-xl border border-amber-200 bg-amber-50/60 p-6">
-          <h1 className="text-[22px] font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+          <h1 className="text-[22px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
             {ticker} not in dataset
           </h1>
           <p className="mt-2 text-[14px] text-gray-700">
@@ -99,7 +99,7 @@ export default function BalanceSheetPage() {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {stock.name}
         </h1>

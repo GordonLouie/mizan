@@ -1,24 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#264464"/>
-      <stop offset="1" stop-color="#1F3A5F"/>
+      <stop offset="0" stop-color="#26543F"/>
+      <stop offset="1" stop-color="#1C4537"/>
     </linearGradient>
   </defs>
   <rect x="0" y="0" width="256" height="256" rx="56" fill="url(#bg)"/>
   <!-- balance beam -->
-  <rect x="48" y="116" width="160" height="6" rx="3" fill="#E8C547"/>
+  <rect x="48" y="116" width="160" height="6" rx="3" fill="#C89030"/>
   <!-- center post -->
-  <rect x="125" y="60" width="6" height="56" rx="3" fill="#E8C547"/>
+  <rect x="125" y="60" width="6" height="56" rx="3" fill="#C89030"/>
   <!-- top knob -->
-  <circle cx="128" cy="58" r="9" fill="#E8C547"/>
+  <circle cx="128" cy="58" r="9" fill="#C89030"/>
   <!-- left pan (heavier side - representing the lower bar = stricter scholar) -->
-  <line x1="78" y1="122" x2="78" y2="158" stroke="#E8C547" stroke-width="3" stroke-linecap="round"/>
+  <line x1="78" y1="122" x2="78" y2="158" stroke="#C89030" stroke-width="3" stroke-linecap="round"/>
   <path d="M 50 158 Q 78 192 106 158 Z" fill="#FFFFFF" opacity="0.95"/>
   <!-- right pan (lighter side - more permissive) -->
-  <line x1="178" y1="122" x2="178" y2="148" stroke="#E8C547" stroke-width="3" stroke-linecap="round"/>
+  <line x1="178" y1="122" x2="178" y2="148" stroke="#C89030" stroke-width="3" stroke-linecap="round"/>
   <path d="M 156 148 Q 178 175 200 148 Z" fill="#FFFFFF" opacity="0.7"/>
   <!-- base -->
-  <rect x="100" y="196" width="56" height="6" rx="3" fill="#E8C547"/>
-  <rect x="118" y="200" width="20" height="14" rx="2" fill="#E8C547"/>
+  <rect x="100" y="196" width="56" height="6" rx="3" fill="#C89030"/>
+  <rect x="118" y="200" width="20" height="14" rx="2" fill="#C89030"/>
 </svg>

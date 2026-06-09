@@ -161,7 +161,7 @@ export default function EarningsWidget({
           <Calendar size={14} className="text-gold-600" />
           <h3
             className="text-[16px] font-bold text-gray-900"
-            style={{ fontFamily: "Georgia, serif" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {title}
           </h3>

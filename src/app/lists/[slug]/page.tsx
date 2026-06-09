@@ -51,7 +51,7 @@ export default function CuratedListPage({ params }: PageProps) {
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {list.title}
         </h1>
@@ -160,7 +160,7 @@ export default function CuratedListPage({ params }: PageProps) {
         </div>
         <h2
           className="mt-2 text-[20px] font-bold text-gray-900"
-          style={{ fontFamily: "Georgia, serif" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Other curated collections
         </h2>
@@ -176,7 +176,7 @@ export default function CuratedListPage({ params }: PageProps) {
               </div>
               <div
                 className="mt-2 text-[15px] font-bold leading-snug text-gray-900 group-hover:text-navy-800"
-                style={{ fontFamily: "Georgia, serif" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 {l.title}
               </div>
@@ -217,7 +217,7 @@ function StatPlain({
       </div>
       <div
         className={`mt-1 text-[22px] font-bold leading-none tabular-nums ${cls}`}
-        style={{ fontFamily: "Georgia, serif" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>

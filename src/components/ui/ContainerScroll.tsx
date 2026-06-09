@@ -128,7 +128,7 @@ function Device({
       {/* Black bezel */}
       <div className="h-full w-full overflow-hidden rounded-[26px] bg-black p-[6px] md:p-[8px]">
         {/* Screen content area */}
-        <div className="relative h-full w-full overflow-hidden rounded-[20px] bg-[#FAF7F0]">
+        <div className="relative h-full w-full overflow-hidden rounded-[20px] bg-[#F5F6F3]">
           {children}
 
           {/* Soft top-glare overlay — keep below content scroll, above bg */}
