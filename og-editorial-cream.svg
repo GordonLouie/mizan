@@ -1,0 +1,43 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#F4ECD8"/>
+
+  <!-- Thin gold border at top -->
+  <rect x="80" y="80" width="1040" height="1" fill="#0B1F3A" fill-opacity="0.15"/>
+
+  <!-- Top eyebrow -->
+  <text x="80" y="115"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="13"
+        font-weight="400"
+        letter-spacing="3"
+        fill="#5A5550">HALAL INVESTING · HONG KONG</text>
+
+  <!-- Big serif statement, centered, restrained -->
+  <text x="600" y="345"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="140"
+        font-weight="400"
+        fill="#0B1F3A"
+        text-anchor="middle"
+        letter-spacing="-2">Mizan</text>
+
+  <!-- Italic tagline -->
+  <text x="600" y="395"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="22"
+        font-style="italic"
+        font-weight="400"
+        fill="#5A5550"
+        text-anchor="middle">halal investing, calibrated to your conscience</text>
+
+  <!-- Thin gold border at bottom -->
+  <rect x="80" y="540" width="1040" height="1" fill="#0B1F3A" fill-opacity="0.15"/>
+
+  <!-- URL bottom right -->
+  <text x="1120" y="570"
+        font-family="Liberation Mono, Menlo, monospace"
+        font-size="13"
+        letter-spacing="2"
+        fill="#5A5550"
+        text-anchor="end">mizaninvesting.com</text>
+</svg>

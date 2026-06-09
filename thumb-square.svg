@@ -1,0 +1,47 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0E2747"/>
+      <stop offset="100%" stop-color="#081730"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E8C988"/>
+      <stop offset="100%" stop-color="#C9A961"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+
+  <!-- Subtle inner border -->
+  <rect x="40" y="40" width="944" height="944" fill="none" stroke="#C9A961" stroke-opacity="0.18" stroke-width="2"/>
+
+  <!-- Big serif M -->
+  <text x="512" y="640"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="560"
+        font-weight="700"
+        fill="url(#gold)"
+        text-anchor="middle">M</text>
+
+  <!-- Gold accent line under M -->
+  <rect x="432" y="700" width="160" height="3" fill="url(#gold)"/>
+
+  <!-- Wordmark below -->
+  <text x="512" y="780"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="56"
+        font-weight="700"
+        letter-spacing="8"
+        fill="#F4ECD8"
+        text-anchor="middle">MIZAN</text>
+
+  <!-- Tagline -->
+  <text x="512" y="830"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="22"
+        font-style="italic"
+        letter-spacing="2"
+        fill="#8FA3BF"
+        text-anchor="middle">balance, in Arabic</text>
+</svg>

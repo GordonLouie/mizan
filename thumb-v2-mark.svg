@@ -1,0 +1,20 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1024" height="1024" fill="#0B1F3A"/>
+
+  <!-- Minimal balance: two pans, central beam, fulcrum -->
+  <g stroke="#C9A961" stroke-width="6" stroke-linecap="round" fill="none">
+    <!-- horizontal beam -->
+    <line x1="312" y1="512" x2="712" y2="512"/>
+    <!-- left pan (semicircle) -->
+    <path d="M 312 512 A 80 80 0 0 0 472 512" />
+    <!-- right pan (semicircle) -->
+    <path d="M 552 512 A 80 80 0 0 0 712 512" />
+    <!-- vertical fulcrum -->
+    <line x1="512" y1="512" x2="512" y2="612"/>
+    <!-- base -->
+    <line x1="452" y1="612" x2="572" y2="612"/>
+  </g>
+
+  <!-- Center dot at fulcrum -->
+  <circle cx="512" cy="512" r="8" fill="#C9A961"/>
+</svg>

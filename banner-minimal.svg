@@ -1,0 +1,16 @@
+<svg width="1584" height="396" viewBox="0 0 1584 396" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1584" height="396" fill="#0B1F3A"/>
+  <text x="1500" y="210"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="56"
+        font-weight="700"
+        fill="#F4ECD8"
+        text-anchor="end">Mizan</text>
+  <text x="1500" y="245"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14"
+        font-style="italic"
+        letter-spacing="3"
+        fill="#8FA3BF"
+        text-anchor="end">balance, in Arabic</text>
+</svg>

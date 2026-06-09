@@ -1,0 +1,29 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0B1F3A"/>
+
+  <!-- Centered Mizan wordmark, generous whitespace -->
+  <text x="600" y="340"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="120"
+        font-weight="400"
+        fill="#F4ECD8"
+        text-anchor="middle"
+        letter-spacing="-1">Mizan</text>
+
+  <!-- Tiny italic tag -->
+  <text x="600" y="380"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="15"
+        font-style="italic"
+        fill="#8FA3BF"
+        text-anchor="middle"
+        letter-spacing="2">multi-scholar halal investing screener</text>
+
+  <!-- Bottom URL only -->
+  <text x="600" y="580"
+        font-family="Liberation Mono, Menlo, monospace"
+        font-size="12"
+        letter-spacing="2"
+        fill="#5A6A82"
+        text-anchor="middle">mizaninvesting.com</text>
+</svg>

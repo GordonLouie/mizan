@@ -1,0 +1,64 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- FT-pink-style salmon background — but using Mizan cream for brand consistency -->
+  <rect width="1200" height="630" fill="#F4ECD8"/>
+
+  <!-- Top masthead with thin double line -->
+  <rect x="80" y="65" width="1040" height="1.5" fill="#0B1F3A"/>
+  <rect x="80" y="70" width="1040" height="0.5" fill="#0B1F3A"/>
+
+  <!-- Masthead row -->
+  <text x="80" y="105"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="14"
+        font-weight="700"
+        letter-spacing="3"
+        fill="#0B1F3A">MIZAN · HONG KONG</text>
+  <text x="1120" y="105"
+        font-family="Liberation Mono, Menlo, monospace"
+        font-size="11"
+        letter-spacing="2"
+        fill="#5A5550"
+        text-anchor="end">VOL. 01 · 2026</text>
+
+  <!-- Big serif headline, left-aligned, editorial -->
+  <text x="80" y="250"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="68"
+        font-weight="400"
+        fill="#0B1F3A">Halal investing,</text>
+  <text x="80" y="325"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="68"
+        font-weight="700"
+        fill="#0B1F3A">calibrated to your scholar.</text>
+
+  <!-- Subhead -->
+  <text x="80" y="395"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="20"
+        font-style="italic"
+        fill="#5A5550">Six scholarly profiles, every threshold cited to a primary source.</text>
+  <text x="80" y="425"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="20"
+        font-style="italic"
+        fill="#5A5550">The only screener that implements Mufti Taqi Usmani's rule.</text>
+
+  <!-- Bottom rule -->
+  <rect x="80" y="525" width="1040" height="0.5" fill="#0B1F3A"/>
+  <rect x="80" y="530" width="1040" height="1.5" fill="#0B1F3A"/>
+
+  <!-- Footer line -->
+  <text x="80" y="570"
+        font-family="Liberation Mono, Menlo, monospace"
+        font-size="12"
+        letter-spacing="2"
+        fill="#5A5550">mizaninvesting.com</text>
+  <text x="1120" y="570"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="12"
+        font-style="italic"
+        letter-spacing="1"
+        fill="#5A5550"
+        text-anchor="end">independent · multi-scholar · transparent</text>
+</svg>

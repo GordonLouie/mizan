@@ -1,0 +1,62 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left half navy -->
+  <rect width="500" height="630" fill="#0B1F3A"/>
+  <!-- Right half cream -->
+  <rect x="500" width="700" height="630" fill="#F4ECD8"/>
+
+  <!-- Left: large wordmark on navy -->
+  <text x="250" y="345"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="92"
+        font-weight="400"
+        fill="#F4ECD8"
+        text-anchor="middle"
+        letter-spacing="-1">Mizan</text>
+
+  <text x="250" y="380"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="14"
+        font-style="italic"
+        fill="#C9A961"
+        text-anchor="middle"
+        letter-spacing="1">balance, in Arabic</text>
+
+  <!-- Right: editorial body -->
+  <text x="555" y="195"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="13"
+        font-weight="600"
+        letter-spacing="4"
+        fill="#0B1F3A">HALAL INVESTING</text>
+
+  <text x="555" y="265"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="42"
+        font-weight="400"
+        fill="#0B1F3A">Six scholarly profiles.</text>
+  <text x="555" y="315"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="42"
+        font-weight="400"
+        fill="#0B1F3A">Every threshold cited.</text>
+
+  <!-- Thin gold accent -->
+  <rect x="555" y="340" width="80" height="2" fill="#C9A961"/>
+
+  <text x="555" y="380"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="17"
+        font-style="italic"
+        fill="#5A5550">The only halal screener that implements</text>
+  <text x="555" y="405"
+        font-family="Liberation Serif, Georgia, 'Times New Roman', serif"
+        font-size="17"
+        font-style="italic"
+        fill="#5A5550">Mufti Taqi Usmani's illiquid-asset rule.</text>
+
+  <text x="555" y="545"
+        font-family="Liberation Mono, Menlo, monospace"
+        font-size="13"
+        letter-spacing="2"
+        fill="#5A5550">mizaninvesting.com</text>
+</svg>

@@ -101,27 +101,52 @@ function ScreenInner() {
     return (
       <div className="space-y-8 pb-16">
         <div className="pt-2">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-            Stock screener
-          </div>
           <h1
-            className="mt-3 text-[32px] font-bold leading-tight text-gray-900 sm:text-[40px]"
+            className="text-[32px] font-bold leading-tight text-gray-900 sm:text-[40px]"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Is your stock halal?
           </h1>
           <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-gray-600">
-            Search any ticker. See it under every scholar — including Mufti Taqi
-            Usmani&apos;s illiquid-asset rule that no other halal app implements.
-            {currentScholar && (
-              <>
-                {" "}You&apos;re currently set to <strong className="text-navy-800">{currentScholar.short}</strong>.
-              </>
-            )}
+            Set your scholar, then search any ticker. See it under every mainstream
+            methodology — including Mufti Taqi Usmani&apos;s illiquid-asset rule
+            that no other halal app implements.
           </p>
         </div>
 
-        <TickerSearch value={ticker} onChange={(t) => setTicker(t)} autoFocus={!ticker} />
+        {/* PRIMARY DECISION ROW — scholar picker FIRST, then search.
+            Direct response to user feedback: "the first thing they would do
+            is pick their scholar then make their decision." Scholar isn't an
+            adjustment — it's the lens through which every verdict is read.
+            Mirrors the stock-selected view's toolbar so the page reads
+            consistently across states. */}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,260px)_1fr]">
+          <div className="sm:min-w-[260px]">
+            <ScholarPicker value={scholarId} onChange={setScholarId} />
+          </div>
+          <TickerSearch value={ticker} onChange={(t) => setTicker(t)} autoFocus={!ticker} />
+        </div>
+
+        {/* Current-scholar pointer — small visible "you are here" anchor.
+            Especially valuable for users who land via /screen?ticker=X from
+            a friend's share: lets them notice + adjust their lens before
+            interpreting the verdict. */}
+        {currentScholar && !ticker && (
+          <div className="-mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-gray-500">
+            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            <span>
+              Viewing as{" "}
+              <strong className="text-navy-800">{currentScholar.short}</strong>.
+            </span>
+            <span className="text-gray-300">·</span>
+            <Link
+              href="/learn"
+              className="text-navy-700 underline hover:text-navy-900"
+            >
+              Don&apos;t know which scholar you follow?
+            </Link>
+          </div>
+        )}
 
         {!ticker && <FeaturedTickers onPick={(t) => setTicker(t)} />}
 
@@ -146,11 +171,6 @@ function ScreenInner() {
             </Link>
           </div>
         )}
-
-        {/* Scholar picker — its own internal "Scholar" label is the heading. */}
-        <div id="scholar-picker">
-          <ScholarPicker value={scholarId} onChange={setScholarId} />
-        </div>
 
         {!ticker && <DemoBanner />}
 
