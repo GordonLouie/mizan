@@ -3,19 +3,19 @@
  *
  *   1. Clearbit (https://logo.clearbit.com/<domain>?size=512) — when the
  *      ticker has a curated domain mapping (companyDomains.ts). Clearbit
- *      returns the current, official, high-resolution corporate mark (the
- *      stylized VISA wordmark, the Berkshire B, etc.) which is consistently
- *      sharper than the per-ticker raster services. Used FIRST whenever we
- *      have a mapped domain.
+ *      returns the current, official, high-resolution corporate mark.
  *   2. FMP (https://financialmodelingprep.com/image-stock/<TICKER>.png) —
- *      per-ticker fallback for tickers with no domain mapping OR when
- *      Clearbit fails. Covers most US tickers but the images can be older /
- *      lower-quality than the current corporate logo.
+ *      per-ticker fallback. Covers most US tickers.
  *   3. Google favicons (https://www.google.com/s2/favicons?domain=&sz=128) —
  *      last-resort image. Capped at 128 because larger sizes silently return
- *      Google's question-mark placeholder for many domains, which we have no
- *      way to detect as "broken" (the HTTP request technically succeeds).
- *   4. Monogram pill — final fallback if every image source fails.
+ *      Google's question-mark placeholder.
+ *
+ * Monogram-first rendering:
+ *   The monogram pill is ALWAYS rendered immediately, as the visible layer.
+ *   The real logo `<img>` is layered on top with opacity 0, fading in only
+ *   when it actually loads. If the image fails or hangs, the monogram is
+ *   already on screen — no broken-image icons, no alt-text flash, no empty
+ *   slots while networks struggle.
  *
  * The cascade is implemented with chained onError handlers so the browser
  * gracefully degrades without flashing through broken states.
@@ -23,7 +23,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getDomainForTicker } from "@/lib/companyDomains";
 
 interface CompanyLogoProps {
@@ -40,9 +40,8 @@ type Stage = "clearbit" | "fmp" | "favicon" | "monogram";
 
 /**
  * Tickers we'll try against FMP's image-stock endpoint.
- * US-style alpha tickers (AAPL, AMZN), share-class tickers (BRK.B, BF.B),
- * and short numeric formats. We exclude anything with an exchange suffix
- * like ".HK" or ".SR" because FMP frequently 404s on those.
+ * US-style alpha tickers (AAPL, AMZN), share-class tickers (BRK.B, BF.B).
+ * Excludes anything with an exchange suffix like ".HK" or ".SR".
  */
 function isFmpFriendlyTicker(ticker: string): boolean {
   return /^[A-Z]{1,5}(\.[A-Z])?$/.test(ticker);
@@ -60,6 +59,13 @@ export default function CompanyLogo({
     if (isFmpFriendlyTicker(ticker)) return "fmp";
     return "monogram";
   });
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  // Reset the loaded flag when the stage advances so the new img has to
+  // re-prove itself before being shown.
+  useEffect(() => {
+    setImgLoaded(false);
+  }, [stage]);
 
   const fallbackBg =
     fallbackTone === "navy"
@@ -69,34 +75,39 @@ export default function CompanyLogo({
   // Two-letter monogram — strip suffixes like ".HK" / ".SR" / ".L".
   const monogram = ticker.replace(/\..*$/, "").slice(0, 2).toUpperCase();
 
-  // If we landed on monogram (either initially because no FMP-compatible
-  // ticker AND no mapped domain, or after exhausting the image cascade),
-  // render the text pill.
+  // The monogram pill — always rendered. When we're in `monogram` stage,
+  // it's the only thing visible. In any image stage, it sits underneath the
+  // <img> until that image loads.
+  const monogramEl = (
+    <span
+      className={
+        "inline-flex shrink-0 items-center justify-center rounded-md font-mono font-bold leading-none select-none " +
+        fallbackBg
+      }
+      style={{
+        width: size,
+        height: size,
+        fontSize: Math.max(8, Math.round(size * 0.42)),
+      }}
+      aria-hidden={stage !== "monogram"}
+    >
+      {monogram}
+    </span>
+  );
+
+  // Pure monogram stage — no image attempt, just the pill.
   if (stage === "monogram") {
     return (
       <span
-        className={
-          "inline-flex shrink-0 items-center justify-center rounded-md font-mono font-bold leading-none " +
-          fallbackBg +
-          (className ? " " + className : "")
-        }
-        style={{
-          width: size,
-          height: size,
-          fontSize: Math.max(8, Math.round(size * 0.42)),
-        }}
+        className={"inline-block shrink-0 " + (className ?? "")}
         aria-label={`${ticker} logo`}
       >
-        {monogram}
+        {monogramEl}
       </span>
     );
   }
 
-  // Build the source URL for the current stage.
-  // Clearbit's `size` param is capped at 512 for clarity without bloating
-  // bytes. FMP serves per-ticker PNGs around 256px square. Google's `sz`
-  // param is held at 128 since larger sizes silently return Google's
-  // placeholder for many domains.
+  // Build the source URL for the current image stage.
   let src: string;
   if (stage === "clearbit") {
     src = `https://logo.clearbit.com/${domain}?size=512`;
@@ -108,8 +119,6 @@ export default function CompanyLogo({
 
   function advanceStage() {
     if (stage === "clearbit") {
-      // Clearbit failed — try FMP if the ticker shape supports it, else
-      // straight to the favicon image.
       if (isFmpFriendlyTicker(ticker)) {
         setStage("fmp");
       } else if (domain) {
@@ -118,29 +127,40 @@ export default function CompanyLogo({
         setStage("monogram");
       }
     } else if (stage === "fmp") {
-      // FMP failed — try favicon if we have a domain, else monogram.
       setStage(domain ? "favicon" : "monogram");
     } else {
       setStage("monogram");
     }
   }
 
-  // eslint-disable-next-line @next/next/no-img-element
+  // Layered render: monogram on the bottom, image on top with opacity
+  // tied to its load state. The wrapper is `relative` so the image can
+  // be `absolute inset-0` to overlay perfectly.
   return (
-    <img
-      key={stage} /* re-mount on stage change so onError re-fires for the new src */
-      src={src}
-      alt={`${ticker} logo`}
-      width={size}
-      height={size}
-      loading="lazy"
-      decoding="async"
-      onError={advanceStage}
-      className={
-        "inline-block shrink-0 rounded-md bg-white object-contain ring-1 ring-gray-100 " +
-        (className ?? "")
-      }
+    <span
+      className={"relative inline-block shrink-0 " + (className ?? "")}
       style={{ width: size, height: size }}
-    />
+      aria-label={`${ticker} logo`}
+    >
+      {monogramEl}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        key={stage}
+        src={src}
+        alt=""
+        width={size}
+        height={size}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setImgLoaded(true)}
+        onError={advanceStage}
+        className="absolute inset-0 rounded-md bg-white object-contain ring-1 ring-gray-100 transition-opacity duration-200"
+        style={{
+          width: size,
+          height: size,
+          opacity: imgLoaded ? 1 : 0,
+        }}
+      />
+    </span>
   );
 }
