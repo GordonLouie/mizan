@@ -43,7 +43,7 @@ export default function FeedbackWidget() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label="Send feedback to Mizan"
-        className="fixed bottom-20 right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg transition hover:bg-blue-700 hover:shadow-xl md:bottom-6"
+        className="fixed bottom-20 right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-[#1B2D4A] text-white shadow-lg transition hover:bg-[#243A5E] hover:shadow-xl md:bottom-6"
       >
         <MessageCircle size={18} />
       </button>
@@ -88,7 +88,7 @@ export default function FeedbackWidget() {
                 <button
                   type="button"
                   onClick={copyEmail}
-                  className="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-blue-700"
+                  className="inline-flex items-center gap-1.5 rounded-md bg-[#1B2D4A] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-[#243A5E]"
                 >
                   {copied ? (
                     <>
