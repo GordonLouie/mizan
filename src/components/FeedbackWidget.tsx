@@ -73,7 +73,10 @@ export default function FeedbackWidget() {
             subject,
             type: kind,
             page: path,
-            email: contact || "(none provided)",
+            // Web3Forms treats `email` as reply-to and rejects an invalid one,
+            // so only send it when it actually looks like an email.
+            ...(contact && contact.includes("@") ? { email: contact } : {}),
+            contact: contact || "(none provided)",
             message,
           }),
         });
@@ -105,7 +108,7 @@ export default function FeedbackWidget() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Send feedback to Mizan"
-        className="fixed bottom-20 right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-navy-800 text-white shadow-lg transition hover:bg-navy-900 hover:shadow-xl md:bottom-6"
+        className="fixed bottom-20 right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg transition hover:bg-blue-700 hover:shadow-xl md:bottom-6"
       >
         <MessageCircle size={18} />
       </button>
