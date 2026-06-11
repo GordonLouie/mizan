@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   icons: {
     // Cache buster on every icon URL — browsers cache favicons aggressively
     // and won't refetch on simple SVG changes. Bump ?v=N when the mark changes.
-    icon: [{ url: "/favicon.svg?v=4", type: "image/svg+xml" }],
-    shortcut: "/favicon.svg?v=4",
-    apple: "/favicon.svg?v=4",
+    icon: [{ url: "/favicon.svg?v=5", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg?v=5",
+    apple: "/favicon.svg?v=5",
   },
   openGraph: {
     title: "Mizan — halal investing, calibrated to your conscience.",
