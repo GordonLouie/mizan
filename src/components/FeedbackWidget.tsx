@@ -90,14 +90,15 @@ export default function FeedbackWidget() {
       }
     }
 
-    // Fallback: open the user's email client (works only if one is configured).
-    const body =
-      `Type: ${kind}\n` +
-      `Page: ${path}\n` +
-      `Contact: ${contact || "(none provided)"}\n\n` +
-      `Message:\n${message}\n`;
-    window.location.href = `mailto:hello@mizaninvesting.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    toast("Opened your email app — hit send when ready.", { tone: "success" });
+    // Fallback (no backend configured, or the POST failed): never hijack the
+    // user's email client. Just hand them the address and copy it so they can
+    // paste it wherever they like.
+    try {
+      await navigator.clipboard.writeText("hello@mizaninvesting.com");
+    } catch {
+      /* clipboard may be blocked; the address is still shown in the toast */
+    }
+    toast("Email your feedback to hello@mizaninvesting.com (address copied).", { tone: "success" });
     reset();
   }
 
@@ -215,9 +216,7 @@ export default function FeedbackWidget() {
               {/* Page context */}
               <div className="rounded-md bg-gray-50 px-3 py-2 text-[11px] text-gray-600">
                 We&apos;ll include the page you&apos;re on right now so we can reproduce the issue.
-                {FEEDBACK_ENDPOINT
-                  ? " Sends straight to Gordon — a person replies."
-                  : " Your email opens with the message pre-filled — hit send when ready."}
+ Sends straight to Gordon — a person replies.
               </div>
             </div>
 
@@ -234,7 +233,7 @@ export default function FeedbackWidget() {
                 disabled={!message.trim() || submitting}
                 className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-3 py-1.5 text-sm font-medium text-white hover:bg-navy-900 disabled:opacity-50"
               >
-                <Send size={13} /> {FEEDBACK_ENDPOINT ? "Send" : "Open email"}
+                <Send size={13} /> Send
               </button>
             </div>
           </form>
