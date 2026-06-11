@@ -6,14 +6,22 @@ import { toast } from "@/lib/toast";
 
 /**
  * Floating feedback button on every page. Click → form opens.
- * On submit, builds a mailto: URL with the structured message and opens
- * the user's email client. This is the right MVP for a feedback channel
- * because it requires no backend, no auth, no spam handling, and the user
- * keeps a copy of what they sent in their Sent folder.
  *
- * When we add a backend endpoint later, swap the mailto for a POST and
- * keep the rest of the component identical.
+ * On submit, POSTs the structured feedback directly to a form backend
+ * (Formspree / Web3Forms / any endpoint that accepts JSON) so it lands in
+ * Gordon's inbox/dashboard WITHOUT redirecting the user into their email
+ * client. Set the endpoint via NEXT_PUBLIC_FEEDBACK_ENDPOINT.
+ *
+ * If no endpoint is configured (or the POST fails), it falls back to the old
+ * mailto: behaviour so feedback is never silently lost.
  */
+const FEEDBACK_ACCESS_KEY = process.env.NEXT_PUBLIC_FEEDBACK_ACCESS_KEY || ""; // Web3Forms
+// If a Web3Forms access key is present, default the endpoint to Web3Forms so the
+// ONLY setup step is adding the key. A custom endpoint (e.g. Formspree) still wins.
+const FEEDBACK_ENDPOINT =
+  process.env.NEXT_PUBLIC_FEEDBACK_ENDPOINT ||
+  (FEEDBACK_ACCESS_KEY ? "https://api.web3forms.com/submit" : "");
+
 export default function FeedbackWidget() {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -31,28 +39,56 @@ export default function FeedbackWidget() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  function submit(e: React.FormEvent) {
+  function reset() {
+    setOpen(false);
+    setMessage("");
+    setContact("");
+    setKind("idea");
+    setSubmitting(false);
+  }
+
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!message.trim()) return;
     setSubmitting(true);
 
     const path = typeof window !== "undefined" ? window.location.pathname + window.location.search : "";
     const subject = `[Mizan feedback · ${kind}] ${truncate(message, 60)}`;
+
+    // Preferred path: POST directly to the form backend — no email redirect.
+    if (FEEDBACK_ENDPOINT) {
+      try {
+        const res = await fetch(FEEDBACK_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            ...(FEEDBACK_ACCESS_KEY ? { access_key: FEEDBACK_ACCESS_KEY } : {}),
+            subject,
+            type: kind,
+            page: path,
+            email: contact || "(none provided)",
+            message,
+          }),
+        });
+        if (res.ok) {
+          toast("Sent — straight to Gordon. Thank you.", { tone: "success" });
+          reset();
+          return;
+        }
+      } catch {
+        /* fall through to mailto */
+      }
+    }
+
+    // Fallback: open the user's email client (works only if one is configured).
     const body =
       `Type: ${kind}\n` +
       `Page: ${path}\n` +
       `Contact: ${contact || "(none provided)"}\n\n` +
       `Message:\n${message}\n`;
-
-    const mailto = `mailto:hello@mizaninvesting.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-
+    window.location.href = `mailto:hello@mizaninvesting.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     toast("Opened your email app — hit send when ready.", { tone: "success" });
-    setOpen(false);
-    setMessage("");
-    setContact("");
-    setKind("idea");
-    setSubmitting(false);
+    reset();
   }
 
   return (
@@ -169,7 +205,9 @@ export default function FeedbackWidget() {
               {/* Page context */}
               <div className="rounded-md bg-gray-50 px-3 py-2 text-[11px] text-gray-600">
                 We&apos;ll include the page you&apos;re on right now so we can reproduce the issue.
-                Your email opens with the message pre-filled — hit send when ready.
+                {FEEDBACK_ENDPOINT
+                  ? " Sends straight to Gordon — a person replies."
+                  : " Your email opens with the message pre-filled — hit send when ready."}
               </div>
             </div>
 
@@ -186,7 +224,7 @@ export default function FeedbackWidget() {
                 disabled={!message.trim() || submitting}
                 className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-3 py-1.5 text-sm font-medium text-white hover:bg-navy-900 disabled:opacity-50"
               >
-                <Send size={13} /> Open email
+                <Send size={13} /> {FEEDBACK_ENDPOINT ? "Send" : "Open email"}
               </button>
             </div>
           </form>
