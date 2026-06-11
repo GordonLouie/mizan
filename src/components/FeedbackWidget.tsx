@@ -15,7 +15,14 @@ import { toast } from "@/lib/toast";
  * If no endpoint is configured (or the POST fails), it falls back to the old
  * mailto: behaviour so feedback is never silently lost.
  */
-const FEEDBACK_ACCESS_KEY = process.env.NEXT_PUBLIC_FEEDBACK_ACCESS_KEY || ""; // Web3Forms
+// ── SIMPLEST SETUP ───────────────────────────────────────────────────────────
+// Paste your Web3Forms access key between the quotes below, then commit + push.
+// It's a PUBLIC client-side key (that's how Web3Forms works) — safe to commit.
+// This skips Vercel env vars entirely. Get a key at https://web3forms.com.
+const WEB3FORMS_KEY = "4a6a5ea7-284c-4d45-b05c-1d661bd64a8b";
+// ─────────────────────────────────────────────────────────────────────────────
+const FEEDBACK_ACCESS_KEY =
+  process.env.NEXT_PUBLIC_FEEDBACK_ACCESS_KEY || WEB3FORMS_KEY; // Web3Forms
 // If a Web3Forms access key is present, default the endpoint to Web3Forms so the
 // ONLY setup step is adding the key. A custom endpoint (e.g. Formspree) still wins.
 const FEEDBACK_ENDPOINT =
