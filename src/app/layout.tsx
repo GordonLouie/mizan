@@ -10,6 +10,7 @@ import PostHogProvider from "@/components/PostHogProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mizaninvesting.com"),
+  verification: { google: "DZV7UJw-g5iwpUnB7L9y-C4KV-jeIO6eMLCjSymFfQo" },
   title: {
     default: "Mizan — halal investing, calibrated to your conscience.",
     template: "%s · Mizan",
