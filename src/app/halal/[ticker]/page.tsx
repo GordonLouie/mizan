@@ -1,14 +1,13 @@
 /**
  * /halal/[ticker] — programmatic SEO page, one per ticker.
  *
- * This is the growth engine: a server-rendered, statically-generated, fully
- * indexable page that answers "Is {Company} halal?" with the verdict under all
- * 5 mainstream scholarly standards, the deciding metrics, and cited sources.
+ * Server-rendered, statically-generated, fully indexable page that answers
+ * "Is {Company} halal?" with the verdict under all 5 mainstream scholarly
+ * standards, the deciding metrics, and cited sources. Unlike /screen (client-
+ * rendered, not indexable) Google can crawl a real answer for every ticker.
  *
- * Unlike /screen (client-rendered, not indexable) this page exists so Google can
- * crawl a real answer for every ticker — the same play that makes Musaffa rank
- * for "is X halal". generateStaticParams pre-renders all tickers at build time;
- * generateMetadata + JSON-LD give rich search results.
+ * ETFs are handled separately — they can't be screened with single-company
+ * ratios, so they get a curated, sourced compliance summary instead.
  */
 
 import type { Metadata } from "next";
@@ -18,6 +17,7 @@ import { ArrowRight, CheckCircle2, XCircle, AlertCircle } from "lucide-react";
 import { listStocks, findStock } from "@/lib/data";
 import { SCHOLAR_PROFILES, getScholar } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
+import { isEtf, etfInfo } from "@/lib/etfInfo";
 import type { StockFundamentals, ScreeningResult, Verdict } from "@/lib/types";
 import CompanyLogo from "@/components/CompanyLogo";
 
@@ -53,6 +53,22 @@ export async function generateMetadata({ params }: { params: Promise<{ ticker: s
   const { ticker } = await params;
   const stock = findStock(decode(ticker));
   if (!stock) return { title: "Stock not found — Mizan" };
+  const url = `${SITE}/halal/${encodeURIComponent(stock.ticker)}`;
+
+  // ── ETF metadata ──
+  if (isEtf(stock)) {
+    const info = etfInfo(stock.ticker);
+    const verdictWord = info ? (info.shariah ? "a Shariah-compliant ETF" : "not Shariah-screened") : "an ETF";
+    const title = `Is ${stock.ticker} (${stock.name}) halal? — Mizan`;
+    const description =
+      `${stock.name} (${stock.ticker}) is ${verdictWord}. ${info?.summary ?? "An ETF's halal status depends on its holdings and structure, not single-company ratios."} Free, no signup.`;
+    return {
+      title, description, alternates: { canonical: url },
+      openGraph: { title, description, url, siteName: "Mizan", type: "article" },
+      twitter: { card: "summary_large_image", title, description },
+    };
+  }
+
   const { pass } = tallies(stock);
   const verdictWord =
     pass === NAMED_SCHOLARS.length ? "halal under all 5 standards"
@@ -63,7 +79,6 @@ export async function generateMetadata({ params }: { params: Promise<{ ticker: s
     `${stock.name} (${stock.ticker}) is ${verdictWord}. See the verdict under ` +
     `AAOIFI, Mufti Taqi Usmani, S&P DJIM, Ja'fari and the strict view side by side, ` +
     `with every threshold cited to its source. Free, no signup.`;
-  const url = `${SITE}/halal/${encodeURIComponent(stock.ticker)}`;
   return {
     title,
     description,
@@ -103,10 +118,134 @@ function decidingLine(r: ScreeningResult): string {
     .join("; ");
 }
 
+/** A few same-sector tickers for internal linking (SEO crawl depth). */
+function relatedTickers(stock: StockFundamentals) {
+  return listStocks()
+    .filter((s) => s.sector === stock.sector && s.ticker !== stock.ticker)
+    .slice(0, 6);
+}
+
+function PageShell({ stock, children, jsonld }: { stock: StockFundamentals; children: React.ReactNode; jsonld: object[] }) {
+  const related = relatedTickers(stock);
+  return (
+    <main className="mx-auto max-w-3xl px-4 py-10 sm:py-14">
+      {jsonld.map((obj, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }} />
+      ))}
+
+      <div className="flex items-center gap-3">
+        <CompanyLogo ticker={stock.ticker} size={44} fallbackTone="neutral" />
+        <div>
+          <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+            {stock.ticker} · {stock.sector}
+          </div>
+          <div className="text-[15px] font-semibold text-gray-800">{stock.name}</div>
+        </div>
+      </div>
+
+      {children}
+
+      {related.length > 0 && (
+        <section className="mt-8">
+          <h2 className="text-[14px] font-semibold text-gray-900">Other {stock.sector} tickers</h2>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {related.map((s) => (
+              <Link key={s.ticker} href={`/halal/${encodeURIComponent(s.ticker)}`}
+                className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-[13px] text-gray-700 transition hover:border-gray-400">
+                Is {s.ticker} halal?
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <p className="mt-8 text-[11px] leading-relaxed text-gray-400">
+        Mizan surfaces published scholarly methodologies with full sourcing; it does not issue
+        fatwa or certify any security as halal. Verify with a qualified scholar before investing.
+      </p>
+    </main>
+  );
+}
+
+/** ETF view — curated compliance summary (ETFs can't be screened by company ratios). */
+function EtfHalalView({ stock }: { stock: StockFundamentals }) {
+  const info = etfInfo(stock.ticker);
+  const headline = info
+    ? info.shariah
+      ? `${stock.name} is a purpose-built Shariah-compliant ETF.`
+      : `${stock.name} is not Shariah-screened.`
+    : `${stock.name} is an ETF — its halal status depends on its holdings.`;
+
+  const faq = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [{
+      "@type": "Question",
+      name: `Is ${stock.name} (${stock.ticker}) halal?`,
+      acceptedAnswer: { "@type": "Answer", text: `${headline} ${info?.detail ?? ""}` },
+    }],
+  };
+  const breadcrumb = {
+    "@context": "https://schema.org", "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Halal stock screener", item: SITE },
+      { "@type": "ListItem", position: 2, name: `Is ${stock.ticker} halal?`, item: `${SITE}/halal/${encodeURIComponent(stock.ticker)}` },
+    ],
+  };
+
+  return (
+    <PageShell stock={stock} jsonld={[faq, breadcrumb]}>
+      <h1 className="mt-5 text-[28px] font-bold leading-tight text-gray-900 sm:text-[34px]" style={{ fontFamily: "var(--font-display)" }}>
+        Is {stock.name} ({stock.ticker}) halal?
+      </h1>
+
+      <div className={"mt-5 rounded-xl border p-5 " + (info?.shariah ? "border-emerald-200 bg-emerald-50/60" : "border-rose-200 bg-rose-50/60")}>
+        <div className="flex items-center gap-2">
+          {info?.shariah ? <CheckCircle2 size={20} className="text-emerald-600" /> : <XCircle size={20} className="text-rose-600" />}
+          <span className="text-[17px] font-bold text-gray-900">{headline}</span>
+        </div>
+        {info && <p className="mt-2 text-[14px] leading-relaxed text-gray-700">{info.detail}</p>}
+        {info?.provider && <p className="mt-2 text-[12px] text-gray-500">Provider: {info.provider}</p>}
+      </div>
+
+      <section className="mt-6 rounded-xl border border-gray-200 bg-white p-5">
+        <h2 className="text-[15px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
+          Why ETFs are screened differently
+        </h2>
+        <p className="mt-2 text-[14px] leading-relaxed text-gray-700">
+          An ETF holds dozens or hundreds of underlying securities, so its halal status depends on
+          (1) whether those holdings are individually Shariah-compliant, (2) whether the fund screens
+          and purifies, and (3) the fund&apos;s own structure (e.g. interest earned on cash). You can&apos;t
+          judge it with a single company&apos;s debt-to-market-cap ratio — which is why Mizan shows a
+          curated summary for funds rather than a company screen.
+        </p>
+      </section>
+
+      <section className="mt-6 flex flex-wrap gap-3">
+        {info?.sourceUrl && (
+          <a href={info.sourceUrl} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:border-gray-400">
+            Fund details <ArrowRight size={14} />
+          </a>
+        )}
+        <Link href="/screen" className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-900">
+          Screen individual stocks <ArrowRight size={14} />
+        </Link>
+        <Link href="/methodology" className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:border-gray-400">
+          How screening works <ArrowRight size={14} />
+        </Link>
+      </section>
+    </PageShell>
+  );
+}
+
 export default async function HalalTickerPage({ params }: { params: Promise<{ ticker: string }> }) {
   const { ticker } = await params;
   const stock = findStock(decode(ticker));
   if (!stock) notFound();
+
+  // ETFs get a dedicated curated view (can't be company-screened).
+  if (isEtf(stock)) return <EtfHalalView stock={stock} />;
 
   const { results, pass, fail, borderline } = tallies(stock);
 
@@ -117,12 +256,6 @@ export default async function HalalTickerPage({ params }: { params: Promise<{ ti
         ? `${stock.name} is not considered halal under the mainstream standards.`
         : `${stock.name} is considered halal under ${pass} of 5 standards — the scholars disagree.`;
 
-  // A few same-sector tickers for internal linking (SEO crawl depth).
-  const related = listStocks()
-    .filter((s) => s.sector === stock.sector && s.ticker !== stock.ticker)
-    .slice(0, 6);
-
-  // JSON-LD: FAQ + breadcrumbs for rich results.
   const faq = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -158,21 +291,7 @@ export default async function HalalTickerPage({ params }: { params: Promise<{ ti
   };
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10 sm:py-14">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faq) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
-
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <CompanyLogo ticker={stock.ticker} size={44} fallbackTone="neutral" />
-        <div>
-          <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-500">
-            {stock.ticker} · {stock.sector}
-          </div>
-          <div className="text-[15px] font-semibold text-gray-800">{stock.name}</div>
-        </div>
-      </div>
-
+    <PageShell stock={stock} jsonld={[faq, breadcrumb]}>
       <h1
         className="mt-5 text-[28px] font-bold leading-tight text-gray-900 sm:text-[34px]"
         style={{ fontFamily: "var(--font-display)" }}
@@ -277,26 +396,6 @@ export default async function HalalTickerPage({ params }: { params: Promise<{ ti
           )}
         </ul>
       </section>
-
-      {/* Internal links */}
-      {related.length > 0 && (
-        <section className="mt-8">
-          <h2 className="text-[14px] font-semibold text-gray-900">Other {stock.sector} stocks</h2>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {related.map((s) => (
-              <Link key={s.ticker} href={`/halal/${encodeURIComponent(s.ticker)}`}
-                className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-[13px] text-gray-700 transition hover:border-gray-400">
-                Is {s.ticker} halal?
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <p className="mt-8 text-[11px] leading-relaxed text-gray-400">
-        Mizan surfaces published scholarly methodologies with full sourcing; it does not issue
-        fatwa or certify any stock as halal. Verify with a qualified scholar before investing.
-      </p>
-    </main>
+    </PageShell>
   );
 }

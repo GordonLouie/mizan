@@ -12,6 +12,7 @@ import HalalChecks from "@/components/HalalChecks";
 import VerdictTimeline from "@/components/VerdictTimeline";
 import TickerSearch from "@/components/TickerSearch";
 import FeaturedTickers from "@/components/FeaturedTickers";
+import EmailCapture from "@/components/EmailCapture";
 import DemoBanner from "@/components/DemoBanner";
 import HalalAlternatives from "@/components/HalalAlternatives";
 import WatchlistButton from "@/components/WatchlistButton";
@@ -493,6 +494,14 @@ function TickerNotFound({
           >
             Browse what&apos;s covered <ArrowRight size={13} />
           </Link>
+        </div>
+        <div className="mt-4 max-w-md">
+          <EmailCapture
+            context={ticker}
+            purpose="ticker_request"
+            label={`Email me when ${ticker} is added`}
+            blurb="We're expanding coverage weekly. Leave your email and we'll tell you the moment this ticker is live."
+          />
         </div>
       </div>
 

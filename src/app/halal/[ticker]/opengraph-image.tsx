@@ -10,6 +10,7 @@ import { ImageResponse } from "next/og";
 import { listStocks, findStock } from "@/lib/data";
 import { SCHOLAR_PROFILES, getScholar } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
+import { isEtf, etfInfo } from "@/lib/etfInfo";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -40,13 +41,16 @@ export default async function OgImage({ params }: { params: Promise<{ ticker: st
     );
   }
 
-  const results = NAMED.map((sc) => screenStock(stock, getScholar(sc.id)));
+  const etf = isEtf(stock);
+  const info = etf ? etfInfo(stock.ticker) : undefined;
+  const results = etf ? [] : NAMED.map((sc) => screenStock(stock, getScholar(sc.id)));
   const pass = results.filter((r) => r.verdict === "pass").length;
   const fail = results.filter((r) => r.verdict === "fail").length;
   const borderline = results.length - pass - fail;
 
-  const headline =
-    pass === NAMED.length ? "Halal under all 5 standards"
+  const headline = etf
+    ? info ? (info.shariah ? "Shariah-compliant ETF" : "Not Shariah-screened") : "Exchange-traded fund"
+    : pass === NAMED.length ? "Halal under all 5 standards"
       : pass === 0 ? "Not halal under the mainstream standards"
         : `Halal under ${pass} of 5 standards`;
 
@@ -81,13 +85,19 @@ export default async function OgImage({ params }: { params: Promise<{ ticker: st
           <div style={{ display: "flex", fontSize: 40, fontWeight: 700, color: NAVY }}>{headline}</div>
         </div>
 
-        {/* verdict pills + footer */}
+        {/* verdict pills (stocks) or status badge (ETFs) + footer */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", gap: 14 }}>
-            <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#047857", background: "#ecfdf5", border: "2px solid #a7f3d0", borderRadius: 999, padding: "8px 20px" }}>{`${pass} halal`}</span>
-            <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#b45309", background: "#fffbeb", border: "2px solid #fde68a", borderRadius: 999, padding: "8px 20px" }}>{`${borderline} doubtful`}</span>
-            <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#be123c", background: "#fff1f2", border: "2px solid #fecdd3", borderRadius: 999, padding: "8px 20px" }}>{`${fail} not halal`}</span>
-          </div>
+          {etf ? (
+            <span style={{ display: "flex", fontSize: 26, fontWeight: 700, color: info?.shariah ? "#047857" : "#be123c", background: info?.shariah ? "#ecfdf5" : "#fff1f2", border: `2px solid ${info?.shariah ? "#a7f3d0" : "#fecdd3"}`, borderRadius: 999, padding: "10px 24px" }}>
+              {info?.shariah ? "Shariah-screened fund" : "Not Shariah-screened"}
+            </span>
+          ) : (
+            <div style={{ display: "flex", gap: 14 }}>
+              <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#047857", background: "#ecfdf5", border: "2px solid #a7f3d0", borderRadius: 999, padding: "8px 20px" }}>{`${pass} halal`}</span>
+              <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#b45309", background: "#fffbeb", border: "2px solid #fde68a", borderRadius: 999, padding: "8px 20px" }}>{`${borderline} doubtful`}</span>
+              <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#be123c", background: "#fff1f2", border: "2px solid #fecdd3", borderRadius: 999, padding: "8px 20px" }}>{`${fail} not halal`}</span>
+            </div>
+          )}
           <div style={{ display: "flex", fontSize: 22, color: AMBER, fontWeight: 700 }}>every threshold cited</div>
         </div>
       </div>

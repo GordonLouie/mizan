@@ -48,6 +48,55 @@ const PROGRESS_PATH = join(process.cwd(), ".enrich-progress.json");
 const CONCURRENCY = 5;
 const BATCH_DELAY_MS = 1000;
 
+// ─── FULL-UNIVERSE MODE ──────────────────────────────────────────────────────
+// Set MIZAN_UNIVERSE=us to pull the entire US-listed universe from FMP's
+// screener (instead of just SEED_TICKERS) — this is how you grow from ~340
+// tickers to thousands. A market-cap floor (default $1B) keeps out illiquid
+// micro-caps that have poor data and no search demand; lower it via
+// MIZAN_MIN_MARKETCAP to go deeper. Needs a paid FMP tier for the request
+// volume (thousands of tickers × ~10 reqs each). Run in chunks — the script is
+// resumable, so you can stop/restart across days on a smaller plan.
+//
+//   MIZAN_UNIVERSE=us MIZAN_MIN_MARKETCAP=2000000000 \
+//     npx tsx --env-file=.env.local scripts/enrichStocks.ts
+const UNIVERSE_MODE = process.env.MIZAN_UNIVERSE || "";
+const UNIVERSE_MIN_MARKETCAP = Number(process.env.MIZAN_MIN_MARKETCAP || "1000000000");
+
+/**
+ * Fetch all actively-traded US common stocks above the market-cap floor from
+ * FMP's stable screener. Returns ticker symbols. Defensive: returns [] on any
+ * error so a failed universe fetch never wipes the seed list. NOTE: adjust the
+ * endpoint/params if your FMP plan differs (some plans use /company-screener,
+ * others the legacy /api/v3/stock-screener).
+ */
+async function fetchUsUniverse(apiKey: string): Promise<string[]> {
+  const url =
+    `https://financialmodelingprep.com/stable/company-screener?` +
+    `marketCapMoreThan=${UNIVERSE_MIN_MARKETCAP}` +
+    `&exchange=NASDAQ,NYSE,AMEX&isEtf=false&isFund=false&isActivelyTrading=true` +
+    `&limit=10000&apikey=${apiKey}`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      console.warn(`Universe fetch failed: HTTP ${res.status}. Falling back to SEED_TICKERS only.`);
+      return [];
+    }
+    const data = await res.json();
+    if (!Array.isArray(data)) {
+      console.warn("Universe fetch: unexpected response shape. Falling back to SEED only.");
+      return [];
+    }
+    const symbols = data
+      .map((r: { symbol?: string }) => r.symbol)
+      .filter((s): s is string => typeof s === "string" && /^[A-Z][A-Z.\-]{0,6}$/.test(s));
+    console.log(`Universe: ${symbols.length} US tickers above $${(UNIVERSE_MIN_MARKETCAP / 1e9).toFixed(1)}B market cap.`);
+    return symbols;
+  } catch (e) {
+    console.warn("Universe fetch error:", e, "— falling back to SEED only.");
+    return [];
+  }
+}
+
 // ─── SEED TICKER LIST ──────────────────────────────────────────────────────
 // Curated list of the ~500 most-traded tickers a Muslim investor is likely to
 // search for. Grouped by region. Add/remove as needed.
@@ -211,15 +260,24 @@ async function main() {
     // No existing file — start fresh from SEED_TICKERS
   }
 
+  // Optional: pull the full US universe (MIZAN_UNIVERSE=us). Otherwise just
+  // the curated seed + whatever's already in stocks.json.
+  let universeTickers: string[] = [];
+  if (UNIVERSE_MODE === "us") {
+    console.log("MIZAN_UNIVERSE=us → fetching full US universe from FMP screener…");
+    universeTickers = await fetchUsUniverse(apiKey);
+  }
+
   const targetTickers = Array.from(
-    new Set([...existingTickers, ...SEED_TICKERS]),
+    new Set([...existingTickers, ...SEED_TICKERS, ...universeTickers]),
   );
 
   const progress = loadProgress();
   const remaining = targetTickers.filter((t) => !(t in progress.done));
 
   console.log(
-    `Enriching ${targetTickers.length} tickers (${existingTickers.length} existing + ${SEED_TICKERS.length} seed, ${remaining.length} remaining)…`,
+    `Enriching ${targetTickers.length} tickers (${existingTickers.length} existing + ${SEED_TICKERS.length} seed` +
+    `${universeTickers.length ? ` + ${universeTickers.length} universe` : ""}, ${remaining.length} remaining)…`,
   );
 
   for (let i = 0; i < remaining.length; i += CONCURRENCY) {
