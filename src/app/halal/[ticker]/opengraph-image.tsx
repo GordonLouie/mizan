@@ -73,21 +73,20 @@ export default async function OgImage({ params }: { params: Promise<{ ticker: st
           <div style={{ fontSize: 24, color: "#6b7280" }}>{stock.sector}</div>
         </div>
 
-        {/* main */}
+        {/* main — each text node is a SINGLE child (template literal) so Satori
+            doesn't require display:flex on these text divs. */}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <div style={{ fontSize: 30, color: "#6b7280", fontWeight: 600 }}>{stock.ticker} · {stock.name}</div>
-          <div style={{ fontSize: 68, fontWeight: 800, color: "#111827", lineHeight: 1.05 }}>
-            Is {stock.ticker} halal?
-          </div>
-          <div style={{ fontSize: 40, fontWeight: 700, color: NAVY }}>{headline}</div>
+          <div style={{ display: "flex", fontSize: 30, color: "#6b7280", fontWeight: 600 }}>{`${stock.ticker} · ${stock.name}`}</div>
+          <div style={{ display: "flex", fontSize: 68, fontWeight: 800, color: "#111827", lineHeight: 1.05 }}>{`Is ${stock.ticker} halal?`}</div>
+          <div style={{ display: "flex", fontSize: 40, fontWeight: 700, color: NAVY }}>{headline}</div>
         </div>
 
         {/* verdict pills + footer */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", gap: 14 }}>
-            <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#047857", background: "#ecfdf5", border: "2px solid #a7f3d0", borderRadius: 999, padding: "8px 20px" }}>{pass} halal</span>
-            <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#b45309", background: "#fffbeb", border: "2px solid #fde68a", borderRadius: 999, padding: "8px 20px" }}>{borderline} doubtful</span>
-            <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#be123c", background: "#fff1f2", border: "2px solid #fecdd3", borderRadius: 999, padding: "8px 20px" }}>{fail} not halal</span>
+            <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#047857", background: "#ecfdf5", border: "2px solid #a7f3d0", borderRadius: 999, padding: "8px 20px" }}>{`${pass} halal`}</span>
+            <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#b45309", background: "#fffbeb", border: "2px solid #fde68a", borderRadius: 999, padding: "8px 20px" }}>{`${borderline} doubtful`}</span>
+            <span style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "#be123c", background: "#fff1f2", border: "2px solid #fecdd3", borderRadius: 999, padding: "8px 20px" }}>{`${fail} not halal`}</span>
           </div>
           <div style={{ display: "flex", fontSize: 22, color: AMBER, fontWeight: 700 }}>every threshold cited</div>
         </div>

@@ -19,3 +19,5 @@ test3.txt
 *.bak
 
 *.fixed
+
+*.smbak
