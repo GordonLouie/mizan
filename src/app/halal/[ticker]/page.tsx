@@ -26,11 +26,18 @@ const SITE = "https://mizaninvesting.com";
 // Only the 5 mainstream named standards (exclude the user-defined "custom").
 const NAMED_SCHOLARS = SCHOLAR_PROFILES.filter((s) => s.id !== "custom");
 
-// Pre-render a static page for every ticker; unknown tickers 404.
+// Pre-build only the most-searched tickers at build time; the long tail renders
+// on first request and is CDN-cached (dynamicParams=true). This keeps build
+// time flat even if the universe grows to thousands of tickers. Unknown tickers
+// 404 via notFound() below.
 export function generateStaticParams() {
-  return listStocks().map((s) => ({ ticker: s.ticker }));
+  return [...listStocks()]
+    .sort((a, b) => b.marketCapUsd - a.marketCapUsd)
+    .slice(0, 100)
+    .map((s) => ({ ticker: s.ticker }));
 }
-export const dynamicParams = false;
+export const dynamicParams = true;
+export const revalidate = 86400; // ISR: re-cache on-demand pages daily
 
 function decode(raw: string): string {
   try {

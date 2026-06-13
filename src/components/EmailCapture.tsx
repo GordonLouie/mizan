@@ -7,14 +7,10 @@ import { toast } from "@/lib/toast";
 /**
  * EmailCapture — a single optional email field (NOT an account/signup wall).
  *
- * Submits directly to the Web3Forms backend (same key as the feedback bubble),
- * so addresses land in hello@'s inbox with no database. Use it to (a) capture
- * "email me when {ticker} is added" demand, and (b) seed an alerts list. The
- * full alert-SENDING system (verdict-change/earnings emails) needs a store +
- * email provider — see RETENTION_SETUP.md.
+ * Submits to /api/subscribe, which forwards to hello@'s inbox (so you see it
+ * today) AND persists to KV when a store is configured, so the daily cron can
+ * send verdict-change / earnings alerts. See RETENTION_SETUP.md.
  */
-const WEB3FORMS_KEY = "4a6a5ea7-284c-4d45-b05c-1d661bd64a8b";
-
 export default function EmailCapture({
   context,
   purpose = "alerts",
@@ -40,10 +36,10 @@ export default function EmailCapture({
         ? `[Mizan signup] Ticker request${context ? `: ${context}` : ""}`
         : `[Mizan signup] Alerts${context ? `: ${context}` : ""}`;
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/subscribe", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, email, purpose, context: context ?? "" }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, purpose, context: context ?? "", subject }),
       });
       if (res.ok) {
         setDone(true);

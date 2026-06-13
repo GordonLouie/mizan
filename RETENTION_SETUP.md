@@ -17,11 +17,39 @@ part that needs a backend.
 That alone starts building a list and a retention hook. You can drop
 `<EmailCapture purpose="alerts" .../>` anywhere else (e.g. a stock page) too.
 
-## To build: the alert-SENDING system
+## UPDATE: the alert-sending code is now BUILT
 
-This is what turns the list into *return visits* — "AAPL reports in 3 days" /
-"a stock on your watchlist changed halal status." It needs three pieces you
-provision:
+The routes and helpers below are all written and deployed (inert until you add
+the env vars). You no longer have to write code — just provision two services
+and set env vars:
+
+- `src/lib/kv.ts` — KV access over REST (no npm dep)
+- `src/lib/email.ts` — Resend over REST (no npm dep)
+- `src/app/api/subscribe/route.ts` — saves signups (KV) + forwards to hello@
+- `src/app/api/cron/alerts/route.ts` — daily diff + email; CRON_SECRET-protected
+- `vercel.json` — cron schedule (`0 13 * * *` ≈ 9pm HK)
+- `EmailCapture` already POSTs to `/api/subscribe`.
+
+**To activate (≈20 min, no coding):**
+1. **Vercel → Storage → Create → KV** (Upstash). Connect it to the mizan
+   project — Vercel auto-injects `KV_REST_API_URL` + `KV_REST_API_TOKEN`. Now
+   signups persist and `kvConfigured()` flips true.
+2. **Resend** — sign up, add + verify `mizaninvesting.com` (DNS on Cloudflare,
+   ~10 min), create an API key. In Vercel env vars set `RESEND_API_KEY` and
+   optionally `ALERTS_FROM` (default `Mizan <alerts@mizaninvesting.com>`).
+3. **Set `CRON_SECRET`** to any random string in Vercel env vars (protects the
+   cron route).
+4. **Redeploy.** The cron fires daily; until KV+Resend exist it safely no-ops.
+
+Test the cron manually: `GET https://mizaninvesting.com/api/cron/alerts` with
+header `Authorization: Bearer <CRON_SECRET>` → returns a JSON status.
+
+---
+
+## Reference: how it works (already implemented)
+
+The list becomes *return visits* — "AAPL reports in 3 days" / "a stock on your
+watchlist changed halal status" — via three pieces (now wired):
 
 **1. A store** (subscriptions + last-known verdicts). Easiest on Vercel:
 - **Vercel KV** (Redis) or **Vercel Postgres**. Shape:

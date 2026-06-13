@@ -7,7 +7,7 @@
  * looks like a designed verdict card, not a bare URL. Shareability is a feature.
  */
 import { ImageResponse } from "next/og";
-import { listStocks, findStock } from "@/lib/data";
+import { findStock } from "@/lib/data";
 import { SCHOLAR_PROFILES, getScholar } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
 import { isEtf, etfInfo } from "@/lib/etfInfo";
@@ -18,10 +18,10 @@ export const alt = "Mizan halal verdict";
 
 const NAMED = SCHOLAR_PROFILES.filter((s) => s.id !== "custom");
 
-// Pre-generate one card per ticker (matches the page's static params).
-export function generateStaticParams() {
-  return listStocks().map((s) => ({ ticker: s.ticker }));
-}
+// NOTE: no generateStaticParams — OG cards generate ON-DEMAND on first share/
+// crawl and are then CDN-cached. Statically prerendering one Satori PNG per
+// ticker was the main build-time cost; lazy generation keeps builds fast even
+// across thousands of tickers.
 
 export default async function OgImage({ params }: { params: Promise<{ ticker: string }> }) {
   const { ticker } = await params;
