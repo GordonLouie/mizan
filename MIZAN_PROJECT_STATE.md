@@ -3,8 +3,74 @@
 A self-contained briefing for a fresh chat to pick up exactly where the
 previous session left off. Read this end-to-end before acting on anything.
 
-Last update: **Day 11 of 30** (start date 2026-05-29, exit gate 2026-06-28).
-Today: 2026-06-09 Tuesday.
+Last update: **~Day 16 of 30** (start date 2026-05-29, exit gate ~2026-06-28).
+Today: 2026-06-13.
+
+---
+
+## Session update — 2026-06-13 (read this first)
+
+A long working session. What changed since Day 11:
+
+### Data integrity (shipped, live)
+- **Found + fixed a systemic FX currency bug.** 21 foreign-listed tickers
+  (Toyota, Sony, MUFG, Alibaba, TSMC, Novo, etc.) had balance sheets ingested in
+  local currency but tagged USD, so ratios were absurd (Toyota debt = 18,793% of
+  market cap). Fixed in the DATA (`scripts/fix_fx_currency.py`, documented FX
+  rates) AND at the PIPELINE source (`fmpFetch.ts` now reads `reportedCurrency`
+  and converts to USD across all 3 ratio paths). Several names (Sony, Wipro, Dr
+  Reddy's, TSMC, Novo) were wrongly failing and now pass correctly.
+- Mega-cap market caps verified CORRECT for June 2026 (the old "$4.5T looks
+  wrong" worry was stale). Removed ATVI + TWTR (confirmed delisted).
+- Full audit in `DATA_AUDIT_2026-06-09.md`. Verdict history for the 21 converted
+  tickers was cleared (can't rebuild reliably) → shows "being ingested".
+
+### Product (shipped, live)
+- **Self-hosted company logos** (`public/logos/*.png` + `fetch_logos.mjs`) —
+  fixed the broken/slow Clearbit loading. `CompanyLogo` now local-first.
+- **Inline per-ratio citations** wired on /screen (Ibrahim's ask).
+- **Feedback bubble** rewritten: now just shows + copies hello@ email (no
+  mailto, no failure modes). Web3Forms key `4a6a5ea7-...` is in the code.
+- **Favicon + feedback bubble** recolored to brand navy `#1B2D4A`.
+
+### Distribution engine (shipped, live) — the big one
+- **Engine 1 (programmatic SEO) is LIVE:** `/halal/[ticker]` server-rendered
+  indexable pages for all ~340 tickers (verdict table, cited sources, JSON-LD),
+  dynamic per-ticker OG share cards, `/halal` hub, `/crypto/[slug]` pages (~12),
+  a new ETF blog post, ETF pages fixed (SPY/QQQ correctly show "not
+  Shariah-screened" via `etfInfo.ts`). Sitemap submitted to Google Search
+  Console (verified; status Success).
+- **Engine 2 (coverage):** `enrichStocks.ts` upgraded with `MIZAN_UNIVERSE=us`
+  full-universe mode — RUN IT with the FMP key (paid tier) to grow 340→thousands.
+- **Engine 3 (retention):** `EmailCapture` component live + wired into the
+  ticker-not-found state. Full alert-sending system (verdict-change/earnings
+  emails) spec'd in `RETENTION_SETUP.md` — needs a store + Resend + Vercel Cron.
+- Plans: `SCALE_PLAN_builder.md`, `VALIDATION_GAMEPLAN_2026-06-10.md`,
+  `HK_FIRST_2WEEK_PLAN_2026-06-12.md`, `TODAY_2026-06-10.md`,
+  `OUTREACH_SEND_QUEUE_2026-06-09.md`, `LINKEDIN_COMMENT_PLAYBOOK_2026-06-09.md`,
+  `CONTRIBUTOR_BRIEF.md` (for a non-Muslim engineer friend offering help).
+
+### Outreach / validation state
+- **4 academics replied** (all CUHK): Terence Chong (Zoom Mon 15 Jun 3pm HK),
+  Pawee Jenweeranon (Law; sending slots; WhatsApp +66639094725), James Frankel
+  (Director, Centre for Study of Islamic Culture; Zoom proposed Tue/Wed next
+  week — best scholar-intro path), Frankel reply pending Gordon's send.
+- HKUSTSU forwarded Mizan to their main group chat (semi-prompted).
+- 4 LinkedIn DMs (Mohamed/HSUHK, Bibi/HKU, Faridah, Haneen) — reminder set for
+  06-12 10am to send; sharper personalized drafts exist in chat.
+- Strategy decided: **HK-first beachhead** (online only — Gordon can't do
+  in-person), keep Miqdad as advisor (solo ceiling accepted), read is
+  "distribution problem (B)" — but retention NOT yet measured (the real test).
+- **Still 0 unprompted shares.** Vercel: ~170 visitors/wk, all from Gordon's own
+  channels (no organic yet — SEO engine just launched to fix that). Funnel
+  healthy (~42% landing→/screen).
+
+### The honest throughline
+The build is now comprehensive (data fixed, product polished, SEO engine live).
+**None of it moves the 30-day gate**, which turns on shares + retention — the
+human signal from the calls, HK forwards, and whether testers return. SEO
+compounds over 6–12 weeks; the gate is ~2 weeks out. Next session: push the
+validation/human work, not more code.
 
 ---
 
