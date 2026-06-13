@@ -49,5 +49,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "weekly" as const,
     priority: 0.5,
   }));
-  return [...staticRoutes, ...listRoutes, ...sectorRoutes];
+  // One SEO page per ticker — the programmatic "Is {ticker} halal?" pages.
+  const tickerRoutes = listStocks().map((s) => ({
+    url: `${base}/halal/${encodeURIComponent(s.ticker)}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+  return [...staticRoutes, ...listRoutes, ...sectorRoutes, ...tickerRoutes];
 }

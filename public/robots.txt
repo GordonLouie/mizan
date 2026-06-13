@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /custom
 
-Sitemap: https://mizan.app/sitemap.xml
+Sitemap: https://mizaninvesting.com/sitemap.xml
