@@ -18,7 +18,7 @@ interface PriceEntry {
   currency: string;
   series: [string, number][]; // [ISO date, close], oldest → newest
 }
-const PRICES = pricesJson as Record<string, PriceEntry>;
+const PRICES = pricesJson as unknown as Record<string, PriceEntry>;
 
 // SAMPLE fallback prices (order-of-magnitude only). Used until real data is
 // ingested; surfaced as "sample" in the UI, never presented as real.
