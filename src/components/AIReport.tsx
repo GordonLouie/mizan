@@ -136,6 +136,8 @@ export default function AIReport({ ticker, scholarId }: { ticker: string; schola
     }
   }
 
+  const isCustom = scholarId === "custom";
+
   if (!report) {
     return (
       <div className="rounded-xl border border-gray-200 bg-white p-6 text-center">
@@ -149,10 +151,15 @@ export default function AIReport({ ticker, scholarId }: { ticker: string; schola
           A written, institutional-grade analysis of {ticker}&apos;s screening result — grounded in the
           deterministic verdict and ratios, never fabricated.
         </p>
+        {isCustom && (
+          <p className="mx-auto mt-3 max-w-md text-[12px] leading-relaxed text-amber-700">
+            AI reports run on a named standard. Select a specific scholar (not &ldquo;Custom&rdquo;) above to generate one.
+          </p>
+        )}
         <button
           type="button"
           onClick={generate}
-          disabled={loading}
+          disabled={loading || isCustom}
           className="mt-4 inline-flex items-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900 disabled:opacity-60"
         >
           {loading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}

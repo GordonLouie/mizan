@@ -43,9 +43,21 @@ fallback), `src/app/api/ai/report/route.ts` (POST, best-effort per-IP daily cap
 via KV), `src/components/AIReport.tsx` (client; honest no-key state). Wired into
 `/screen` gated `aiReport` (now **retail** per matrix). `.env.local.example` +
 ANTHROPIC_API_KEY/ANTHROPIC_MODEL. tsc clean.
-TODO (Phase 4): `/api/ai/report` is gated client-side only — harden with auth so
-the paid endpoint can't be called directly once a key is live. Remaining Phase 3:
-3b (portfolio assistant / halal swaps), 3c (portfolio-level Q&A; wire /ask to Claude).
+TODO (Phase 4): the `/api/ai/*` routes are gated client-side only — harden with
+auth so the paid endpoints can't be called directly once a key is live.
+
+### Phase 3b — AI portfolio assistant (built, gated, inert without key)
+Same integrity model. NEW: `src/lib/aiPortfolio.ts` (deterministic weighted
+halal %, per-holding verdict/issues/value/weight, halal SWAP candidates via
+findHalalAlternatives, notCovered list; Claude writes only the narrative and may
+ONLY reference supplied swaps), `src/app/api/ai/portfolio/route.ts`,
+`src/components/AIPortfolioAssistant.tsx`. Wired into `/portfolio` gated
+`aiReport`. Both AI features GUARD against scholar="custom" (server can't see the
+user's localStorage custom thresholds → would falsely pass everything): the UI
+disables generate for Custom and the routes 400 `custom_unsupported`. tsc clean.
+
+Remaining Phase 3: 3c (portfolio-level Q&A; wire `/ask` to Claude as a fallback
+when the seeded KB has no strong match). Optional: an AI report for `/indexes/[slug]`.
 
 ### Real index numbers (gated, Pro): Halal 50 **+223%**, Halal Tech **+431%**, Income **+80%** vs S&P ~+23% (~16mo)
 Genuine arithmetic — halal baskets exclude banks, skew tech/semi, equal-weight

@@ -14,6 +14,7 @@ import {
   ProgressRing, DonutChart, DonutLegend, HorizontalBars, sectorColor,
 } from "@/components/Charts";
 import PortfolioPerformance from "@/components/PortfolioPerformance";
+import AIPortfolioAssistant from "@/components/AIPortfolioAssistant";
 import LockedFeature from "@/components/LockedFeature";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import type { Verdict, StockFundamentals, ScreeningResult } from "@/lib/types";
@@ -283,6 +284,21 @@ export default function PortfolioPage() {
             <div className="rounded-xl border border-gray-200 bg-white p-6">
               <PortfolioPerformance holdings={positions.map((p) => ({ ticker: p.ticker, shares: p.shares }))} />
             </div>
+          </LockedFeature>
+        </div>
+      </section>
+
+      {/* AI PORTFOLIO ASSISTANT — Pro: grounded compliance + halal swaps. */}
+      <section className="mt-12">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+          AI portfolio assistant
+        </div>
+        <div className="mt-4">
+          <LockedFeature feature="aiReport" label="AI portfolio assistant">
+            <AIPortfolioAssistant
+              holdings={positions.map((p) => ({ ticker: p.ticker, shares: p.shares }))}
+              scholarId={scholarId}
+            />
           </LockedFeature>
         </div>
       </section>

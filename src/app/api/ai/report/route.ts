@@ -36,7 +36,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "missing_ticker" }, { status: 400 });
   }
 
-  // Validate scholar (falls back to a known default inside getScholar).
+  // "custom" thresholds live in the user's browser; the server can't replicate
+  // them, so reject rather than emit a misleading (all-null) screen.
+  if (scholarId === "custom") {
+    return NextResponse.json({ error: "custom_unsupported" }, { status: 400 });
+  }
   const scholar = getScholar(scholarId || "aaoifi");
 
   const stock = findStock(ticker);
