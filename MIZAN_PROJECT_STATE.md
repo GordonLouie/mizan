@@ -67,9 +67,59 @@ question box in AIPortfolioAssistant ("Which swap raises my halal % most?"). tsc
 
 Phase 3 (AI layer) DONE: 3a stock report, 3b portfolio assistant + swaps, 3c Q&A
 (general + portfolio). All gated/free per matrix, all inert without ANTHROPIC_API_KEY.
-Optional later: AI report on `/indexes/[slug]`. Next up per masterplan: Phase 4
-(tiering/paywall go-live + AUTH — needed to harden the AI endpoints), Phase 5
-(coverage/scale), Phase 6 (brand/business).
+Optional later: AI report on `/indexes/[slug]`.
+
+### Phase 4 — tiering, paywall, AUTH (built, inert without keys)
+Decisions: **Pro = $9.99/mo or $89/yr** (market: Zoya ~$8/mo·$100/yr, Musaffa
+$7.49+/mo); institutional = sales-led. **Auth = custom passwordless magic-link**
+(fits the stack; reuses KV + Resend; no vendor/deps).
+NEW: `src/lib/auth.ts` (HMAC magic-link [15min, single-use via KV] + httpOnly
+Secure session cookie [30d]; tier looked up LIVE from KV `mizan:tiers`, never in
+the cookie). Routes: `/api/auth/request|callback|logout`, `/api/me`,
+`/api/billing/portal`. `/api/checkout` now takes plan monthly|annual + attaches
+session email. Webhook = retail on checkout (institutional manual). AI report +
+portfolio routes now ENFORCE tier server-side (402) — but only once AUTH_SECRET
+is set, so pre-go-live nothing changes. `useEntitlement` reads `/api/me` (server
+truth) when auth is on, else localStorage dev override. Pages: `/pricing`
+(finalised matrix + monthly/annual toggle + current-plan badge) and `/account`
+(magic-link sign-in + plan + manage billing + sign out). Nav has Pricing +
+Account. LockedFeature "Unlock" → `/pricing`. tsc clean.
+
+GO-LIVE ORDER (when ready to charge):
+ 1. Stripe: create Product + 2 prices ($9.99/mo, $89/yr) → STRIPE_PRICE_RETAIL +
+    STRIPE_PRICE_RETAIL_ANNUAL + STRIPE_SECRET_KEY; add webhook → STRIPE_WEBHOOK_SECRET.
+ 2. KV (Upstash) → KV_REST_API_URL/TOKEN (tiers, single-use links, rate limits).
+ 3. Resend → RESEND_API_KEY + verified domain (sends sign-in links).
+ 4. AUTH_SECRET = 32-byte hex (turns ON enforcement). Set LAST.
+ 5. Seed your own access: add your email to KV `mizan:tiers` as "institutional"
+    (otherwise once AUTH_SECRET is set you'll be "free" and gated like everyone).
+SECURITY: auth is hand-rolled — get it reviewed before heavy reliance. Known
+follow-ups: dedupe is fine; consider CSRF token on POST auth routes, and a
+`customer.subscription.updated` handler for plan changes.
+
+### Phase 4c — institutional API (built, inert without KV keys)
+NEW: `src/lib/apiKeys.ts` (Bearer key → {email,tier} from KV `mizan:apikeys`;
+inert without KV) + `GET /api/v1/screen` (institutional-only bulk screening
+export; params tickers/scholar/format[json|csv]/limit; deterministic data only;
+per-key daily quota). Issue a key by adding to KV: `mizan:apikeys = {"<key>":
+{"email":"firm@x.com","tier":"institutional"}}`. White-label reports + multi-seat
+= deferred (demand-driven). tsc clean.
+
+### Phase 5 — coverage & scale (pipeline READY, pending your FMP run)
+5a: `scripts/enrichStocks.ts` already supports `MIZAN_UNIVERSE=us` (full US
+universe via FMP screener) + `MIZAN_MIN_MARKETCAP`. To expand: run enrich with
+that flag, then `scripts/fetch_prices.mjs`, then commit. (Reminder scheduled for
+2026-06-16 10:30.) 5b perf: on-demand OG/pages already done — revisit at scale.
+
+### Phase 6 — brand & business (your decisions/actions)
+Mostly non-code: register HK company + bank (enables billing payout), naming
+decision (keep "Mizan" + clearer tagline vs rename — Chong's point), one-pager,
+institutional outreach (product now ready), competitions, YouTube, media. Claude
+can draft the one-pager / outreach on request.
+
+STATUS: Phases 1–4 (incl. 4c) built & deployable; Phase 5 pipeline ready (your
+run); Phase 6 is business-side. Scheduled reminders: Anthropic key (10:00),
+go-live keys + data runs (10:30), both 2026-06-16.
 
 ### Real index numbers (gated, Pro): Halal 50 **+223%**, Halal Tech **+431%**, Income **+80%** vs S&P ~+23% (~16mo)
 Genuine arithmetic — halal baskets exclude banks, skew tech/semi, equal-weight

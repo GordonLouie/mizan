@@ -13,7 +13,6 @@
  */
 import { useEffect, useState } from "react";
 import { Lock } from "lucide-react";
-import { toast } from "@/lib/toast";
 import {
   type Tier,
   type FeatureKey,
@@ -24,20 +23,45 @@ import {
 
 const KEY = "mizan_tier";
 
+// Dedupe /api/me across all LockedFeature instances on a page (one request, not N).
+let mePromise: Promise<{ tier?: Tier; authConfigured?: boolean }> | null = null;
+function fetchMe() {
+  if (!mePromise) mePromise = fetch("/api/me").then((r) => r.json()).catch(() => ({}));
+  return mePromise;
+}
+
 export function useEntitlement() {
   const [tier, setTierState] = useState<Tier>("free");
   useEffect(() => {
-    try {
-      const t = localStorage.getItem(KEY) as Tier | null;
-      if (t === "retail" || t === "institutional" || t === "free") setTierState(t);
-    } catch {
-      /* ignore */
-    }
+    let active = true;
+    const readLocal = () => {
+      try {
+        const t = localStorage.getItem(KEY) as Tier | null;
+        if (t === "retail" || t === "institutional" || t === "free") setTierState(t);
+      } catch {
+        /* ignore */
+      }
+    };
+    // The authoritative tier comes from the server session (/api/me). Before auth
+    // is configured (pre-go-live), we fall back to the localStorage override so
+    // Pro UI stays previewable in dev/demo. Once auth is live, the server wins.
+    fetch("/api/me")
+      .then((r) => r.json())
+      .then((v: { tier?: Tier; authConfigured?: boolean }) => {
+        if (!active) return;
+        if (v.authConfigured) setTierState(v.tier ?? "free");
+        else readLocal();
+      })
+      .catch(() => { if (active) readLocal(); });
+
     const onStorage = (e: StorageEvent) => {
       if (e.key === KEY && e.newValue) setTierState(e.newValue as Tier);
     };
     window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    return () => {
+      active = false;
+      window.removeEventListener("storage", onStorage);
+    };
   }, []);
   // Exposed for testing / future billing callback.
   const setTier = (t: Tier) => {
@@ -69,13 +93,8 @@ export default function LockedFeature({
   const needLabel = TIER_LABEL[need];
 
   function onUnlock() {
-    // Billing not wired yet — honest placeholder. When Stripe is live this
-    // calls /api/checkout (retail) or opens the institutional contact flow.
-    if (need === "institutional") {
-      window.location.href = "mailto:hello@mizaninvesting.com?subject=Mizan%20Institutional%20access";
-    } else {
-      toast("Pro is coming soon — email hello@mizaninvesting.com for early access.", { tone: "info" });
-    }
+    // Both plans (and the institutional "contact us") live on /pricing.
+    window.location.href = need === "institutional" ? "/pricing#institutional" : "/pricing";
   }
 
   return (

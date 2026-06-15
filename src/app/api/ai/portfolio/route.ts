@@ -11,6 +11,8 @@ import { NextResponse } from "next/server";
 import { generatePortfolioReport, generatePortfolioAnswer, type HoldingInput } from "@/lib/aiPortfolio";
 import { getScholar } from "@/lib/scholars";
 import { kvIncrWithTtl } from "@/lib/kv";
+import { getViewer } from "@/lib/auth";
+import { tierMeets } from "@/lib/entitlements";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,6 +21,11 @@ const DAILY_CAP = 40;
 const MAX_HOLDINGS = 100;
 
 export async function POST(req: Request) {
+  const viewer = await getViewer(req);
+  if (viewer.authConfigured && !tierMeets(viewer.tier, "retail")) {
+    return NextResponse.json({ error: "upgrade_required" }, { status: 402 });
+  }
+
   let body: { holdings?: unknown; scholarId?: string; question?: string };
   try {
     body = await req.json();

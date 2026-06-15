@@ -123,6 +123,10 @@ export default function AIReport({ ticker, scholarId }: { ticker: string; schola
         setError("You've reached today's report limit. Please try again tomorrow.");
         return;
       }
+      if (res.status === 402) {
+        setError("AI reports are a Pro feature. Upgrade at /pricing to generate one.");
+        return;
+      }
       if (!res.ok) {
         setError("Could not generate the report. Please try again.");
         return;

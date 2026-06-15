@@ -44,6 +44,17 @@ export async function kvSetJson(key: string, value: unknown): Promise<void> {
   await cmd(["SET", key, JSON.stringify(value)]);
 }
 
+export async function kvSetJsonWithTtl(key: string, value: unknown, ttlSeconds: number): Promise<void> {
+  await cmd(["SET", key, JSON.stringify(value), "EX", String(ttlSeconds)]);
+}
+
+/** Delete a key. Returns true if KV is configured (best-effort). */
+export async function kvDel(key: string): Promise<boolean> {
+  if (!kvConfigured()) return false;
+  await cmd(["DEL", key]);
+  return true;
+}
+
 /**
  * Atomic-ish counter with a TTL on first write. Returns the new count, or null
  * if KV isn't configured (caller should then skip limiting). Used for best-effort

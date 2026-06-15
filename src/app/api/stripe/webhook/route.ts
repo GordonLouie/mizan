@@ -56,7 +56,9 @@ export async function POST(req: Request) {
     if (email) {
       const map = (await kvGetJson<Record<string, string>>("mizan:tiers")) ?? {};
       if (event.type === "checkout.session.completed") {
-        map[email] = "retail"; // TODO: derive retail vs institutional from the price id
+        // Self-serve checkout is Pro (retail) only; institutional is sales-led
+        // and set manually in KV (mizan:tiers).
+        map[email] = "retail";
         await kvSetJson("mizan:tiers", map);
       } else if (event.type === "customer.subscription.deleted") {
         delete map[email];

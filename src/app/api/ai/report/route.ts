@@ -14,6 +14,8 @@ import { NextResponse } from "next/server";
 import { generateStockReport, findStock } from "@/lib/aiReport";
 import { getScholar } from "@/lib/scholars";
 import { kvIncrWithTtl } from "@/lib/kv";
+import { getViewer } from "@/lib/auth";
+import { tierMeets } from "@/lib/entitlements";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,6 +23,13 @@ export const dynamic = "force-dynamic";
 const DAILY_CAP = 40;
 
 export async function POST(req: Request) {
+  // Server-side entitlement (defense-in-depth beyond the client paywall). Only
+  // enforced once auth is configured, so pre-go-live behaviour is unchanged.
+  const viewer = await getViewer(req);
+  if (viewer.authConfigured && !tierMeets(viewer.tier, "retail")) {
+    return NextResponse.json({ error: "upgrade_required" }, { status: 402 });
+  }
+
   let body: { type?: string; ticker?: string; scholarId?: string };
   try {
     body = await req.json();

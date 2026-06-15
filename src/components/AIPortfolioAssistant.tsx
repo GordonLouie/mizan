@@ -114,6 +114,7 @@ export default function AIPortfolioAssistant({
         body: JSON.stringify({ holdings, scholarId }),
       });
       if (res.status === 429) { setError("You've reached today's limit. Please try again tomorrow."); return; }
+      if (res.status === 402) { setError("The AI portfolio assistant is a Pro feature. Upgrade at /pricing."); return; }
       if (!res.ok) { setError("Could not generate the assessment. Please try again."); return; }
       const data = (await res.json()) as { report: Report };
       setReport(data.report);

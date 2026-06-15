@@ -46,6 +46,7 @@ const TOOL_GROUPS: Array<{
       { href: "/purification", label: "Purification", sub: "Dividend cleansing" },
       { href: "/crypto", label: "Crypto", sub: "Early development" },
       { href: "/sukuk", label: "Sukuk", sub: "Early development" },
+      { href: "/account", label: "Account", sub: "Sign in & plan" },
     ],
   },
 ];
@@ -84,6 +85,7 @@ export default function Header() {
             <Link href="/screen" className="hover:text-navy-800">Screen</Link>
             <Link href="/discover" className="hover:text-navy-800">Discover</Link>
             <Link href="/learn" className="hover:text-navy-800">Learn</Link>
+            <Link href="/pricing" className="hover:text-navy-800">Pricing</Link>
             <div
               className="relative"
               onMouseEnter={openTools}
@@ -149,6 +151,7 @@ export default function Header() {
               <Link href="/screen" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Screen</Link>
               <Link href="/discover" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Discover</Link>
               <Link href="/learn" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Learn</Link>
+              <Link href="/pricing" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Pricing</Link>
 
               {TOOL_GROUPS.map((group) => (
                 <div key={group.heading} className="mt-3">
