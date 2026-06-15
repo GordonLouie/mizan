@@ -5,7 +5,7 @@
  * benchmark for ROI comparison. Keeps the multi-MB prices.json OUT of the client
  * bundle (the chart fetches this instead of importing the data).
  */
-import { priceSeries, hasRealPrices } from "@/lib/prices";
+import { priceSeries, hasHistory } from "@/lib/prices.server";
 
 export const runtime = "nodejs";
 
@@ -17,7 +17,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ ticker:
   return Response.json(
     {
       ticker: t,
-      real: hasRealPrices(t),
+      real: hasHistory(t),
       series,
       benchmark: benchmark.length ? { ticker: "SPY", series: benchmark } : null,
     },

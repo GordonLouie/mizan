@@ -74,7 +74,14 @@ async function main() {
     await new Promise((r) => setTimeout(r, 250));
   }
   writeFileSync(join(ROOT, "src/data/prices.json"), JSON.stringify(out));
-  console.log(`\nWrote src/data/prices.json (${ok} tickers with history, ${fail} without).`);
+  // Also emit a tiny latest-close map for client-safe current prices (the full
+  // history is server-only — see src/lib/prices.server.ts).
+  const latest = {};
+  for (const [t, v] of Object.entries(out)) {
+    if (v?.series?.length) latest[t] = Math.round(v.series[v.series.length - 1][1] * 10000) / 10000;
+  }
+  writeFileSync(join(ROOT, "src/data/prices-latest.json"), JSON.stringify(latest));
+  console.log(`\nWrote src/data/prices.json (${ok} tickers with history, ${fail} without) + prices-latest.json.`);
   console.log("Next: commit it, and the app will use real prices automatically.");
 }
 

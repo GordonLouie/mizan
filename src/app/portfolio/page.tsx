@@ -11,9 +11,10 @@ import ScholarPicker from "@/components/ScholarPicker";
 import CurrencyInput from "@/components/CurrencyInput";
 import EarningsWidget from "@/components/EarningsWidget";
 import {
-  ProgressRing, DonutChart, DonutLegend, HorizontalBars,
-  LineChart, LineLegend, sectorColor,
+  ProgressRing, DonutChart, DonutLegend, HorizontalBars, sectorColor,
 } from "@/components/Charts";
+import PortfolioPerformance from "@/components/PortfolioPerformance";
+import LockedFeature from "@/components/LockedFeature";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import type { Verdict, StockFundamentals, ScreeningResult } from "@/lib/types";
 import { Plus, Trash2, RotateCcw, ArrowUpRight, ArrowDownRight } from "lucide-react";
@@ -23,35 +24,9 @@ const VERDICT_COLORS: Record<Verdict, string> = {
   pass: "#047857", borderline: "#B45309", fail: "#BE123C",
 };
 
-type Period = "1M" | "3M" | "6M" | "1Y" | "2Y" | "ALL";
-
-function generatePerformanceData(period: Period) {
-  const monthsByPeriod: Record<Period, number> = {
-    "1M": 1, "3M": 3, "6M": 6, "1Y": 12, "2Y": 24, "ALL": 36,
-  };
-  const months = monthsByPeriod[period];
-  const labels: string[] = [];
-  const portfolio: number[] = [];
-  const spy: number[] = [];
-  const spus: number[] = [];
-
-  const baseDate = new Date(2026, 4, 1);
-  baseDate.setMonth(baseDate.getMonth() - months);
-  let p = 100, sp = 100, sps = 100;
-
-  for (let i = 0; i <= months; i++) {
-    const d = new Date(baseDate.getFullYear(), baseDate.getMonth() + i, 1);
-    labels.push(d.toLocaleDateString("en-US", { month: "short", year: "2-digit" }));
-    const seed = Math.sin(i * 13.7);
-    p *= 1 + (seed * 0.03 + 0.012);
-    sp *= 1 + (Math.cos(i * 7.3) * 0.025 + 0.008);
-    sps *= 1 + (Math.sin(i * 11.1) * 0.025 + 0.010);
-    portfolio.push(p);
-    spy.push(sp);
-    spus.push(sps);
-  }
-  return { labels, portfolio, spy, spus };
-}
+// (Removed generatePerformanceData — it fabricated the performance line.
+// Real portfolio performance now lives in <PortfolioPerformance>, computed from
+// real prices via /api/prices.)
 
 function fmtMoney(n: number): string {
   return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -80,7 +55,6 @@ export default function PortfolioPage() {
   const [scholarId, setScholarId] = useState("aaoifi");
   const [positions, setPositions] = useState<Position[]>([]);
   const [bump, setBump] = useState(0);
-  const [period, setPeriod] = useState<Period>("1Y");
   const [showEditor, setShowEditor] = useState(false);
   const [sortKey, setSortKey] = useState<"value" | "ticker" | "gain">("value");
   const [hydrated, setHydrated] = useState(false);
@@ -160,7 +134,6 @@ export default function PortfolioPage() {
     return out;
   }, [enriched, sortKey]);
 
-  const performance = useMemo(() => generatePerformanceData(period), [period]);
 
   function updatePosition(id: string, patch: Partial<Position>) {
     setPositions((ps) => ps.map((p) => p.id === id ? { ...p, ...patch } : p));
@@ -304,42 +277,13 @@ export default function PortfolioPage() {
               Your portfolio vs benchmarks
             </h2>
           </div>
-          <div className="flex items-center gap-1 rounded-md border border-gray-200 bg-gray-50 p-1">
-            {(["1M", "3M", "6M", "1Y", "2Y", "ALL"] as Period[]).map((p) => (
-              <button
-                key={p}
-                type="button"
-                onClick={() => setPeriod(p)}
-                className={
-                  "rounded px-2.5 py-1 text-[11px] font-semibold transition-colors " +
-                  (period === p
-                    ? "bg-white text-navy-800 shadow-sm"
-                    : "text-gray-500 hover:text-gray-900")
-                }
-              >
-                {p}
-              </button>
-            ))}
-          </div>
         </div>
-        <div className="mt-6 rounded-xl border border-gray-200 bg-white p-6">
-          <LineChart
-            labels={performance.labels}
-            series={[
-              { label: "Your portfolio", color: "#1C4537", data: performance.portfolio, bold: true },
-              { label: "S&P 500 (SPY)", color: "#94A3B8", data: performance.spy },
-              { label: "Halal S&P 500 (SPUS)", color: "#B8860B", data: performance.spus },
-            ]}
-          />
-          <div className="mt-5 border-t border-gray-100 pt-4">
-            <LineLegend
-              series={[
-                { label: "Your portfolio", color: "#1C4537", data: [], bold: true },
-                { label: "S&P 500 (SPY)", color: "#94A3B8", data: [] },
-                { label: "Halal S&P 500 (SPUS)", color: "#B8860B", data: [] },
-              ]}
-            />
-          </div>
+        <div className="mt-6">
+          <LockedFeature feature="portfolioPerformance" label="Portfolio performance">
+            <div className="rounded-xl border border-gray-200 bg-white p-6">
+              <PortfolioPerformance holdings={positions.map((p) => ({ ticker: p.ticker, shares: p.shares }))} />
+            </div>
+          </LockedFeature>
         </div>
       </section>
 
