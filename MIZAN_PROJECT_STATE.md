@@ -8,6 +8,40 @@ Today: 2026-06-13.
 
 ---
 
+## Session update — 2026-06-15 (read this first)
+
+Built **Phase 1 (price charts/ROI)** and **Phase 2 (halal indexes)** of the
+masterplan. All build-clean (tsc passes), gated behind `LockedFeature` (Pro).
+
+NEW FILES: `src/lib/indicators.ts`, `src/lib/indexes.ts`, `src/lib/indexes.server.ts`,
+`src/components/PriceChart.tsx`, `src/components/PortfolioPerformance.tsx`,
+`src/components/IndexPerfChart.tsx`, `src/app/api/prices/[ticker]/route.ts`,
+`src/app/indexes/page.tsx`, `src/app/indexes/[slug]/page.tsx`. Sitemap + /screen +
+/portfolio wired up. Index selection switched to **AAOIFI** (Taqi was too strict —
+rejected asset-light tech, gave empty Tech index).
+
+### Price data — VERIFIED CORRECT (earlier "corrupt" scare was a false alarm)
+I initially flagged the feed as corrupt (Micron $1,054, SanDisk $2,063, NFLX
+$80). **That was wrong** — anchored on my pre-split / pre-boom knowledge cutoff
+(May 2025). Verified against live quotes (Jun 2026): Micron really is ~$1,060
+(ATH $1,089 Jun 3), SanDisk really is ~$1,995 (+692% YTD on the AI/NAND
+shortage), NFLX did a ~10:1 split. The 2025-26 AI semiconductor/memory boom is
+real and beyond my training. **The feed is accurate; trust it.**
+Kept `fetch_prices.mjs` on the **full**/adjClose endpoint (correct either way).
+Removed the over-aggressive index guard (it was hiding real top performers);
+`indexes.server.ts` now only drops true unadjusted-split glitches (>+400%/<-80%
+one-day).
+
+### Real index numbers (gated, Pro): Halal 50 **+223%**, Halal Tech **+431%**, Income **+80%** vs S&P ~+23% (~16mo)
+Genuine arithmetic — halal baskets exclude banks, skew tech/semi, equal-weight
+rewards the smaller names that ran hardest. CAVEAT (disclosed on-page): selection
+uses **current** constituents → look-ahead/survivorship bias inflates trailing
+returns. A point-in-time rebalanced index is a later-phase fix (Chong will flag
+this). Numbers are real but framed as "today's basket's trailing performance,"
+not a live track record.
+
+---
+
 ## Session update — 2026-06-13 (read this first)
 
 A long working session. What changed since Day 11:

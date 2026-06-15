@@ -36,20 +36,22 @@ const tickers = JSON.parse(readFileSync(join(ROOT, "src/data/stocks.json"), "utf
 const fromDate = new Date(Date.now() - DAYS * 86_400_000).toISOString().slice(0, 10);
 
 async function fetchOne(ticker) {
-  // FMP stable historical EOD. Adjust endpoint to your plan if needed.
+  // FMP stable historical EOD — FULL endpoint so we can use the split/dividend
+  // ADJUSTED close (adjClose). The "light" endpoint's `price` field proved
+  // unreliable (semis inflated, NFLX ~10x off). adjClose is the correct series
+  // for returns/charts. Adjust the endpoint to your plan if needed.
   const url =
-    `https://financialmodelingprep.com/stable/historical-price-eod/light` +
+    `https://financialmodelingprep.com/stable/historical-price-eod/full` +
     `?symbol=${encodeURIComponent(ticker)}&from=${fromDate}&apikey=${KEY}`;
   try {
     const res = await fetch(url);
     if (!res.ok) return null;
     const data = await res.json();
-    // FMP returns an array of { date, price } (light) or { date, close }.
     const rows = Array.isArray(data) ? data : data?.historical ?? [];
     if (!rows.length) return null;
     let series = rows
-      .map((r) => [String(r.date), Number(r.price ?? r.close)])
-      .filter(([, p]) => Number.isFinite(p))
+      .map((r) => [String(r.date), Number(r.adjClose ?? r.adjustedClose ?? r.close ?? r.price)])
+      .filter(([, p]) => Number.isFinite(p) && p > 0)
       .sort((a, b) => a[0].localeCompare(b[0])); // oldest → newest
     if (SAMPLE === "weekly") series = series.filter((_, i) => i % 5 === 0 || i === series.length - 1);
     return series.length ? { currency: "USD", series } : null;

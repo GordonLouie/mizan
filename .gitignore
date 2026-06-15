@@ -21,3 +21,4 @@ test3.txt
 *.fixed
 
 *.smbak
+scripts/_*
