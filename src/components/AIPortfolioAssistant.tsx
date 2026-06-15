@@ -77,6 +77,33 @@ export default function AIPortfolioAssistant({
   const [report, setReport] = useState<Report | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [q, setQ] = useState("");
+  const [qAnswer, setQAnswer] = useState<string | null>(null);
+  const [qAsked, setQAsked] = useState("");
+  const [qLoading, setQLoading] = useState(false);
+  const [qError, setQError] = useState<string | null>(null);
+
+  async function askFollowup() {
+    const question = q.trim();
+    if (!question) return;
+    setQLoading(true); setQError(null); setQAnswer(null);
+    try {
+      const res = await fetch("/api/ai/portfolio", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ holdings, scholarId, question }),
+      });
+      if (res.status === 429) { setQError("You've reached today's limit. Please try again tomorrow."); return; }
+      if (!res.ok) { setQError("Couldn't answer that right now. Please try again."); return; }
+      const data = (await res.json()) as { answer: string | null };
+      if (data.answer) { setQAnswer(data.answer); setQAsked(question); }
+      else setQError("The AI couldn't produce a confident answer — try rephrasing.");
+    } catch {
+      setQError("Network error. Please try again.");
+    } finally {
+      setQLoading(false);
+    }
+  }
 
   async function generate() {
     setLoading(true); setError(null);
@@ -220,6 +247,36 @@ export default function AIPortfolioAssistant({
             The AI assessment isn&apos;t available right now{report.aiEnabled ? " (the model didn't return a valid result)" : " — AI activates once the Claude API key is configured"}.
             The compliance figures and swaps above are complete and unaffected.
           </div>
+        </div>
+      )}
+
+      {/* Follow-up Q&A about this portfolio */}
+      {report.aiEnabled && (
+        <div className="mt-6 border-t border-gray-100 pt-5">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-500">Ask about your portfolio</div>
+          <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+            <input
+              type="text"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter") askFollowup(); }}
+              placeholder="e.g., Which swap would raise my halal % the most?"
+              className="w-full rounded-md border border-gray-200 px-3 py-2 text-[14px] text-gray-900 outline-none focus:border-navy-700"
+            />
+            <button
+              type="button" onClick={askFollowup} disabled={qLoading || !q.trim()}
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900 disabled:opacity-60"
+            >
+              {qLoading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />} Ask
+            </button>
+          </div>
+          {qError && <p className="mt-2 text-[12px] text-amber-700">{qError}</p>}
+          {qAnswer && (
+            <div className="mt-3 rounded-lg border border-navy-200 bg-navy-50/30 p-4">
+              {qAsked && <div className="text-[12px] font-semibold text-gray-700">{qAsked}</div>}
+              <p className="mt-1.5 whitespace-pre-line text-[14px] leading-relaxed text-gray-800">{qAnswer}</p>
+            </div>
+          )}
         </div>
       )}
 

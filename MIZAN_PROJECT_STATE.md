@@ -56,8 +56,20 @@ ONLY reference supplied swaps), `src/app/api/ai/portfolio/route.ts`,
 user's localStorage custom thresholds → would falsely pass everything): the UI
 disables generate for Custom and the routes 400 `custom_unsupported`. tsc clean.
 
-Remaining Phase 3: 3c (portfolio-level Q&A; wire `/ask` to Claude as a fallback
-when the seeded KB has no strong match). Optional: an AI report for `/indexes/[slug]`.
+### Phase 3c — AI Q&A (built, inert without key) — PHASE 3 COMPLETE
+NEW: `src/lib/aiAsk.ts` (grounded scholar Q&A — pulls closest vetted KB entries as
+context, never invents fatwas/citations), `src/app/api/ai/ask/route.ts` (FREE +
+KV-rate-limited — it's a public acquisition surface, unlike the Pro reports).
+Wired into `/ask`: "Ask AI for a tailored answer" button → renders AI answer +
+citations + caveat; KB stays primary. Portfolio-level Q&A: `generatePortfolioAnswer`
+in aiPortfolio + optional `{question}` on `/api/ai/portfolio` + a follow-up
+question box in AIPortfolioAssistant ("Which swap raises my halal % most?"). tsc clean.
+
+Phase 3 (AI layer) DONE: 3a stock report, 3b portfolio assistant + swaps, 3c Q&A
+(general + portfolio). All gated/free per matrix, all inert without ANTHROPIC_API_KEY.
+Optional later: AI report on `/indexes/[slug]`. Next up per masterplan: Phase 4
+(tiering/paywall go-live + AUTH — needed to harden the AI endpoints), Phase 5
+(coverage/scale), Phase 6 (brand/business).
 
 ### Real index numbers (gated, Pro): Halal 50 **+223%**, Halal Tech **+431%**, Income **+80%** vs S&P ~+23% (~16mo)
 Genuine arithmetic — halal baskets exclude banks, skew tech/semi, equal-weight

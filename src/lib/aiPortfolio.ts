@@ -143,32 +143,67 @@ Return ONLY a JSON object (no markdown fences) with exactly these keys:
   "bottomLine": "1-2 sentences, with a not-advice caveat."
 }`;
 
+function factsToJson(facts: PortfolioFacts): string {
+  return JSON.stringify(
+    {
+      standard: facts.scholarLabel,
+      weightedHalalPct: Math.round(facts.weightedHalalPct * 10) / 10,
+      passRatePct: Math.round(facts.passRatePct * 10) / 10,
+      coveredHoldings: facts.coveredHoldings,
+      passingHoldings: facts.passingHoldings,
+      notCovered: facts.notCovered,
+      holdings: facts.holdings.map((h) => ({
+        ticker: h.ticker,
+        name: h.name,
+        sector: h.sector,
+        weightPct: Math.round(h.weightPct * 10) / 10,
+        verdict: h.verdict,
+        issues: h.issues,
+        halalSwapCandidates: h.swaps.map((s) => `${s.ticker} (${s.name})`),
+      })),
+    },
+    null,
+    2,
+  );
+}
+
 function buildUserPrompt(facts: PortfolioFacts): string {
   return [
     "Here are the deterministic portfolio facts. Write the assessment grounded strictly in this data.",
     "",
-    JSON.stringify(
-      {
-        standard: facts.scholarLabel,
-        weightedHalalPct: Math.round(facts.weightedHalalPct * 10) / 10,
-        passRatePct: Math.round(facts.passRatePct * 10) / 10,
-        coveredHoldings: facts.coveredHoldings,
-        passingHoldings: facts.passingHoldings,
-        notCovered: facts.notCovered,
-        holdings: facts.holdings.map((h) => ({
-          ticker: h.ticker,
-          name: h.name,
-          sector: h.sector,
-          weightPct: Math.round(h.weightPct * 10) / 10,
-          verdict: h.verdict,
-          issues: h.issues,
-          halalSwapCandidates: h.swaps.map((s) => `${s.ticker} (${s.name})`),
-        })),
-      },
-      null,
-      2,
-    ),
+    factsToJson(facts),
   ].join("\n");
+}
+
+const QA_SYSTEM_PROMPT = `You are a Shariah-compliance portfolio assistant for Mizan answering a specific question about the user's OWN portfolio.
+
+You are given the deterministic portfolio facts (overall halal %, each holding's verdict, weight, issues, and pre-screened halal swap candidates) and the user's question. Rules:
+1. Answer ONLY from the provided facts. NEVER change a verdict or invent tickers, numbers, companies, or rulings.
+2. When suggesting swaps, use ONLY the provided candidates.
+3. If the facts don't contain what's needed, say so plainly.
+4. Be concise and practical. This is screening guidance, not investment advice.
+
+Return ONLY a JSON object: { "answer": "your answer in plain prose" }`;
+
+export interface PortfolioAnswer {
+  answer: string;
+}
+
+export async function generatePortfolioAnswer(
+  holdings: HoldingInput[],
+  scholarId: string,
+  question: string,
+): Promise<{ answer: string | null; aiEnabled: boolean }> {
+  const facts = buildPortfolioFacts(holdings, scholarId);
+  if (!aiEnabled() || facts.coveredHoldings === 0) return { answer: null, aiEnabled: aiEnabled() };
+  const out = await generateJson<PortfolioAnswer>({
+    system: QA_SYSTEM_PROMPT,
+    user: `Portfolio facts:\n${factsToJson(facts)}\n\nUser question: ${question}`,
+    maxTokens: 900,
+    temperature: 0.3,
+  });
+  const answer = out && typeof out.answer === "string" && out.answer.trim() ? out.answer : null;
+  return { answer, aiEnabled: true };
 }
 
 function isValidNarrative(x: unknown): x is PortfolioNarrative {

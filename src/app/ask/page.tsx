@@ -4,7 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import { SCHOLAR_PROFILES, getScholar } from "@/lib/scholars";
 import { QA_KNOWLEDGE_BASE, QAEntry } from "@/lib/qa_seed";
 import ScholarPicker from "@/components/ScholarPicker";
-import { BookOpen, AlertCircle, Search } from "lucide-react";
+import { BookOpen, AlertCircle, Search, Sparkles, Loader2 } from "lucide-react";
+
+interface AskAnswer {
+  answer: string;
+  citations: string[];
+}
 
 function scoreEntry(entry: QAEntry, query: string): number {
   const q = query.toLowerCase().trim();
@@ -28,6 +33,38 @@ export default function AskPage() {
   const [scholarId, setScholarId] = useState("taqi_usmani");
   const [query, setQuery] = useState("");
   const [picked, setPicked] = useState<QAEntry | null>(null);
+  const [aiAnswer, setAiAnswer] = useState<AskAnswer | null>(null);
+  const [aiAsked, setAiAsked] = useState<string>("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+
+  async function askAI() {
+    const q = query.trim();
+    if (!q) return;
+    setAiLoading(true);
+    setAiError(null);
+    setAiAnswer(null);
+    try {
+      const res = await fetch("/api/ai/ask", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ question: q, scholarId }),
+      });
+      if (res.status === 429) { setAiError("You've reached today's AI question limit. Please try again tomorrow."); return; }
+      if (!res.ok) { setAiError("Couldn't get an AI answer right now. Please try again."); return; }
+      const data = (await res.json()) as { result: { answer: AskAnswer | null; aiEnabled: boolean } };
+      if (data.result.answer) {
+        setAiAnswer(data.result.answer);
+        setAiAsked(q);
+      } else {
+        setAiError(data.result.aiEnabled ? "The AI couldn't produce a confident answer — try rephrasing, or email methodology@mizaninvesting.com." : "AI answers aren't enabled yet. Pick from the knowledge base above, or email methodology@mizaninvesting.com.");
+      }
+    } catch {
+      setAiError("Network error. Please try again.");
+    } finally {
+      setAiLoading(false);
+    }
+  }
 
   useEffect(() => {
     try {
@@ -74,9 +111,8 @@ export default function AskPage() {
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
           Type your question. Mizan returns the answer per your selected scholar from a
-          knowledge base of 49 common questions, with citations. The production version
-          will be powered by Anthropic Claude with system prompts reviewed by qualified
-          scholars once that engagement is in place.
+          knowledge base of 49 common questions, with citations. For anything not covered,
+          ask for an AI answer — powered by Claude and grounded in this knowledge base.
         </p>
       </header>
 
@@ -146,6 +182,50 @@ export default function AskPage() {
           </div>
         )}
       </div>
+
+      {/* ASK AI — Claude fallback, grounded in the vetted KB */}
+      {query.trim() && (
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={askAI}
+            disabled={aiLoading}
+            className="inline-flex items-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900 disabled:opacity-60"
+          >
+            {aiLoading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
+            {aiLoading ? "Asking…" : "Ask AI for a tailored answer"}
+          </button>
+          <span className="text-[12px] text-gray-500">Powered by Claude, grounded in our knowledge base.</span>
+        </div>
+      )}
+      {aiError && <p className="mt-3 text-[13px] text-amber-700">{aiError}</p>}
+      {aiAnswer && (
+        <article className="mt-6 rounded-xl border border-navy-200 bg-navy-50/30 p-5">
+          <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-navy-700">
+            <Sparkles size={11} /> AI answer · {scholar.label}
+          </div>
+          {aiAsked && (
+            <h3 className="mt-2 text-[18px] font-bold leading-tight text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
+              {aiAsked}
+            </h3>
+          )}
+          <p className="mt-3 whitespace-pre-line text-[15px] leading-relaxed text-gray-800">{aiAnswer.answer}</p>
+          {aiAnswer.citations.length > 0 && (
+            <div className="mt-5 border-t border-navy-100 pt-4">
+              <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+                <BookOpen size={11} /> Citations
+              </div>
+              <ul className="mt-2 space-y-1 pl-5 text-[12px] text-gray-600 [list-style:disc]">
+                {aiAnswer.citations.map((c, i) => <li key={i}>{c}</li>)}
+              </ul>
+            </div>
+          )}
+          <p className="mt-4 text-[11px] leading-relaxed text-gray-500">
+            AI-generated and grounded in Mizan&apos;s vetted knowledge base. General information, not
+            investment advice — for a specific ruling, consult a qualified scholar.
+          </p>
+        </article>
+      )}
 
       {/* WEAK MATCH WARNING */}
       {isWeakMatch && (

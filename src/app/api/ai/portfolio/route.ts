@@ -8,7 +8,7 @@
  * Same inert-without-key + best-effort KV rate-limit posture as /api/ai/report.
  */
 import { NextResponse } from "next/server";
-import { generatePortfolioReport, type HoldingInput } from "@/lib/aiPortfolio";
+import { generatePortfolioReport, generatePortfolioAnswer, type HoldingInput } from "@/lib/aiPortfolio";
 import { getScholar } from "@/lib/scholars";
 import { kvIncrWithTtl } from "@/lib/kv";
 
@@ -19,7 +19,7 @@ const DAILY_CAP = 40;
 const MAX_HOLDINGS = 100;
 
 export async function POST(req: Request) {
-  let body: { holdings?: unknown; scholarId?: string };
+  let body: { holdings?: unknown; scholarId?: string; question?: string };
   try {
     body = await req.json();
   } catch {
@@ -49,6 +49,12 @@ export async function POST(req: Request) {
   const count = await kvIncrWithTtl(`ai:portfolio:${ip}:${day}`, 86_400);
   if (count !== null && count > DAILY_CAP) {
     return NextResponse.json({ error: "rate_limited" }, { status: 429 });
+  }
+
+  const question = typeof body.question === "string" ? body.question.trim().slice(0, 500) : "";
+  if (question) {
+    const result = await generatePortfolioAnswer(holdings, scholar.id, question);
+    return NextResponse.json({ answer: result.answer, aiEnabled: result.aiEnabled });
   }
 
   const report = await generatePortfolioReport(holdings, scholar.id);
