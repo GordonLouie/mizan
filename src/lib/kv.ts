@@ -43,3 +43,18 @@ export async function kvGetJson<T>(key: string): Promise<T | null> {
 export async function kvSetJson(key: string, value: unknown): Promise<void> {
   await cmd(["SET", key, JSON.stringify(value)]);
 }
+
+/**
+ * Atomic-ish counter with a TTL on first write. Returns the new count, or null
+ * if KV isn't configured (caller should then skip limiting). Used for best-effort
+ * rate limiting of expensive endpoints (e.g. the AI report).
+ */
+export async function kvIncrWithTtl(key: string, ttlSeconds: number): Promise<number | null> {
+  if (!kvConfigured()) return null;
+  const n = await cmd(["INCR", key]);
+  if (typeof n === "number") {
+    if (n === 1) await cmd(["EXPIRE", key, String(ttlSeconds)]);
+    return n;
+  }
+  return null;
+}

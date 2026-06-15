@@ -30,7 +30,11 @@ export const FEATURE_TIER = {
   indexes: "retail",
   alerts: "retail",
   customThresholdsSaved: "retail",
-  aiReport: "institutional",
+  // Per the feature matrix: retail gets AI reports (limited), institutional
+  // unlimited. The limited/unlimited usage cap is enforced once accounts exist
+  // (Phase 4); for now any paid tier unlocks the feature and the API applies a
+  // best-effort per-IP daily cap.
+  aiReport: "retail",
   apiExport: "institutional",
   whiteLabel: "institutional",
 } as const satisfies Record<string, Tier>;

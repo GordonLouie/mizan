@@ -32,6 +32,21 @@ Removed the over-aggressive index guard (it was hiding real top performers);
 `indexes.server.ts` now only drops true unadjusted-split glitches (>+400%/<-80%
 one-day).
 
+### Phase 3a — AI compliance report (built, gated, inert without key)
+INTEGRITY MODEL: verdict + every ratio come from the deterministic screener;
+Claude writes ONLY the prose, under a strict system prompt (never change the
+verdict, never invent numbers/rulings). UI renders the deterministic facts +
+ratio table itself; AI sections sit alongside; downloadable as .md.
+NEW: `src/lib/ai.ts` (Anthropic REST, no npm dep, inert without ANTHROPIC_API_KEY),
+`src/lib/aiReport.ts` (facts builder + grounded prompt + JSON parse/validate/
+fallback), `src/app/api/ai/report/route.ts` (POST, best-effort per-IP daily cap
+via KV), `src/components/AIReport.tsx` (client; honest no-key state). Wired into
+`/screen` gated `aiReport` (now **retail** per matrix). `.env.local.example` +
+ANTHROPIC_API_KEY/ANTHROPIC_MODEL. tsc clean.
+TODO (Phase 4): `/api/ai/report` is gated client-side only — harden with auth so
+the paid endpoint can't be called directly once a key is live. Remaining Phase 3:
+3b (portfolio assistant / halal swaps), 3c (portfolio-level Q&A; wire /ask to Claude).
+
 ### Real index numbers (gated, Pro): Halal 50 **+223%**, Halal Tech **+431%**, Income **+80%** vs S&P ~+23% (~16mo)
 Genuine arithmetic — halal baskets exclude banks, skew tech/semi, equal-weight
 rewards the smaller names that ran hardest. CAVEAT (disclosed on-page): selection
