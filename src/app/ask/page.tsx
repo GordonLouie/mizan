@@ -123,12 +123,13 @@ export default function AskPage() {
 
       {/* QUERY INPUT */}
       <div className="mt-8 rounded-xl border border-gray-200 bg-white p-5">
-        <label className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
+        <label htmlFor="ask-input" className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
           Your question
         </label>
         <div className="mt-2 flex items-center gap-2 border-b border-gray-200 px-1 py-2 focus-within:border-navy-700">
           <Search size={16} className="text-gray-400" />
           <input
+            id="ask-input"
             type="text"
             value={query}
             onChange={(e) => { setQuery(e.target.value); setPicked(null); }}

@@ -84,11 +84,11 @@ export default function PricingPage() {
         </p>
 
         {/* Monthly / annual toggle */}
-        <div className="mt-6 inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white p-1 text-[13px]">
-          <button type="button" onClick={() => setAnnual(false)}
-            className={"rounded-full px-4 py-1.5 font-semibold transition " + (!annual ? "bg-navy-800 text-white" : "text-gray-600")}>Monthly</button>
-          <button type="button" onClick={() => setAnnual(true)}
-            className={"rounded-full px-4 py-1.5 font-semibold transition " + (annual ? "bg-navy-800 text-white" : "text-gray-600")}>
+        <div className="mt-6 inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white p-1 text-[13px]" role="group" aria-label="Billing period">
+          <button type="button" onClick={() => setAnnual(false)} aria-pressed={!annual}
+            className={"rounded-full px-4 py-1.5 font-semibold transition " + (!annual ? "bg-navy-800 text-white" : "text-gray-600 hover:text-gray-900")}>Monthly</button>
+          <button type="button" onClick={() => setAnnual(true)} aria-pressed={annual}
+            className={"rounded-full px-4 py-1.5 font-semibold transition " + (annual ? "bg-navy-800 text-white" : "text-gray-600 hover:text-gray-900")}>
             Annual <span className={annual ? "text-emerald-300" : "text-emerald-600"}>·save 26%</span>
           </button>
         </div>
@@ -154,6 +154,7 @@ export default function PricingPage() {
       {/* Feature matrix */}
       <div className="mt-12 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
         <table className="w-full min-w-[640px] text-[13px]">
+          <caption className="sr-only">Feature comparison across Free, Pro, and Institutional plans</caption>
           <thead>
             <tr className="border-b border-gray-200 text-gray-500">
               <th className="px-5 py-3 text-left font-medium">Features</th>

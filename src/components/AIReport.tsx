@@ -195,7 +195,7 @@ export default function AIReport({ ticker, scholarId }: { ticker: string; schola
         <b>Business activity:</b> {f.sectorPasses ? "Pass" : "Fail"} — {f.sectorReason}
       </div>
       <div className="mt-3 overflow-x-auto">
-        <table className="w-full text-[12px]">
+        <table className="w-full min-w-[460px] text-[12px]">
           <thead>
             <tr className="border-b border-gray-200 text-left text-gray-500">
               <th className="py-1.5 pr-2 font-medium">Financial ratio</th>

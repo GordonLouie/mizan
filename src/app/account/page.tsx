@@ -26,6 +26,10 @@ function AccountInner() {
   useEffect(() => {
     if (params.get("signedin")) setMsg("You're signed in.");
     if (params.get("error") === "link") setMsg("That sign-in link was invalid or expired. Request a new one.");
+    // Strip the one-time query params so the message doesn't persist on reload.
+    if (params.get("signedin") || params.get("error")) {
+      window.history.replaceState({}, "", "/account");
+    }
     fetch("/api/me").then((r) => r.json()).then((v: { email?: string | null; tier?: Tier; authConfigured?: boolean }) => {
       setEmail(v.email ?? null);
       setTier(v.tier ?? "free");
@@ -105,12 +109,14 @@ function AccountInner() {
           <p className="text-[14px] leading-relaxed text-gray-600">
             Sign in with your email — no password. We&apos;ll send you a one-time link.
           </p>
+          <label htmlFor="account-email" className="sr-only">Email address</label>
           <div className="mt-4 flex flex-col gap-2 sm:flex-row">
             <input
+              id="account-email"
               type="email" value={input} onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") sendLink(); }}
               placeholder="you@example.com"
-              className="w-full rounded-md border border-gray-200 px-3 py-2 text-[14px] outline-none focus:border-navy-700"
+              className="w-full rounded-md border border-gray-200 px-3 py-2 text-[14px] outline-none focus:border-navy-700 focus:ring-1 focus:ring-navy-700/20"
             />
             <button type="button" onClick={sendLink} disabled={sending || !input.trim()}
               className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900 disabled:opacity-60">
