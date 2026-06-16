@@ -6,8 +6,10 @@
  * KV_REST_API_URL + KV_REST_API_TOKEN. Until then kvConfigured() is false and
  * callers no-op gracefully.
  */
-const KV_URL = process.env.KV_REST_API_URL;
-const KV_TOKEN = process.env.KV_REST_API_TOKEN;
+// Accept either Vercel KV (KV_REST_API_*) or the Upstash Marketplace integration
+// (UPSTASH_REDIS_REST_*) — whichever Vercel injects.
+const KV_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const KV_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
 export function kvConfigured(): boolean {
   return !!(KV_URL && KV_TOKEN);
