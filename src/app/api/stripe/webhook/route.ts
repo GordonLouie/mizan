@@ -51,20 +51,42 @@ export async function POST(req: Request) {
 
   if (kvConfigured()) {
     const obj = (event.data?.object ?? {}) as Record<string, unknown>;
-    const details = obj["customer_details"] as { email?: string } | undefined;
-    const email = (details?.email ?? (obj["customer_email"] as string | undefined) ?? "").toLowerCase();
-    if (email) {
-      const map = (await kvGetJson<Record<string, string>>("mizan:tiers")) ?? {};
-      if (event.type === "checkout.session.completed") {
-        // Self-serve checkout is Pro (retail) only; institutional is sales-led
-        // and set manually in KV (mizan:tiers).
-        map[email] = "retail";
-        await kvSetJson("mizan:tiers", map);
-      } else if (event.type === "customer.subscription.deleted") {
-        delete map[email];
-        await kvSetJson("mizan:tiers", map);
+    const tiers = (await kvGetJson<Record<string, string>>("mizan:tiers")) ?? {};
+    const customers = (await kvGetJson<Record<string, string>>("mizan:customers")) ?? {};
+    let changed = false;
+
+    if (event.type === "checkout.session.completed") {
+      // The session object carries both the email and the Stripe customer id.
+      const details = obj["customer_details"] as { email?: string } | undefined;
+      const email = (details?.email ?? (obj["customer_email"] as string | undefined) ?? "").toLowerCase();
+      const customerId = (obj["customer"] as string | undefined) ?? "";
+      if (email) {
+        // Self-serve checkout is Pro (retail); institutional is sales-led (manual).
+        tiers[email] = "retail";
+        await kvSetJson("mizan:tiers", tiers);
+        if (customerId) {
+          customers[customerId] = email;
+          await kvSetJson("mizan:customers", customers);
+        }
+      }
+    } else if (event.type === "customer.subscription.updated" || event.type === "customer.subscription.deleted") {
+      // Subscription objects have a customer id (not an email) — resolve via the
+      // map we stored at checkout.
+      const customerId = (obj["customer"] as string | undefined) ?? "";
+      const email = customers[customerId];
+      if (email) {
+        const status = obj["status"] as string | undefined; // active, canceled, unpaid, …
+        const active = event.type === "customer.subscription.updated" && (status === "active" || status === "trialing");
+        if (active) {
+          if (tiers[email] !== "institutional") tiers[email] = "retail";
+        } else {
+          // canceled / unpaid / deleted → downgrade (unless manually institutional)
+          if (tiers[email] !== "institutional") delete tiers[email];
+        }
+        changed = true;
       }
     }
+    if (changed) await kvSetJson("mizan:tiers", tiers);
   }
 
   return Response.json({ received: true });

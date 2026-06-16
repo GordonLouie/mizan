@@ -1,135 +1,168 @@
-# Mizan — master build plan (post-Chong)
+# Mizan — master build plan & status
 
-Everything from the Chong meeting, sequenced. This is the blueprint; we build in
-order, phase by phase. Read top to bottom before we start Phase 0.
+The blueprint from the Chong meeting, now annotated with what's actually been
+built. This is the single source of truth for where the product stands and where
+it's going.
 
----
-
-## 0. Locked decisions (the frame)
-- **Mizan is a company** (Chong confirmed). Building for paying customers.
-- **Dual model:** a **Free** tier + **Paid** tiers. Paid features appear in the
-  UI **faded/blurred with an "Unlock" button** → upgrade flow.
-- **Two paid tiers:** **Retail** (cheaper, individuals — SEA/India focus) and
-  **Institutional** (expensive, funds/banks/MPF — HK focus).
-- **Data integrity is non-negotiable.** No fabricated prices, returns, or
-  performance — ever. Our audience (an econometrician's network + regulators)
-  will scrutinise. Real data or clearly-labelled "sample," nothing in between.
-- **SEO pages stay free + open** (they're the discovery engine — never gate them).
-- **Free tier stays no-account**; accounts only required for paid features (keeps
-  the "no signup to try" promise intact).
-
-## 1. New subsystems this requires (the big architectural adds)
-These don't exist yet and gate the paid model:
-1. **Historical price data** — currently prices are *mock*. Everything
-   return-related needs a real price feed + storage.
-2. **Accounts / auth** — paid features need login. (Free tier stays anonymous.)
-3. **Billing** — Stripe (subscriptions, the "Unlock" → checkout).
-4. **Entitlements/gating** — a flag system (free / retail / institutional) + the
-   faded-lock UI pattern.
-*(1 needs your FMP key + a run; 2–3 need you to create Stripe + an auth provider
-and add keys. I build the code around them.)*
+**Last updated:** 2026-06-15
+**State in one line:** Phases 1–4 are built and deployable (incl. the
+institutional API); the product is **feature-complete for launch**. What stands
+between Mizan and revenue is *backend provisioning* (Stripe/KV/Resend/Anthropic
+keys) and *business setup* (company + bank) — **not more code.**
 
 ---
 
-## BUILD ORDER
-
-### PHASE 0 — Foundations (unblocks everything else)
-- **0a. Historical price ingestion** — script pulls FMP historical EOD prices for
-  the universe; store as compact per-ticker series. *(I build · you run with key)*
-- **0b. Replace mock prices** with real current + historical. Remove/clearly
-  label any remaining sample data. *(depends 0a)*
-- **0c. Auth + Stripe scaffolding** — anonymous free; account for paid; Stripe
-  subscription + webhook. *(I build · you create Stripe/auth accounts + keys)*
-- **0d. Entitlement system + "locked feature" UI** — the reusable faded/blurred
-  overlay + "Unlock with Pro/Institutional" button → checkout. *(I build)*
-
-### PHASE 1 — Returns & data features (Chong's core — needs 0a)
-- **1a. Real stock price charts** on each stock page.
-- **1b. ROI / performance** — stock vs benchmark index over time.
-- **1c. Technical analysis** overlays (MA, RSI…) — **gated (paid)**.
-- **1d. Portfolio v2** — real past-performance + benchmark vs indexes (rebuild
-  the sloppy/static current one).
-
-### PHASE 2 — Halal index product (Chong's flagship)
-- **2a. Index definitions** — strict-screen constituent baskets (e.g. "Mizan
-  Halal 50"). *(real fundamentals — no data dep, can prototype early)*
-- **2b. Index performance + ROI vs conventional** (S&P 500 etc). *(needs 0a)*
-- **2c. Multiple risk/growth tiers** + comparison view; "choose your
-  growth/risk." Institutional-grade index methodology doc.
-
-### PHASE 3 — AI layer
-- **3a. AI compliance report** (stock / portfolio / index) — the institutional
-  deliverable; **gated**. *(needs an LLM API key)*
-- **3b. AI portfolio assistant** — "you're 80% compliant; here are halal swaps"
-  (builds on existing HalalAlternatives). **gated**.
-- **3c. Extend AI Q&A** to portfolio-level.
-
-### PHASE 4 — Tiering & monetisation go-live
-- **4a. Finalise the free / retail / institutional feature matrix** (draft §2).
-- **4b. Wire the paywall** — faded locks + Unlock → Stripe, both tiers.
-- **4c. Institutional-only features** — API/bulk export, white-label reports,
-  index as a licensable feed, multi-seat.
-
-### PHASE 5 — Coverage & scale
-- **5a. Full universe** — US + HK + London + international (your FMP run; pipeline
-  already supports `MIZAN_UNIVERSE`).
-- **5b. Perf** — on-demand OG/pages already done; revisit if needed at scale.
-
-### PHASE 6 — Brand & business (parallel — your actions)
-- **6a. Register the company** (HK limited co.) + bank account → enables billing.
-- **6b. Naming decision** — keep "Mizan" + clearer tagline, or rename for instant
-  legibility (Chong's point). Decide before heavy brand spend.
-- **6c. One-pager, institutional outreach (after product ready), startup
-  competitions, YouTube channel, media.**
+## 0. The frame (locked decisions — unchanged, all honoured)
+- **Mizan is a company**, building for paying customers.
+- **Free tier + paid tiers**, with paid features shown faded/blurred behind an
+  "Unlock" button. ✅ Built (LockedFeature).
+- **Two paid tiers:** Retail (individuals — SEA/India/global) and Institutional
+  (funds/banks/MPF — HK). ✅ Both in the entitlement system + pricing page.
+- **Data integrity is non-negotiable** — no fabricated prices/returns. ✅ Held
+  throughout. We removed two fake-data sources (FX-broken ratios; a fabricated
+  portfolio line) and a survivorship caveat is shown on index backtests.
+- **SEO pages stay free + open.** ✅ Untouched; AI Q&A added as a free hook.
+- **Free tier stays no-account.** ✅ Accounts are required only for paid features.
 
 ---
 
-## 2. Free vs Paid — draft feature matrix (we'll finalise in 4a)
-| Feature | Free | Retail (paid) | Institutional |
-|---|---|---|---|
-| 6-scholar verdict + cited sources | ✅ | ✅ | ✅ |
-| Per-ticker SEO pages, crypto, methodology | ✅ | ✅ | ✅ |
-| Save watchlist (local) | ✅ | ✅ | ✅ |
-| Custom thresholds (saved to account) | – | ✅ | ✅ |
-| Price charts | – | ✅ | ✅ |
-| Technical analysis (MA/RSI) | – | ✅ | ✅ |
-| ROI vs index, portfolio performance | – | ✅ | ✅ |
-| Halal indexes (view) | teaser | ✅ | ✅ |
-| AI compliance report | – | limited | ✅ unlimited |
-| Verdict-change / earnings alerts | – | ✅ | ✅ |
-| API / bulk data export | – | – | ✅ |
-| White-label / licensable index feed | – | – | ✅ |
-| Multi-seat, priority support | – | – | ✅ |
-| Pricing (Chong's ballpark) | $0 | ~US$X/yr | ~US$10k/yr |
+## Build status by phase
 
-## 3. The "locked feature" UX (your spec)
-Paid features render **visible but blurred/faded**, with a small lock + **"Unlock
-with Pro"** (retail) or **"Talk to us"** (institutional) button. Clicking →
-Stripe checkout (retail) or a contact/demo form (institutional). This shows value
-before asking for money — better conversion than hiding features entirely.
+Legend: ✅ done · 🔶 ready, pending your run/keys · ⬜ not started / deferred
 
-## 4. Who does what
-- **I build:** all code — ingestion scripts, charts, ROI, indexes, AI features,
-  paywall/entitlements UI, the report generator.
-- **You provide:** FMP key (prices/coverage), Stripe account + keys, an auth
-  provider, an LLM API key (for AI), and the company registration (for billing &
-  contracts). Each phase I'll tell you exactly which key/step is needed.
+### PHASE 0 — Foundations ✅
+- 0a Historical price ingestion — ✅ `scripts/fetch_prices.mjs` (adjusted close).
+- 0b Real prices replace mock — ✅ client/server split (9KB client vs 6.7MB
+  server). **Verified accurate** against live quotes (the AI/memory boom is real).
+- 0c Auth + Stripe scaffolding — ✅ built (see Phase 4).
+- 0d Entitlement system + locked-feature UI — ✅ `entitlements.ts` + `LockedFeature`.
 
-## 5. Honest sequencing notes
-- **Phase 0 is the gate.** Without real prices + auth/billing, Phases 1–4 can't be
-  real. Start there.
-- **This is months of work for a solo part-time founder.** Resist doing all
-  phases at once. Realistic: 0 → 1 → 2 first (that's already a strong paid
-  product), then 3–4, then institutional polish.
-- **You can send the institutional emails before all this is built** — they ask
-  for a meeting, and Phase 0–2 is what you'd show *in* the meeting. Don't let the
-  full build block the outreach; but don't show fake data either.
-- **Accounts/billing slightly changes positioning** ("no signup, no data") — keep
-  free tier anonymous; only paid requires an account. Say so explicitly on-site.
+### PHASE 1 — Returns & data features ✅
+- 1a Price charts — ✅ `PriceChart` (SVG, no dep) on `/screen`.
+- 1b ROI vs benchmark — ✅ price vs S&P %, in the chart.
+- 1c Technical analysis (MA/RSI) — ✅ gated.
+- 1d Portfolio v2 — ✅ real performance vs SPY (`PortfolioPerformance`); the old
+  fabricated line was deleted.
+
+### PHASE 2 — Halal index product ✅
+- 2a Index definitions — ✅ Mizan Halal 50 / Tech / Income (AAOIFI screen).
+- 2b Index performance vs S&P 500 + SPUS — ✅ real equal-weight backtest.
+- 2c Risk/growth tiers + methodology — ✅ three risk profiles + published method.
+  **Known limitation (disclosed on-page):** constituents are current-as-of-today,
+  so the backtest carries look-ahead/survivorship bias → it's framed as "today's
+  basket's trailing performance," not a live track record. *Point-in-time
+  rebalancing is the main quality upgrade still owed here.*
+
+### PHASE 3 — AI layer ✅
+- 3a AI compliance report (stock) — ✅ `/screen`, grounded (verdict/numbers
+  deterministic, Claude writes only prose), downloadable, gated Pro.
+- 3b AI portfolio assistant — ✅ "you're X% halal" + halal swaps + follow-up Q&A.
+- 3c AI Q&A — ✅ `/ask` wired to Claude (free, grounded in the vetted KB) +
+  portfolio-level Q&A.
+- *Optional later:* AI report on `/indexes/[slug]`.
+
+### PHASE 4 — Tiering, paywall & auth ✅
+- 4a Feature matrix finalised — ✅ `/pricing` page.
+- 4b Paywall wired — ✅ passwordless magic-link auth (`auth.ts`), Stripe checkout
+  (monthly/annual), billing portal, `/account`, and **server-side entitlement
+  enforcement** on the AI endpoints (the real fix beyond client gating).
+- 4c Institutional features — ✅ read-only bulk **screening API** (`/api/v1/screen`,
+  key-gated). ⬜ White-label reports + multi-seat deferred (demand-driven).
+
+### PHASE 5 — Coverage & scale 🔶
+- 5a Full universe — 🔶 pipeline ready (`MIZAN_UNIVERSE=us`); needs your FMP run.
+- 5b Perf — ✅ on-demand OG/pages already done; revisit at scale.
+
+### PHASE 6 — Brand & business ⬜ (your decisions/actions)
+- 6a Register HK company + bank → enables Stripe payouts.
+- 6b Naming decision (keep "Mizan" + sharper tagline vs rename — Chong's point).
+- 6c One-pager, institutional outreach, competitions, YouTube, media. *(Claude can
+  draft the one-pager + outreach on request.)*
 
 ---
 
-## Proposed start
-Phase **0a (historical price ingestion)** — I write the script, you run it with
-your FMP key. That single step unlocks charts, ROI, indexes, and portfolio
-performance. Confirm the plan and I'll build 0a first.
+## What changed vs the original plan
+- **Auth:** chose **custom passwordless magic-link** over a vendor (Clerk/Supabase)
+  — it fits the no-dependency, inert-until-keyed stack and reuses KV + Resend.
+  Trade-off: hand-rolled, so it should get a security review before heavy reliance.
+- **Index screen:** switched constituent selection from Mufti Taqi (too strict —
+  it emptied the Tech index by rejecting asset-light tech) to **AAOIFI**, the basis
+  for mainstream halal indices. More robust, properly-sized baskets.
+- **Pricing decided:** **Pro $9.99/mo or $89/yr**; institutional sales-led. Set at
+  market (Zoya ~$8/mo·$100/yr; Musaffa $7.49+/mo), justified by the extra depth.
+- **A real data scare, correctly resolved:** an apparent price-corruption alarm
+  turned out to be the genuine 2025–26 AI semiconductor/memory boom (Micron
+  ~$1,060, SanDisk +692% YTD, Netflix post-split). Verified against live quotes;
+  the feed is accurate. Lesson reinforced: verify before alarming.
+- **Free AI Q&A** added as an acquisition hook (the plan only had gated AI).
+
+---
+
+## What's left to do
+**Your provisioning (reminders set for 2026-06-16):**
+1. Anthropic key → turns on AI reports. *(10:00 reminder)*
+2. Go-live stack — Stripe (2 prices) → KV/Upstash → Resend (+domain) →
+   `AUTH_SECRET` last; then add your email to KV `mizan:tiers` as institutional.
+   *(10:30 reminder)*
+3. Optional: expand the universe (`MIZAN_UNIVERSE=us`) + re-fetch prices.
+
+**Code follow-ups (when prioritised):**
+- Point-in-time index rebalancing (remove survivorship bias) — the credibility
+  upgrade Chong would want.
+- Security review of the magic-link auth; add CSRF tokens to POST auth routes;
+  handle `customer.subscription.updated`.
+- Optional: AI index report; white-label reports + multi-seat (institutional demand).
+
+**Business (yours):** company + bank, naming call, then institutional outreach
+(Chong's intros to Cheng Yan Chee / HKMA's Howard Lee are warm and waiting).
+
+---
+
+## Positioning — how Mizan wins
+**One line:** *The halal screener that shows its work — every verdict tied to a
+named scholar and a cited source, with the analytics and AI reports serious
+investors and institutions actually need.*
+
+**The wedge (what competitors don't do):**
+- **Multi-scholar transparency.** Zoya/Musaffa pick a standard; Mizan shows the
+  verdict across standards, *where scholars disagree*, with primary-source
+  citations. This is the trust differentiator for a religiously-sensitive purchase.
+- **Data integrity as a brand.** Built deliberately for an econometrician's network
+  and regulators — real data or clearly-labelled, never fabricated. Most retail
+  apps don't carry that burden; it's exactly what unlocks institutions.
+- **Institutional deliverables retail apps lack:** halal indexes with real
+  backtests, grounded AI compliance reports, and a screening **API/feed**.
+- **A distribution wedge competitors ignore:** **HK + institutional**. Zoya/Musaffa
+  are US-retail-first. Mizan has a warm path into HK institutions (Chong's network)
+  and a real gap to fill — there is no Shariah MPF option, and HK is actively
+  promoting Islamic finance.
+
+**Two-sided market:**
+- *Retail* (SEA/India/global Muslim investors) — $9.99/mo, acquired via the free
+  SEO pages + free AI Q&A. Validates the funnel and funds the business.
+- *Institutional* (HK funds, MPF providers, banks) — custom/high-ticket, landed via
+  warm intros, sold on the index feed + API + white-label reports.
+
+**Competitive read:** Zoya = polished US retail; Musaffa = broad coverage + trading
++ academy. Mizan's defensible position is **transparency + integrity + institutional
+depth + an underserved HK beachhead** — not "another screener," but the credible,
+auditable layer that both careful individuals and institutions can stand behind.
+
+---
+
+## Future outlook (next 1–2 quarters)
+1. **Flip the switches** (this week): keys in, paywall + AI live.
+2. **Validate retail** — watch free→Pro conversion off the SEO/Q&A funnel; iterate
+   on the upgrade moment. This is the 30-day-gate evidence.
+3. **Land one institutional pilot** — use the warm Chong intros; the meeting demo
+   is the live indexes + AI report + API. One reference customer changes everything.
+4. **Earn the index claim** — ship point-in-time rebalancing so the index numbers
+   are defensible to a quant, then pitch the index as a licensable feed.
+5. **Deepen legitimacy** — formalise a scholar/advisory touchpoint (the citations
+   promise a review process; making it real is a moat).
+6. **Scale coverage** — global universe once the funnel justifies the FMP cost.
+7. **Decide the brand** (6b) before heavy spend; then one-pager + outreach cadence.
+
+**Bottom line:** the engineering risk is largely behind us. The next chapter is
+distribution and proof — turning a complete, credible product into its first
+paying retail cohort and its first institutional logo.

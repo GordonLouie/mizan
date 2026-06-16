@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
-import { INDEXES, getIndexDef, indexConstituents } from "@/lib/indexes";
+import { INDEXES, getIndexDef } from "@/lib/indexes";
 import { indexPerformance } from "@/lib/indexes.server";
 import { getScholar } from "@/lib/scholars";
 import { fmtMarketCap } from "@/lib/lists";
@@ -40,9 +40,12 @@ export default async function IndexPage({ params }: { params: Promise<{ slug: st
   const def = getIndexDef(slug);
   if (!def) notFound();
 
-  const cons = indexConstituents(def);
   const perf = indexPerformance(def);
+  const cons = perf.constituents;
   const scholar = getScholar(def.scholarId);
+  const inceptionLabel = perf.inceptionDate
+    ? new Date(perf.inceptionDate).toLocaleDateString("en-US", { month: "short", year: "numeric" })
+    : null;
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10 sm:py-14">
@@ -76,15 +79,16 @@ export default async function IndexPage({ params }: { params: Promise<{ slug: st
         <ul className="mt-2 space-y-1.5 text-[13px] leading-relaxed text-gray-700">
           <li><b>Universe:</b> Mizan&apos;s covered equities (ETFs excluded).</li>
           <li><b>Screen:</b> must PASS the {scholar.label} standard — the basis for most mainstream halal indices.</li>
-          <li><b>Selection:</b> {def.filter ? "themed subset, " : ""}the {def.size} largest qualifying companies by market cap ({cons.length} currently qualify).</li>
+          <li><b>Selection (point-in-time):</b> {def.filter ? "themed subset, " : ""}the {def.size} largest qualifying companies by estimated market cap <i>at the index start date</i>{inceptionLabel ? ` (${inceptionLabel})` : ""} — not today&apos;s largest — so the basket reflects what you&apos;d have held at inception ({cons.length} constituents).</li>
           <li><b>Weighting:</b> equal-weight, buy-and-hold, price return.</li>
           <li><b>Benchmarks:</b> S&amp;P 500 (SPY) and the halal S&amp;P (SPUS), normalised the same way.</li>
         </ul>
         <p className="mt-3 rounded-md bg-amber-50/70 px-3 py-2 text-[11px] leading-relaxed text-amber-800">
-          <b>Important:</b> constituents are the companies that qualify <i>today</i>. The chart
-          therefore shows the trailing performance of the <i>current</i> basket — not a
-          point-in-time rebalanced track record — so it carries an upward look-ahead bias and
-          overstates what a live index would have returned. Treat it as illustrative.
+          <b>Note:</b> constituents are selected by size <i>at the start date</i> to avoid
+          look-ahead/survivorship bias on selection. One residual caveat: the halal screen uses
+          <i> current</i> fundamentals (historical balance sheets aren&apos;t available), and the
+          index is buy-and-hold (not periodically rebalanced). Treat as illustrative, not a live
+          fund track record.
         </p>
         <Link href="/methodology" className="mt-3 inline-flex items-center gap-1 text-[13px] font-semibold text-navy-700">
           Full screening methodology <ArrowRight size={13} />

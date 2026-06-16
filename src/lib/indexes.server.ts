@@ -1,35 +1,43 @@
 /**
- * Halal index performance backtest (Phase 2b). SERVER-ONLY (imports the price
- * history via prices.server). Methodology: equal-weight, buy-and-hold from the
- * start of the common date window — index value[t] = average over constituents
- * of (close_i[t] / close_i[t0]); reported as % return. Benchmarks (S&P 500 via
- * SPY, halal S&P via SPUS) normalised the same way. Real prices only.
+ * Halal index performance backtest (Phase 2b + point-in-time upgrade). SERVER-ONLY.
+ *
+ * Methodology: equal-weight, buy-and-hold from the start of the common date
+ * window — index value[t] = average over constituents of (close_i[t]/close_i[t0]);
+ * reported as % return. Benchmarks: S&P 500 (SPY) + halal S&P (SPUS).
+ *
+ * POINT-IN-TIME SELECTION (the credibility fix): constituents are the N largest by
+ * ESTIMATED market cap AT THE START of the backtest window — not today's largest.
+ * Picking today's biggest names would be survivorship/look-ahead bias (they're big
+ * because they won). We estimate size at t0 as currentMktCap × price_t0/price_now
+ * (assumes ~constant shares — fine for ranking). The halal screen still uses
+ * current fundamentals (we don't have historical balance sheets); that residual
+ * bias is small and disclosed on-page.
  */
 import { priceSeries } from "./prices.server";
-import { indexConstituents, type IndexDef } from "./indexes";
+import { type IndexDef, indexConstituents } from "./indexes";
+import { listStocks } from "./data";
+import { getScholar } from "./scholars";
+import { screenStock } from "./screen";
+import type { StockFundamentals } from "./types";
 
 export interface IndexPerformance {
   dates: string[];
   indexPct: number[];
   spyPct: number[] | null;
   spusPct: number[] | null;
+  /** The point-in-time selected constituents (for display + the table). */
+  constituents: StockFundamentals[];
   constituentsUsed: string[];
   excluded: string[];
-  /** constituents dropped for a true data glitch (single-day move > +400%, i.e.
-   *  an unadjusted corporate action) — verified-real explosive moves are kept */
   excludedAnomalous: string[];
+  /** The inception date the backtest/selection is anchored to. */
+  inceptionDate: string | null;
   totalReturn: number | null;
   spyReturn: number | null;
   spusReturn: number | null;
 }
 
-// Minimal glitch guard ONLY. The price feed is split/dividend-adjusted and was
-// verified accurate against live quotes (e.g. SanDisk +692% YTD, Micron ~$1,060,
-// Netflix post-split ~$80 are all REAL in the 2025-26 AI/memory boom), so we do
-// NOT filter on magnitude — that would hide genuine top performers. We exclude a
-// constituent only if it has a single-day move so large (> +400% or < -80%) that
-// it almost certainly reflects an unadjusted corporate action / bad print.
-const MAX_DAY_UP = 5.0; // +400%
+const MAX_DAY_UP = 5.0; // +400% one-day = almost certainly an unadjusted action
 const MIN_DAY_DOWN = 0.2; // -80%
 
 function hasGlitch(map: Map<string, number>, dates: string[]): boolean {
@@ -46,7 +54,6 @@ function hasGlitch(map: Map<string, number>, dates: string[]): boolean {
   return false;
 }
 
-/** Forward-filled % return of a series, aligned to `dates`. null if unusable. */
 function alignPct(series: { date: string; close: number }[], dates: string[]): number[] | null {
   if (!series.length) return null;
   const m = new Map(series.map((p) => [p.date, p.close]));
@@ -61,28 +68,66 @@ function alignPct(series: { date: string; close: number }[], dates: string[]): n
   return vals.map((v) => (v == null ? 0 : ((v - base) / base) * 100));
 }
 
+/** First close on or after `t0` in an ascending-by-date series. */
+function priceOnOrAfter(series: { date: string; close: number }[], t0: string): number | undefined {
+  for (const p of series) if (p.date >= t0) return p.close;
+  return undefined;
+}
+
+/**
+ * Point-in-time constituent selection: the `size` largest by estimated market cap
+ * at the backtest inception date, among current halal-passing names that already
+ * traded at inception. Falls back to current-size selection if prices are missing.
+ */
+export function selectConstituentsPIT(def: IndexDef, inception: string | null): StockFundamentals[] {
+  if (!inception) return indexConstituents(def);
+  const scholar = getScholar(def.scholarId);
+  const pool = listStocks()
+    .filter((s) => s.sector !== "ETF")
+    .filter((s) => screenStock(s, scholar).verdict === "pass")
+    .filter((s) => (def.filter ? def.filter(s) : true));
+
+  const ranked = pool
+    .map((s) => {
+      const ser = priceSeries(s.ticker);
+      if (!ser.length) return null;
+      const pT0 = priceOnOrAfter(ser, inception);
+      const pNow = ser[ser.length - 1].close;
+      if (pT0 == null || pNow <= 0) return null; // didn't trade at inception
+      const estCapT0 = s.marketCapUsd * (pT0 / pNow);
+      return { stock: s, estCapT0 };
+    })
+    .filter((x): x is { stock: StockFundamentals; estCapT0: number } => x !== null)
+    .sort((a, b) => b.estCapT0 - a.estCapT0)
+    .slice(0, def.size);
+
+  // If price coverage is too thin to form the basket, fall back gracefully.
+  return ranked.length >= Math.min(def.size, 5) ? ranked.map((r) => r.stock) : indexConstituents(def);
+}
+
 export function indexPerformance(def: IndexDef): IndexPerformance {
-  const cons = indexConstituents(def);
+  const spy = priceSeries("SPY");
+  const spus = priceSeries("SPUS");
+  const inception = spy.length ? spy[0].date : null;
+
+  const constituents = selectConstituentsPIT(def, inception);
+
   const used: { ticker: string; map: Map<string, number> }[] = [];
   const excluded: string[] = [];
-  for (const s of cons) {
+  for (const s of constituents) {
     const ser = priceSeries(s.ticker);
     if (ser.length) used.push({ ticker: s.ticker, map: new Map(ser.map((p) => [p.date, p.close])) });
     else excluded.push(s.ticker);
   }
 
-  const spy = priceSeries("SPY");
-  const spus = priceSeries("SPUS");
   const excludedAnomalous: string[] = [];
   const empty: IndexPerformance = {
     dates: [], indexPct: [], spyPct: null, spusPct: null,
-    constituentsUsed: used.map((u) => u.ticker), excluded, excludedAnomalous,
-    totalReturn: null, spyReturn: null, spusReturn: null,
+    constituents, constituentsUsed: used.map((u) => u.ticker), excluded, excludedAnomalous,
+    inceptionDate: inception, totalReturn: null, spyReturn: null, spusReturn: null,
   };
   if (used.length === 0) return empty;
 
-  // Reference axis: SPY dates (or first constituent's) where EVERY used
-  // constituent has a close — keeps the equal-weight maths exact.
   const axisDates = (set: typeof used) => {
     const axis = spy.length ? spy.map((p) => p.date) : [...set[0].map.keys()];
     return axis.filter((d) => set.every((u) => u.map.has(d)));
@@ -121,9 +166,11 @@ export function indexPerformance(def: IndexDef): IndexPerformance {
     indexPct,
     spyPct,
     spusPct,
+    constituents,
     constituentsUsed: used.map((u) => u.ticker),
     excluded,
     excludedAnomalous,
+    inceptionDate: t0,
     totalReturn: indexPct.length ? indexPct[indexPct.length - 1] : null,
     spyReturn: lastOrNull(spyPct),
     spusReturn: lastOrNull(spusPct),

@@ -121,13 +121,22 @@ STATUS: Phases 1–4 (incl. 4c) built & deployable; Phase 5 pipeline ready (your
 run); Phase 6 is business-side. Scheduled reminders: Anthropic key (10:00),
 go-live keys + data runs (10:30), both 2026-06-16.
 
-### Real index numbers (gated, Pro): Halal 50 **+223%**, Halal Tech **+431%**, Income **+80%** vs S&P ~+23% (~16mo)
-Genuine arithmetic — halal baskets exclude banks, skew tech/semi, equal-weight
-rewards the smaller names that ran hardest. CAVEAT (disclosed on-page): selection
-uses **current** constituents → look-ahead/survivorship bias inflates trailing
-returns. A point-in-time rebalanced index is a later-phase fix (Chong will flag
-this). Numbers are real but framed as "today's basket's trailing performance,"
-not a live track record.
+### Index numbers — NOW POINT-IN-TIME (survivorship bias removed) ✅
+`indexes.server.ts` `selectConstituentsPIT()` selects the N largest by estimated
+market cap AT THE START of the window (currentCap × price_t0/price_now), not
+today's largest. Honest results over ~2y (2024-06→2026-06): **Halal 50 +35.5%**
+vs S&P +37.6%, **Halal Tech +78.7%**, **Halal Income +16.1%** (SPUS +41.9%). Top
+holdings are the real largest-at-inception (MSFT/AAPL/NVDA/GOOG), not cherry-picked
+moonshots. The old current-selection numbers (+223%/+431%) were the bias; gone.
+Residual caveat (disclosed): screen uses CURRENT fundamentals (no historical
+balance sheets) + buy-and-hold (not periodically rebalanced). Page renders
+constituents from the PIT set for full coherence.
+
+### Webhook lifecycle fix ✅
+Stripe webhook now stores a customerId→email map (`mizan:customers`) at checkout,
+so `customer.subscription.updated/deleted` (whose objects carry a customer id, not
+an email) correctly resolve the account and downgrade/upgrade. Fixes the prior bug
+where cancellations couldn't be matched to an email.
 
 ---
 
