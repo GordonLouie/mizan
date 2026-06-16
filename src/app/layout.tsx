@@ -76,10 +76,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <span className="text-xs">halal investing, calibrated</span>
               </div>
               <nav className="flex flex-wrap gap-3 text-xs">
+                <a href="/indexes" className="hover:text-navy-700">Halal indexes</a>
+                <a href="/pricing" className="hover:text-navy-700">Pricing</a>
                 <a href="/about" className="hover:text-navy-700">About</a>
                 <a href="/trust" className="hover:text-navy-700">Trust centre</a>
                 <a href="/methodology" className="hover:text-navy-700">Methodology</a>
-                <a href="/roadmap" className="hover:text-navy-700">Roadmap</a>
                 <a href="/help" className="hover:text-navy-700">Help</a>
                 <a href="/terms" className="hover:text-navy-700">Terms</a>
                 <a href="/privacy" className="hover:text-navy-700">Privacy</a>
@@ -88,9 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
             <p className="mt-4 text-xs leading-6 text-gray-500">
               Mizan provides information, not investment advice. Compliance verdicts
-              are scholarly opinions, not buy/sell recommendations. Sample data shown
-              for demonstration only. © {new Date().getFullYear()} Mizan Operations
-              (HK) Limited.
+              are scholarly opinions, not buy/sell recommendations. © {new Date().getFullYear()} Mizan.
             </p>
           </div>
         </footer>

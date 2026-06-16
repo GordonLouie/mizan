@@ -23,6 +23,7 @@ const TOOL_GROUPS: Array<{
     heading: "Explore stocks",
     items: [
       { href: "/discover", label: "Discover", sub: "Trending & where scholars split" },
+      { href: "/indexes", label: "Halal indexes", sub: "Screened baskets + returns" },
       { href: "/sectors", label: "Sectors", sub: "By industry" },
       { href: "/lists", label: "Curated lists", sub: "Editorial collections" },
       { href: "/universe", label: "Universe", sub: "Every ticker" },

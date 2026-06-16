@@ -4,11 +4,18 @@ The blueprint from the Chong meeting, now annotated with what's actually been
 built. This is the single source of truth for where the product stands and where
 it's going.
 
-**Last updated:** 2026-06-15
-**State in one line:** Phases 1–4 are built and deployable (incl. the
-institutional API); the product is **feature-complete for launch**. What stands
-between Mizan and revenue is *backend provisioning* (Stripe/KV/Resend/Anthropic
-keys) and *business setup* (company + bank) — **not more code.**
+**Last updated:** 2026-06-16
+**State in one line:** Phases 1–4 built + provisioned + a QA/polish pass done.
+The product is **live in Stripe TEST mode** end-to-end — auth, KV, Resend email,
+Stripe checkout, and AI reports are all verified working. The only things left
+before taking real money are *business setup* (HK company + bank → Stripe live)
+and a *live UI stress test + security review*.
+
+**Provisioning status (all DONE, 2026-06-16):**
+KV (Upstash `mizan-kv`) ✅ · Resend + verified domain ✅ · Stripe test (product +
+$9.99mo/$89yr prices + webhook) ✅ · AUTH_SECRET ✅ · ANTHROPIC_API_KEY ✅ · own
+email seeded as institutional in KV ✅. Verified: sign-in email → signed in →
+paywall enforced → test-card checkout flips a fresh account to Pro.
 
 ---
 
@@ -99,22 +106,31 @@ Legend: ✅ done · 🔶 ready, pending your run/keys · ⬜ not started / defer
 ---
 
 ## What's left to do
-**Your provisioning (reminders set for 2026-06-16):**
-1. Anthropic key → turns on AI reports. *(10:00 reminder)*
-2. Go-live stack — Stripe (2 prices) → KV/Upstash → Resend (+domain) →
-   `AUTH_SECRET` last; then add your email to KV `mizan:tiers` as institutional.
-   *(10:30 reminder)*
-3. Optional: expand the universe (`MIZAN_UNIVERSE=us`) + re-fetch prices.
+**Provisioning:** ✅ DONE (see status block at the top).
 
-**Code follow-ups (when prioritised):**
-- Point-in-time index rebalancing (remove survivorship bias) — the credibility
-  upgrade Chong would want.
-- Security review of the magic-link auth; add CSRF tokens to POST auth routes;
-  handle `customer.subscription.updated`.
-- Optional: AI index report; white-label reports + multi-seat (institutional demand).
+**Done since last update:**
+- Point-in-time index selection — survivorship bias removed; honest numbers
+  (Halal 50 +35.5% vs S&P +37.6%, Tech +78.7%, Income +16.1%).
+- Webhook `customer.subscription.updated/deleted` lifecycle (customer→email map).
+- QA polish: a11y labels/aria, stale URL-param cleanup, mobile table widths.
+- Integration fixes: `/indexes` was unlinked in nav → added to Tools menu +
+  footer; footer now links Pricing + Indexes; removed the stale "sample data"
+  disclaimer and the not-yet-registered "(HK) Limited" entity name.
 
-**Business (yours):** company + bank, naming call, then institutional outreach
-(Chong's intros to Cheng Yan Chee / HKMA's Howard Lee are warm and waiting).
+**Remaining code follow-ups:**
+- **Live UI/UX stress test** (Claude in Chrome) — needs the browser extension
+  connected; drive real flows at mobile + desktop widths, watch console.
+- **Security review** of the hand-rolled magic-link auth before heavy reliance
+  (CSRF is largely covered by SameSite=Lax cookies — confirm/document).
+- Optional/demand-driven: AI report on `/indexes/[slug]`; white-label reports +
+  multi-seat.
+
+**Business (yours) — the real critical path now:**
+- Register HK company + bank → unlocks Stripe **live** mode (then restore the
+  legal entity name in the footer) and adds weight to institutional talks.
+- Send the warm intros (drafted in `OUTREACH_INSTITUTIONAL_EMAILS.md`) — ideally
+  ask Chong to introduce you to Cheng Yan-chee (MPFA) and Howard Lee (HKMA).
+- Optional: expand the universe (`MIZAN_UNIVERSE=us`) + re-fetch prices.
 
 ---
 
