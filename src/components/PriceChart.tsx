@@ -1,70 +1,166 @@
 "use client";
 
 /**
- * PriceChart (Phase 1) — dependency-free SVG price chart.
+ * PriceChart (v2) — TradingView-grade chart via lightweight-charts.
  *
- * Fetches /api/prices/[ticker] (real data only — never fabricated). Modes:
- *  - Price line + optional 50-day moving average
- *  - "Compare to S&P 500": both normalised to % return (ROI comparison)
- *  - Optional RSI(14) sub-panel
- * If a ticker has no real history yet, it shows an honest "being ingested" note.
+ * Real data only (/api/prices/[ticker]). Features:
+ *  - Area / Line price with interactive crosshair + zoom/pan
+ *  - Overlays: 50-day MA, 20-day EMA, Bollinger Bands (20,2)
+ *  - Sub-panels: RSI(14), MACD(12/26/9)
+ *  - Compare vs a selectable benchmark (S&P 500 / Nasdaq / Dow / Halal S&P), as % return
+ *  - Range selector (1M / 6M / 1Y / All)
+ * Honest empty state when a ticker has no real history yet.
  */
-import { useEffect, useMemo, useState } from "react";
-import { sma, rsi, toReturnPct, totalReturn } from "@/lib/indicators";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  createChart, ColorType, LineStyle, CrosshairMode,
+  type IChartApi, type ISeriesApi, type Time,
+} from "lightweight-charts";
+import { sma, ema, rsi, macd, bollinger, toReturnPct, totalReturn } from "@/lib/indicators";
 
 type Pt = { date: string; close: number };
+interface Bench { ticker: string; label?: string; series: Pt[] }
 interface ApiResp {
   ticker: string;
   real: boolean;
   series: Pt[];
-  benchmark: { ticker: string; series: Pt[] } | null;
+  benchmark: Bench | null;
+  benchmarks?: { sym: string; label: string }[];
 }
 
 const RANGES: Record<string, number> = { "1M": 21, "6M": 126, "1Y": 252, All: Number.POSITIVE_INFINITY };
-const W = 640, H = 220, PAD = 28;
+const NAVY = "#1B2D4A", GOLD = "#C89030", GRAY = "#9ca3af", EMERALD = "#059669", PURPLE = "#6d28d9";
 
-function path(values: (number | null)[], min: number, max: number, w = W, h = H, pad = PAD): string {
-  const span = max - min || 1;
-  const n = values.length;
-  let d = "";
-  let started = false;
-  values.forEach((v, i) => {
-    if (v === null || !Number.isFinite(v)) { started = false; return; }
-    const x = pad + (i / Math.max(1, n - 1)) * (w - 2 * pad);
-    const y = h - pad - ((v - min) / span) * (h - 2 * pad);
-    d += `${started ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)} `;
-    started = true;
+const LINE_OPTS = { lineWidth: 2 as const, priceLineVisible: false, lastValueVisible: false };
+const baseChart = (el: HTMLDivElement, height: number): IChartApi =>
+  createChart(el, {
+    height,
+    autoSize: true,
+    layout: { background: { type: ColorType.Solid, color: "transparent" }, textColor: "#6b7280", fontSize: 11, fontFamily: "inherit" },
+    grid: { vertLines: { color: "#f3f4f6" }, horzLines: { color: "#f3f4f6" } },
+    rightPriceScale: { borderVisible: false },
+    timeScale: { borderVisible: false, fixLeftEdge: true, fixRightEdge: true },
+    crosshair: { mode: CrosshairMode.Normal },
+    handleScale: { axisPressedMouseMove: false },
   });
-  return d.trim();
+
+function pairs(dates: string[], vals: (number | null)[]) {
+  const out: { time: Time; value: number }[] = [];
+  for (let i = 0; i < dates.length; i++) {
+    const v = vals[i];
+    if (v != null && Number.isFinite(v)) out.push({ time: dates[i] as Time, value: v });
+  }
+  return out;
 }
 
 export default function PriceChart({ ticker }: { ticker: string }) {
   const [data, setData] = useState<ApiResp | null>(null);
   const [loading, setLoading] = useState(true);
-  const [range, setRange] = useState<string>("1Y");
+  const [range, setRange] = useState("1Y");
+  const [bench, setBench] = useState("SPY");
+  const [chartType, setChartType] = useState<"area" | "line">("area");
   const [compare, setCompare] = useState(false);
-  const [showMA, setShowMA] = useState(true);
-  const [showRSI, setShowRSI] = useState(false);
+  const [ov, setOv] = useState({ ma: true, ema: false, bb: false });
+  const [sub, setSub] = useState({ rsi: false, macd: false });
 
+  const mainRef = useRef<HTMLDivElement>(null);
+  const rsiRef = useRef<HTMLDivElement>(null);
+  const macdRef = useRef<HTMLDivElement>(null);
+
+  // fetch (re-fetch when the benchmark changes)
   useEffect(() => {
     let alive = true;
     setLoading(true);
-    fetch(`/api/prices/${encodeURIComponent(ticker)}`)
+    fetch(`/api/prices/${encodeURIComponent(ticker)}?bench=${encodeURIComponent(bench)}`)
       .then((r) => r.json())
       .then((d: ApiResp) => { if (alive) { setData(d); setLoading(false); } })
       .catch(() => { if (alive) setLoading(false); });
     return () => { alive = false; };
-  }, [ticker]);
+  }, [ticker, bench]);
 
   const view = useMemo(() => {
-    if (!data || !data.series?.length) return null;
+    if (!data?.series?.length) return null;
     const n = RANGES[range];
-    const slice = <T,>(arr: T[]) => (n === Number.POSITIVE_INFINITY ? arr : arr.slice(Math.max(0, arr.length - n)));
+    const slice = <T,>(a: T[]) => (n === Number.POSITIVE_INFINITY ? a : a.slice(Math.max(0, a.length - n)));
     const s = slice(data.series);
+    const dates = s.map((p) => p.date);
     const closes = s.map((p) => p.close);
-    const benchCloses = compare && data.benchmark?.series?.length ? slice(data.benchmark.series).map((p) => p.close) : null;
-    return { dates: s.map((p) => p.date), closes, benchCloses };
-  }, [data, range, compare]);
+    const benchCloses = data.benchmark?.series?.length ? slice(data.benchmark.series).map((p) => p.close) : null;
+    return { dates, closes, benchCloses };
+  }, [data, range]);
+
+  const stockRet = view ? totalReturn(view.closes) : null;
+  const benchRet = view?.benchCloses ? totalReturn(view.benchCloses) : null;
+
+  // build charts
+  useEffect(() => {
+    if (!view || !mainRef.current) return;
+    const { dates, closes, benchCloses } = view;
+    const charts: IChartApi[] = [];
+
+    // ── main pane ──
+    const main = baseChart(mainRef.current, 300);
+    charts.push(main);
+
+    if (compare && benchCloses) {
+      const sPct = pairs(dates, toReturnPct(closes));
+      const bPct = pairs(dates, toReturnPct(benchCloses));
+      const ls1 = main.addLineSeries({ color: NAVY, ...LINE_OPTS });
+      ls1.setData(sPct);
+      ls1.createPriceLine({ price: 0, color: "#d1d5db", lineStyle: LineStyle.Dashed, lineWidth: 1, axisLabelVisible: false, title: "" });
+      const ls2 = main.addLineSeries({ color: GRAY, ...LINE_OPTS, lineWidth: 1 });
+      ls2.setData(bPct);
+    } else {
+      let priceSeries: ISeriesApi<"Area"> | ISeriesApi<"Line">;
+      if (chartType === "area") {
+        const a = main.addAreaSeries({ lineColor: NAVY, topColor: "rgba(27,45,74,0.18)", bottomColor: "rgba(27,45,74,0.01)", lineWidth: 2, priceLineVisible: false });
+        a.setData(pairs(dates, closes));
+        priceSeries = a;
+      } else {
+        const l = main.addLineSeries({ color: NAVY, ...LINE_OPTS });
+        l.setData(pairs(dates, closes));
+        priceSeries = l;
+      }
+      void priceSeries;
+      if (ov.ma) main.addLineSeries({ color: GOLD, lineWidth: 1, priceLineVisible: false, lastValueVisible: false }).setData(pairs(dates, sma(closes, 50)));
+      if (ov.ema) main.addLineSeries({ color: EMERALD, lineWidth: 1, priceLineVisible: false, lastValueVisible: false }).setData(pairs(dates, ema(closes, 20)));
+      if (ov.bb) {
+        const bb = bollinger(closes, 20, 2);
+        const opt = { color: "#cbd5e1", lineWidth: 1 as const, priceLineVisible: false, lastValueVisible: false, lineStyle: LineStyle.Dotted };
+        main.addLineSeries(opt).setData(pairs(dates, bb.upper));
+        main.addLineSeries(opt).setData(pairs(dates, bb.lower));
+      }
+    }
+    main.timeScale().fitContent();
+
+    // ── RSI sub-pane ──
+    if (sub.rsi && rsiRef.current) {
+      const c = baseChart(rsiRef.current, 110);
+      charts.push(c);
+      const s = c.addLineSeries({ color: PURPLE, lineWidth: 1, priceLineVisible: false, lastValueVisible: true });
+      s.setData(pairs(dates, rsi(closes, 14)));
+      s.createPriceLine({ price: 70, color: "#fca5a5", lineStyle: LineStyle.Dashed, lineWidth: 1, axisLabelVisible: true, title: "70" });
+      s.createPriceLine({ price: 30, color: "#fca5a5", lineStyle: LineStyle.Dashed, lineWidth: 1, axisLabelVisible: true, title: "30" });
+      c.timeScale().fitContent();
+    }
+
+    // ── MACD sub-pane ──
+    if (sub.macd && macdRef.current) {
+      const c = baseChart(macdRef.current, 110);
+      charts.push(c);
+      const m = macd(closes);
+      const hist = c.addHistogramSeries({ priceLineVisible: false, lastValueVisible: false });
+      hist.setData(
+        dates.map((d, i) => ({ time: d as Time, value: m.hist[i] ?? 0, color: (m.hist[i] ?? 0) >= 0 ? "rgba(5,150,105,0.5)" : "rgba(220,38,38,0.5)" }))
+          .filter((_, i) => m.hist[i] != null),
+      );
+      c.addLineSeries({ color: NAVY, lineWidth: 1, priceLineVisible: false, lastValueVisible: false }).setData(pairs(dates, m.macd));
+      c.addLineSeries({ color: GOLD, lineWidth: 1, priceLineVisible: false, lastValueVisible: false }).setData(pairs(dates, m.signal));
+      c.timeScale().fitContent();
+    }
+
+    return () => { charts.forEach((c) => c.remove()); };
+  }, [view, chartType, compare, ov, sub]);
 
   if (loading) return <div className="p-6 text-center text-sm text-gray-400">Loading chart…</div>;
   if (!data || !data.real || !view || view.closes.length < 2) {
@@ -76,37 +172,14 @@ export default function PriceChart({ ticker }: { ticker: string }) {
     );
   }
 
-  const { closes, benchCloses } = view;
-  const stockRet = totalReturn(closes);
-  const benchRet = benchCloses ? totalReturn(benchCloses) : null;
-
-  // Build series for the chosen mode
-  let line1: number[], line2: number[] | null = null, maLine: (number | null)[] | null = null, unit: string;
-  if (compare && benchCloses) {
-    line1 = toReturnPct(closes);
-    line2 = toReturnPct(benchCloses);
-    unit = "%";
-  } else {
-    line1 = closes;
-    maLine = showMA ? sma(closes, 50) : null;
-    unit = "$";
-  }
-  const all = [...line1, ...(line2 ?? []), ...((maLine ?? []).filter((v): v is number => v !== null))];
-  const min = Math.min(...all), max = Math.max(...all);
-
-  const rsiVals = showRSI ? rsi(closes, 14) : null;
-  const fmt = (v: number | null) => (v === null ? "—" : unit === "%" ? `${v >= 0 ? "+" : ""}${v.toFixed(1)}%` : `$${v.toFixed(0)}`);
-
-  const Toggle = ({ on, set, children }: { on: boolean; set: (b: boolean) => void; children: React.ReactNode }) => (
-    <button type="button" onClick={() => set(!on)}
-      className={"rounded-md border px-2.5 py-1 text-[12px] font-medium transition " + (on ? "border-navy-700 bg-navy-50 text-navy-800" : "border-gray-200 bg-white text-gray-600 hover:bg-gray-50")}>
-      {children}
-    </button>
-  );
+  const benchLabel = data.benchmark?.label ?? "S&P 500";
+  const chip = (active: boolean) =>
+    "rounded-md px-2.5 py-1 text-[12px] font-medium transition " +
+    (active ? "bg-navy-800 text-white" : "border border-gray-200 bg-white text-gray-600 hover:bg-gray-50");
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-4">
-      {/* header: ROI summary */}
+      {/* header */}
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div className="text-[13px] text-gray-700">
           <span className="font-semibold text-gray-900">{ticker}</span>{" "}
@@ -114,58 +187,72 @@ export default function PriceChart({ ticker }: { ticker: string }) {
             {stockRet != null ? `${stockRet >= 0 ? "+" : ""}${stockRet.toFixed(1)}%` : "—"}
           </span>{" "}
           <span className="text-gray-400">over {range}</span>
-          {benchRet != null && (
-            <span className="text-gray-500"> · S&amp;P {benchRet >= 0 ? "+" : ""}{benchRet.toFixed(1)}%</span>
+          {compare && benchRet != null && (
+            <span className="text-gray-500"> · {benchLabel} {benchRet >= 0 ? "+" : ""}{benchRet.toFixed(1)}%</span>
           )}
         </div>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1">
           {Object.keys(RANGES).map((r) => (
-            <button key={r} type="button" onClick={() => setRange(r)}
-              className={"rounded px-2 py-0.5 text-[12px] " + (range === r ? "bg-navy-800 text-white" : "text-gray-500 hover:bg-gray-100")}>{r}</button>
+            <button key={r} type="button" onClick={() => setRange(r)} className={chip(range === r)}>{r}</button>
           ))}
         </div>
       </div>
 
       {/* main chart */}
-      <svg viewBox={`0 0 ${W} ${H}`} className="mt-3 w-full" preserveAspectRatio="none" style={{ height: 220 }}>
-        <line x1={PAD} y1={H - PAD} x2={W - PAD} y2={H - PAD} stroke="#e5e7eb" />
-        {compare && (
-          <line x1={PAD} y1={H - PAD - ((0 - min) / (max - min || 1)) * (H - 2 * PAD)} x2={W - PAD}
-            y2={H - PAD - ((0 - min) / (max - min || 1)) * (H - 2 * PAD)} stroke="#d1d5db" strokeDasharray="3 3" />
-        )}
-        {maLine && <path d={path(maLine, min, max)} fill="none" stroke="#C89030" strokeWidth={1.5} opacity={0.9} />}
-        {line2 && <path d={path(line2, min, max)} fill="none" stroke="#9ca3af" strokeWidth={1.5} />}
-        <path d={path(line1, min, max)} fill="none" stroke="#1B2D4A" strokeWidth={2} />
-        <text x={PAD} y={14} className="fill-gray-400" style={{ fontSize: 10 }}>{fmt(max)}</text>
-        <text x={PAD} y={H - PAD + 14} className="fill-gray-400" style={{ fontSize: 10 }}>{fmt(min)}</text>
-      </svg>
-
-      {/* legend */}
+      <div ref={mainRef} className="mt-3 w-full" style={{ height: 300 }} />
       <div className="mt-1 flex flex-wrap items-center gap-3 text-[11px] text-gray-500">
-        <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: "#1B2D4A" }} /> {ticker}</span>
-        {line2 && <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: "#9ca3af" }} /> S&amp;P 500</span>}
-        {maLine && <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: "#C89030" }} /> 50-day MA</span>}
+        <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: NAVY }} /> {ticker}</span>
+        {compare && <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: GRAY }} /> {benchLabel}</span>}
+        {!compare && ov.ma && <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: GOLD }} /> MA 50</span>}
+        {!compare && ov.ema && <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: EMERALD }} /> EMA 20</span>}
+        {!compare && ov.bb && <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4 border-t border-dotted border-gray-400" /> Bollinger</span>}
       </div>
 
-      {/* RSI panel */}
-      {rsiVals && (
+      {sub.rsi && (
         <div className="mt-3">
           <div className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">RSI (14)</div>
-          <svg viewBox={`0 0 ${W} 80`} className="mt-1 w-full" preserveAspectRatio="none" style={{ height: 80 }}>
-            <line x1={PAD} y1={80 - 60 * 0.3 - 10} x2={W - PAD} y2={80 - 60 * 0.3 - 10} stroke="#fca5a5" strokeDasharray="3 3" />
-            <line x1={PAD} y1={80 - 60 * 0.7 - 10} x2={W - PAD} y2={80 - 60 * 0.7 - 10} stroke="#fca5a5" strokeDasharray="3 3" />
-            <path d={path(rsiVals, 0, 100, W, 80, 10)} fill="none" stroke="#6d28d9" strokeWidth={1.5} />
-            <text x={PAD} y={12} className="fill-gray-400" style={{ fontSize: 9 }}>70</text>
-            <text x={PAD} y={72} className="fill-gray-400" style={{ fontSize: 9 }}>30</text>
-          </svg>
+          <div ref={rsiRef} className="mt-1 w-full" style={{ height: 110 }} />
+        </div>
+      )}
+      {sub.macd && (
+        <div className="mt-3">
+          <div className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">MACD (12, 26, 9)</div>
+          <div ref={macdRef} className="mt-1 w-full" style={{ height: 110 }} />
         </div>
       )}
 
-      {/* controls */}
-      <div className="mt-3 flex flex-wrap gap-2">
-        <Toggle on={compare} set={setCompare}>Compare to S&amp;P 500</Toggle>
-        {!compare && <Toggle on={showMA} set={setShowMA}>50-day MA</Toggle>}
-        <Toggle on={showRSI} set={setShowRSI}>RSI</Toggle>
+      {/* toolbar */}
+      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-gray-100 pt-3">
+        <div className="flex items-center gap-1">
+          <span className="mr-1 text-[10px] font-semibold uppercase tracking-wide text-gray-400">Type</span>
+          <button type="button" onClick={() => setChartType("area")} className={chip(chartType === "area" && !compare)} disabled={compare}>Area</button>
+          <button type="button" onClick={() => setChartType("line")} className={chip(chartType === "line" && !compare)} disabled={compare}>Line</button>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="mr-1 text-[10px] font-semibold uppercase tracking-wide text-gray-400">Overlays</span>
+          <button type="button" onClick={() => setOv((o) => ({ ...o, ma: !o.ma }))} className={chip(ov.ma && !compare)} disabled={compare}>MA 50</button>
+          <button type="button" onClick={() => setOv((o) => ({ ...o, ema: !o.ema }))} className={chip(ov.ema && !compare)} disabled={compare}>EMA 20</button>
+          <button type="button" onClick={() => setOv((o) => ({ ...o, bb: !o.bb }))} className={chip(ov.bb && !compare)} disabled={compare}>Bollinger</button>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="mr-1 text-[10px] font-semibold uppercase tracking-wide text-gray-400">Indicators</span>
+          <button type="button" onClick={() => setSub((s) => ({ ...s, rsi: !s.rsi }))} className={chip(sub.rsi)}>RSI</button>
+          <button type="button" onClick={() => setSub((s) => ({ ...s, macd: !s.macd }))} className={chip(sub.macd)}>MACD</button>
+        </div>
+        <div className="flex items-center gap-1">
+          <button type="button" onClick={() => setCompare((c) => !c)} className={chip(compare)}>Compare</button>
+          {compare && (
+            <select
+              value={bench}
+              onChange={(e) => setBench(e.target.value)}
+              className="rounded-md border border-gray-200 bg-white px-2 py-1 text-[12px] text-gray-700"
+            >
+              {(data.benchmarks ?? [{ sym: "SPY", label: "S&P 500" }]).map((b) => (
+                <option key={b.sym} value={b.sym}>{b.label}</option>
+              ))}
+            </select>
+          )}
+        </div>
       </div>
     </div>
   );
