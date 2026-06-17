@@ -11,7 +11,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X, ChevronDown, ArrowRight } from "lucide-react";
 import MizanWordmark from "@/components/MizanWordmark";
 
@@ -54,7 +54,12 @@ const TOOL_GROUPS: Array<{
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
   const closeTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    fetch("/api/me").then((r) => r.json()).then((v: { email?: string | null }) => setSignedIn(!!v.email)).catch(() => {});
+  }, []);
 
   function openTools() {
     if (closeTimerRef.current) {
@@ -126,18 +131,27 @@ export default function Header() {
             </div>
           </nav>
 
-          {/* Right: sign in + sign up on desktop, hamburger on mobile */}
+          {/* Right: account when signed in, else sign in + sign up. Hamburger on mobile. */}
           <div className="hidden items-center gap-3 md:flex">
-            <Link href="/account" className="text-[13px] font-medium text-gray-700 hover:text-navy-800">
-              Sign in
-            </Link>
-            <Link
-              href="/account"
-              className="inline-flex items-center gap-1.5 rounded-full bg-navy-900 px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition hover:bg-navy-800"
-            >
-              Sign up free
-              <ArrowRight size={14} />
-            </Link>
+            {signedIn ? (
+              <Link
+                href="/account"
+                className="inline-flex items-center gap-1.5 rounded-full border border-gray-300 px-4 py-2 text-[13px] font-semibold text-gray-800 transition hover:border-gray-400"
+              >
+                Account
+              </Link>
+            ) : (
+              <>
+                <Link href="/account" className="text-[13px] font-medium text-gray-700 hover:text-navy-800">Sign in</Link>
+                <Link
+                  href="/account"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-navy-900 px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition hover:bg-navy-800"
+                >
+                  Sign up free
+                  <ArrowRight size={14} />
+                </Link>
+              </>
+            )}
           </div>
 
           <button
@@ -153,11 +167,15 @@ export default function Header() {
         {mobileOpen && (
           <div className="mx-auto mt-2 max-w-5xl rounded-2xl border border-gray-200 bg-white p-4 shadow-lg md:hidden">
             <div className="flex flex-col gap-1 text-sm">
-              {/* Sign in / up — prominent at the top */}
-              <div className="mb-2 flex gap-2">
-                <Link href="/account" onClick={() => setMobileOpen(false)} className="flex-1 rounded-md border border-gray-200 px-3 py-2 text-center font-semibold text-gray-800">Sign in</Link>
-                <Link href="/account" onClick={() => setMobileOpen(false)} className="flex-1 rounded-md bg-navy-900 px-3 py-2 text-center font-semibold text-white">Sign up free</Link>
-              </div>
+              {/* Account when signed in, else sign in / up — prominent at the top */}
+              {signedIn ? (
+                <Link href="/account" onClick={() => setMobileOpen(false)} className="mb-2 rounded-md border border-gray-200 px-3 py-2 text-center font-semibold text-gray-800">Account</Link>
+              ) : (
+                <div className="mb-2 flex gap-2">
+                  <Link href="/account" onClick={() => setMobileOpen(false)} className="flex-1 rounded-md border border-gray-200 px-3 py-2 text-center font-semibold text-gray-800">Sign in</Link>
+                  <Link href="/account" onClick={() => setMobileOpen(false)} className="flex-1 rounded-md bg-navy-900 px-3 py-2 text-center font-semibold text-white">Sign up free</Link>
+                </div>
+              )}
               <Link href="/screen" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Screen</Link>
               <Link href="/indexes" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Indexes</Link>
               <Link href="/learn" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Learn</Link>

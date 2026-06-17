@@ -36,6 +36,7 @@ const baseChart = (el: HTMLDivElement, height: number): IChartApi =>
   createChart(el, {
     height,
     autoSize: true,
+    localization: { locale: "en-US" },
     layout: { background: { type: ColorType.Solid, color: "transparent" }, textColor: "#6b7280", fontSize: 11, fontFamily: "inherit" },
     grid: { vertLines: { color: "#f3f4f6" }, horzLines: { color: "#f3f4f6" } },
     rightPriceScale: { borderVisible: false },
