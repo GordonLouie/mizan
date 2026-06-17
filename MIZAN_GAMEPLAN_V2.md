@@ -21,10 +21,16 @@ under-built relative to what Chong actually asked for.
 - ✅ I — **halal swaps with deterministic reasoning**, now shown on pass too.
 - ✅ H — **/institutions** page (index licensing, data API, white-label, audit screening).
 - ✅ Integration/QA — /indexes linked in nav+footer; footer cleaned; a11y polish.
-- ⏳ Remaining: **B charts/technicals overhaul** (TradingView-grade — do with Chrome
-  connected), **E auth → Clerk** (needs your account), **J rename → HalalScope**
-  (needs domain), **G coverage** (your FMP run), custom index builder, per-stock
-  data provenance.
+- ✅ B — **charts/technicals overhaul** (TradingView `lightweight-charts`: crosshair,
+  Area/Line, MA/EMA/Bollinger overlays, RSI+MACD sub-panels, selectable benchmark,
+  clean toolbar; forced en-US axis). Candlesticks pending OHLC ingestion.
+- ✅ A (complete) — **custom index builder** (/indexes/build): pick standard + theme
+  + size → live point-in-time backtest + risk/reward vs S&P. Gated Pro; institutional
+  licensing pitched.
+- ✅ Header now reflects signed-in state (Account vs Sign up).
+- ⏳ Remaining: **E auth → Clerk** (keys added; needs the code migration — next),
+  **J rename → HalalScan** (domain checkout failing — reminder set 2026-06-18),
+  **G coverage** (your FMP run), per-stock data provenance, candlestick OHLC data.
 
 ---
 

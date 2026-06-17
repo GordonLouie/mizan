@@ -65,6 +65,13 @@ export default function IndexesPage() {
         })}
       </div>
 
+      {/* Build your own */}
+      <div className="mt-6">
+        <Link href="/indexes/build" className="inline-flex items-center gap-1.5 rounded-md border border-navy-800 px-4 py-2 text-[13px] font-semibold text-navy-800 transition hover:bg-navy-50">
+          Build your own index <ArrowRight size={14} />
+        </Link>
+      </div>
+
       {/* Risk/reward comparison — gated Pro */}
       <section className="mt-10">
         <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500">Compare</div>
