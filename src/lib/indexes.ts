@@ -11,6 +11,7 @@
 import { listStocks } from "./data";
 import { getScholar } from "./scholars";
 import { screenStock } from "./screen";
+import { fundamentalsReliable } from "./dataQuality";
 import type { StockFundamentals } from "./types";
 
 export type IndexRisk = "Core" | "Growth" | "Income";
@@ -65,6 +66,7 @@ export function indexConstituents(def: IndexDef): StockFundamentals[] {
   const scholar = getScholar(def.scholarId);
   return listStocks()
     .filter((s) => s.sector !== "ETF")
+    .filter((s) => fundamentalsReliable(s)) // never index a name we can't trust the data on
     .filter((s) => screenStock(s, scholar).verdict === "pass")
     .filter((s) => (def.filter ? def.filter(s) : true))
     .sort((a, b) => b.marketCapUsd - a.marketCapUsd)

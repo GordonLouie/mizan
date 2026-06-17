@@ -135,6 +135,9 @@ export interface ScreeningResult {
   sectorReason: string;
   ratioChecks: RatioCheck[];
   purificationNote: string;
+  /** False when fundamentals look implausible (e.g. un-normalized foreign
+   *  currency) — the verdict should be treated as withheld / under review. */
+  dataReliable: boolean;
 }
 
 /** A scholar / standard profile that defines screening rules. */

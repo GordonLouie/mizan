@@ -12,6 +12,7 @@
  */
 import { NextResponse } from "next/server";
 import { generateStockReport, findStock } from "@/lib/aiReport";
+import { fundamentalsReliable } from "@/lib/dataQuality";
 import { getScholar } from "@/lib/scholars";
 import { kvIncrWithTtl } from "@/lib/kv";
 import { getViewer } from "@/lib/auth";
@@ -55,6 +56,10 @@ export async function POST(req: Request) {
   const stock = findStock(ticker);
   if (!stock) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
+  }
+  // Don't spend an AI call (or risk a misleading report) on data we've flagged.
+  if (!fundamentalsReliable(stock)) {
+    return NextResponse.json({ error: "data_under_review" }, { status: 422 });
   }
 
   // Best-effort rate limit (per IP, per day). No-ops without KV.

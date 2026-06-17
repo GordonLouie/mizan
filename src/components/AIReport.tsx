@@ -133,6 +133,10 @@ export default function AIReport({ ticker, scholarId }: { ticker: string; schola
         setError("AI reports are a Pro feature. Upgrade at /pricing to generate one.");
         return;
       }
+      if (res.status === 422) {
+        setError("This company's data is under review (some figures look implausible), so we're withholding an AI report rather than risk a misleading one.");
+        return;
+      }
       if (!res.ok) {
         setError("Could not generate the report. Please try again.");
         return;

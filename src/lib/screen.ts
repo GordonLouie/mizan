@@ -2,6 +2,7 @@ import type {
   ScholarProfile, StockFundamentals, ScreeningResult,
   RatioCheck, Verdict, ProhibitedSector
 } from "./types";
+import { fundamentalsReliable } from "./dataQuality";
 
 const SECTOR_LABELS: Record<ProhibitedSector, string> = {
   alcohol: "Alcohol production / sales",
@@ -139,6 +140,7 @@ export function screenStock(
     sectorReason: sector.reason,
     ratioChecks,
     purificationNote,
+    dataReliable: fundamentalsReliable(stock),
   };
 }
 

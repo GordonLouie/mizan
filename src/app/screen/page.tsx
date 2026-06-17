@@ -204,6 +204,16 @@ function ScreenInner() {
         </div>
       </div>
 
+      {/* DATA-QUALITY GUARD — withhold a confident verdict when fundamentals look broken. */}
+      {result && !result.dataReliable && (
+        <div className="mb-4 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-[13px] leading-relaxed text-amber-900">
+          <strong>Verdict under review.</strong> Some of {stock.ticker}&apos;s reported figures look
+          implausible (often un-normalised foreign-currency data), so we&apos;re not displaying a
+          confident verdict for it yet — we&apos;d rather withhold than mislead. We&apos;re
+          re-verifying this company&apos;s data.
+        </div>
+      )}
+
       {/* HERO ROW — company info LEFT, verdict card RIGHT */}
       <section className="grid grid-cols-12 gap-6">
         <div className="col-span-12 lg:col-span-7">
