@@ -359,11 +359,9 @@ function ScreenInner() {
       {/* HALAL ALTERNATIVES — surfaced HIGH on fail. Miqdad: when a stock is
           ruled out, the next question is always "what should I buy instead?"
           Was previously buried below the company stats. */}
-      {result!.verdict === "fail" && (
-        <section>
-          <HalalAlternatives failedStock={stock} scholar={scholar} />
-        </section>
-      )}
+      <section>
+        <HalalAlternatives stock={stock} scholar={scholar} stockPasses={result!.verdict === "pass"} />
+      </section>
 
       {/* VERDICT TIMELINE — 8-quarter track record across active scholar.
           Direct response to Saifuddin Abbas: "track that over time as well bc

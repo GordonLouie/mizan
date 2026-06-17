@@ -78,6 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <nav className="flex flex-wrap gap-3 text-xs">
                 <a href="/indexes" className="hover:text-navy-700">Halal indexes</a>
                 <a href="/pricing" className="hover:text-navy-700">Pricing</a>
+                <a href="/institutions" className="hover:text-navy-700">Institutions</a>
                 <a href="/about" className="hover:text-navy-700">About</a>
                 <a href="/trust" className="hover:text-navy-700">Trust centre</a>
                 <a href="/methodology" className="hover:text-navy-700">Methodology</a>

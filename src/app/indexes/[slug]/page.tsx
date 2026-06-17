@@ -61,7 +61,24 @@ export default async function IndexPage({ params }: { params: Promise<{ slug: st
         <div className="mt-3">
           <LockedFeature feature="indexes" label="Index performance">
             <div className="rounded-xl border border-gray-200 bg-white p-5">
+              {perf.stats && (
+                <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-5">
+                  {[
+                    { label: "Return p.a.", value: `${perf.stats.annReturnPct >= 0 ? "+" : ""}${perf.stats.annReturnPct.toFixed(1)}%` },
+                    { label: "Volatility", value: `${perf.stats.annVolPct.toFixed(1)}%` },
+                    { label: "Sharpe", value: perf.stats.sharpe == null ? "—" : perf.stats.sharpe.toFixed(2) },
+                    { label: "Max drawdown", value: `${perf.stats.maxDrawdownPct.toFixed(1)}%` },
+                    { label: "Beta vs S&P", value: perf.stats.beta == null ? "—" : perf.stats.beta.toFixed(2) },
+                  ].map((s) => (
+                    <div key={s.label} className="rounded-lg border border-gray-100 bg-gray-50/60 p-2.5 text-center">
+                      <div className="text-[15px] font-bold text-navy-800" style={{ fontFamily: "var(--font-display)" }}>{s.value}</div>
+                      <div className="mt-0.5 text-[10px] uppercase tracking-wide text-gray-500">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
               <IndexPerfChart name={def.name} indexPct={perf.indexPct} spyPct={perf.spyPct} spusPct={perf.spusPct} />
+              <p className="mt-3 text-[10px] text-gray-400">Annualized; Sharpe assumes 0% risk-free rate; beta vs S&amp;P 500. Price-return, equal-weight.</p>
             </div>
           </LockedFeature>
         </div>

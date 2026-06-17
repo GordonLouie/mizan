@@ -182,6 +182,42 @@ export default function MethodologyPage() {
         </ol>
       </section>
 
+      {/* BEYOND THE BALANCE SHEET */}
+      <section className="mt-20 border-t border-gray-200 pt-10">
+        <SectionHead
+          kicker="A fair question"
+          title="Can a company be non-halal for reasons outside its balance sheet?"
+        />
+        <div className="mt-5 max-w-2xl space-y-4 text-[14px] leading-relaxed text-gray-700">
+          <p>
+            Yes — and pretending otherwise would be the opposite of trustworthy. Here is exactly
+            how far the screen reaches, and where it stops.
+          </p>
+          <p>
+            <strong className="text-gray-900">Incidental &amp; investment income.</strong> The
+            impermissible-income screen isn&apos;t only interest on deposits. It captures income from
+            non-permissible sources generally — interest, returns on non-compliant holdings, and
+            income from non-compliant lines or associates — to the extent the company reports it. A
+            firm in a permissible sector that earns meaningfully from haram activity still fails here.
+          </p>
+          <p>
+            <strong className="text-gray-900">Subsidiaries &amp; consolidation.</strong> We screen
+            consolidated financials, so a subsidiary&apos;s debt and revenue are already inside the
+            parent&apos;s figures. A group whose consolidated revenue is materially non-compliant is
+            caught by the sector and income screens.
+          </p>
+          <p>
+            <strong className="text-gray-900">The honest limit.</strong> What no automated screen —
+            ours included — can fully see: private or unreported dealings, off-balance-sheet
+            arrangements, or a one-off external investment a company doesn&apos;t disclose. Where
+            filings report investment or associate income, it flows into the income screen; where
+            they don&apos;t, no screen can detect it. We surface this rather than imply omniscience.
+            It is precisely why, for a material position, the standing advice is to confirm with a
+            qualified scholar.
+          </p>
+        </div>
+      </section>
+
       {/* PER-SCHOLAR PROFILES */}
       <section className="mt-20">
         <SectionHead
@@ -351,9 +387,9 @@ export default function MethodologyPage() {
             Pro-tier users whose portfolio verdicts change.
           </p>
           <p className="text-[12px] italic text-gray-500">
-            Current prototype screens a {listStocks().length}-ticker representative sample.
-            FMP live-data integration is wired in; production coverage scales to any listed
-            equity as the daily enrichment script runs.
+            Mizan screens {listStocks().length} companies today with live fundamentals and real
+            price history. Coverage expands to Hong Kong, Greater China, and other international
+            markets as the enrichment pipeline runs.
           </p>
         </div>
       </section>

@@ -139,7 +139,7 @@ export default function PricingPage() {
           <div className="mt-4 h-10 flex items-center">
             {isInst
               ? <span className="text-[13px] font-semibold text-emerald-700">✓ Your current plan</span>
-              : <a href="mailto:hello@mizaninvesting.com?subject=Mizan%20Institutional" className="inline-flex items-center rounded-md border border-navy-800 px-5 py-2 text-[13px] font-semibold text-navy-800 transition hover:bg-navy-50">Contact us</a>}
+              : <Link href="/institutions" className="inline-flex items-center rounded-md border border-navy-800 px-5 py-2 text-[13px] font-semibold text-navy-800 transition hover:bg-navy-50">For institutions</Link>}
           </div>
         </div>
       </div>

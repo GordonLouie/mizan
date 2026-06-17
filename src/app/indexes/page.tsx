@@ -6,6 +6,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { INDEXES, indexConstituents } from "@/lib/indexes";
+import { indexPerformance, benchmarkStats } from "@/lib/indexes.server";
+import LockedFeature from "@/components/LockedFeature";
+import IndexCompare, { type CompareRow } from "@/components/IndexCompare";
 
 const SITE = "https://mizaninvesting.com";
 
@@ -23,6 +26,13 @@ const RISK_TONE: Record<string, string> = {
 };
 
 export default function IndexesPage() {
+  const compareRows: CompareRow[] = INDEXES.map((def) => {
+    const p = indexPerformance(def);
+    return { slug: def.slug, name: def.name, risk: def.risk, totalReturnPct: p.totalReturn, stats: p.stats };
+  });
+  const spy = benchmarkStats("SPY");
+  compareRows.push({ slug: null, name: "S&P 500", risk: "Benchmark", totalReturnPct: spy.totalReturnPct, stats: spy.stats });
+
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 sm:py-14">
       <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500">Halal indexes</div>
@@ -54,6 +64,16 @@ export default function IndexesPage() {
           );
         })}
       </div>
+
+      {/* Risk/reward comparison — gated Pro */}
+      <section className="mt-10">
+        <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500">Compare</div>
+        <div className="mt-3">
+          <LockedFeature feature="indexes" label="Index comparison">
+            <IndexCompare rows={compareRows} />
+          </LockedFeature>
+        </div>
+      </section>
 
       <p className="mt-8 text-[11px] leading-relaxed text-gray-400">
         Indexes are informational, screened baskets — not investable funds, and not investment

@@ -20,11 +20,21 @@ import { getScholar } from "./scholars";
 import { screenStock } from "./screen";
 import type { StockFundamentals } from "./types";
 
+export interface IndexStats {
+  annReturnPct: number;
+  annVolPct: number;
+  sharpe: number | null;
+  maxDrawdownPct: number;
+  beta: number | null;
+}
+
 export interface IndexPerformance {
   dates: string[];
   indexPct: number[];
   spyPct: number[] | null;
   spusPct: number[] | null;
+  /** Risk/reward metrics for the index over the window (null if too little data). */
+  stats: IndexStats | null;
   /** The point-in-time selected constituents (for display + the table). */
   constituents: StockFundamentals[];
   constituentsUsed: string[];
@@ -52,6 +62,57 @@ function hasGlitch(map: Map<string, number>, dates: string[]): boolean {
     prev = v;
   }
   return false;
+}
+
+// ── risk/reward metrics ──────────────────────────────────────────────────────
+const TRADING_DAYS = 252;
+function mean(xs: number[]): number {
+  return xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : 0;
+}
+function dailyReturns(vals: number[]): number[] {
+  const r: number[] = [];
+  for (let i = 1; i < vals.length; i++) if (vals[i - 1] > 0) r.push(vals[i] / vals[i - 1] - 1);
+  return r;
+}
+/** vals = gross-multiple series starting at ~1; spyRel = benchmark gross multiple. */
+function computeStats(vals: number[], spyRel: number[] | null): IndexStats | null {
+  const n = vals.length;
+  if (n < 20 || vals[0] <= 0) return null;
+  const years = (n - 1) / TRADING_DAYS;
+  const gross = vals[n - 1] / vals[0];
+  const annReturn = years > 0 ? Math.pow(gross, 1 / years) - 1 : gross - 1;
+
+  const idxDaily = dailyReturns(vals);
+  const m = mean(idxDaily);
+  const variance = idxDaily.reduce((s, x) => s + (x - m) ** 2, 0) / Math.max(1, idxDaily.length);
+  const annVol = Math.sqrt(variance) * Math.sqrt(TRADING_DAYS);
+  const sharpe = annVol > 0 ? annReturn / annVol : null; // rf assumed 0
+
+  let peak = vals[0], maxDD = 0;
+  for (const v of vals) {
+    if (v > peak) peak = v;
+    const dd = v / peak - 1;
+    if (dd < maxDD) maxDD = dd;
+  }
+
+  let beta: number | null = null;
+  if (spyRel && spyRel.length === vals.length) {
+    const spyDaily = dailyReturns(spyRel);
+    const k = Math.min(idxDaily.length, spyDaily.length);
+    const a = idxDaily.slice(0, k), b = spyDaily.slice(0, k);
+    const ma = mean(a), mb = mean(b);
+    let cov = 0, varb = 0;
+    for (let i = 0; i < k; i++) { cov += (a[i] - ma) * (b[i] - mb); varb += (b[i] - mb) ** 2; }
+    beta = varb > 0 ? cov / varb : null;
+  }
+
+  return {
+    annReturnPct: annReturn * 100,
+    annVolPct: annVol * 100,
+    sharpe,
+    maxDrawdownPct: maxDD * 100,
+    beta,
+  };
 }
 
 function alignPct(series: { date: string; close: number }[], dates: string[]): number[] | null {
@@ -105,6 +166,16 @@ export function selectConstituentsPIT(def: IndexDef, inception: string | null): 
   return ranked.length >= Math.min(def.size, 5) ? ranked.map((r) => r.stock) : indexConstituents(def);
 }
 
+/** Total return + risk stats for a single benchmark ticker (e.g. SPY) over its
+ *  full available window. Used for the index comparison table. */
+export function benchmarkStats(symbol: string): { totalReturnPct: number | null; stats: IndexStats | null } {
+  const ser = priceSeries(symbol);
+  if (ser.length < 20 || ser[0].close <= 0) return { totalReturnPct: null, stats: null };
+  const base = ser[0].close;
+  const vals = ser.map((p) => p.close / base);
+  return { totalReturnPct: (vals[vals.length - 1] - 1) * 100, stats: computeStats(vals, ser.map((p) => p.close / base)) };
+}
+
 export function indexPerformance(def: IndexDef): IndexPerformance {
   const spy = priceSeries("SPY");
   const spus = priceSeries("SPUS");
@@ -122,7 +193,7 @@ export function indexPerformance(def: IndexDef): IndexPerformance {
 
   const excludedAnomalous: string[] = [];
   const empty: IndexPerformance = {
-    dates: [], indexPct: [], spyPct: null, spusPct: null,
+    dates: [], indexPct: [], spyPct: null, spusPct: null, stats: null,
     constituents, constituentsUsed: used.map((u) => u.ticker), excluded, excludedAnomalous,
     inceptionDate: inception, totalReturn: null, spyReturn: null, spusReturn: null,
   };
@@ -159,6 +230,8 @@ export function indexPerformance(def: IndexDef): IndexPerformance {
   const indexPct = indexVal.map((v) => (v - 1) * 100);
   const spyPct = alignPct(spy, dates);
   const spusPct = alignPct(spus, dates);
+  const spyRel = spyPct ? spyPct.map((p) => 1 + p / 100) : null;
+  const stats = computeStats(indexVal, spyRel);
 
   const lastOrNull = (a: number[] | null) => (a && a.length ? a[a.length - 1] : null);
   return {
@@ -166,6 +239,7 @@ export function indexPerformance(def: IndexDef): IndexPerformance {
     indexPct,
     spyPct,
     spusPct,
+    stats,
     constituents,
     constituentsUsed: used.map((u) => u.ticker),
     excluded,

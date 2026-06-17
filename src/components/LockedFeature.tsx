@@ -93,8 +93,7 @@ export default function LockedFeature({
   const needLabel = TIER_LABEL[need];
 
   function onUnlock() {
-    // Both plans (and the institutional "contact us") live on /pricing.
-    window.location.href = need === "institutional" ? "/pricing#institutional" : "/pricing";
+    window.location.href = need === "institutional" ? "/institutions" : "/pricing";
   }
 
   return (

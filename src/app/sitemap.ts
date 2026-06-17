@@ -14,6 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/screen", priority: 0.9, change: "weekly" as const },
     { url: "/halal", priority: 0.9, change: "weekly" as const },
     { url: "/indexes", priority: 0.8, change: "weekly" as const },
+    { url: "/institutions", priority: 0.7, change: "monthly" as const },
+    { url: "/pricing", priority: 0.7, change: "monthly" as const },
     { url: "/blog", priority: 0.7, change: "weekly" as const },
     { url: "/discover", priority: 0.9, change: "weekly" as const },
     { url: "/sectors", priority: 0.8, change: "weekly" as const },
