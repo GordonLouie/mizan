@@ -140,7 +140,10 @@ export function screenStock(
     sectorReason: sector.reason,
     ratioChecks,
     purificationNote,
-    dataReliable: fundamentalsReliable(stock),
+    // Only withhold when the verdict actually hinges on the (possibly broken)
+    // ratios. If the sector screen already fails, we're confident it's not halal
+    // regardless of ratio data quality — don't hide that behind "under review".
+    dataReliable: sector.passes ? fundamentalsReliable(stock) : true,
   };
 }
 

@@ -83,6 +83,28 @@ Gate to credibly sell to funds/MPF/banks:
 
 ---
 
+## 3b. Data audit findings (2026-06-18) — real issues found
+
+The audit was honest and surfaced two data-curation problems (both need the
+Stage-1 reference pass to fully fix; a safety guard now withholds the affected names):
+
+1. **Foreign-ADR FX normalisation** — ~33 ADRs (Toyota, MUFG, Sony, Indian/Japanese
+   banks, etc.) have un-normalised local-currency balance sheets → absurd ratios
+   (Toyota "18,793% debt"). Even subtler cases (TSM showing 145% cash vs a real ~3–4%)
+   slip below a naive cap. Root fix: re-run FMP enrichment (FX code is in fmpFetch.ts)
+   and cross-check vs a reference.
+2. **Inconsistent sector flags** — some financials carry `conventional_finance`
+   (GS, MS) and some don't (JPM, BAC, C, HSBC), so banks pass the sector screen and
+   only fail on ratios. We do NOT auto-exclude all "Financial Services" because that
+   bucket also holds Visa/Mastercard/exchanges/ratings that scholars treat differently.
+   Needs manual curation against a reference list.
+
+**Interim guard shipped:** `fundamentalsReliable()` withholds a verdict (shows
+"under review", excludes from indexes, blocks AI report) for sector-passing names
+with implausible ratios — currently ~47 names (~7%). Honest, not a real fix.
+The **screening LOGIC is verified correct** across pass/borderline/fail; the issue
+is input-data quality, which is a Stage-1 gate.
+
 ## 4. Immediate execution queue (Claude, now)
 1. **Data-integrity audit** — run across all tickers; flag zero/implausible fundamentals,
    FX/foreign issues, ETF handling, verdict distribution; fix what's clearly broken.

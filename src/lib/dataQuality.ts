@@ -32,5 +32,11 @@ export function fundamentalsReliable(s: StockFundamentals): boolean {
     s.receivablesToMarketCapPct > MAX_PLAUSIBLE_RATIO
   ) return false;
   if ((s.dividendYieldPct ?? 0) > 40) return false;
+  // A NON-financial company holding more cash/securities or receivables than its
+  // entire market cap is almost always a data error (e.g. un-normalised FX), even
+  // below the hard cap above. Banks/insurers legitimately do — but they fail the
+  // sector screen anyway, so excluding them here is harmless.
+  const isFinancial = (s.sectorFlags ?? []).includes("conventional_finance");
+  if (!isFinancial && (s.cashSecuritiesToMarketCapPct > 120 || s.receivablesToMarketCapPct > 120)) return false;
   return true;
 }
