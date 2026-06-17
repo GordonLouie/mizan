@@ -9,7 +9,7 @@ import { getViewer } from "@/lib/auth";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-export async function GET(req: Request) {
-  const viewer = await getViewer(req);
+export async function GET() {
+  const viewer = await getViewer();
   return NextResponse.json(viewer);
 }

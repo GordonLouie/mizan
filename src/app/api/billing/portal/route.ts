@@ -3,17 +3,17 @@
  * signed-in user (manage/cancel subscription, update card). Plain REST, no SDK.
  * Inert until STRIPE_SECRET_KEY is set. Looks the customer up by session email.
  */
-import { getSessionEmail } from "@/lib/auth";
+import { sessionEmail } from "@/lib/auth";
 
 const SK = process.env.STRIPE_SECRET_KEY;
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://mizaninvesting.com";
 
 export const runtime = "nodejs";
 
-export async function POST(req: Request) {
+export async function POST() {
   if (!SK) return Response.json({ ok: false, reason: "billing not configured" });
 
-  const email = getSessionEmail(req);
+  const email = await sessionEmail();
   if (!email) return Response.json({ ok: false, error: "not_signed_in" }, { status: 401 });
 
   try {

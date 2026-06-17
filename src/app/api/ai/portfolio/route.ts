@@ -21,7 +21,7 @@ const DAILY_CAP = 40;
 const MAX_HOLDINGS = 100;
 
 export async function POST(req: Request) {
-  const viewer = await getViewer(req);
+  const viewer = await getViewer();
   if (viewer.authConfigured && !tierMeets(viewer.tier, "retail")) {
     return NextResponse.json({ error: "upgrade_required" }, { status: 402 });
   }

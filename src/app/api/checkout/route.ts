@@ -7,7 +7,7 @@
  * Attaches the signed-in user's email so the webhook can map the subscription to
  * the right account.
  */
-import { getSessionEmail } from "@/lib/auth";
+import { sessionEmail } from "@/lib/auth";
 
 const SK = process.env.STRIPE_SECRET_KEY;
 const PRICE_MONTHLY = process.env.STRIPE_PRICE_RETAIL;
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   }
 
   // Prefer the authenticated session email so billing ties to the account.
-  const email = getSessionEmail(req) || bodyEmail;
+  const email = (await sessionEmail()) || bodyEmail;
 
   const body = new URLSearchParams();
   body.set("mode", "subscription");

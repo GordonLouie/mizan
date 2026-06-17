@@ -7,6 +7,7 @@ import FeedbackWidget from "@/components/FeedbackWidget";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import PostHogProvider from "@/components/PostHogProvider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mizaninvesting.com"),
@@ -62,7 +63,10 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
+  // Wrap with ClerkProvider only when configured, so a missing key never breaks
+  // the build/render (keeps the inert-without-keys posture).
+  const clerkEnabled = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  const tree = (
     <html lang="en">
       <body>
         <Header />
@@ -104,4 +108,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </body>
     </html>
   );
+  return clerkEnabled ? <ClerkProvider>{tree}</ClerkProvider> : tree;
 }

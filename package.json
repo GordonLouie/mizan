@@ -11,6 +11,7 @@
     "test:engine:compiled": "tsc --target es2022 --module commonjs --outDir .test-build --resolveJsonModule --esModuleInterop --moduleResolution node src/lib/__tests__/screen.test.ts src/lib/screen.ts src/lib/scholars.ts src/lib/purification.ts src/lib/types.ts && mkdir -p .test-build/data && cp -r src/data/. .test-build/data/ && node .test-build/lib/__tests__/screen.test.js"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.5.3",
     "@tailwindcss/typography": "^0.5.19",
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",

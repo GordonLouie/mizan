@@ -25,7 +25,7 @@ const DAILY_CAP = 40;
 export async function POST(req: Request) {
   // Server-side entitlement (defense-in-depth beyond the client paywall). Only
   // enforced once auth is configured, so pre-go-live behaviour is unchanged.
-  const viewer = await getViewer(req);
+  const viewer = await getViewer();
   if (viewer.authConfigured && !tierMeets(viewer.tier, "retail")) {
     return NextResponse.json({ error: "upgrade_required" }, { status: 402 });
   }

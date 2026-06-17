@@ -15,8 +15,28 @@
  * before it guards anything truly sensitive. It only gates paid features here.
  */
 import crypto from "crypto";
+import { currentUser } from "@clerk/nextjs/server";
 import { kvGetJson, kvSetJsonWithTtl, kvDel, kvConfigured } from "./kv";
 import type { Tier } from "./entitlements";
+
+/** Auth is now handled by Clerk. These helpers read the Clerk session and map
+ *  the email to a KV tier. (The legacy magic-link code below is retained but
+ *  unused — Clerk supplies Google / email / password sign-in.) */
+export function clerkConfigured(): boolean {
+  return !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+}
+
+/** The signed-in user's email (lowercased) from Clerk, or null. */
+export async function sessionEmail(): Promise<string | null> {
+  if (!clerkConfigured()) return null;
+  try {
+    const u = await currentUser();
+    const e = u?.primaryEmailAddress?.emailAddress ?? u?.emailAddresses?.[0]?.emailAddress ?? null;
+    return e ? e.toLowerCase() : null;
+  } catch {
+    return null;
+  }
+}
 
 const SECRET = process.env.AUTH_SECRET;
 export const SESSION_COOKIE = "mizan_session";
@@ -136,9 +156,10 @@ export interface Viewer {
   authConfigured: boolean;
 }
 
-/** The authoritative, server-validated viewer for the current request. */
-export async function getViewer(req: Request): Promise<Viewer> {
-  const email = getSessionEmail(req);
+/** The authoritative, server-validated viewer (Clerk session → KV tier). */
+export async function getViewer(): Promise<Viewer> {
+  if (!clerkConfigured()) return { email: null, tier: "free", authConfigured: false };
+  const email = await sessionEmail();
   const tier = await getTier(email);
-  return { email, tier, authConfigured: authConfigured() };
+  return { email, tier, authConfigured: true };
 }
