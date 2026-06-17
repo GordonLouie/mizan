@@ -47,7 +47,6 @@ const TOOL_GROUPS: Array<{
       { href: "/purification", label: "Purification", sub: "Dividend cleansing" },
       { href: "/crypto", label: "Crypto", sub: "Early development" },
       { href: "/sukuk", label: "Sukuk", sub: "Early development" },
-      { href: "/account", label: "Account", sub: "Sign in & plan" },
     ],
   },
 ];
@@ -82,9 +81,9 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-7 text-[14px] font-medium text-gray-700 md:flex">
+          <nav className="hidden items-center gap-6 text-[14px] font-medium text-gray-700 md:flex">
             <Link href="/screen" className="hover:text-navy-800">Screen</Link>
-            <Link href="/discover" className="hover:text-navy-800">Discover</Link>
+            <Link href="/indexes" className="hover:text-navy-800">Indexes</Link>
             <Link href="/learn" className="hover:text-navy-800">Learn</Link>
             <Link href="/pricing" className="hover:text-navy-800">Pricing</Link>
             <div
@@ -127,14 +126,19 @@ export default function Header() {
             </div>
           </nav>
 
-          {/* Right: dark pill CTA on desktop, hamburger on mobile */}
-          <Link
-            href="/screen"
-            className="hidden items-center gap-1.5 rounded-full bg-navy-900 px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition hover:bg-navy-800 md:inline-flex"
-          >
-            Try a stock
-            <ArrowRight size={14} />
-          </Link>
+          {/* Right: sign in + sign up on desktop, hamburger on mobile */}
+          <div className="hidden items-center gap-3 md:flex">
+            <Link href="/account" className="text-[13px] font-medium text-gray-700 hover:text-navy-800">
+              Sign in
+            </Link>
+            <Link
+              href="/account"
+              className="inline-flex items-center gap-1.5 rounded-full bg-navy-900 px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition hover:bg-navy-800"
+            >
+              Sign up free
+              <ArrowRight size={14} />
+            </Link>
+          </div>
 
           <button
             className="rounded-full p-2 text-gray-700 hover:bg-gray-100 md:hidden"
@@ -149,8 +153,13 @@ export default function Header() {
         {mobileOpen && (
           <div className="mx-auto mt-2 max-w-5xl rounded-2xl border border-gray-200 bg-white p-4 shadow-lg md:hidden">
             <div className="flex flex-col gap-1 text-sm">
+              {/* Sign in / up — prominent at the top */}
+              <div className="mb-2 flex gap-2">
+                <Link href="/account" onClick={() => setMobileOpen(false)} className="flex-1 rounded-md border border-gray-200 px-3 py-2 text-center font-semibold text-gray-800">Sign in</Link>
+                <Link href="/account" onClick={() => setMobileOpen(false)} className="flex-1 rounded-md bg-navy-900 px-3 py-2 text-center font-semibold text-white">Sign up free</Link>
+              </div>
               <Link href="/screen" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Screen</Link>
-              <Link href="/discover" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Discover</Link>
+              <Link href="/indexes" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Indexes</Link>
               <Link href="/learn" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Learn</Link>
               <Link href="/pricing" onClick={() => setMobileOpen(false)} className="rounded-md px-2 py-2 font-medium text-gray-900 hover:bg-gray-50">Pricing</Link>
 
@@ -175,9 +184,9 @@ export default function Header() {
               <Link
                 href="/screen"
                 onClick={() => setMobileOpen(false)}
-                className="mt-3 inline-flex items-center justify-center gap-1.5 rounded-full bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white"
+                className="mt-3 inline-flex items-center justify-center gap-1.5 rounded-full border border-navy-900 px-4 py-2.5 text-sm font-semibold text-navy-900"
               >
-                Try a stock <ArrowRight size={14} />
+                Screen a stock <ArrowRight size={14} />
               </Link>
             </div>
           </div>
