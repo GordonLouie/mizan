@@ -287,7 +287,7 @@ export default function AIReport({ ticker, scholarId }: { ticker: string; schola
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 px-5 py-4 sm:px-6">
         <p className="max-w-md text-[11px] leading-relaxed text-gray-400">
           Verdict &amp; figures are computed deterministically; the narrative is AI-generated and grounded in them.
-          Screening analysis, not investment advice.
+          Screening analysis — not investment advice, and not a religious ruling (fatwa). Verify with a qualified scholar.
         </p>
         <button
           type="button"
