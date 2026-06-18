@@ -81,7 +81,7 @@ export default function Header() {
       <header className="fixed inset-x-0 top-3 z-40 px-3 sm:top-4 sm:px-6">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 px-3 py-2 shadow-[0_8px_30px_-12px_rgba(31,58,95,0.18)] backdrop-blur-md sm:px-4">
           {/* Brand mark — McKinsey-style wordmark on navy block */}
-          <Link href="/" aria-label="Mizan home" className="inline-flex shrink-0">
+          <Link href="/" aria-label="HalalGauge home" className="inline-flex shrink-0">
             <MizanWordmark height={28} asLink={false} />
           </Link>
 

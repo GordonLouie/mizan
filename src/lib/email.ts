@@ -5,7 +5,7 @@
  * the sending domain in Resend). emailConfigured() is false until then.
  */
 const RESEND_KEY = process.env.RESEND_API_KEY;
-const FROM = process.env.ALERTS_FROM || "Mizan <alerts@mizaninvesting.com>";
+const FROM = process.env.ALERTS_FROM || "HalalGauge <alerts@mizaninvesting.com>";
 
 export function emailConfigured(): boolean {
   return !!RESEND_KEY;

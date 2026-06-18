@@ -1,6 +1,6 @@
 /**
  * CompanyLogoMarquee — infinite scrolling row of company logos with soft
- * blur fades at the edges. Tells visitors "Mizan covers these companies"
+ * blur fades at the edges. Tells visitors "HalalGauge covers these companies"
  * at a glance, without listing them.
  *
  * Composes InfiniteSlider + ProgressiveBlur + CompanyLogo. All tickers run

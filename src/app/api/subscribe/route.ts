@@ -49,7 +49,7 @@ export async function POST(req: Request) {
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({
         access_key: WEB3FORMS_KEY,
-        subject: `[Mizan signup] ${purpose}${ticker ? `: ${ticker}` : ""}`,
+        subject: `[HalalGauge signup] ${purpose}${ticker ? `: ${ticker}` : ""}`,
         email,
         ticker,
         purpose,

@@ -164,7 +164,7 @@ function ScreenInner() {
                 Rather browse than search?
               </div>
               <p className="mt-1 text-[13px] text-gray-600">
-                See every stock Mizan covers, filtered by your scholar &amp; verdict.
+                See every stock HalalGauge covers, filtered by your scholar &amp; verdict.
               </p>
             </div>
             <Link
@@ -493,9 +493,9 @@ function TickerNotFound({
   covered: number;
   onPick: (ticker: string) => void;
 }) {
-  const mailtoSubject = encodeURIComponent(`Mizan ticker request: ${ticker}`);
+  const mailtoSubject = encodeURIComponent(`HalalGauge ticker request: ${ticker}`);
   const mailtoBody = encodeURIComponent(
-    `Hi Gordon,\n\nI tried to screen ${ticker} on Mizan but it's not in the universe yet. Could you add it?\n\nThanks.`,
+    `Hi Gordon,\n\nI tried to screen ${ticker} on HalalGauge but it's not in the universe yet. Could you add it?\n\nThanks.`,
   );
   const mailtoHref = `mailto:hello@mizaninvesting.com?subject=${mailtoSubject}&body=${mailtoBody}`;
 
@@ -512,7 +512,7 @@ function TickerNotFound({
           {ticker} isn&apos;t covered — yet.
         </h2>
         <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-gray-700">
-          Mizan covers {covered} tickers today and is expanding weekly toward
+          HalalGauge covers {covered} tickers today and is expanding weekly toward
           the full Russell 3000 + major international names. The fastest way
           to get {ticker} prioritised is to ask for it directly.
         </p>
@@ -573,7 +573,7 @@ function ShareVerdictButton({
 
   async function handleShare() {
     const url = `https://mizaninvesting.com/screen?ticker=${ticker}`;
-    const text = `${ticker} (${name}) under ${scholarShort}: ${verdictLabel}.\nSee all 6 scholars on Mizan: ${url}`;
+    const text = `${ticker} (${name}) under ${scholarShort}: ${verdictLabel}.\nSee all 6 scholars on HalalGauge: ${url}`;
     try {
       if (typeof navigator !== "undefined" && navigator.share) {
         await navigator.share({

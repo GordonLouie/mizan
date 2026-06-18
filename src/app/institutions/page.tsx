@@ -9,7 +9,7 @@ import { Boxes, Database, FileBadge, ShieldCheck, ArrowRight } from "lucide-reac
 const SITE = "https://mizaninvesting.com";
 
 export const metadata: Metadata = {
-  title: "Mizan for institutions — halal index licensing, screening data & white-label reports",
+  title: "HalalGauge for institutions — halal index licensing, screening data & white-label reports",
   description:
     "Transparent, multi-scholar Shariah infrastructure for funds, banks and pension/MPF providers: custom halal index construction & licensing, a screening data API, white-label compliance reports, and audit-grade fund screening.",
   alternates: { canonical: `${SITE}/institutions` },
@@ -46,7 +46,7 @@ export default function InstitutionsPage() {
         Shariah infrastructure you can put your name on.
       </h1>
       <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-gray-700">
-        The existing Shariah indices are narrow, opaque, single-standard fund products. Mizan is
+        The existing Shariah indices are narrow, opaque, single-standard fund products. HalalGauge is
         the transparent, multi-scholar, customizable layer underneath — for funds, banks, and
         pension/MPF providers who need halal screening and indexing they (and their regulators)
         can audit.
@@ -95,7 +95,7 @@ Authorization: Bearer <your-api-key>
           and we&apos;ll scope a pilot.
         </p>
         <a
-          href="mailto:hello@mizaninvesting.com?subject=Mizan%20for%20institutions"
+          href="mailto:hello@mizaninvesting.com?subject=HalalGauge%20for%20institutions"
           className="mt-4 inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-5 py-2.5 text-[14px] font-semibold text-white transition hover:bg-navy-900"
         >
           Contact us <ArrowRight size={15} />

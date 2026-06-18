@@ -177,7 +177,7 @@ export default function PricingPage() {
       </div>
 
       <p className="mt-6 text-center text-[11px] leading-relaxed text-gray-400">
-        Mizan is a screening tool, not investment advice. Cancel anytime. Prices in USD.
+        HalalGauge is a screening tool, not investment advice. Cancel anytime. Prices in USD.
       </p>
     </main>
   );

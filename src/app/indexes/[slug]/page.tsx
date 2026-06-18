@@ -25,13 +25,13 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const def = getIndexDef(slug);
-  if (!def) return { title: "Index not found — Mizan" };
-  const title = `${def.name} — halal index & returns vs S&P 500 — Mizan`;
+  if (!def) return { title: "Index not found — HalalGauge" };
+  const title = `${def.name} — halal index & returns vs S&P 500 — HalalGauge`;
   return {
     title,
     description: `${def.tagline} See the constituents, methodology, and backtested performance vs the S&P 500 and SPUS.`,
     alternates: { canonical: `${SITE}/indexes/${def.slug}` },
-    openGraph: { title, description: def.tagline, url: `${SITE}/indexes/${def.slug}`, siteName: "Mizan", type: "article" },
+    openGraph: { title, description: def.tagline, url: `${SITE}/indexes/${def.slug}`, siteName: "HalalGauge", type: "article" },
   };
 }
 
@@ -94,7 +94,7 @@ export default async function IndexPage({ params }: { params: Promise<{ slug: st
       <section className="mt-10 rounded-xl border border-gray-200 bg-white p-5">
         <h2 className="text-[15px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>Methodology</h2>
         <ul className="mt-2 space-y-1.5 text-[13px] leading-relaxed text-gray-700">
-          <li><b>Universe:</b> Mizan&apos;s covered equities (ETFs excluded).</li>
+          <li><b>Universe:</b> HalalGauge&apos;s covered equities (ETFs excluded).</li>
           <li><b>Screen:</b> must PASS the {scholar.label} standard — the basis for most mainstream halal indices.</li>
           <li><b>Selection (point-in-time):</b> {def.filter ? "themed subset, " : ""}the {def.size} largest qualifying companies by estimated market cap <i>at the index start date</i>{inceptionLabel ? ` (${inceptionLabel})` : ""} — not today&apos;s largest — so the basket reflects what you&apos;d have held at inception ({cons.length} constituents).</li>
           <li><b>Weighting:</b> equal-weight, buy-and-hold, price return.</li>

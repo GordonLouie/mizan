@@ -97,7 +97,7 @@ function toMarkdown(r: Report): string {
     lines.push("", "## Bottom line", "", n.bottomLine, "");
   }
   lines.push("");
-  lines.push(`_Generated ${new Date(r.generatedAt).toLocaleString()} by Mizan. Screening analysis, not investment advice. Verdict and figures are computed deterministically; narrative is AI-generated and grounded in those figures. Verify with a qualified scholar._`);
+  lines.push(`_Generated ${new Date(r.generatedAt).toLocaleString()} by HalalGauge. Screening analysis, not investment advice. Verdict and figures are computed deterministically; narrative is AI-generated and grounded in those figures. Verify with a qualified scholar._`);
   return lines.join("\n");
 }
 

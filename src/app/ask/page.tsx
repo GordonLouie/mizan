@@ -110,7 +110,7 @@ export default function AskPage() {
           Ask a scholar
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
-          Type your question. Mizan returns the answer per your selected scholar from a
+          Type your question. HalalGauge returns the answer per your selected scholar from a
           knowledge base of 49 common questions, with citations. For anything not covered,
           ask for an AI answer — powered by Claude and grounded in this knowledge base.
         </p>
@@ -222,7 +222,7 @@ export default function AskPage() {
             </div>
           )}
           <p className="mt-4 text-[11px] leading-relaxed text-gray-500">
-            AI-generated and grounded in Mizan&apos;s vetted knowledge base. General information, not
+            AI-generated and grounded in HalalGauge&apos;s vetted knowledge base. General information, not
             investment advice — for a specific ruling, consult a qualified scholar.
           </p>
         </article>
@@ -307,7 +307,7 @@ export default function AskPage() {
           49 entries across cryptocurrency, gold and silver, real estate and REITs,
           sukuk and bonds, retirement accounts, mortgages, options/futures/short selling,
           zakat and khums, purification, specific stock verdicts, halal ETFs, portfolio
-          strategy, insurance and takaful, and Mizan-specific FAQs.
+          strategy, insurance and takaful, and HalalGauge-specific FAQs.
         </p>
       </div>
     </div>

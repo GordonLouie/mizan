@@ -45,7 +45,7 @@ export default function HalalChecks({ stock, result, scholar }: Props) {
         <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-gray-600">
           {hasDetail
             ? "Click any card to expand the math — line items, calculation, and sources."
-            : "Mizan shows the aggregate ratios for this ticker. Full line-item detail is being ingested progressively (AAPL has it today)."}
+            : "HalalGauge shows the aggregate ratios for this ticker. Full line-item detail is being ingested progressively (AAPL has it today)."}
         </p>
       </header>
 
@@ -140,7 +140,7 @@ function DetailChecks({
           dataSourceUrl={bs.filingUrl}
           thresholdSource={`${scholar.sourceLabel}, §15.4`}
           thresholdSourceUrl={scholar.sourceUrl ?? undefined}
-          whatThisMeans="Mufti Taqi's requirement: ≥20% of total assets must be tangible. Unique to Mizan."
+          whatThisMeans="Mufti Taqi's requirement: ≥20% of total assets must be tangible. Unique to HalalGauge."
         />
       )}
 

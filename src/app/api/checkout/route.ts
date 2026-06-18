@@ -1,5 +1,5 @@
 /**
- * POST /api/checkout — start a Stripe Checkout session for Mizan Pro.
+ * POST /api/checkout — start a Stripe Checkout session for HalalGauge Pro.
  * Body: { plan?: "monthly" | "annual" }
  *
  * Plain REST (no Stripe SDK / npm dep). Inert until STRIPE_SECRET_KEY +

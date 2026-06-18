@@ -59,19 +59,19 @@ function tallies(stock: StockFundamentals) {
 export async function generateMetadata({ params }: { params: Promise<{ ticker: string }> }): Promise<Metadata> {
   const { ticker } = await params;
   const stock = findStock(decode(ticker));
-  if (!stock) return { title: "Stock not found — Mizan" };
+  if (!stock) return { title: "Stock not found — HalalGauge" };
   const url = `${SITE}/halal/${encodeURIComponent(stock.ticker)}`;
 
   // ── ETF metadata ──
   if (isEtf(stock)) {
     const info = etfInfo(stock.ticker);
     const verdictWord = info ? (info.shariah ? "a Shariah-compliant ETF" : "not Shariah-screened") : "an ETF";
-    const title = `Is ${stock.ticker} (${stock.name}) halal? — Mizan`;
+    const title = `Is ${stock.ticker} (${stock.name}) halal? — HalalGauge`;
     const description =
       `${stock.name} (${stock.ticker}) is ${verdictWord}. ${info?.summary ?? "An ETF's halal status depends on its holdings and structure, not single-company ratios."} Free, no signup.`;
     return {
       title, description, alternates: { canonical: url },
-      openGraph: { title, description, url, siteName: "Mizan", type: "article" },
+      openGraph: { title, description, url, siteName: "HalalGauge", type: "article" },
       twitter: { card: "summary_large_image", title, description },
     };
   }
@@ -81,7 +81,7 @@ export async function generateMetadata({ params }: { params: Promise<{ ticker: s
     pass === NAMED_SCHOLARS.length ? "halal under all 5 standards"
       : pass === 0 ? "not halal under the mainstream standards"
         : `halal under ${pass} of 5 standards`;
-  const title = `Is ${stock.ticker} (${stock.name}) halal? — Mizan`;
+  const title = `Is ${stock.ticker} (${stock.name}) halal? — HalalGauge`;
   const description =
     `${stock.name} (${stock.ticker}) is ${verdictWord}. See the verdict under ` +
     `AAOIFI, Mufti Taqi Usmani, S&P DJIM, Ja'fari and the strict view side by side, ` +
@@ -93,7 +93,7 @@ export async function generateMetadata({ params }: { params: Promise<{ ticker: s
     // OG/Twitter images come from the co-located opengraph-image.tsx (a dynamic
     // per-ticker verdict card) — don't set images here or it overrides that.
     openGraph: {
-      title, description, url, siteName: "Mizan", type: "article",
+      title, description, url, siteName: "HalalGauge", type: "article",
     },
     twitter: { card: "summary_large_image", title, description },
   };
@@ -167,7 +167,7 @@ function PageShell({ stock, children, jsonld }: { stock: StockFundamentals; chil
       )}
 
       <p className="mt-8 text-[11px] leading-relaxed text-gray-400">
-        Mizan surfaces published scholarly methodologies with full sourcing; it does not issue
+        HalalGauge surfaces published scholarly methodologies with full sourcing; it does not issue
         fatwa or certify any security as halal. Verify with a qualified scholar before investing.
       </p>
     </main>
@@ -223,7 +223,7 @@ function EtfHalalView({ stock }: { stock: StockFundamentals }) {
           An ETF holds dozens or hundreds of underlying securities, so its halal status depends on
           (1) whether those holdings are individually Shariah-compliant, (2) whether the fund screens
           and purifies, and (3) the fund&apos;s own structure (e.g. interest earned on cash). You can&apos;t
-          judge it with a single company&apos;s debt-to-market-cap ratio — which is why Mizan shows a
+          judge it with a single company&apos;s debt-to-market-cap ratio — which is why HalalGauge shows a
           curated summary for funds rather than a company screen.
         </p>
       </section>
@@ -272,7 +272,7 @@ export default async function HalalTickerPage({ params }: { params: Promise<{ ti
         name: `Is ${stock.name} (${stock.ticker}) stock halal?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `${headline} Mizan screens ${stock.ticker} under AAOIFI, Mufti Taqi Usmani, S&P DJIM, Ja'fari and the strict view, citing every threshold to its primary source.`,
+          text: `${headline} HalalGauge screens ${stock.ticker} under AAOIFI, Mufti Taqi Usmani, S&P DJIM, Ja'fari and the strict view, citing every threshold to its primary source.`,
         },
       },
       {

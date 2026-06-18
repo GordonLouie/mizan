@@ -200,7 +200,7 @@ export function ScholarSpectrumDiagram() {
   const colX = (i: number) => i * COL_W + COL_W / 2;
 
   return (
-    <Figure caption="Five mainstream scholarly methodologies. Same stock — Amazon. Different verdicts. Mizan ships all five plus a custom builder; you pick whose rulings to apply.">
+    <Figure caption="Five mainstream scholarly methodologies. Same stock — Amazon. Different verdicts. HalalGauge ships all five plus a custom builder; you pick whose rulings to apply.">
       <svg
         viewBox="0 0 720 300"
         xmlns="http://www.w3.org/2000/svg"
@@ -285,7 +285,7 @@ export function RatiosDiagram() {
   };
 
   return (
-    <Figure caption="Halal screening checks five numbers per company. Each scholar sets the limit; Mizan shows the company's value against it. The last row is Mufti Taqi Usmani's distinctive floor — no other major standard requires it.">
+    <Figure caption="Halal screening checks five numbers per company. Each scholar sets the limit; HalalGauge shows the company's value against it. The last row is Mufti Taqi Usmani's distinctive floor — no other major standard requires it.">
       <svg
         viewBox="0 0 720 380"
         xmlns="http://www.w3.org/2000/svg"
@@ -402,7 +402,7 @@ export function PurificationDiagram() {
 // ──────────────────────────────────────────────────────────────
 export function ZakatDiagram() {
   return (
-    <Figure caption="Zakat is the annual 2.5% obligation on net wealth above the nisab threshold. Distinct from purification. Mizan's calculator handles cash, stocks, gold, silver, and crypto.">
+    <Figure caption="Zakat is the annual 2.5% obligation on net wealth above the nisab threshold. Distinct from purification. HalalGauge's calculator handles cash, stocks, gold, silver, and crypto.">
       <svg
         viewBox="0 0 720 240"
         xmlns="http://www.w3.org/2000/svg"

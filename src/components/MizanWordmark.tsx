@@ -30,32 +30,31 @@ export default function MizanWordmark({
   asLink = true,
   className,
 }: Props) {
-  const width = Math.round(height * 2.6);
+  const width = Math.round(height * 4.7); // "HalalGauge" is wider than "Mizan"
 
   const svg = (
     <svg
       width={width}
       height={height}
-      viewBox="0 0 260 100"
+      viewBox="0 0 470 100"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Mizan"
+      aria-label="HalalGauge"
       className={className}
     >
-      {/* Deep institutional navy — slightly desaturated from the brand
-          navy-800 tone so the word reads as elegant, not punchy. */}
-      <rect width="260" height="100" rx="6" fill="#1B2D4A" />
+      {/* Deep institutional navy — reads as elegant, not punchy. */}
+      <rect width="470" height="100" rx="6" fill="#1B2D4A" />
       <text
         x="50%"
         y="50%"
         dominantBaseline="central"
         textAnchor="middle"
         fontFamily="Georgia, 'Times New Roman', serif"
-        fontSize="56"
+        fontSize="46"
         fontWeight="600"
         fill="#FFFFFF"
-        letterSpacing="2"
+        letterSpacing="0.5"
       >
-        Mizan
+        HalalGauge
       </text>
     </svg>
   );
@@ -63,7 +62,7 @@ export default function MizanWordmark({
   if (!asLink) return svg;
 
   return (
-    <Link href="/" aria-label="Mizan home" className="inline-flex">
+    <Link href="/" aria-label="HalalGauge home" className="inline-flex">
       {svg}
     </Link>
   );

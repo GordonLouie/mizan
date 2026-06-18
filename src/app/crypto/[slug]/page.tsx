@@ -34,13 +34,13 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const a = find(slug);
-  if (!a) return { title: "Cryptoasset not found — Mizan" };
-  const title = `Is ${a.name} (${a.symbol}) halal? — Mizan`;
+  if (!a) return { title: "Cryptoasset not found — HalalGauge" };
+  const title = `Is ${a.name} (${a.symbol}) halal? — HalalGauge`;
   const description = `${a.blunt} See what Mufti Taqi Usmani, Mufti Faraz Adam, AAOIFI and others say about ${a.name}, side by side. Free, no signup.`;
   const url = `${SITE}/crypto/${slugOf(a)}`;
   return {
     title, description, alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: "Mizan", type: "article" },
+    openGraph: { title, description, url, siteName: "HalalGauge", type: "article" },
     twitter: { card: "summary_large_image", title, description },
   };
 }
@@ -155,7 +155,7 @@ export default async function CryptoSlugPage({ params }: { params: Promise<{ slu
       </section>
 
       <p className="mt-8 text-[11px] leading-relaxed text-gray-400">
-        Mizan surfaces published scholarly views with sourcing; it does not issue fatwa. Crypto
+        HalalGauge surfaces published scholarly views with sourcing; it does not issue fatwa. Crypto
         rulings are evolving and contested — verify with a scholar you trust before acting.
       </p>
     </main>

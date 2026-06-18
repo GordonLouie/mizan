@@ -4,7 +4,7 @@
  * + a small grid of source badges.
  *
  * The "small pill badge above a hero headline" is a common SaaS section
- * pattern; we've populated it with Mizan-original copy about our
+ * pattern; we've populated it with HalalGauge-original copy about our
  * primary-source rigor (AAOIFI, Mufti Taqi's published rulings, Sistani's
  * Code of Practice, the S&P DJIM methodology, SEC filings).
  */
@@ -54,7 +54,7 @@ export default function MethodologyBubble() {
           Sourced from the documents that actually rule.
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-gray-600">
-          Every threshold on Mizan traces back to a published primary source —
+          Every threshold on HalalGauge traces back to a published primary source —
           not a third-party score, not an opinion. Open any check to see the
           citation.
         </p>

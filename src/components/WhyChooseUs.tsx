@@ -5,7 +5,7 @@
  * pale cream background. Right column: the content + mock UI for the
  * currently selected tab.
  *
- * Each tab maps to one of Mizan's actual differentiators — multi-scholar
+ * Each tab maps to one of HalalGauge's actual differentiators — multi-scholar
  * transparency, primary-source citations, the breach-risk indicator — so
  * the panel content is real product surface, not stock illustration.
  */
@@ -31,7 +31,7 @@ const TABS: Array<{
     icon: <Scale size={18} />,
     headline: "Every scholar, one screen.",
     description:
-      "Every other halal app hides scholar disagreement behind a single default. Mizan shows you the verdict under AAOIFI, Mufti Taqi Usmani, S&P DJIM, Ja'fari, and the strict view — side by side, on every stock.",
+      "Every other halal app hides scholar disagreement behind a single default. HalalGauge shows you the verdict under AAOIFI, Mufti Taqi Usmani, S&P DJIM, Ja'fari, and the strict view — side by side, on every stock.",
   },
   {
     key: "show-the-math",
@@ -47,7 +47,7 @@ const TABS: Array<{
     icon: <Activity size={18} />,
     headline: "Will it still be halal next quarter?",
     description:
-      "A passing stock can flip when debt creeps up or illiquid assets fall. Mizan computes a stability score and per-ratio breach risk so you can see — at a glance — which holdings are comfortable, which are near the limit, and which are about to fail.",
+      "A passing stock can flip when debt creeps up or illiquid assets fall. HalalGauge computes a stability score and per-ratio breach risk so you can see — at a glance — which holdings are comfortable, which are near the limit, and which are about to fail.",
   },
 ];
 
@@ -61,7 +61,7 @@ export default function WhyChooseUs() {
         {/* LEFT — section header + tab buttons */}
         <div>
           <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-600">
-            Why choose Mizan
+            Why choose HalalGauge
           </div>
           <h2
             className="mt-4 text-[34px] font-bold leading-[1.05] text-gray-900 sm:text-[44px]"
@@ -151,7 +151,7 @@ function previewCTA(tab: TabKey): string {
 
 /**
  * TabPreview — a small mock specific to each tab. Editorial / hairline
- * borders, no shadows, monospace data per the Mizan signature.
+ * borders, no shadows, monospace data per the HalalGauge signature.
  */
 function TabPreview({ tab }: { tab: TabKey }) {
   if (tab === "multi-scholar") {

@@ -44,10 +44,10 @@ function topContext(question: string, scholarId: string, n = 4) {
     });
 }
 
-const SYSTEM_PROMPT = `You are a careful halal-investing Q&A assistant for Mizan. You answer according to the named scholar/standard the user has selected.
+const SYSTEM_PROMPT = `You are a careful halal-investing Q&A assistant for HalalGauge. You answer according to the named scholar/standard the user has selected.
 
-You will be given the user's question, the selected standard, and REFERENCE Q&A entries from Mizan's vetted knowledge base. Rules:
-1. Prefer and stay consistent with the reference entries. They reflect Mizan's reviewed positions for this standard.
+You will be given the user's question, the selected standard, and REFERENCE Q&A entries from HalalGauge's vetted knowledge base. Rules:
+1. Prefer and stay consistent with the reference entries. They reflect HalalGauge's reviewed positions for this standard.
 2. If the question is outside the references' scope or would require a specific fatwa, say so plainly and recommend consulting a qualified scholar — do NOT guess a ruling.
 3. NEVER invent fatwas, scholar quotes, citations, dates, or numbers. Only cite sources you are given, or describe well-established general principles generally (without fake references).
 4. Be concise: a few short paragraphs at most. Neutral, clear, practical.
@@ -64,7 +64,7 @@ function buildUser(question: string, scholarLabel: string, scholarBlurb: string,
     `Selected standard: ${scholarLabel}`,
     scholarBlurb ? `Standard summary: ${scholarBlurb}` : "",
     "",
-    "Reference Q&A from Mizan's vetted knowledge base (may be partial or empty):",
+    "Reference Q&A from HalalGauge's vetted knowledge base (may be partial or empty):",
     JSON.stringify(ctx, null, 2),
     "",
     `User question: ${question}`,

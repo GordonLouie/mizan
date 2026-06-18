@@ -5,7 +5,7 @@
  * angle to flat and scales slightly. The chrome is rendered to look like
  * an actual iPad: matte aluminium frame, fine inner bezel, camera notch,
  * subtle screen glare. The inner content area is cream so the embedded
- * Mizan UI sits naturally inside it.
+ * HalalGauge UI sits naturally inside it.
  */
 
 "use client";
@@ -75,7 +75,7 @@ function Header({
  *   1. Matte aluminium body — dark charcoal with a faint vertical gradient
  *   2. Fine inner bezel ring — slightly lighter to suggest reflectivity
  *   3. Black bezel — the actual screen border
- *   4. Cream content area where Mizan's UI lives
+ *   4. Cream content area where HalalGauge's UI lives
  *   5. Front camera dot at top center
  *   6. Subtle glare overlay across the top of the screen
  */

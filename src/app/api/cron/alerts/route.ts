@@ -77,11 +77,11 @@ export async function GET(req: Request) {
       }
       if (lines.length === 0) continue;
       const html =
-        `<p>Updates on the stocks you're watching on Mizan:</p>` +
+        `<p>Updates on the stocks you're watching on HalalGauge:</p>` +
         `<ul>${lines.map((l) => `<li>${l}</li>`).join("")}</ul>` +
-        `<p><a href="https://mizaninvesting.com/screen">Open Mizan</a></p>` +
+        `<p><a href="https://mizaninvesting.com/screen">Open HalalGauge</a></p>` +
         `<p style="color:#888;font-size:12px">You're getting this because you asked for alerts at mizaninvesting.com.</p>`;
-      if (await sendEmail(sub.email, "Mizan — watchlist update", html)) sent++;
+      if (await sendEmail(sub.email, "HalalGauge — watchlist update", html)) sent++;
     }
   }
 

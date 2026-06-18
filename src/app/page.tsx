@@ -13,11 +13,11 @@
  *   7. MethodologyBubble — primary-source rigor signal
  *   8. GetStartedSteps — 3-step conversion
  *   9. Curated lists
- *  10. What Mizan is / isn't
+ *  10. What HalalGauge is / isn't
  *
  * Removed in v5:
  *   - WhyChooseUs ("Built for the way Muslims actually invest.")
- *   - "Why Mizan" Amazon wedge ("Most apps check one rulebook…")
+ *   - "Why HalalGauge" Amazon wedge ("Most apps check one rulebook…")
  *   - EarningsCalendar block (lives on /calendar now)
  */
 
@@ -44,7 +44,7 @@ export default function Home() {
       {/* HERO — asymmetric grid: content LEFT (60%), real product preview
           RIGHT (40%). Replaces the prior centered text-only hero, which
           read as the LLM default. The right-column "verdict card" shows
-          what Mizan actually does in one glance — Amazon under 5 scholars,
+          what HalalGauge actually does in one glance — Amazon under 5 scholars,
           three say halal, two say not. */}
       <section className="mx-auto max-w-6xl px-4 pt-6 sm:px-6 sm:pt-10">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
@@ -218,7 +218,7 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
           <div>
             <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-emerald-700">
-              What Mizan is
+              What HalalGauge is
             </div>
             <ul className="mt-4 space-y-2.5 text-[14px] leading-relaxed text-gray-700">
               <li>Free, transparent halal stock screening.</li>
@@ -229,7 +229,7 @@ export default function Home() {
           </div>
           <div>
             <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-rose-700">
-              What Mizan isn&apos;t
+              What HalalGauge isn&apos;t
             </div>
             <ul className="mt-4 space-y-2.5 text-[14px] leading-relaxed text-gray-700">
               <li>An investment advisor. We don&apos;t tell you what to buy.</li>
@@ -253,7 +253,7 @@ export default function Home() {
  * based fake screenshots).
  *
  * Why this works as a hero visual:
- *   - Demonstrates Mizan's core differentiator (multi-scholar disagreement)
+ *   - Demonstrates HalalGauge's core differentiator (multi-scholar disagreement)
  *     in a single glance — no copy needed
  *   - Uses real scholar names + real Amazon logo + real verdict logic
  *   - Quietly reinforces trust: this is what you actually get, not a mockup

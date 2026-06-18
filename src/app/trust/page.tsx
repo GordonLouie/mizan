@@ -2,9 +2,9 @@ import Link from "next/link";
 import { CheckCircle2, AlertCircle, Clock, ExternalLink } from "lucide-react";
 
 export const metadata = {
-  title: "Trust centre · Mizan",
+  title: "Trust centre · HalalGauge",
   description:
-    "Everything a Muslim investor needs to evaluate whether to trust Mizan — in one place. Status of scholar onboarding, methodology sources, data sources, privacy, and how to reach the founder directly.",
+    "Everything a Muslim investor needs to evaluate whether to trust HalalGauge — in one place. Status of scholar onboarding, methodology sources, data sources, privacy, and how to reach the founder directly.",
 };
 
 type Status = "done" | "in_progress" | "not_yet";
@@ -27,7 +27,7 @@ export default function TrustPage() {
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Everything you need to evaluate Mizan
+          Everything you need to evaluate HalalGauge
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
           A single page with the honest current status of every credibility signal you might
@@ -57,7 +57,7 @@ export default function TrustPage() {
               label: "Live product deployed",
               status: "done",
               detail:
-                "Mizan is live, public, free to use. Web app supports six scholarly profiles, screens a 163-ticker representative sample, full source on GitHub.",
+                "HalalGauge is live, public, free to use. Web app supports six scholarly profiles, screens a 163-ticker representative sample, full source on GitHub.",
             }}
           />
           <StatusRow
@@ -89,12 +89,12 @@ export default function TrustPage() {
               label: "Co-founder / additional team",
               status: "not_yet",
               detail:
-                "Mizan is built solo today by Gordon Louie. No co-founder or additional team member is currently engaged. Future hires will appear here when in place.",
+                "HalalGauge is built solo today by Gordon Louie. No co-founder or additional team member is currently engaged. Future hires will appear here when in place.",
             }}
           />
           <StatusRow
             item={{
-              label: "Hong Kong operating entity (Mizan Operations Ltd)",
+              label: "Hong Kong operating entity (HalalGauge Operations Ltd)",
               status: "in_progress",
               detail:
                 "Incorporation scheduled via Sleek HK in week 6 of the launch roadmap.",
@@ -132,7 +132,7 @@ export default function TrustPage() {
         <SectionHead title="Who we are" />
         <div className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
           <p>
-            Mizan is built today by{" "}
+            HalalGauge is built today by{" "}
             <strong className="text-gray-900">Gordon Louie</strong> — a Hong&nbsp;Kong-based
             technologist, solo founder. A Muslim friend got me thinking about why existing
             halal-investing apps hide scholarly disagreement instead of surfacing it; that
@@ -163,7 +163,7 @@ export default function TrustPage() {
         <SectionHead title="Where the screening rules come from" />
         <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-gray-700">
           Every threshold in the engine traces back to a public primary source. If you find
-          a mismatch between a Mizan profile and the cited source, write to{" "}
+          a mismatch between a HalalGauge profile and the cited source, write to{" "}
           <a
             href="mailto:methodology@mizaninvesting.com"
             className="text-navy-700 underline hover:text-navy-900"
@@ -229,7 +229,7 @@ export default function TrustPage() {
           </li>
           <li>
             <strong className="text-gray-900">Ratios computed in-house</strong> from
-            balance-sheet primitives. Mizan does not rely on any third party&apos;s
+            balance-sheet primitives. HalalGauge does not rely on any third party&apos;s
             pre-computed &lsquo;halal score&rsquo;.
           </li>
         </ul>

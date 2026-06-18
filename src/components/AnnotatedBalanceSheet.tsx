@@ -342,7 +342,7 @@ function SummaryBreakdown({
           Detailed line items being ingested
         </div>
         <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-gray-700">
-          For this ticker Mizan currently shows the aggregate ratios used in the halal check.
+          For this ticker HalalGauge currently shows the aggregate ratios used in the halal check.
           We&apos;re ingesting line-by-line balance sheets progressively from primary filings;
           tickers like AAPL already show the full breakdown.
         </p>

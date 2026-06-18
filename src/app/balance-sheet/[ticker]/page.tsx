@@ -72,7 +72,7 @@ export default function BalanceSheetPage() {
             {ticker} not in dataset
           </h1>
           <p className="mt-2 text-[14px] text-gray-700">
-            Mizan&apos;s prototype dataset doesn&apos;t include this ticker yet. Email us at
+            HalalGauge&apos;s prototype dataset doesn&apos;t include this ticker yet. Email us at
             hello@mizaninvesting.com and we&apos;ll add it in the next batch.
           </p>
         </div>

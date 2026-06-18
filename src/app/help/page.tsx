@@ -11,11 +11,11 @@ const SECTIONS: { title: string; faqs: FAQ[] }[] = [
     faqs: [
       {
         q: "I just signed up. What should I do first?",
-        a: <>Pick your scholar in the Scholar Picker. The verdict you see for any stock depends on which scholar&apos;s methodology Mizan applies. If you don&apos;t know which to pick, start with AAOIFI (the most-followed mainstream standard) and explore the others from there.</>,
+        a: <>Pick your scholar in the Scholar Picker. The verdict you see for any stock depends on which scholar&apos;s methodology HalalGauge applies. If you don&apos;t know which to pick, start with AAOIFI (the most-followed mainstream standard) and explore the others from there.</>,
       },
       {
         q: "How does the screener work?",
-        a: <>Enter a stock ticker. Mizan runs the ticker through two screens: a sector check (is the primary business permissible?) and a financial-ratio check (do the numbers fall within your scholar&apos;s thresholds?). Both must pass for the stock to receive a PASS verdict. We show the ratio breakdown so you can see exactly why the verdict came out the way it did.</>,
+        a: <>Enter a stock ticker. HalalGauge runs the ticker through two screens: a sector check (is the primary business permissible?) and a financial-ratio check (do the numbers fall within your scholar&apos;s thresholds?). Both must pass for the stock to receive a PASS verdict. We show the ratio breakdown so you can see exactly why the verdict came out the way it did.</>,
       },
       {
         q: "Which scholars do you ship with?",
@@ -57,11 +57,11 @@ const SECTIONS: { title: string; faqs: FAQ[] }[] = [
       },
       {
         q: "What is purification?",
-        a: <>Purification is the practice of donating the impermissible portion of dividend income (and, under stricter scholars, realized capital gains) to charity without expecting reward. Mizan calculates this automatically per holding, then offers a one-tap donation flow to vetted charities.</>,
+        a: <>Purification is the practice of donating the impermissible portion of dividend income (and, under stricter scholars, realized capital gains) to charity without expecting reward. HalalGauge calculates this automatically per holding, then offers a one-tap donation flow to vetted charities.</>,
       },
       {
         q: "Do I need to purify capital gains?",
-        a: <>It depends on your scholar. Under AAOIFI and DJIM: no, dividends only. Under Mufti Taqi Usmani and Ja&apos;fari: yes, both dividends and gains. Mizan automatically applies the right scope for your selected scholar.</>,
+        a: <>It depends on your scholar. Under AAOIFI and DJIM: no, dividends only. Under Mufti Taqi Usmani and Ja&apos;fari: yes, both dividends and gains. HalalGauge automatically applies the right scope for your selected scholar.</>,
       },
     ],
   },
@@ -103,11 +103,11 @@ const SECTIONS: { title: string; faqs: FAQ[] }[] = [
     title: "Scholarly questions",
     faqs: [
       {
-        q: "I think Mizan implements [scholar's] methodology wrong.",
+        q: "I think HalalGauge implements [scholar's] methodology wrong.",
         a: <>Tell us, please. We update with citation. Write to <a href="mailto:methodology@mizaninvesting.com" className="text-navy-700 underline">methodology@mizaninvesting.com</a> with the specific scholar, the specific ruling, and the published source. Every note is reviewed against the cited primary source and a public changelog entry is added if a profile changes.</>,
       },
       {
-        q: "Does Mizan have a Shariah board?",
+        q: "Does HalalGauge have a Shariah board?",
         a: <>Not yet. Until one is engaged, credibility comes from the primary-source citations on <a href="/methodology" className="text-navy-700 underline">/methodology</a>. The honest scoreboard of what is and isn&apos;t in place lives on <a href="/trust" className="text-navy-700 underline">/trust</a>.</>,
       },
       {

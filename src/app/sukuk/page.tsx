@@ -7,7 +7,7 @@ import {
 } from "@/lib/sukuk";
 
 export const metadata = {
-  title: "Sukuk · Mizan",
+  title: "Sukuk · HalalGauge",
   description:
     "Islamic bonds explained — primer, accessible ETFs and funds, and notable issuances. The fixed-income leg every halal portfolio needs.",
 };
@@ -254,7 +254,7 @@ export default function SukukPage() {
           </li>
           <li>
             <strong className="text-gray-900">This isn&apos;t advice.</strong> Speak to a
-            registered adviser before allocating. Mizan is information, not recommendation.
+            registered adviser before allocating. HalalGauge is information, not recommendation.
           </li>
         </ul>
       </section>

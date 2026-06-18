@@ -4,7 +4,7 @@
  * Why hand-curated: Clearbit's logo API needs a domain, not a ticker.
  * We only need to cover the heavily-displayed tickers (featured chips,
  * curated lists, watchlist defaults, screen detail). Anything missing
- * falls back to a Mizan monogram pill in <CompanyLogo>.
+ * falls back to a HalalGauge monogram pill in <CompanyLogo>.
  */
 
 export const TICKER_DOMAIN: Record<string, string> = {

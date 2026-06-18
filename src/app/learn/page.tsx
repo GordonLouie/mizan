@@ -4,9 +4,9 @@ import GlossaryTerm from "@/components/GlossaryTerm";
 import { GLOSSARY } from "@/lib/glossaryEntries";
 
 export const metadata = {
-  title: "Halal investing 101 · Mizan",
+  title: "Halal investing 101 · HalalGauge",
   description:
-    "Halal stock screening, explained from scratch. How to read a Mizan verdict, the math behind each check, and how to track your stocks over time.",
+    "Halal stock screening, explained from scratch. How to read a HalalGauge verdict, the math behind each check, and how to track your stocks over time.",
 };
 
 function G({ term, children }: { term: string; children?: React.ReactNode }) {
@@ -32,7 +32,7 @@ export default function LearnPage() {
           If you&apos;ve never bought a stock and you&apos;re not sure what halal
           investing even means, you&apos;re in the right place. This page assumes
           nothing. Read it once and you&apos;ll understand how to use every part
-          of Mizan.
+          of HalalGauge.
         </p>
       </header>
 
@@ -109,7 +109,7 @@ export default function LearnPage() {
       <Section n={3} title="Why scholars actually disagree">
         <p>
           Most halal investing apps hide this fact and just pick one default
-          framework for you. Mizan does the opposite.
+          framework for you. HalalGauge does the opposite.
         </p>
         <p>
           A Hanafi investor following Mufti Taqi Usmani applies stricter rules
@@ -126,13 +126,13 @@ export default function LearnPage() {
           is methodology.
         </p>
         <p>
-          Mizan shows you all six side-by-side so you can see exactly where they
+          HalalGauge shows you all six side-by-side so you can see exactly where they
           agree and where they split.
         </p>
       </Section>
 
       {/* SECTION 4 — six scholar profiles */}
-      <Section n={4} title="The six scholar profiles Mizan ships">
+      <Section n={4} title="The six scholar profiles HalalGauge ships">
         <ScholarRow
           id="aaoifi"
           name="AAOIFI Standard"
@@ -143,7 +143,7 @@ export default function LearnPage() {
           id="taqi_usmani"
           name="Mufti Taqi Usmani"
           oneLine="AAOIFI rules plus a strict illiquid-asset floor and capital-gains purification."
-          who="If you&apos;re Hanafi and follow Mufti Taqi&apos;s framework — Mizan is the only app that implements his illiquid-asset rule properly."
+          who="If you&apos;re Hanafi and follow Mufti Taqi&apos;s framework — HalalGauge is the only app that implements his illiquid-asset rule properly."
         />
         <ScholarRow
           id="djim"
@@ -175,10 +175,10 @@ export default function LearnPage() {
         </p>
       </Section>
 
-      {/* SECTION 5 — How to read a Mizan verdict (NEW) */}
-      <Section n={5} title="How to read a Mizan verdict (3 minutes)">
+      {/* SECTION 5 — How to read a HalalGauge verdict (NEW) */}
+      <Section n={5} title="How to read a HalalGauge verdict (3 minutes)">
         <p>
-          When you search a stock on Mizan, you&apos;ll see four parts. They&apos;re
+          When you search a stock on HalalGauge, you&apos;ll see four parts. They&apos;re
           stacked top-to-bottom on the screen page:
         </p>
 
@@ -251,7 +251,7 @@ export default function LearnPage() {
       {/* SECTION 6 — When stocks change halal status (NEW) */}
       <Section n={6} title="Why a stock can &ldquo;flip&rdquo; halal status">
         <p>
-          This is where Mizan does something other apps don&apos;t: track
+          This is where HalalGauge does something other apps don&apos;t: track
           changes over time.
         </p>
         <p>
@@ -282,7 +282,7 @@ export default function LearnPage() {
           </li>
         </ul>
         <p>
-          That&apos;s why Mizan tracks quarter-by-quarter, surfaces upcoming
+          That&apos;s why HalalGauge tracks quarter-by-quarter, surfaces upcoming
           earnings dates, and shows you the full track record. So you can spot
           changes before they catch you off-guard.
         </p>
@@ -291,17 +291,17 @@ export default function LearnPage() {
       {/* SECTION 7 — Watchlist + portfolio + earnings calendar */}
       <Section n={7} title="Tracking your own holdings">
         <p>
-          Three tools on Mizan help you keep tabs on stocks you care about:
+          Three tools on HalalGauge help you keep tabs on stocks you care about:
         </p>
         <NumberedItem n="•" title="Watchlist">
           <p>
-            Stocks you&apos;re considering or want to monitor. Mizan shows each
+            Stocks you&apos;re considering or want to monitor. HalalGauge shows each
             one&apos;s current verdict and flags any with upcoming earnings.
           </p>
         </NumberedItem>
         <NumberedItem n="•" title="Portfolio">
           <p>
-            Stocks you actually own, weighted by how much you hold. Mizan
+            Stocks you actually own, weighted by how much you hold. HalalGauge
             calculates what percentage of your portfolio value is halal under
             your scholar.
           </p>
@@ -321,7 +321,7 @@ export default function LearnPage() {
       {/* SECTION 8 — Other tools (briefly) */}
       <Section n={8} title="Other tools — briefly">
         <p>
-          Mizan ships a few additional features for users who need them. They&apos;re
+          HalalGauge ships a few additional features for users who need them. They&apos;re
           intentionally secondary — the core experience is stock screening.
         </p>
         <ul className="list-disc space-y-1.5 pl-6">
@@ -366,7 +366,7 @@ export default function LearnPage() {
 
       {/* SECTION 9 — FAQ */}
       <Section n={9} title="Common questions">
-        <Q q="Is Mizan free?">
+        <Q q="Is HalalGauge free?">
           Yes — the methodology, screener, watchlist, portfolio, and earnings
           calendar are all free, no signup. A small paid tier for alerts and
           advanced features will land later.
@@ -380,7 +380,7 @@ export default function LearnPage() {
           Not us. Every threshold traces to a published primary source — AAOIFI
           Shariah Standard No. 21, Mufti Taqi Usmani&apos;s published works, the
           S&P DJIM methodology document, the Sistani office&apos;s Code of
-          Practice. Mizan&apos;s job is faithful implementation with full
+          Practice. HalalGauge&apos;s job is faithful implementation with full
           citations, not new rulings.
         </Q>
         <Q q="Why isn't my stock in the dataset?">
@@ -394,7 +394,7 @@ export default function LearnPage() {
           </a>{" "}
           and we&apos;ll add it.
         </Q>
-        <Q q="What if I disagree with how Mizan classifies a line item?">
+        <Q q="What if I disagree with how HalalGauge classifies a line item?">
           Tell us. Email methodology@mizaninvesting.com with the ticker and
           your reasoning. We log every methodology challenge and address it
           openly on the{" "}
@@ -406,7 +406,7 @@ export default function LearnPage() {
         <Q q="Are you a scholar?">
           No. The founder is a CUHK med student. Miqdad — the project&apos;s
           Founding Advisor — is Muslim. Every religious call defers to the cited
-          scholars and to qualified scholars Mizan will engage as it grows.
+          scholars and to qualified scholars HalalGauge will engage as it grows.
         </Q>
       </Section>
 

@@ -14,7 +14,7 @@ import { isEtf, etfInfo } from "@/lib/etfInfo";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Mizan halal verdict";
+export const alt = "HalalGauge halal verdict";
 
 const NAMED = SCHOLAR_PROFILES.filter((s) => s.id !== "custom");
 
@@ -34,7 +34,7 @@ export default async function OgImage({ params }: { params: Promise<{ ticker: st
     return new ImageResponse(
       (
         <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: NAVY, color: "#fff", fontSize: 64, fontWeight: 700 }}>
-          Mizan
+          HalalGauge
         </div>
       ),
       size,
@@ -72,7 +72,7 @@ export default async function OgImage({ params }: { params: Promise<{ ticker: st
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 56, height: 56, borderRadius: 12, background: NAVY, color: "#fff", fontSize: 34, fontWeight: 800 }}>M</div>
-            <div style={{ fontSize: 30, fontWeight: 700, color: NAVY }}>Mizan</div>
+            <div style={{ fontSize: 30, fontWeight: 700, color: NAVY }}>HalalGauge</div>
           </div>
           <div style={{ fontSize: 24, color: "#6b7280" }}>{stock.sector}</div>
         </div>

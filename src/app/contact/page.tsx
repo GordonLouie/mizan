@@ -42,7 +42,7 @@ export default function ContactPage() {
     if (!validateEmail(newsletterEmail)) { setNewsState("error"); return; }
     setNewsState("sending");
     // Mailto fallback — in production this hits the Beehiiv / Substack endpoint.
-    const url = `mailto:newsletter@mizaninvesting.com?subject=${encodeURIComponent("Subscribe to Mizan newsletter")}&body=${encodeURIComponent("Please add " + newsletterEmail + " to the Mizan newsletter list.")}`;
+    const url = `mailto:newsletter@mizaninvesting.com?subject=${encodeURIComponent("Subscribe to HalalGauge newsletter")}&body=${encodeURIComponent("Please add " + newsletterEmail + " to the HalalGauge newsletter list.")}`;
     setTimeout(() => {
       window.location.href = url;
       setNewsState("sent");
@@ -132,7 +132,7 @@ export default function ContactPage() {
 
           <form onSubmit={handleNewsletter} className="rounded-xl border border-navy-200 bg-navy-50 p-5">
             <h3 className="flex items-center gap-2 text-sm font-semibold text-navy-900">
-              <Newspaper size={14} /> The monthly Mizan letter
+              <Newspaper size={14} /> The monthly HalalGauge letter
             </h3>
             <p className="mt-2 text-xs text-navy-800">
               One essay a month on halal investing, scholarly variation, and the

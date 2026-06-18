@@ -1,6 +1,6 @@
 // Crypto compliance — scholar-by-scholar views on major cryptoassets.
 //
-// Mizan does NOT issue rulings. Mizan summarises what each scholar / school
+// HalalGauge does NOT issue rulings. HalalGauge summarises what each scholar / school
 // has publicly said about a category, and cites the source so users can read
 // it themselves. All entries updated quarterly from public scholarly publications.
 

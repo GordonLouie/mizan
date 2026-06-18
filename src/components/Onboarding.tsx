@@ -39,7 +39,7 @@ export default function Onboarding() {
           Halal investing, made clear.
         </h2>
         <p className="mt-3 text-sm leading-6 text-gray-700">
-          Mizan tells you what your scholar would say about any stock. If you&apos;ve
+          HalalGauge tells you what your scholar would say about any stock. If you&apos;ve
           never invested before, start with our 10-minute primer — it explains
           everything in plain English.
         </p>

@@ -13,9 +13,9 @@ import IndexCompare, { type CompareRow } from "@/components/IndexCompare";
 const SITE = "https://mizaninvesting.com";
 
 export const metadata: Metadata = {
-  title: "Halal stock indexes — screened, with real returns vs the S&P 500 — Mizan",
+  title: "Halal stock indexes — screened, with real returns vs the S&P 500 — HalalGauge",
   description:
-    "Mizan's halal indexes: baskets of the largest companies that pass the strictest mainstream Shariah screen, with real backtested performance vs the S&P 500 and SPUS. Core, growth and income profiles.",
+    "HalalGauge's halal indexes: baskets of the largest companies that pass the strictest mainstream Shariah screen, with real backtested performance vs the S&P 500 and SPUS. Core, growth and income profiles.",
   alternates: { canonical: `${SITE}/indexes` },
 };
 

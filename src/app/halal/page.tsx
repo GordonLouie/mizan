@@ -15,7 +15,7 @@ import { CRYPTO_ASSETS } from "@/lib/crypto";
 const SITE = "https://mizaninvesting.com";
 
 export const metadata: Metadata = {
-  title: "Is your stock halal? Free multi-scholar screener — Mizan",
+  title: "Is your stock halal? Free multi-scholar screener — HalalGauge",
   description:
     "Check whether any stock is halal under all 6 scholarly methodologies — AAOIFI, Mufti Taqi Usmani, S&P DJIM, Ja'fari and the strict view — with every threshold cited to its source. Free, no signup. Browse popular tickers and crypto.",
   alternates: { canonical: `${SITE}/halal` },
@@ -97,7 +97,7 @@ export default function HalalHub() {
       </section>
 
       <p className="mt-10 text-[11px] leading-relaxed text-gray-400">
-        Mizan surfaces published scholarly methodologies with full sourcing; it does not issue fatwa
+        HalalGauge surfaces published scholarly methodologies with full sourcing; it does not issue fatwa
         or certify any security as halal. Verify with a qualified scholar before investing.
       </p>
     </main>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/ui";
 
 export const metadata = {
-  title: "Glossary · Mizan",
+  title: "Glossary · HalalGauge",
   description: "Plain-language definitions of Islamic finance terms: riba, gharar, maisir, sukuk, zakat, khums, mudaraba, musharaka, ijara, and more.",
 };
 
@@ -102,7 +102,7 @@ const TERMS: { letter: string; entries: Term[] }[] = [
       { term: "SAC", def: "Shariah Advisory Council — typically refers to the SAC of Securities Commission Malaysia, which sets methodology for Shariah-compliant securities listed in Malaysia. Tightened from a 5%/20% mixed-activity benchmark to a single 5% benchmark effective for FY ending Dec 2025 onward." },
       { term: "Salam", transliteration: "سلم", def: "A forward sale where the buyer pays upfront and the seller delivers a specified good at a future date. Permissible because both price and specifications are defined in advance — different from speculative futures." },
       { term: "Shariah", transliteration: "شريعة", def: "Islamic law derived from the Quran, the Sunnah (Prophet's example, peace be upon him), and scholarly consensus. In finance, governs what transactions and structures are permissible." },
-      { term: "Shariah Supervisory Board", def: "A body of qualified scholars who supervise an Islamic financial institution's compliance — approving methodologies, reviewing products, auditing operations. Mizan does not yet have a Supervisory Board; until one is seated, credibility comes from the primary-source citations on /methodology." },
+      { term: "Shariah Supervisory Board", def: "A body of qualified scholars who supervise an Islamic financial institution's compliance — approving methodologies, reviewing products, auditing operations. HalalGauge does not yet have a Supervisory Board; until one is seated, credibility comes from the primary-source citations on /methodology." },
       { term: "Sukuk", transliteration: "صكوك", def: "Islamic financial certificate, often called the Shariah-compliant alternative to bonds. Unlike conventional bonds, sukuk represent ownership in an underlying asset (real estate, infrastructure, equipment) rather than interest-bearing debt. SPSK is a US ETF that holds Sukuk." },
     ],
   },
@@ -128,7 +128,7 @@ const TERMS: { letter: string; entries: Term[] }[] = [
   {
     letter: "Z",
     entries: [
-      { term: "Zakat", transliteration: "زكاة", def: "An obligatory annual charity, the third pillar of Islam. Paid at 2.5% on net zakatable wealth above the nisab threshold. Categories of wealth include cash, stocks, gold/silver, trade inventory. Mizan provides a zakat calculator at /zakat." },
+      { term: "Zakat", transliteration: "زكاة", def: "An obligatory annual charity, the third pillar of Islam. Paid at 2.5% on net zakatable wealth above the nisab threshold. Categories of wealth include cash, stocks, gold/silver, trade inventory. HalalGauge provides a zakat calculator at /zakat." },
     ],
   },
 ];

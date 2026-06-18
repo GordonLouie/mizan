@@ -2,7 +2,7 @@
  * PostHogProvider
  *
  * Initializes PostHog product analytics on the client.
- * Lets us see how users actually use Mizan — which pages they visit, what
+ * Lets us see how users actually use HalalGauge — which pages they visit, what
  * tickers they screen, which scholar they pick, time-on-page, etc.
  *
  * Direct response to BOTH Toby + Miqdad's "hook it up to posthog" suggestion.

@@ -45,7 +45,7 @@ function toMarkdown(r: Report): string {
       L.push("");
     }
   }
-  if (f.notCovered.length) L.push(`_Not yet covered by Mizan: ${f.notCovered.join(", ")}._`, "");
+  if (f.notCovered.length) L.push(`_Not yet covered by HalalGauge: ${f.notCovered.join(", ")}._`, "");
   if (r.narrative) {
     const n = r.narrative;
     L.push("## Overall assessment", "", n.overallAssessment, "");
@@ -55,7 +55,7 @@ function toMarkdown(r: Report): string {
     for (const s of n.nextSteps) L.push(`- ${s}`);
     L.push("", "## Bottom line", "", n.bottomLine, "");
   }
-  L.push("", `_Generated ${new Date(r.generatedAt).toLocaleString()} by Mizan. Compliance % and verdicts are computed deterministically; narrative is AI-generated and grounded in them. Screening guidance, not investment advice._`);
+  L.push("", `_Generated ${new Date(r.generatedAt).toLocaleString()} by HalalGauge. Compliance % and verdicts are computed deterministically; narrative is AI-generated and grounded in them. Screening guidance, not investment advice._`);
   return L.join("\n");
 }
 

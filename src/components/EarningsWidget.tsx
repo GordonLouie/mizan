@@ -40,7 +40,7 @@ interface Props {
    *   - "at-risk-first": at-risk rows top of list, sorted by ratio buffer
    *     ascending (most fragile first), then everything else by date.
    *     Used on /calendar so the page leads with the stocks most likely to
-   *     flip — Mizan's actual differentiator.
+   *     flip — HalalGauge's actual differentiator.
    */
   sortMode?: "date" | "at-risk-first";
   /** Subtitle next to the title; defaults to "next 90 days". */

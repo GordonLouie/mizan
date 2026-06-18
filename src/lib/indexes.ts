@@ -31,7 +31,7 @@ export interface IndexDef {
 export const INDEXES: IndexDef[] = [
   {
     slug: "mizan-halal-50",
-    name: "Mizan Halal 50",
+    name: "HalalGauge Halal 50",
     tagline: "The 50 largest companies that pass the mainstream AAOIFI halal screen.",
     risk: "Core",
     scholarId: "aaoifi",
@@ -39,7 +39,7 @@ export const INDEXES: IndexDef[] = [
   },
   {
     slug: "mizan-halal-tech",
-    name: "Mizan Halal Tech",
+    name: "HalalGauge Halal Tech",
     tagline: "Halal-screened technology leaders — higher growth, higher volatility.",
     risk: "Growth",
     scholarId: "aaoifi",
@@ -48,7 +48,7 @@ export const INDEXES: IndexDef[] = [
   },
   {
     slug: "mizan-halal-income",
-    name: "Mizan Halal Income",
+    name: "HalalGauge Halal Income",
     tagline: "Halal-screened dividend payers for investors who want cash flow.",
     risk: "Income",
     scholarId: "aaoifi",

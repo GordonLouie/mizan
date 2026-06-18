@@ -42,7 +42,7 @@ export default function FeedbackWidget() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label="Send feedback to Mizan"
+        aria-label="Send feedback to HalalGauge"
         className="fixed bottom-20 right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-[#1B2D4A] text-white shadow-lg transition hover:bg-[#243A5E] hover:shadow-xl md:bottom-6"
       >
         <MessageCircle size={18} />

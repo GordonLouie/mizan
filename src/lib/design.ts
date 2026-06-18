@@ -1,4 +1,4 @@
-// Mizan design tokens — single source of truth for all visual decisions.
+// HalalGauge design tokens — single source of truth for all visual decisions.
 // Every page imports from here; nothing else should hardcode colors/spacing.
 
 export const COLOR = {

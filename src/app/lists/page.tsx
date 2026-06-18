@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { CURATED_LISTS, statsForList, fmtMarketCap } from "@/lib/lists";
 
 export const metadata = {
-  title: "Curated lists · Mizan",
+  title: "Curated lists · HalalGauge",
   description:
     "Hand-picked halal investing collections — mega-caps, dividend payers, ETFs, " +
     "tech leaders, consumer staples, and stricter-Hanafi-only equities.",
@@ -101,7 +101,7 @@ export default function ListsIndex() {
         </div>
         <p className="mt-3 max-w-2xl text-[13px] leading-relaxed text-gray-600">
           Curated lists are <strong className="text-gray-900">not investment recommendations</strong>.
-          They are starting points for research — Mizan does not assess whether a stock fits
+          They are starting points for research — HalalGauge does not assess whether a stock fits
           your financial goals, risk tolerance, or tax situation. Always do your own due
           diligence, and consider speaking with a registered financial adviser before acting.
         </p>

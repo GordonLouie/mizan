@@ -47,7 +47,7 @@ export const CURATED_LISTS: CuratedList[] = [
     blurb:
       "Established companies that pass AAOIFI's screen and pay a dividend yield of 2.5% or more. " +
       "Remember: under most scholars these dividends must still be purified for the small " +
-      "impermissible-income share. Mizan's purification calculator does the math for you.",
+      "impermissible-income share. HalalGauge's purification calculator does the math for you.",
     tickers: [
       "CVX", "XOM", "SHEL.L", "COP", "EOG", "PSX",
       "UPS", "ABBV", "JNJ", "MRK", "ABT", "AZN.L",
@@ -58,13 +58,13 @@ export const CURATED_LISTS: CuratedList[] = [
     ],
     defaultScholarId: "aaoifi",
     note: "Dividend yields shown reflect the most recent annual payout / current price. " +
-      "All names re-screened on each Mizan data refresh.",
+      "All names re-screened on each HalalGauge data refresh.",
   },
   {
     slug: "halal-etfs",
     title: "Halal & Sharia-screened ETFs",
     kicker: "Funds",
-    audience: "One-ticker diversification — Mizan still surfaces what's inside.",
+    audience: "One-ticker diversification — HalalGauge still surfaces what's inside.",
     blurb:
       "The major Sharia-compliant ETFs available to retail investors. SPUS and HLAL cover " +
       "US equities; UMMA goes global; SPSK provides sukuk (Islamic bond) exposure; SPRE adds " +
@@ -127,7 +127,7 @@ export const CURATED_LISTS: CuratedList[] = [
     blurb:
       "Major Saudi-listed names. Most Tadawul-listed companies operate under explicit Sharia " +
       "governance — there's no separate \"halal subset\" because the market itself is designed " +
-      "around compliance. Mizan still surfaces the underlying ratios so you can see the math.",
+      "around compliance. HalalGauge still surfaces the underlying ratios so you can see the math.",
     tickers: ["2222.SR", "1120.SR"],
     defaultScholarId: "aaoifi",
     note: "Sample coverage of Tadawul is intentionally small in the prototype. Production version " +

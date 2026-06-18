@@ -6,7 +6,7 @@ export const GLOSSARY: Record<string, string> = {
   riba: "Interest or usury. The categorical prohibition against riba is one of the foundational principles of Islamic finance — you can't pay or earn interest.",
   gharar: "Excessive uncertainty or ambiguity in a contract. Why conventional options and futures are problematic in Islamic finance.",
   maisir: "Gambling. Categorically prohibited. Why lottery, casino bets, and many speculative derivatives are off-limits.",
-  zakat: "An obligatory annual charity — the third pillar of Islam. Paid at 2.5% on net wealth above a minimum threshold (nisab). Mizan has a calculator at /zakat.",
+  zakat: "An obligatory annual charity — the third pillar of Islam. Paid at 2.5% on net wealth above a minimum threshold (nisab). HalalGauge has a calculator at /zakat.",
   khums: "One-fifth (20%) annual religious obligation in Shia practice on net annual surplus wealth, including investment gains. Separate from zakat.",
   nisab: "The minimum wealth threshold above which zakat becomes obligatory. Historically defined in gold (87.48g) or silver (612.36g) market value.",
   purification: "Donating the impure portion of investment income (typically dividends) to charity, without expecting reward. Cleanses an otherwise-permissible holding.",

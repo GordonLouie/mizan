@@ -1,7 +1,7 @@
 /**
  * ScrollDashboardHero — the scroll-tilting product showcase.
  *
- * Embeds a faithful slice of Mizan's actual /screen page (company header
+ * Embeds a faithful slice of HalalGauge's actual /screen page (company header
  * + verdict hero + multi-scholar comparison table) inside the iPad chrome
  * from ContainerScroll. The card tilts in as the user scrolls.
  *

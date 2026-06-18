@@ -1,4 +1,4 @@
-export const metadata = { title: "Roadmap · Mizan" };
+export const metadata = { title: "Roadmap · HalalGauge" };
 
 const NOW = [
   "Live financial data pipeline (Financial Modeling Prep)",

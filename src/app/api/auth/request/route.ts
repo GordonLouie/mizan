@@ -47,12 +47,12 @@ export async function POST(req: Request) {
   const link = `${SITE}/api/auth/callback?token=${encodeURIComponent(token)}`;
   const html = `
     <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;padding:24px;color:#1f2937">
-      <h2 style="color:#1B2D4A;margin:0 0 12px">Sign in to Mizan</h2>
+      <h2 style="color:#1B2D4A;margin:0 0 12px">Sign in to HalalGauge</h2>
       <p style="font-size:15px;line-height:1.6">Click the button below to sign in. This link expires in 15 minutes and can be used once.</p>
-      <p style="margin:24px 0"><a href="${link}" style="background:#1B2D4A;color:#fff;text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:600;display:inline-block">Sign in to Mizan</a></p>
+      <p style="margin:24px 0"><a href="${link}" style="background:#1B2D4A;color:#fff;text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:600;display:inline-block">Sign in to HalalGauge</a></p>
       <p style="font-size:12px;color:#6b7280">If you didn't request this, you can ignore this email.</p>
     </div>`;
-  await sendEmail(email, "Your Mizan sign-in link", html);
+  await sendEmail(email, "Your HalalGauge sign-in link", html);
 
   return NextResponse.json({ ok: true });
 }

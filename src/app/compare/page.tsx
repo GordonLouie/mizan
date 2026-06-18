@@ -1,4 +1,4 @@
-export const metadata = { title: "Compare · Mizan vs Wahed / Zoya / Musaffa" };
+export const metadata = { title: "Compare · HalalGauge vs Wahed / Zoya / Musaffa" };
 
 const ROWS = [
   { feature: "Multi-scholar screening", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
@@ -29,9 +29,9 @@ export default function ComparePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Mizan vs the rest</h1>
+        <h1 className="text-3xl font-bold text-gray-900">HalalGauge vs the rest</h1>
         <p className="mt-2 max-w-2xl text-sm text-gray-600">
-          A neutral comparison of Mizan against the major halal investing apps in the
+          A neutral comparison of HalalGauge against the major halal investing apps in the
           English-speaking market. Updated quarterly. We compete on multi-scholar
           architecture, not on price — though we&apos;re cheaper too.
         </p>
@@ -42,7 +42,7 @@ export default function ComparePage() {
           <thead className="bg-gray-50 text-left">
             <tr className="text-xs font-semibold uppercase tracking-wide text-gray-500">
               <th className="px-4 py-3">Feature</th>
-              <th className="bg-navy-50 px-4 py-3 text-center text-navy-800">Mizan</th>
+              <th className="bg-navy-50 px-4 py-3 text-center text-navy-800">HalalGauge</th>
               <th className="px-4 py-3 text-center">Zoya</th>
               <th className="px-4 py-3 text-center">Musaffa</th>
               <th className="px-4 py-3 text-center">Wahed</th>
@@ -67,7 +67,7 @@ export default function ComparePage() {
       </div>
 
       <div className="rounded-xl border border-gray-200 bg-gray-50 p-5">
-        <h2 className="text-lg font-semibold text-gray-900">Honestly, when shouldn&apos;t you use Mizan?</h2>
+        <h2 className="text-lg font-semibold text-gray-900">Honestly, when shouldn&apos;t you use HalalGauge?</h2>
         <ul className="mt-3 list-disc pl-5 text-sm text-gray-700">
           <li>If you only follow AAOIFI and want managed money — Wahed is the better fit. We don&apos;t manage money.</li>
           <li>If you only need a research-heavy screener and you&apos;re an institution rather than an individual — Musaffa has deeper financials.</li>

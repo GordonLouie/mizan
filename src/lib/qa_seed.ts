@@ -34,7 +34,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
         ]
       },
       "djim": {
-        "t": "DJIM screens equities only — direct crypto holdings aren't within its scope. ETFs and trusts holding Bitcoin (like spot BTC ETFs) would be screened on the underlying instrument; Mizan currently treats Bitcoin spot ETFs as borderline pending board review.",
+        "t": "DJIM screens equities only — direct crypto holdings aren't within its scope. ETFs and trusts holding Bitcoin (like spot BTC ETFs) would be screened on the underlying instrument; HalalGauge currently treats Bitcoin spot ETFs as borderline pending board review.",
         "c": [
           "DJIM Methodology, scope note"
         ]
@@ -416,7 +416,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     ],
     "a": {
       "aaoifi": {
-        "t": "Yes. The classical view: zakat is due annually on the market value of shares held for trading (2.5% of value), and on the net liquid assets of long-term holdings (a calculation we'll add to Mizan). The Custom approach favored by many contemporary scholars: 2.5% on the market value of all your stock holdings on your zakat anniversary date, regardless of intent. Mizan's zakat calculator is on the roadmap.",
+        "t": "Yes. The classical view: zakat is due annually on the market value of shares held for trading (2.5% of value), and on the net liquid assets of long-term holdings (a calculation we'll add to HalalGauge). The Custom approach favored by many contemporary scholars: 2.5% on the market value of all your stock holdings on your zakat anniversary date, regardless of intent. HalalGauge's zakat calculator is on the roadmap.",
         "c": []
       },
       "jafari": {
@@ -434,7 +434,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     ],
     "a": {
       "aaoifi": {
-        "t": "Pick your zakat anniversary date (the lunar date one year after you first reached nisab). On that date: sum the market value of all your stock holdings + cash + business inventory + gold/silver + crypto + other zakatable assets. Subtract any short-term debts owed by you. Multiply by 2.5%. That's your zakat. We'll add an automated calculator to Mizan in 2027.",
+        "t": "Pick your zakat anniversary date (the lunar date one year after you first reached nisab). On that date: sum the market value of all your stock holdings + cash + business inventory + gold/silver + crypto + other zakatable assets. Subtract any short-term debts owed by you. Multiply by 2.5%. That's your zakat. We'll add an automated calculator to HalalGauge in 2027.",
         "c": []
       }
     }
@@ -448,11 +448,11 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     ],
     "a": {
       "aaoifi": {
-        "t": "For each stock you own that pays dividends, calculate: (impermissible income % of the company's revenue) × (your dividend received) = amount to donate to charity, without expecting reward. Mizan calculates this automatically in /purification.",
+        "t": "For each stock you own that pays dividends, calculate: (impermissible income % of the company's revenue) × (your dividend received) = amount to donate to charity, without expecting reward. HalalGauge calculates this automatically in /purification.",
         "c": []
       },
       "taqi_usmani": {
-        "t": "Same as AAOIFI on dividends. Additionally, purify the same percentage of realized capital gains. Most halal apps miss this; Mizan implements it.",
+        "t": "Same as AAOIFI on dividends. Additionally, purify the same percentage of realized capital gains. Most halal apps miss this; HalalGauge implements it.",
         "c": [
           "Mufti Taqi Usmani, equity screening guidance"
         ]
@@ -471,7 +471,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
         "c": []
       },
       "taqi_usmani": {
-        "t": "Yes. Mufti Taqi Usmani's published view requires purifying both dividends AND capital gains at the impermissible-income rate. This is a meaningful difference; we implement it in Mizan.",
+        "t": "Yes. Mufti Taqi Usmani's published view requires purifying both dividends AND capital gains at the impermissible-income rate. This is a meaningful difference; we implement it in HalalGauge.",
         "c": []
       },
       "jafari": {
@@ -489,7 +489,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     ],
     "a": {
       "aaoifi": {
-        "t": "Purification funds should go to charity WITHOUT expectation of reward (this is the technical Shariah requirement — purification is cleansing, not voluntary sadaqah). Suitable channels: humanitarian aid (where direct support is clearly not investing back into impermissible activities), educational scholarships, infrastructure projects. Mizan partners with LaunchGood, Islamic Relief, and Penny Appeal for the integrated donation flow.",
+        "t": "Purification funds should go to charity WITHOUT expectation of reward (this is the technical Shariah requirement — purification is cleansing, not voluntary sadaqah). Suitable channels: humanitarian aid (where direct support is clearly not investing back into impermissible activities), educational scholarships, infrastructure projects. HalalGauge partners with LaunchGood, Islamic Relief, and Penny Appeal for the integrated donation flow.",
         "c": []
       }
     }
@@ -697,7 +697,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     }
   },
   {
-    "q": "How do I cancel my Mizan subscription?",
+    "q": "How do I cancel my HalalGauge subscription?",
     "k": [
       "cancel",
       "cancel subscription",
@@ -711,7 +711,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     }
   },
   {
-    "q": "How much does Mizan cost?",
+    "q": "How much does HalalGauge cost?",
     "k": [
       "price",
       "pricing",
@@ -726,7 +726,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     }
   },
   {
-    "q": "Who runs Mizan?",
+    "q": "Who runs HalalGauge?",
     "k": [
       "who runs",
       "team",
@@ -735,13 +735,13 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     ],
     "a": {
       "aaoifi": {
-        "t": "Mizan is a Hong Kong-based fintech, founded solo in 2026 by Gordon Louie — a non-Muslim technologist. A Shariah Supervisory Board is not yet engaged; credibility currently comes from the primary-source citations on /methodology (AAOIFI Standard No. 21, Mufti Taqi Usmani's published works, the DJIM methodology PDF, the Sistani office). The honest scoreboard of what is and isn't in place lives at /trust.",
+        "t": "HalalGauge is a Hong Kong-based fintech, founded solo in 2026 by Gordon Louie — a non-Muslim technologist. A Shariah Supervisory Board is not yet engaged; credibility currently comes from the primary-source citations on /methodology (AAOIFI Standard No. 21, Mufti Taqi Usmani's published works, the DJIM methodology PDF, the Sistani office). The honest scoreboard of what is and isn't in place lives at /trust.",
         "c": []
       }
     }
   },
   {
-    "q": "Is Mizan giving me investment advice?",
+    "q": "Is HalalGauge giving me investment advice?",
     "k": [
       "investment advice",
       "advice",
@@ -749,7 +749,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     ],
     "a": {
       "aaoifi": {
-        "t": "No. Mizan is an informational research tool. We tell you what scholarly opinions exist about a stock's compliance under various methodologies; we do not tell you what to buy or sell. We are not licensed as an investment advisor and do not provide individualized advice. For decisions with material financial consequences, consult a licensed financial advisor.",
+        "t": "No. HalalGauge is an informational research tool. We tell you what scholarly opinions exist about a stock's compliance under various methodologies; we do not tell you what to buy or sell. We are not licensed as an investment advisor and do not provide individualized advice. For decisions with material financial consequences, consult a licensed financial advisor.",
         "c": []
       }
     }
@@ -791,7 +791,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     ],
     "a": {
       "aaoifi": {
-        "t": "Yes, dividends from Shariah-compliant companies are halal. Note: even for compliant companies, you need to purify the small impermissible-income portion (typically 1-5%) of dividends received. Mizan calculates this automatically.",
+        "t": "Yes, dividends from Shariah-compliant companies are halal. Note: even for compliant companies, you need to purify the small impermissible-income portion (typically 1-5%) of dividends received. HalalGauge calculates this automatically.",
         "c": []
       }
     }
@@ -819,7 +819,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     ],
     "a": {
       "taqi_usmani": {
-        "t": "Mufti Taqi Usmani's published methodology requires that a stock's company have at least 20% of total assets as illiquid (tangible) assets — property, equipment, inventory. The reasoning: a company that's mostly cash + intangibles is, in commercial substance, trading paper for paper, which approaches the impermissible category. No major halal app outside Mizan implements this rule explicitly. We do.",
+        "t": "Mufti Taqi Usmani's published methodology requires that a stock's company have at least 20% of total assets as illiquid (tangible) assets — property, equipment, inventory. The reasoning: a company that's mostly cash + intangibles is, in commercial substance, trading paper for paper, which approaches the impermissible category. No major halal app outside HalalGauge implements this rule explicitly. We do.",
         "c": [
           "Mufti Taqi Usmani, An Introduction to Islamic Finance"
         ]

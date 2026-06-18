@@ -1,5 +1,5 @@
 /**
- * Financial Modeling Prep client + Mizan ratio computation.
+ * Financial Modeling Prep client + HalalGauge ratio computation.
  *
  * Used by scripts/enrichStocks.ts at build time to populate src/data/stocks.json.
  * NOT used at runtime — production reads from the pre-computed JSON.
@@ -122,7 +122,7 @@ async function fmpGet<T>(
 }
 
 /**
- * Map FMP industry strings to Mizan's ProhibitedSector taxonomy.
+ * Map FMP industry strings to HalalGauge's ProhibitedSector taxonomy.
  * Conservative: only flag explicit matches.
  */
 export function industryToProhibitedFlags(
@@ -175,7 +175,7 @@ export function normalizeSector(fmpSector: string | null): string {
 }
 
 /**
- * Compute Mizan's StockFundamentals from FMP raw data.
+ * Compute HalalGauge's StockFundamentals from FMP raw data.
  * Returns null if essential data (profile) is missing.
  */
 export async function fetchStockFundamentals(

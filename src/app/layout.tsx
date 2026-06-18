@@ -13,16 +13,16 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://mizaninvesting.com"),
   verification: { google: "DZV7UJw-g5iwpUnB7L9y-C4KV-jeIO6eMLCjSymFfQo" },
   title: {
-    default: "Mizan — halal investing, calibrated to your conscience.",
-    template: "%s · Mizan",
+    default: "HalalGauge — halal investing, calibrated to your conscience.",
+    template: "%s · HalalGauge",
   },
   description:
     "The first stock screener that adapts to your scholar's methodology — AAOIFI, Mufti Taqi Usmani, DJIM, Ja'fari, strict, or your own custom thresholds. With AI scholar Q&A.",
-  applicationName: "Mizan",
+  applicationName: "HalalGauge",
   keywords: ["halal investing", "shariah screening", "halal stocks", "mufti taqi usmani", "AAOIFI", "DJIM", "halal stock screener", "muslim investing"],
-  authors: [{ name: "Mizan" }],
-  creator: "Mizan",
-  publisher: "Mizan",
+  authors: [{ name: "HalalGauge" }],
+  creator: "HalalGauge",
+  publisher: "HalalGauge",
   manifest: "/manifest.webmanifest",
   icons: {
     // Cache buster on every icon URL — browsers cache favicons aggressively
@@ -32,18 +32,18 @@ export const metadata: Metadata = {
     apple: "/favicon.svg?v=6",
   },
   openGraph: {
-    title: "Mizan — halal investing, calibrated to your conscience.",
+    title: "HalalGauge — halal investing, calibrated to your conscience.",
     description:
       "The first stock screener that adapts to your scholar. Six scholar profiles plus a custom builder. Transparent ratio reasoning behind every verdict.",
     url: "https://mizaninvesting.com",
-    siteName: "Mizan",
-    images: [{ url: "/og-image.png?v=3", width: 1200, height: 630, alt: "Mizan — multi-scholar halal investing screener" }],
+    siteName: "HalalGauge",
+    images: [{ url: "/og-image.png?v=3", width: 1200, height: 630, alt: "HalalGauge — multi-scholar halal investing screener" }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mizan — halal investing, calibrated to your conscience.",
+    title: "HalalGauge — halal investing, calibrated to your conscience.",
     description: "The first stock screener that adapts to your scholar's methodology.",
     creator: "@mizanapp",
     images: ["/og-image.png?v=3"],
@@ -77,12 +77,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "@graph": [
                 {
                   "@type": "Organization",
-                  name: "Mizan",
+                  name: "HalalGauge",
                   url: "https://mizaninvesting.com",
                   email: "hello@mizaninvesting.com",
                   description: "Multi-scholar halal stock screening, halal indexes, and grounded AI compliance reports.",
                 },
-                { "@type": "WebSite", name: "Mizan", url: "https://mizaninvesting.com" },
+                { "@type": "WebSite", name: "HalalGauge", url: "https://mizaninvesting.com" },
               ],
             }),
           }}
@@ -93,7 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="mx-auto max-w-6xl px-6 py-8 text-sm text-gray-500">
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <div className="flex items-center gap-2">
-                <span className="font-bold text-navy-800" style={{ fontFamily: "var(--font-display)" }}>Mizan</span>
+                <span className="font-bold text-navy-800" style={{ fontFamily: "var(--font-display)" }}>HalalGauge</span>
                 <span className="text-xs text-gray-400">·</span>
                 <span className="text-xs">halal investing, calibrated</span>
               </div>
@@ -111,8 +111,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </nav>
             </div>
             <p className="mt-4 text-xs leading-6 text-gray-500">
-              Mizan provides information, not investment advice. Compliance verdicts
-              are scholarly opinions, not buy/sell recommendations. © {new Date().getFullYear()} Mizan.
+              HalalGauge provides information, not investment advice. Compliance verdicts
+              are scholarly opinions, not buy/sell recommendations. © {new Date().getFullYear()} HalalGauge.
             </p>
           </div>
         </footer>

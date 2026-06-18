@@ -43,7 +43,7 @@ export interface PortfolioFacts {
   weightedHalalPct: number;
   totalValue: number;
   holdings: HoldingFact[];
-  /** Tickers the user holds that Mizan doesn't cover yet. */
+  /** Tickers the user holds that HalalGauge doesn't cover yet. */
   notCovered: string[];
 }
 export interface PortfolioNarrative {
@@ -123,9 +123,9 @@ export function buildPortfolioFacts(holdings: HoldingInput[], scholarId: string)
   };
 }
 
-const SYSTEM_PROMPT = `You are a Shariah-compliance portfolio assistant for Mizan, a halal investing platform. You help a retail investor understand how halal their portfolio is and how to improve it.
+const SYSTEM_PROMPT = `You are a Shariah-compliance portfolio assistant for HalalGauge, a halal investing platform. You help a retail investor understand how halal their portfolio is and how to improve it.
 
-You will receive DETERMINISTIC facts as JSON: an overall weighted halal percentage, each holding with its verdict, weight, the specific issues that make it non-compliant, and a short list of same-sector halal SWAP candidates that Mizan has already screened as passing.
+You will receive DETERMINISTIC facts as JSON: an overall weighted halal percentage, each holding with its verdict, weight, the specific issues that make it non-compliant, and a short list of same-sector halal SWAP candidates that HalalGauge has already screened as passing.
 
 STRICT RULES:
 1. NEVER change a holding's verdict — they are computed deterministically and are final.
@@ -175,7 +175,7 @@ function buildUserPrompt(facts: PortfolioFacts): string {
   ].join("\n");
 }
 
-const QA_SYSTEM_PROMPT = `You are a Shariah-compliance portfolio assistant for Mizan answering a specific question about the user's OWN portfolio.
+const QA_SYSTEM_PROMPT = `You are a Shariah-compliance portfolio assistant for HalalGauge answering a specific question about the user's OWN portfolio.
 
 You are given the deterministic portfolio facts (overall halal %, each holding's verdict, weight, issues, and pre-screened halal swap candidates) and the user's question. Rules:
 1. Answer ONLY from the provided facts. NEVER change a verdict or invent tickers, numbers, companies, or rulings.

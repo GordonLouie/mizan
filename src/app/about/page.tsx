@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "About · Mizan",
+  title: "About · HalalGauge",
   description:
     "Why a non-Muslim builder in Hong Kong built a halal-investing platform — and the principles that keep it honest.",
 };
@@ -12,7 +12,7 @@ export default function AboutPage() {
       {/* PAGE HEADER */}
       <header className="pt-6">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          About Mizan
+          About HalalGauge
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
@@ -60,7 +60,7 @@ export default function AboutPage() {
             default.
           </p>
           <p>
-            I built Mizan because I&apos;m a builder, and because the gap was obviously
+            I built HalalGauge because I&apos;m a builder, and because the gap was obviously
             real, and because the fact that I have no religious stake is exactly what
             makes me the right person to represent all the scholars fairly. I will never
             claim authority I don&apos;t have. I cite the sources. I show the math. I
@@ -68,12 +68,12 @@ export default function AboutPage() {
           </p>
           <p>
             The friend in this story is Miqdad. He&apos;s a Muslim, based in Hong Kong,
-            and he&apos;s now Mizan&apos;s Founding Advisor — gut-checking the
+            and he&apos;s now HalalGauge&apos;s Founding Advisor — gut-checking the
             methodology against how a real Muslim investor actually thinks. Without him
             this project does not exist.
           </p>
           <p>
-            If you&apos;re Muslim and you find Mizan useful, that&apos;s the whole point.
+            If you&apos;re Muslim and you find HalalGauge useful, that&apos;s the whole point.
             If you find something wrong, email me at{" "}
             <a
               href="mailto:hello@mizaninvesting.com"
@@ -89,7 +89,7 @@ export default function AboutPage() {
       {/* OPERATING PRINCIPLES */}
       <section className="mt-20 border-t border-gray-200 pt-10">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          What keeps Mizan honest
+          What keeps HalalGauge honest
         </div>
         <h2
           className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
@@ -101,8 +101,8 @@ export default function AboutPage() {
         <div className="mt-8 max-w-3xl divide-y divide-gray-200">
           <Principle
             n="01"
-            title="Scholars hold religious authority. Mizan does not."
-            body="Mizan summarises what scholars have publicly said and cites the source. Mizan never issues a ruling of its own. Disagreements between scholars are surfaced, not hidden."
+            title="Scholars hold religious authority. HalalGauge does not."
+            body="HalalGauge summarises what scholars have publicly said and cites the source. HalalGauge never issues a ruling of its own. Disagreements between scholars are surfaced, not hidden."
           />
           <Principle
             n="02"
@@ -117,7 +117,7 @@ export default function AboutPage() {
           <Principle
             n="04"
             title="The strict view is a first-class profile."
-            body="Most apps either ignore the zero-tolerance regime or hide it. Mizan ships it as one of six profiles, with the same care as AAOIFI or DJIM."
+            body="Most apps either ignore the zero-tolerance regime or hide it. HalalGauge ships it as one of six profiles, with the same care as AAOIFI or DJIM."
           />
         </div>
       </section>
@@ -161,7 +161,7 @@ export default function AboutPage() {
                 </div>
                 <p className="mt-4 text-[14px] leading-relaxed text-gray-700">
                   Solo founder. Leads product, engineering, methodology research, and
-                  every other surface of Mizan today. Not a scholar — defers every
+                  every other surface of HalalGauge today. Not a scholar — defers every
                   religious question to the cited primary sources and to qualified scholars
                   the project will engage as it grows. Reads and replies to every
                   substantive email personally; no support tickets.
@@ -201,12 +201,12 @@ export default function AboutPage() {
                   </span>
                 </div>
                 <div className="mt-1 text-[11px] uppercase tracking-[0.14em] text-gray-500">
-                  Hong Kong · Muslim investor · the reason Mizan exists
+                  Hong Kong · Muslim investor · the reason HalalGauge exists
                 </div>
                 <p className="mt-4 text-[14px] leading-relaxed text-gray-700">
                   The friend who showed Gordon his halal-app screen two years ago and
                   said the verdict didn&apos;t match what his scholar would have used.
-                  That moment is why Mizan exists. Provides ongoing methodology
+                  That moment is why HalalGauge exists. Provides ongoing methodology
                   gut-checks — does the engine actually answer the question a real
                   Muslim investor is asking? Defers all religious authority to
                   qualified scholars.
@@ -221,7 +221,7 @@ export default function AboutPage() {
               What&apos;s not yet here
             </div>
             <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-gray-700">
-              Mizan does not yet have a formal Shariah Supervisory Board or paid scholar
+              HalalGauge does not yet have a formal Shariah Supervisory Board or paid scholar
               engagements. Until those happen, credibility comes from the primary-source
               citations on{" "}
               <Link
@@ -257,11 +257,11 @@ export default function AboutPage() {
           <Fact label="Base" value="Hong Kong" />
           <Fact
             label="Operating entity"
-            value="Mizan Operations (HK) Ltd · in formation"
+            value="HalalGauge Operations (HK) Ltd · in formation"
           />
           <Fact
             label="Holding company"
-            value="Mizan Holdings Ltd, Cayman Islands · planned Q3"
+            value="HalalGauge Holdings Ltd, Cayman Islands · planned Q3"
           />
           <Fact
             label="Funding status"

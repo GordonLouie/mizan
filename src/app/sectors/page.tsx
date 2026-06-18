@@ -123,7 +123,7 @@ export default function SectorsIndex() {
       </section>
 
       <p className="mt-12 text-center text-[11px] text-gray-500">
-        Pass-rates reflect Mizan&apos;s current {sectors.reduce((s, x) => s + x.total, 0)}-ticker
+        Pass-rates reflect HalalGauge&apos;s current {sectors.reduce((s, x) => s + x.total, 0)}-ticker
         representative sample. Live FMP integration is wired in for production expansion.
       </p>
     </div>

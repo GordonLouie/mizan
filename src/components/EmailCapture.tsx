@@ -33,8 +33,8 @@ export default function EmailCapture({
     setBusy(true);
     const subject =
       purpose === "ticker_request"
-        ? `[Mizan signup] Ticker request${context ? `: ${context}` : ""}`
-        : `[Mizan signup] Alerts${context ? `: ${context}` : ""}`;
+        ? `[HalalGauge signup] Ticker request${context ? `: ${context}` : ""}`
+        : `[HalalGauge signup] Alerts${context ? `: ${context}` : ""}`;
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",

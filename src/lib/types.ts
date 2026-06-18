@@ -1,4 +1,4 @@
-// ---- Core domain types for Mizan's screening engine ----
+// ---- Core domain types for HalalGauge's screening engine ----
 
 export type ProhibitedSector =
   | "alcohol"

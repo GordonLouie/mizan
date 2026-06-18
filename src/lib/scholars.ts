@@ -1,7 +1,7 @@
 import type { ScholarProfile } from "./types";
 
 /**
- * The five scholar / standard profiles Mizan ships with at v1.
+ * The five scholar / standard profiles HalalGauge ships with at v1.
  * Numbers reflect the published methodologies of each.
  *
  * Sources:

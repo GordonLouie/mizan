@@ -80,7 +80,7 @@ export default function CalendarPage() {
             Nothing in your watchlist or portfolio yet
           </h3>
           <p className="mt-2 max-w-md text-[14px] text-gray-600">
-            Add stocks you want to track or own — Mizan will show their
+            Add stocks you want to track or own — HalalGauge will show their
             upcoming earnings dates here so you know when to re-verify the
             halal verdict.
           </p>
@@ -151,7 +151,7 @@ export default function CalendarPage() {
 
           {/* AT-RISK FIRST FEED — same data, different question. Sorted so
               the holdings whose ratios are closest to flipping land at the
-              top. This is Mizan's real differentiator — not "what reports
+              top. This is HalalGauge's real differentiator — not "what reports
               next" but "what's about to break." */}
           <div className="mt-10">
             <EarningsWidget
@@ -172,7 +172,7 @@ export default function CalendarPage() {
               About this calendar
             </div>
             <p className="mt-2">
-              Mizan is ingesting earnings dates progressively from primary
+              HalalGauge is ingesting earnings dates progressively from primary
               filings. Some tickers won&apos;t appear here yet — those have data
               coming. AAPL has full coverage today as the reference example.
             </p>

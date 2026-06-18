@@ -1,7 +1,7 @@
 /**
  * EarningsCalendar
  *
- * Horizontal-scroll earnings calendar — Mizan's adaptation of the 21st.dev
+ * Horizontal-scroll earnings calendar — HalalGauge's adaptation of the 21st.dev
  * "economic calendar" pattern. Borrowed the structure (cards in a scrollable
  * row, impact bars, scroll buttons), dropped the SaaS chrome:
  *

@@ -1,7 +1,7 @@
 /**
  * auth.ts (Phase 4) — passwordless magic-link auth. SERVER-ONLY.
  *
- * Design (fits Mizan's REST + inert-until-keyed stack — no npm deps, no vendor):
+ * Design (fits HalalGauge's REST + inert-until-keyed stack — no npm deps, no vendor):
  *  - A magic-link token is an HMAC-signed, short-lived (15 min), single-use blob.
  *    The user requests it by email; clicking it sets a session.
  *  - A session is a separate HMAC-signed token stored in an httpOnly, Secure,

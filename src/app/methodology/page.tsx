@@ -4,9 +4,9 @@ import { listStocks } from "@/lib/data";
 import { ExternalLink, ArrowRight } from "lucide-react";
 
 export const metadata = {
-  title: "Methodology · Mizan",
+  title: "Methodology · HalalGauge",
   description:
-    "How Mizan screens stocks across six scholarly methodologies — with primary-source citations for every threshold.",
+    "How HalalGauge screens stocks across six scholarly methodologies — with primary-source citations for every threshold.",
 };
 
 interface Source {
@@ -75,7 +75,7 @@ const SOURCES: Record<string, Source[]> = {
       url: "https://www.sistani.org/english/book/46/",
       kind: "ruling",
       cites:
-        "Rulings on permissible income, dealings in interest-bearing instruments, and the khums obligation (one-fifth of net annual surplus) treated by Mizan as the equivalent of capital-gain purification.",
+        "Rulings on permissible income, dealings in interest-bearing instruments, and the khums obligation (one-fifth of net annual surplus) treated by HalalGauge as the equivalent of capital-gain purification.",
     },
     {
       title: "Sistani — Q&A on share trading and stock-market participation",
@@ -98,7 +98,7 @@ const SOURCES: Record<string, Source[]> = {
       url: "https://www.minhaj.org/english/tid/8688/",
       kind: "fatwa",
       cites:
-        "Minority opinions holding the major-school thresholds (5% / 30%) as concessions; Mizan represents this view by setting every cap to 0%.",
+        "Minority opinions holding the major-school thresholds (5% / 30%) as concessions; HalalGauge represents this view by setting every cap to 0%.",
     },
   ],
   custom: [
@@ -107,7 +107,7 @@ const SOURCES: Record<string, Source[]> = {
       url: "/custom",
       kind: "standard",
       cites:
-        "The custom profile is yours to configure. Mizan defaults to AAOIFI thresholds; edit them at /custom to match the scholar you follow.",
+        "The custom profile is yours to configure. HalalGauge defaults to AAOIFI thresholds; edit them at /custom to match the scholar you follow.",
     },
   ],
 };
@@ -132,10 +132,10 @@ export default function MethodologyPage() {
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          How Mizan screens stocks
+          How HalalGauge screens stocks
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
-          Every threshold in Mizan traces back to a public, primary source — the original
+          Every threshold in HalalGauge traces back to a public, primary source — the original
           standard, the scholar&apos;s own publication, or the index methodology. No
           black-box scores.
         </p>
@@ -355,7 +355,7 @@ export default function MethodologyPage() {
           </p>
           <p>
             No standard is &quot;more correct.&quot; The disagreement is real, published,
-            and held by hundreds of millions of Muslims. Mizan&apos;s job is to surface it.
+            and held by hundreds of millions of Muslims. HalalGauge&apos;s job is to surface it.
           </p>
         </div>
         <div className="mt-5">
@@ -377,7 +377,7 @@ export default function MethodologyPage() {
         <div className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
           <p>
             Financial fundamentals are sourced from Financial Modeling Prep in Year 1 and
-            graduate to Refinitiv / SIX Financial as international coverage expands. Mizan
+            graduate to Refinitiv / SIX Financial as international coverage expands. HalalGauge
             computes the Shariah ratios in-house from balance-sheet primitives — we do not
             rely on any third party&apos;s pre-computed &quot;halal score&quot;.
           </p>
@@ -387,7 +387,7 @@ export default function MethodologyPage() {
             Pro-tier users whose portfolio verdicts change.
           </p>
           <p className="text-[12px] italic text-gray-500">
-            Mizan screens {listStocks().length} companies today with live fundamentals and real
+            HalalGauge screens {listStocks().length} companies today with live fundamentals and real
             price history. Coverage expands to Hong Kong, Greater China, and other international
             markets as the enrichment pipeline runs.
           </p>
@@ -402,7 +402,7 @@ export default function MethodologyPage() {
         />
         <div className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
           <p>
-            Mizan does not yet have a Shariah Supervisory Board. Until one is seated,
+            HalalGauge does not yet have a Shariah Supervisory Board. Until one is seated,
             credibility comes entirely from the primary-source citations on this page —
             every threshold in the engine traces back to a public document you can verify.
             That citation chain is intentionally the credibility floor.
@@ -424,7 +424,7 @@ export default function MethodologyPage() {
           title="We welcome challenge"
         />
         <p className="mt-5 max-w-2xl text-[14px] leading-relaxed text-gray-700">
-          If you believe a scholar profile in Mizan misrepresents the underlying
+          If you believe a scholar profile in HalalGauge misrepresents the underlying
           scholarship, write to{" "}
           <a
             href="mailto:methodology@mizaninvesting.com"

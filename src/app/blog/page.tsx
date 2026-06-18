@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
 
 export const metadata = {
-  title: "Blog · Mizan",
+  title: "Blog · HalalGauge",
   description: "Essays on halal investing, scholarly variation, and what existing products get wrong.",
 };
 
@@ -12,7 +12,7 @@ export default function BlogIndex() {
     <article className="space-y-8">
       <div>
         <div className="inline-block rounded-full bg-navy-50 px-3 py-1 text-xs font-medium text-navy-800">
-          The Mizan letter
+          The HalalGauge letter
         </div>
         <h1 className="mt-3 text-3xl font-bold text-gray-900">Essays on halal investing.</h1>
         <p className="mt-2 max-w-2xl text-sm text-gray-600">

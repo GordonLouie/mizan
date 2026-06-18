@@ -1,6 +1,6 @@
 /**
  * GetStartedSteps — three numbered cards walking new users through the
- * Mizan flow. Lives near the bottom of the homepage as a soft conversion.
+ * HalalGauge flow. Lives near the bottom of the homepage as a soft conversion.
  *
  * Each card: big 01/02/03 numeral in Georgia, icon, title, one-line copy,
  * and a small visual cue mapped to each step.
@@ -16,7 +16,7 @@ const STEPS = [
     num: "01",
     icon: <Layers size={18} />,
     title: "Pick your scholar",
-    body: "Six methodologies, or build your own thresholds. Pick once — Mizan remembers.",
+    body: "Six methodologies, or build your own thresholds. Pick once — HalalGauge remembers.",
     cta: "Browse scholars",
     href: "/learn",
   },

@@ -8,7 +8,7 @@ import {
 import { fmtMarketCap } from "@/lib/lists";
 
 export const metadata = {
-  title: "Crypto compliance · Mizan",
+  title: "Crypto compliance · HalalGauge",
   description:
     "Multi-scholar views on Bitcoin, Ethereum, stablecoins, DeFi tokens, and the rest of the major cryptoassets. No other app shows you what every scholar says, side by side.",
 };
@@ -44,7 +44,7 @@ export default function CryptoPage() {
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
           The only place on the internet where the major cryptoassets are screened against
-          every scholarly view side by side. Mizan summarises published rulings — it does
+          every scholarly view side by side. HalalGauge summarises published rulings — it does
           not issue them.
         </p>
 
@@ -55,7 +55,7 @@ export default function CryptoPage() {
             Early development — methodology evolving
           </div>
           <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-gray-700">
-            Mizan&apos;s crypto coverage is less mature than its equity screening. Scholars
+            HalalGauge&apos;s crypto coverage is less mature than its equity screening. Scholars
             actively disagree on classification of cryptoassets — and the rulings move faster
             than they do for public equities. Treat the verdicts here as a starting point for
             your own scholar conversation, not a substitute. We update quarterly and flag
@@ -102,8 +102,8 @@ export default function CryptoPage() {
             reach different conclusions on the same asset.
           </p>
           <p>
-            Mizan&apos;s job is to surface what every credible scholar has actually written
-            or said about each asset, with sources — not to issue a single Mizan verdict.
+            HalalGauge&apos;s job is to surface what every credible scholar has actually written
+            or said about each asset, with sources — not to issue a single HalalGauge verdict.
             Read the citations. Choose your scholar. Ask a qualified mufti for your
             specific situation before acting.
           </p>
@@ -212,7 +212,7 @@ export default function CryptoPage() {
           <li>
             <strong className="text-gray-900">NFTs.</strong> Too varied to generalise — some
             are permissible art, some are speculation, some include impermissible imagery.
-            Per-NFT analysis is beyond Mizan&apos;s scope.
+            Per-NFT analysis is beyond HalalGauge&apos;s scope.
           </li>
           <li>
             <strong className="text-gray-900">ICOs / token launches.</strong> Mostly
