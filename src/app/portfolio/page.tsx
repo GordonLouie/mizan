@@ -112,6 +112,14 @@ export default function PortfolioPage() {
     .reduce((s, e) => s + e.value, 0);
   const halalPct = totalValue > 0 ? (halalValue / totalValue) * 100 : 0;
 
+  // Estimated ANNUAL purification owed: for each holding, the share of its dividend
+  // income that is impermissible (dividendYield × impermissibleIncome%), summed.
+  // An estimate from current fundamentals — the amount to give to charity, not a precise figure.
+  const purificationOwed = enriched.reduce((s, e) => {
+    const annualDividend = e.value * ((e.stock.dividendYieldPct ?? 0) / 100);
+    return s + annualDividend * ((e.stock.impermissibleIncomePct ?? 0) / 100);
+  }, 0);
+
   const allocationByVerdict = enriched.map((e) => ({
     label: e.stock.ticker,
     value: e.value,
@@ -219,20 +227,23 @@ export default function PortfolioPage() {
               ({fmtMoneyShort(totalGain)})
             </span>
           </div>
+          <div className="mt-1 text-[11px] text-gray-500">
+            {enriched.length} {enriched.length === 1 ? "position" : "positions"} · cost {fmtMoneyShort(totalCost)}
+          </div>
         </div>
 
         <div className="bg-white p-6">
           <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
-            Cost basis
+            Est. purification owed
           </div>
           <div
-            className="mt-2 text-[28px] font-bold leading-none tabular-nums text-gray-900"
+            className="mt-2 text-[28px] font-bold leading-none tabular-nums text-navy-800"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            {fmtMoneyShort(totalCost)}
+            {fmtMoneyShort(purificationOwed)}
           </div>
           <div className="mt-2 text-[11px] text-gray-500">
-            Across {enriched.length} {enriched.length === 1 ? "position" : "positions"}
+            Est. annual, to give to charity
           </div>
         </div>
 

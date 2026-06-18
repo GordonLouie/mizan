@@ -1,12 +1,13 @@
 /**
- * POST /api/indexes/custom (v2) — build a custom halal index on the fly.
+ * POST /api/indexes/custom (v3) — build a custom halal BASKET on the fly.
  * Body: { scholarId, theme, size }
- * Returns the constituents + backtest series + risk stats vs S&P. Real data only.
+ * Returns the constituents + present-tense analytics (yield, debt, dividends to
+ * purify, drift watch). NO backtest — a screened-universe backtest is biased by
+ * survivorship/look-ahead, so we describe what the basket IS, not a fake history.
  */
 import { NextResponse } from "next/server";
 import { getScholar } from "@/lib/scholars";
-import { type IndexDef } from "@/lib/indexes";
-import { indexPerformance, benchmarkStats } from "@/lib/indexes.server";
+import { type IndexDef, indexConstituents, indexAnalytics } from "@/lib/indexes";
 import { getViewer } from "@/lib/auth";
 import { tierMeets } from "@/lib/entitlements";
 import { kvIncrWithTtl } from "@/lib/kv";
@@ -15,7 +16,7 @@ import type { StockFundamentals } from "@/lib/types";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const DAILY_CAP = 60; // backtests are compute-heavy; cap per IP/day
+const DAILY_CAP = 80;
 
 const THEMES: Record<string, (s: StockFundamentals) => boolean> = {
   any: () => true,
@@ -31,8 +32,6 @@ const THEME_LABEL: Record<string, string> = {
 };
 
 export async function POST(req: Request) {
-  // The custom builder is a Pro feature — enforce server-side (once auth is on),
-  // not just in the UI. And rate-limit because each call runs a full backtest.
   const viewer = await getViewer();
   if (viewer.authConfigured && !tierMeets(viewer.tier, "retail")) {
     return NextResponse.json({ error: "upgrade_required" }, { status: 402 });
@@ -58,27 +57,29 @@ export async function POST(req: Request) {
     slug: "custom",
     name: `${THEME_LABEL[theme]} · ${scholar.short} · ${size}`,
     tagline: "",
+    thesis: "",
     risk: "Core",
     scholarId: scholar.id,
     filter: THEMES[theme],
     size,
   };
 
-  const perf = indexPerformance(def);
-  const spy = benchmarkStats("SPY");
+  const cons = indexConstituents(def);
+  const a = indexAnalytics(def);
 
   return NextResponse.json({
     name: def.name,
     scholarLabel: scholar.label,
     themeLabel: THEME_LABEL[theme],
     size,
-    totalReturn: perf.totalReturn,
-    stats: perf.stats,
-    indexPct: perf.indexPct,
-    spyPct: perf.spyPct,
-    spusPct: perf.spusPct,
-    spy: { totalReturnPct: spy.totalReturnPct, stats: spy.stats },
-    constituents: perf.constituents.map((s) => ({ ticker: s.ticker, name: s.name, sector: s.sector, marketCapUsd: s.marketCapUsd })),
-    excluded: perf.excluded.length + perf.excludedAnomalous.length,
+    analytics: {
+      count: a.count,
+      weightedDivYieldPct: a.weightedDivYieldPct,
+      medianDebtPct: a.medianDebtPct,
+      purificationPctOfDividends: a.purificationPctOfDividends,
+      sectorMix: a.sectorMix,
+      atRisk: a.atRisk,
+    },
+    constituents: cons.map((s) => ({ ticker: s.ticker, name: s.name, sector: s.sector, marketCapUsd: s.marketCapUsd })),
   });
 }
