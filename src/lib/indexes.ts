@@ -72,3 +72,17 @@ export function indexConstituents(def: IndexDef): StockFundamentals[] {
     .sort((a, b) => b.marketCapUsd - a.marketCapUsd)
     .slice(0, def.size);
 }
+
+/**
+ * Cross-link helper: which indexes currently include this ticker. Powers the
+ * "Appears in" chips on a stock page so the screener, indexes and builder feel
+ * like one product rather than separate tools.
+ */
+export function indexesContaining(ticker: string): { slug: string; name: string; risk: IndexRisk }[] {
+  const t = ticker.toUpperCase();
+  return INDEXES.filter((def) => indexConstituents(def).some((s) => s.ticker.toUpperCase() === t)).map((def) => ({
+    slug: def.slug,
+    name: def.name,
+    risk: def.risk,
+  }));
+}

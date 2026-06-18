@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Boxes, Database, FileBadge, ShieldCheck, ArrowRight } from "lucide-react";
 
-const SITE = "https://mizaninvesting.com";
+const SITE = "https://halalgauge.com";
 
 export const metadata: Metadata = {
   title: "HalalGauge for institutions — halal index licensing, screening data & white-label reports",

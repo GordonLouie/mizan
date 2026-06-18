@@ -10,7 +10,7 @@ import PostHogProvider from "@/components/PostHogProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mizaninvesting.com"),
+  metadataBase: new URL("https://halalgauge.com"),
   verification: { google: "DZV7UJw-g5iwpUnB7L9y-C4KV-jeIO6eMLCjSymFfQo" },
   title: {
     default: "HalalGauge — halal investing, calibrated to your conscience.",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     title: "HalalGauge — halal investing, calibrated to your conscience.",
     description:
       "The first stock screener that adapts to your scholar. Six scholar profiles plus a custom builder. Transparent ratio reasoning behind every verdict.",
-    url: "https://mizaninvesting.com",
+    url: "https://halalgauge.com",
     siteName: "HalalGauge",
     images: [{ url: "/og-image.png?v=3", width: 1200, height: 630, alt: "HalalGauge — multi-scholar halal investing screener" }],
     locale: "en_US",
@@ -78,11 +78,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {
                   "@type": "Organization",
                   name: "HalalGauge",
-                  url: "https://mizaninvesting.com",
+                  url: "https://halalgauge.com",
                   email: "hello@mizaninvesting.com",
                   description: "Multi-scholar halal stock screening, halal indexes, and grounded AI compliance reports.",
                 },
-                { "@type": "WebSite", name: "HalalGauge", url: "https://mizaninvesting.com" },
+                { "@type": "WebSite", name: "HalalGauge", url: "https://halalgauge.com" },
               ],
             }),
           }}

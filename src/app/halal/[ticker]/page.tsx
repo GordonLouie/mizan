@@ -18,10 +18,17 @@ import { listStocks, findStock } from "@/lib/data";
 import { SCHOLAR_PROFILES, getScholar } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
 import { isEtf, etfInfo } from "@/lib/etfInfo";
+import { indexesContaining } from "@/lib/indexes";
 import type { StockFundamentals, ScreeningResult, Verdict } from "@/lib/types";
 import CompanyLogo from "@/components/CompanyLogo";
 
-const SITE = "https://mizaninvesting.com";
+const INDEX_RISK_TONE: Record<string, string> = {
+  Core: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  Growth: "bg-amber-50 text-amber-700 border-amber-200",
+  Income: "bg-navy-50 text-navy-800 border-navy-200",
+};
+
+const SITE = "https://halalgauge.com";
 
 // Only the 5 mainstream named standards (exclude the user-defined "custom").
 const NAMED_SCHOLARS = SCHOLAR_PROFILES.filter((s) => s.id !== "custom");
@@ -255,6 +262,7 @@ export default async function HalalTickerPage({ params }: { params: Promise<{ ti
   if (isEtf(stock)) return <EtfHalalView stock={stock} />;
 
   const { results, pass, fail, borderline } = tallies(stock);
+  const inIndexes = indexesContaining(stock.ticker);
 
   const headline =
     pass === NAMED_SCHOLARS.length
@@ -376,6 +384,28 @@ export default async function HalalTickerPage({ params }: { params: Promise<{ ti
           How the methodologies work <ArrowRight size={14} />
         </Link>
       </section>
+
+      {/* Cross-link: which HalalGauge indexes hold this stock */}
+      {inIndexes.length > 0 && (
+        <section className="mt-8 rounded-xl border border-gray-200 bg-white p-5">
+          <h2 className="text-[15px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
+            {stock.ticker} appears in {inIndexes.length === 1 ? "this halal index" : "these halal indexes"}
+          </h2>
+          <p className="mt-1 text-[13px] leading-relaxed text-gray-600">
+            It passes the AAOIFI screen and is large enough to be a current constituent.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2.5">
+            {inIndexes.map((ix) => (
+              <Link key={ix.slug} href={`/indexes/${ix.slug}`}
+                className="group inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50/60 px-3 py-2 transition hover:border-gray-400">
+                <span className={"rounded-full border px-2 py-0.5 text-[10px] font-semibold " + (INDEX_RISK_TONE[ix.risk] ?? "")}>{ix.risk}</span>
+                <span className="text-[13px] font-semibold text-gray-900">{ix.name}</span>
+                <ArrowRight size={13} className="text-gray-400 transition group-hover:translate-x-0.5" />
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Sources */}
       <section className="mt-8 rounded-xl border border-gray-200 bg-white p-5">

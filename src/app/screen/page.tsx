@@ -572,7 +572,7 @@ function ShareVerdictButton({
   const [copied, setCopied] = useState(false);
 
   async function handleShare() {
-    const url = `https://mizaninvesting.com/screen?ticker=${ticker}`;
+    const url = `https://halalgauge.com/screen?ticker=${ticker}`;
     const text = `${ticker} (${name}) under ${scholarShort}: ${verdictLabel}.\nSee all 6 scholars on HalalGauge: ${url}`;
     try {
       if (typeof navigator !== "undefined" && navigator.share) {

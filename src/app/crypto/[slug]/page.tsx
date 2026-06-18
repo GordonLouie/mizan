@@ -18,7 +18,7 @@ import {
   type CryptoVerdict,
 } from "@/lib/crypto";
 
-const SITE = "https://mizaninvesting.com";
+const SITE = "https://halalgauge.com";
 
 const slugOf = (a: CryptoAsset) => a.symbol.toLowerCase();
 function find(slug: string): CryptoAsset | undefined {

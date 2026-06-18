@@ -6,11 +6,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { INDEXES, indexConstituents } from "@/lib/indexes";
-import { indexPerformance, benchmarkStats } from "@/lib/indexes.server";
-import LockedFeature from "@/components/LockedFeature";
-import IndexCompare, { type CompareRow } from "@/components/IndexCompare";
+import IndexesTabs from "@/components/IndexesTabs";
 
-const SITE = "https://mizaninvesting.com";
+const SITE = "https://halalgauge.com";
 
 export const metadata: Metadata = {
   title: "Halal stock indexes — screened, with real returns vs the S&P 500 — HalalGauge",
@@ -26,13 +24,6 @@ const RISK_TONE: Record<string, string> = {
 };
 
 export default function IndexesPage() {
-  const compareRows: CompareRow[] = INDEXES.map((def) => {
-    const p = indexPerformance(def);
-    return { slug: def.slug, name: def.name, risk: def.risk, totalReturnPct: p.totalReturn, stats: p.stats };
-  });
-  const spy = benchmarkStats("SPY");
-  compareRows.push({ slug: null, name: "S&P 500", risk: "Benchmark", totalReturnPct: spy.totalReturnPct, stats: spy.stats });
-
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 sm:py-14">
       <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500">Halal indexes</div>
@@ -45,7 +36,9 @@ export default function IndexesPage() {
         Constituents and methodology are open; full performance is a Pro feature.
       </p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
+      <div className="mt-8"><IndexesTabs /></div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
         {INDEXES.map((def) => {
           const n = indexConstituents(def).length;
           return (
@@ -65,22 +58,15 @@ export default function IndexesPage() {
         })}
       </div>
 
-      {/* Build your own */}
-      <div className="mt-6">
+      {/* Next steps — keep the hub cohesive: point to Compare + Build */}
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Link href="/indexes/compare" className="inline-flex items-center gap-1.5 rounded-md border border-gray-300 px-4 py-2 text-[13px] font-semibold text-gray-700 transition hover:border-gray-400">
+          Compare returns side by side <ArrowRight size={14} />
+        </Link>
         <Link href="/indexes/build" className="inline-flex items-center gap-1.5 rounded-md border border-navy-800 px-4 py-2 text-[13px] font-semibold text-navy-800 transition hover:bg-navy-50">
           Build your own index <ArrowRight size={14} />
         </Link>
       </div>
-
-      {/* Risk/reward comparison — gated Pro */}
-      <section className="mt-10">
-        <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500">Compare</div>
-        <div className="mt-3">
-          <LockedFeature feature="indexes" label="Index comparison">
-            <IndexCompare rows={compareRows} />
-          </LockedFeature>
-        </div>
-      </section>
 
       <p className="mt-8 text-[11px] leading-relaxed text-gray-400">
         Indexes are informational, screened baskets — not investable funds, and not investment

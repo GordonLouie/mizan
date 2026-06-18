@@ -15,7 +15,7 @@ import LockedFeature from "@/components/LockedFeature";
 import IndexPerfChart from "@/components/IndexPerfChart";
 import CompanyLogo from "@/components/CompanyLogo";
 
-const SITE = "https://mizaninvesting.com";
+const SITE = "https://halalgauge.com";
 
 export function generateStaticParams() {
   return INDEXES.map((i) => ({ slug: i.slug }));

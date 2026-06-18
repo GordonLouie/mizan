@@ -6,7 +6,7 @@
 import { sessionEmail } from "@/lib/auth";
 
 const SK = process.env.STRIPE_SECRET_KEY;
-const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://mizaninvesting.com";
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://halalgauge.com";
 
 export const runtime = "nodejs";
 

@@ -12,7 +12,7 @@ import { listStocks } from "@/lib/data";
 import { isEtf } from "@/lib/etfInfo";
 import { CRYPTO_ASSETS } from "@/lib/crypto";
 
-const SITE = "https://mizaninvesting.com";
+const SITE = "https://halalgauge.com";
 
 export const metadata: Metadata = {
   title: "Is your stock halal? Free multi-scholar screener — HalalGauge",

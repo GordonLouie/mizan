@@ -11,6 +11,7 @@ import { Loader2, Sparkles } from "lucide-react";
 import { SCHOLAR_PROFILES } from "@/lib/scholars";
 import LockedFeature from "@/components/LockedFeature";
 import IndexPerfChart from "@/components/IndexPerfChart";
+import IndexesTabs from "@/components/IndexesTabs";
 
 interface Stats { annReturnPct: number; annVolPct: number; sharpe: number | null; maxDrawdownPct: number; beta: number | null }
 interface Result {
@@ -163,7 +164,8 @@ export default function BuildIndexPage() {
         Pick a scholarly standard, a theme, and a size — get a real, point-in-time backtest with
         risk/reward versus the S&amp;P 500. Choose your own growth-vs-risk profile.
       </p>
-      <div className="mt-8">
+      <div className="mt-8"><IndexesTabs /></div>
+      <div>
         <LockedFeature feature="indexes" label="Custom index builder">
           <Builder />
         </LockedFeature>

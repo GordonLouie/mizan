@@ -7,13 +7,14 @@ import { getAllPosts } from "@/lib/blog";
 import { INDEXES } from "@/lib/indexes";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://mizaninvesting.com";
+  const base = "https://halalgauge.com";
   const now = new Date();
   const routes = [
     { url: "", priority: 1.0, change: "weekly" as const },
     { url: "/screen", priority: 0.9, change: "weekly" as const },
     { url: "/halal", priority: 0.9, change: "weekly" as const },
     { url: "/indexes", priority: 0.8, change: "weekly" as const },
+    { url: "/indexes/compare", priority: 0.6, change: "monthly" as const },
     { url: "/indexes/build", priority: 0.6, change: "monthly" as const },
     { url: "/institutions", priority: 0.7, change: "monthly" as const },
     { url: "/pricing", priority: 0.7, change: "monthly" as const },
