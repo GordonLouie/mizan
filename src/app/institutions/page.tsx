@@ -64,6 +64,28 @@ export default function InstitutionsPage() {
         ))}
       </div>
 
+      {/* API at a glance */}
+      <section className="mt-10 rounded-2xl border border-gray-200 bg-white p-6">
+        <h2 className="text-[16px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>Screening API — at a glance</h2>
+        <p className="mt-1.5 text-[13px] leading-relaxed text-gray-600">
+          Programmatic, multi-scholar compliance data — Bearer-authenticated, JSON or CSV.
+          Each row returns the verdict, the business-activity check, every financial ratio
+          (observed / threshold / pass), and the purification rule.
+        </p>
+        <pre className="mt-4 overflow-x-auto rounded-lg bg-navy-900 p-4 text-[12px] leading-relaxed text-gray-100">
+{`GET /api/v1/screen?tickers=AAPL,MSFT&scholar=aaoifi&format=json
+Authorization: Bearer <your-api-key>
+
+→ { "scholar": "aaoifi", "count": 2, "results": [
+     { "ticker": "AAPL", "verdict": "pass", "sectorPasses": true,
+       "ratios": [ { "metric": "...", "valuePct": 0.6, "thresholdPct": 5, "passes": true }, ... ] },
+     ... ] }`}
+        </pre>
+        <p className="mt-3 text-[12px] text-gray-500">
+          Keys are issued per engagement. Bulk export, scheduled feeds, and white-label fields available on request.
+        </p>
+      </section>
+
       <div className="mt-10 rounded-2xl border border-navy-200 bg-navy-50/40 p-6 text-center">
         <h2 className="text-[18px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
           Let&apos;s talk about your mandate
