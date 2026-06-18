@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: "%s · HalalGauge",
   },
   description:
-    "The first stock screener that adapts to your scholar's methodology — AAOIFI, Mufti Taqi Usmani, DJIM, Ja'fari, strict, or your own custom thresholds. With AI scholar Q&A.",
+    "The first stock screener that adapts to your scholar's methodology — AAOIFI, Mufti Taqi Usmani, DJIM, Ja'fari, strict, or your own custom thresholds. With an AI-assisted halal investing Q&A.",
   applicationName: "HalalGauge",
   keywords: ["halal investing", "shariah screening", "halal stocks", "mufti taqi usmani", "AAOIFI", "DJIM", "halal stock screener", "muslim investing"],
   authors: [{ name: "HalalGauge" }],

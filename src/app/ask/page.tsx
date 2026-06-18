@@ -101,18 +101,19 @@ export default function AskPage() {
       {/* PAGE HEADER */}
       <header className="pt-6">
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          AI scholar Q&amp;A
+          Halal investing Q&amp;A
         </div>
         <h1
           className="mt-3 text-[36px] font-bold leading-[1.1] text-gray-900 sm:text-[44px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Ask a scholar
+          Halal investing, answered
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
-          Type your question. HalalGauge returns the answer per your selected scholar from a
-          knowledge base of 49 common questions, with citations. For anything not covered,
-          ask for an AI answer — powered by Claude and grounded in this knowledge base.
+          Common questions answered per your selected standard, from a vetted knowledge base of 49
+          entries, with citations. For anything not covered, get an AI-assisted answer grounded in
+          that knowledge base. This is educational information, not a religious ruling (fatwa) — for a
+          ruling on your situation, consult a qualified scholar.
         </p>
       </header>
 

@@ -8,7 +8,7 @@
  * the facts plus an honest "AI narrative unavailable" note — never fabrications.
  */
 import { useState } from "react";
-import { Sparkles, Download, AlertCircle, Loader2, Check, X, CheckCircle2, XCircle, AlertTriangle, ShieldCheck, Building2, BarChart3, BookOpen, Droplets } from "lucide-react";
+import { Sparkles, Download, AlertCircle, Loader2, Check, X, CheckCircle2, XCircle, AlertTriangle, ShieldCheck, Gavel, Eye, Droplets } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 interface RatioCheck {
@@ -34,13 +34,10 @@ interface Facts {
   purificationNote: string;
 }
 interface Narrative {
-  executiveSummary: string;
-  sectorAssessment: string;
-  financialAnalysis: string;
-  scholarRationale: string;
+  plainVerdict: string;
+  whatDecidedIt: string;
+  whatToMonitor: string[];
   purificationGuidance: string;
-  risks: string[];
-  bottomLine: string;
 }
 interface Report {
   facts: Facts;
@@ -87,17 +84,14 @@ function toMarkdown(r: Report): string {
   lines.push("");
   if (r.narrative) {
     const n = r.narrative;
-    lines.push("## Executive summary", "", n.executiveSummary, "");
-    lines.push("## Sector assessment", "", n.sectorAssessment, "");
-    lines.push("## Financial analysis", "", n.financialAnalysis, "");
-    lines.push("## Scholarly rationale", "", n.scholarRationale, "");
-    lines.push("## Purification guidance", "", n.purificationGuidance, "");
-    lines.push("## Risks & caveats", "");
-    for (const risk of n.risks) lines.push(`- ${risk}`);
-    lines.push("", "## Bottom line", "", n.bottomLine, "");
+    lines.push("## In plain language", "", n.plainVerdict, "");
+    lines.push("## What decided it", "", n.whatDecidedIt, "");
+    lines.push("## What to monitor", "");
+    for (const w of n.whatToMonitor) lines.push(`- ${w}`);
+    lines.push("", "## Purification", "", n.purificationGuidance, "");
   }
   lines.push("");
-  lines.push(`_Generated ${new Date(r.generatedAt).toLocaleString()} by HalalGauge. Screening analysis, not investment advice. Verdict and figures are computed deterministically; narrative is AI-generated and grounded in those figures. Verify with a qualified scholar._`);
+  lines.push(`_Generated ${new Date(r.generatedAt).toLocaleString()} by HalalGauge. This is a plain-language explanation of HalalGauge's automated screen — NOT a religious ruling (fatwa) and NOT investment advice. The verdict and figures are computed deterministically; the explanation is AI-written and contains no figure not present in those results. Compliance rulings require a qualified scholar._`);
   return lines.join("\n");
 }
 
@@ -159,11 +153,11 @@ export default function AIReport({ ticker, scholarId }: { ticker: string; schola
           <Sparkles size={18} />
         </div>
         <h3 className="mt-3 text-[16px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
-          AI compliance report
+          Plain-language explainer
         </h3>
         <p className="mx-auto mt-1 max-w-md text-[13px] leading-relaxed text-gray-600">
-          A written, institutional-grade analysis of {ticker}&apos;s screening result — grounded in the
-          deterministic verdict and ratios, never fabricated.
+          A plain-English explanation of {ticker}&apos;s screening result — what the verdict means, which
+          check decided it, and what to watch. Grounded strictly in the figures; not a fatwa or advice.
         </p>
         {isCustom && (
           <p className="mx-auto mt-3 max-w-md text-[12px] leading-relaxed text-amber-700">
@@ -203,13 +197,13 @@ export default function AIReport({ ticker, scholarId }: { ticker: string; schola
       </div>
 
       <div className="space-y-7 p-5 sm:p-6">
-        {/* Executive summary callout */}
-        {n?.executiveSummary?.trim() && (
+        {/* In plain language — the verdict + the one driver */}
+        {n?.plainVerdict?.trim() && (
           <div className="rounded-lg border-l-[3px] border-navy-700 bg-navy-50/50 p-4">
             <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-navy-700">
-              <Sparkles size={11} /> Executive summary
+              <Sparkles size={11} /> In plain language
             </div>
-            <p className="mt-2 text-[14px] leading-relaxed text-gray-800">{n.executiveSummary}</p>
+            <p className="mt-2 text-[14px] leading-relaxed text-gray-800">{n.plainVerdict}</p>
           </div>
         )}
 
@@ -243,33 +237,25 @@ export default function AIReport({ ticker, scholarId }: { ticker: string; schola
           </div>
         </div>
 
-        {/* AI narrative — grounded prose */}
+        {/* AI explainer — translates the deterministic screen, no fiqh/opinion */}
         {n ? (
           <div className="space-y-6">
-            <NarrativeSection icon={Building2} title="Sector assessment" body={n.sectorAssessment} />
-            <NarrativeSection icon={BarChart3} title="Financial analysis" body={n.financialAnalysis} />
-            <NarrativeSection icon={BookOpen} title="Scholarly rationale" body={n.scholarRationale} />
-            <NarrativeSection icon={Droplets} title="Purification guidance" body={n.purificationGuidance} />
-            {n.risks.length > 0 && (
+            <NarrativeSection icon={Gavel} title="What decided it" body={n.whatDecidedIt} />
+            {n.whatToMonitor.length > 0 && (
               <div className="rounded-lg border border-amber-200/70 bg-amber-50/40 p-4">
                 <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-amber-700">
-                  <AlertTriangle size={11} /> Risks &amp; caveats
+                  <Eye size={11} /> What to monitor
                 </div>
                 <ul className="mt-2 space-y-1.5 text-[13px] leading-relaxed text-gray-700">
-                  {n.risks.map((r, i) => (
+                  {n.whatToMonitor.map((r, i) => (
                     <li key={i} className="flex gap-2"><span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-amber-500" /><span>{r}</span></li>
                   ))}
                 </ul>
               </div>
             )}
-            {n.bottomLine?.trim() && (
-              <div className="rounded-lg bg-navy-800 p-4 text-white">
-                <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/70">Bottom line</div>
-                <p className="mt-1.5 text-[14px] leading-relaxed">{n.bottomLine}</p>
-              </div>
-            )}
+            <NarrativeSection icon={Droplets} title="Purification" body={n.purificationGuidance} />
             <div className="flex items-center gap-1.5 text-[10px] text-gray-400">
-              <Sparkles size={10} /> AI-written analysis, grounded strictly in the figures above.
+              <Sparkles size={10} /> Plain-language explanation of the screen above — every figure traceable to it; no ruling or advice.
             </div>
           </div>
         ) : (

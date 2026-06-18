@@ -3,7 +3,7 @@ export const metadata = { title: "Roadmap · HalalGauge" };
 const NOW = [
   "Live financial data pipeline (Financial Modeling Prep)",
   "Brokerage portfolio sync (Plaid US)",
-  "AI scholar Q&A with bounded scope and board-reviewed prompts",
+  "AI-assisted halal Q&A with bounded scope and board-reviewed prompts",
   "Onboarding flow + scholar-selection nudge",
   "Mobile-responsive polish on all screens",
 ];

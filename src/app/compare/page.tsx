@@ -12,7 +12,7 @@ const ROWS = [
   { feature: "Robo-advisor / managed money", mizan: false, zoya: false, musaffa: false, wahed: true, islamicly: false },
   { feature: "Dividend purification calculator", mizan: true, zoya: false, musaffa: false, wahed: true, islamicly: false },
   { feature: "Capital-gain purification (Mufti Taqi / Ja'fari)", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
-  { feature: "AI scholar Q&A", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
+  { feature: "AI-assisted halal Q&A", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
   { feature: "Open-published methodology", mizan: true, zoya: "partial", musaffa: "partial", wahed: "partial", islamicly: "partial" },
   { feature: "Free tier with daily screens", mizan: true, zoya: true, musaffa: true, wahed: false, islamicly: true },
   { feature: "Monthly price (paid plan)", mizan: "$7.99", zoya: "$9.99", musaffa: "$9.99", wahed: "0.99% AUM", islamicly: "$5.99" },

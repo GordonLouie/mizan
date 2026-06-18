@@ -13,6 +13,7 @@ import { getScholar } from "./scholars";
 import { findHalalAlternatives } from "./alternatives";
 import { currentPrice } from "./prices";
 import { generateJson, aiEnabled } from "./ai";
+import { hasBannedContent } from "./aiGuards";
 import type { Verdict } from "./types";
 
 export interface SwapCandidate {
@@ -131,16 +132,17 @@ STRICT RULES:
 1. NEVER change a holding's verdict — they are computed deterministically and are final.
 2. NEVER invent tickers, companies, numbers, or rulings. When you suggest a swap, use ONLY the swap candidates provided for that holding. If none are provided, say so.
 3. Prioritise by weight — the largest non-compliant positions matter most.
-4. Be practical, encouraging, and clear; this is for a retail investor, not an institution.
-5. This is screening guidance, not investment advice. Selling/buying has tax and market consequences; say so where relevant.
+4. NEVER quote the Qur'an or hadith, name or attribute views to scholars, or reason about fiqh. You are describing what HalalGauge's automated screen computed, not issuing a religious ruling.
+5. NEVER give investment advice — do not say a holding is a good/bad investment or tell the user to buy/sell/hold. You may note that swapping has tax/market consequences and is the user's decision.
+6. Every sentence must be specific to THIS portfolio's holdings — no generic filler that could apply to any portfolio (e.g. avoid "consult a financial advisor", "review your allocation regularly").
 
 Return ONLY a JSON object (no markdown fences) with exactly these keys:
 {
   "overallAssessment": "2-3 sentences: how halal the portfolio is overall (use the weighted %) and the headline takeaway.",
-  "whatToFix": "1-2 paragraphs naming the specific non-compliant holdings (largest weight first) and why each fails.",
-  "swapGuidance": "1 paragraph on how to think about the suggested halal swaps, referencing ONLY the provided candidates by ticker.",
-  "nextSteps": ["3 to 5 short, concrete bullet strings the investor can act on."],
-  "bottomLine": "1-2 sentences, with a not-advice caveat."
+  "whatToFix": "1-2 paragraphs naming the SPECIFIC non-compliant holdings (largest weight first, by ticker) and the specific reason each fails.",
+  "swapGuidance": "1 paragraph on the suggested halal swaps, referencing ONLY the provided candidates by ticker. If a holding has no candidates, say so.",
+  "nextSteps": ["3 to 5 short bullets, each naming a SPECIFIC holding or action from this portfolio — never generic advice."],
+  "bottomLine": "1-2 sentences. State plainly this is a screening summary, not a fatwa or investment advice."
 }`;
 
 function factsToJson(facts: PortfolioFacts): string {
@@ -181,7 +183,8 @@ You are given the deterministic portfolio facts (overall halal %, each holding's
 1. Answer ONLY from the provided facts. NEVER change a verdict or invent tickers, numbers, companies, or rulings.
 2. When suggesting swaps, use ONLY the provided candidates.
 3. If the facts don't contain what's needed, say so plainly.
-4. Be concise and practical. This is screening guidance, not investment advice.
+4. NEVER quote scripture, name scholars, reason about fiqh, or give investment advice (buy/sell/hold). You explain what the automated screen shows — not a religious ruling.
+5. Be concise and practical; specific to this portfolio.
 
 Return ONLY a JSON object: { "answer": "your answer in plain prose" }`;
 
@@ -202,8 +205,8 @@ export async function generatePortfolioAnswer(
     maxTokens: 900,
     temperature: 0.3,
   });
-  const answer = out && typeof out.answer === "string" && out.answer.trim() ? out.answer : null;
-  return { answer, aiEnabled: true };
+  const valid = out && typeof out.answer === "string" && out.answer.trim() && !hasBannedContent(out.answer);
+  return { answer: valid ? out.answer : null, aiEnabled: true };
 }
 
 function isValidNarrative(x: unknown): x is PortfolioNarrative {
@@ -213,7 +216,10 @@ function isValidNarrative(x: unknown): x is PortfolioNarrative {
     if (typeof o[k] !== "string") return false;
   }
   if (!Array.isArray(o.nextSteps) || !o.nextSteps.every((s) => typeof s === "string")) return false;
-  return (o.overallAssessment as string).trim().length > 0 && (o.bottomLine as string).trim().length > 0;
+  if ((o.overallAssessment as string).trim().length === 0 || (o.bottomLine as string).trim().length === 0) return false;
+  // Safety gate: no fiqh/scripture/scholar-attribution or investment advice anywhere.
+  const allText = [o.overallAssessment, o.whatToFix, o.swapGuidance, o.bottomLine, ...(o.nextSteps as string[])].join("\n");
+  return !hasBannedContent(allText);
 }
 
 export async function generatePortfolioReport(holdings: HoldingInput[], scholarId: string): Promise<PortfolioReport> {
