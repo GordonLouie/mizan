@@ -82,7 +82,7 @@ export default function ComparePage() {
       <p className="text-xs text-gray-500">
         Feature comparison updated 18 May 2026. Information reflects publicly disclosed
         capabilities of each platform; we welcome corrections via{" "}
-        <a href="mailto:hello@mizaninvesting.com" className="text-navy-700 underline">hello@mizaninvesting.com</a>.
+        <a href="mailto:hello@halalgauge.com" className="text-navy-700 underline">hello@halalgauge.com</a>.
       </p>
     </div>
   );

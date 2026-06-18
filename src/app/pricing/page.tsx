@@ -60,7 +60,7 @@ export default function PricingPage() {
       });
       const data = (await res.json()) as { ok?: boolean; url?: string };
       if (data.url) { window.location.href = data.url; return; }
-      setNote("Billing isn't switched on yet. Email hello@mizaninvesting.com for early access.");
+      setNote("Billing isn't switched on yet. Email hello@halalgauge.com for early access.");
     } catch {
       setNote("Something went wrong. Please try again.");
     } finally {
@@ -124,7 +124,7 @@ export default function PricingPage() {
               <span className="text-[13px] font-semibold text-emerald-700">✓ Your current plan</span>
             ) : (
               <button type="button" onClick={upgrade} disabled={busy}
-                className="inline-flex items-center gap-2 rounded-md bg-navy-800 px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900 disabled:opacity-60">
+                className="inline-flex items-center gap-2 rounded-md bg-navy-800 px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700 disabled:opacity-60">
                 {busy ? <Loader2 size={14} className="animate-spin" /> : null} Upgrade to Pro
               </button>
             )}

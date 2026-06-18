@@ -73,7 +73,7 @@ export default function BalanceSheetPage() {
           </h1>
           <p className="mt-2 text-[14px] text-gray-700">
             HalalGauge&apos;s prototype dataset doesn&apos;t include this ticker yet. Email us at
-            hello@mizaninvesting.com and we&apos;ll add it in the next batch.
+            hello@halalgauge.com and we&apos;ll add it in the next batch.
           </p>
         </div>
       </div>

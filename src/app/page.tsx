@@ -32,6 +32,7 @@ import CompanyLogo from "@/components/CompanyLogo";
 import CompanyLogoMarquee from "@/components/CompanyLogoMarquee";
 import MethodologyBubble from "@/components/MethodologyBubble";
 import GetStartedSteps from "@/components/GetStartedSteps";
+import ForInstitutionsBand from "@/components/ForInstitutionsBand";
 
 export default function Home() {
   const router = useRouter();
@@ -65,16 +66,16 @@ export default function Home() {
             </Link>
 
             <h1
-              className="mt-6 text-[44px] font-bold leading-[1.04] tracking-tight text-gray-900 sm:text-[64px]"
+              className="mt-6 text-[40px] font-bold leading-[1.05] tracking-tight text-gray-900 sm:text-[64px]"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Is your stock halal?
             </h1>
 
             <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-gray-600 sm:text-[16px]">
-              See it under all six scholars side by side, including Mufti Taqi
-              Usmani&apos;s illiquid-asset rule. The one no other halal app
-              implements.
+              See it under all five scholarly standards side by side, including
+              Mufti Taqi Usmani&apos;s illiquid-asset rule — the one no other
+              halal app implements.
             </p>
 
             <div className="mt-8 max-w-lg">
@@ -213,7 +214,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 11. WHAT MIZAN IS / ISN'T */}
+      {/* FOR INSTITUTIONS — the one institutional band on the retail homepage */}
+      <ForInstitutionsBand />
+
+      {/* 11. WHAT HALALGAUGE IS / ISN'T */}
       <section className="mx-auto mt-32 max-w-3xl border-t border-gray-200 px-4 pt-14 sm:px-6">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
           <div>
@@ -222,7 +226,7 @@ export default function Home() {
             </div>
             <ul className="mt-4 space-y-2.5 text-[14px] leading-relaxed text-gray-700">
               <li>Free, transparent halal stock screening.</li>
-              <li>Six scholarly methodologies + a custom builder.</li>
+              <li>Five scholarly methodologies + a custom builder.</li>
               <li>Zakat and purification calculators.</li>
               <li>Information you can verify. We show the math.</li>
             </ul>

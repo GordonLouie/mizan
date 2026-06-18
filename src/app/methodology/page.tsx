@@ -427,10 +427,10 @@ export default function MethodologyPage() {
           If you believe a scholar profile in HalalGauge misrepresents the underlying
           scholarship, write to{" "}
           <a
-            href="mailto:methodology@mizaninvesting.com"
+            href="mailto:methodology@halalgauge.com"
             className="text-navy-700 underline hover:text-navy-900"
           >
-            methodology@mizaninvesting.com
+            methodology@halalgauge.com
           </a>{" "}
           with the citation. Every note is reviewed against the cited primary source and a
           public changelog entry is added if a profile changes.

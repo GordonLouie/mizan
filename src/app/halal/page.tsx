@@ -49,7 +49,7 @@ export default function HalalHub() {
         cited to its primary source. Free, no signup, no data collected.
       </p>
       <div className="mt-5">
-        <Link href="/screen" className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-900">
+        <Link href="/screen" className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-700">
           Screen any stock <ArrowRight size={14} />
         </Link>
       </div>

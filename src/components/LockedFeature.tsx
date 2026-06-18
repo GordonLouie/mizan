@@ -113,7 +113,7 @@ export default function LockedFeature({
         <button
           type="button"
           onClick={onUnlock}
-          className="mt-1 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900"
+          className="mt-1 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700"
         >
           {need === "institutional" ? "Talk to us" : "Unlock with Pro"}
         </button>

@@ -42,7 +42,7 @@ export default function ContactPage() {
     if (!validateEmail(newsletterEmail)) { setNewsState("error"); return; }
     setNewsState("sending");
     // Mailto fallback — in production this hits the Beehiiv / Substack endpoint.
-    const url = `mailto:newsletter@mizaninvesting.com?subject=${encodeURIComponent("Subscribe to HalalGauge newsletter")}&body=${encodeURIComponent("Please add " + newsletterEmail + " to the HalalGauge newsletter list.")}`;
+    const url = `mailto:newsletter@halalgauge.com?subject=${encodeURIComponent("Subscribe to HalalGauge newsletter")}&body=${encodeURIComponent("Please add " + newsletterEmail + " to the HalalGauge newsletter list.")}`;
     setTimeout(() => {
       window.location.href = url;
       setNewsState("sent");
@@ -52,7 +52,7 @@ export default function ContactPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Contact</h1>
+        <h1 className="text-[30px] font-bold leading-tight text-gray-900 sm:text-[38px]" style={{ fontFamily: "var(--font-display)" }}>Contact</h1>
         <p className="mt-1 max-w-2xl text-sm text-gray-600">
           jk reads every email personally. Expect a reply within 48 hours.
         </p>
@@ -121,12 +121,12 @@ export default function ContactPage() {
               <Mail size={14} /> Direct email
             </h3>
             <ul className="mt-3 space-y-1 text-xs text-gray-700">
-              <li><strong>General:</strong> <a href="mailto:hello@mizaninvesting.com" className="text-navy-700 underline">hello@mizaninvesting.com</a></li>
-              <li><strong>Press:</strong> <a href="mailto:press@mizaninvesting.com" className="text-navy-700 underline">press@mizaninvesting.com</a></li>
-              <li><strong>Investors:</strong> <a href="mailto:investors@mizaninvesting.com" className="text-navy-700 underline">investors@mizaninvesting.com</a></li>
-              <li><strong>Methodology:</strong> <a href="mailto:methodology@mizaninvesting.com" className="text-navy-700 underline">methodology@mizaninvesting.com</a></li>
-              <li><strong>Privacy:</strong> <a href="mailto:privacy@mizaninvesting.com" className="text-navy-700 underline">privacy@mizaninvesting.com</a></li>
-              <li><strong>Legal:</strong> <a href="mailto:legal@mizaninvesting.com" className="text-navy-700 underline">legal@mizaninvesting.com</a></li>
+              <li><strong>General:</strong> <a href="mailto:hello@halalgauge.com" className="text-navy-700 underline">hello@halalgauge.com</a></li>
+              <li><strong>Press:</strong> <a href="mailto:press@halalgauge.com" className="text-navy-700 underline">press@halalgauge.com</a></li>
+              <li><strong>Investors:</strong> <a href="mailto:investors@halalgauge.com" className="text-navy-700 underline">investors@halalgauge.com</a></li>
+              <li><strong>Methodology:</strong> <a href="mailto:methodology@halalgauge.com" className="text-navy-700 underline">methodology@halalgauge.com</a></li>
+              <li><strong>Privacy:</strong> <a href="mailto:privacy@halalgauge.com" className="text-navy-700 underline">privacy@halalgauge.com</a></li>
+              <li><strong>Legal:</strong> <a href="mailto:legal@halalgauge.com" className="text-navy-700 underline">legal@halalgauge.com</a></li>
             </ul>
           </div>
 
@@ -167,13 +167,13 @@ function Field({ label, required, children }: { label: string; required?: boolea
 
 function topicEmail(topic: string): string {
   switch (topic) {
-    case "press": return "press@mizaninvesting.com";
-    case "investors": return "investors@mizaninvesting.com";
-    case "methodology": return "methodology@mizaninvesting.com";
-    case "privacy": return "privacy@mizaninvesting.com";
-    case "bug": return "support@mizaninvesting.com";
-    case "hardship": return "hello@mizaninvesting.com";
-    case "partnership": return "hello@mizaninvesting.com";
-    default: return "hello@mizaninvesting.com";
+    case "press": return "press@halalgauge.com";
+    case "investors": return "investors@halalgauge.com";
+    case "methodology": return "methodology@halalgauge.com";
+    case "privacy": return "privacy@halalgauge.com";
+    case "bug": return "support@halalgauge.com";
+    case "hardship": return "hello@halalgauge.com";
+    case "partnership": return "hello@halalgauge.com";
+    default: return "hello@halalgauge.com";
   }
 }

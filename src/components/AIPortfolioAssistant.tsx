@@ -147,7 +147,7 @@ export default function AIPortfolioAssistant({
         )}
         <button
           type="button" onClick={generate} disabled={loading || holdings.length === 0 || isCustom}
-          className="mt-4 inline-flex items-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900 disabled:opacity-60"
+          className="mt-4 inline-flex items-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700 disabled:opacity-60"
         >
           {loading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
           {loading ? "Analysing…" : "Analyse my portfolio"}
@@ -266,7 +266,7 @@ export default function AIPortfolioAssistant({
             />
             <button
               type="button" onClick={askFollowup} disabled={qLoading || !q.trim()}
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900 disabled:opacity-60"
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700 disabled:opacity-60"
             >
               {qLoading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />} Ask
             </button>

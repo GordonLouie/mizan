@@ -134,7 +134,7 @@ export default async function CryptoSlugPage({ params }: { params: Promise<{ slu
       </section>
 
       <section className="mt-8 flex flex-wrap gap-3">
-        <Link href="/crypto" className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-900">
+        <Link href="/crypto" className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-700">
           All crypto verdicts <ArrowRight size={14} />
         </Link>
         <Link href="/methodology" className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:border-gray-400">

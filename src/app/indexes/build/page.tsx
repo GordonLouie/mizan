@@ -88,7 +88,7 @@ function Builder() {
           </select>
         </label>
         <button type="button" onClick={build} disabled={loading}
-          className="mt-auto inline-flex items-center justify-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900 disabled:opacity-60">
+          className="mt-auto inline-flex items-center justify-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700 disabled:opacity-60">
           {loading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />} Build index
         </button>
       </div>
@@ -155,9 +155,9 @@ function Builder() {
 
 export default function BuildIndexPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10 sm:py-14">
+    <main className="mx-auto max-w-4xl px-4 py-10 sm:py-14">
       <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500">Build your own</div>
-      <h1 className="mt-2 text-[28px] font-bold leading-tight text-gray-900 sm:text-[34px]" style={{ fontFamily: "var(--font-display)" }}>
+      <h1 className="mt-2 text-[30px] font-bold leading-tight text-gray-900 sm:text-[36px]" style={{ fontFamily: "var(--font-display)" }}>
         Construct a halal index
       </h1>
       <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-gray-700">

@@ -76,10 +76,10 @@ export default function AboutPage() {
             If you&apos;re Muslim and you find HalalGauge useful, that&apos;s the whole point.
             If you find something wrong, email me at{" "}
             <a
-              href="mailto:hello@mizaninvesting.com"
+              href="mailto:hello@halalgauge.com"
               className="text-navy-700 underline hover:text-navy-900"
             >
-              hello@mizaninvesting.com
+              hello@halalgauge.com
             </a>
             . I read every message personally.
           </p>
@@ -169,10 +169,10 @@ export default function AboutPage() {
                 <p className="mt-2 text-[13px] leading-relaxed text-gray-600">
                   Contact:{" "}
                   <a
-                    href="mailto:hello@mizaninvesting.com"
+                    href="mailto:hello@halalgauge.com"
                     className="text-navy-700 underline hover:text-navy-900"
                   >
-                    hello@mizaninvesting.com
+                    hello@halalgauge.com
                   </a>
                 </p>
               </div>
@@ -284,11 +284,11 @@ export default function AboutPage() {
         </h2>
 
         <dl className="mt-6 max-w-xl divide-y divide-gray-100">
-          <ContactRow label="General" email="hello@mizaninvesting.com" />
-          <ContactRow label="Methodology challenge" email="methodology@mizaninvesting.com" />
-          <ContactRow label="Press" email="press@mizaninvesting.com" />
-          <ContactRow label="Investors" email="investors@mizaninvesting.com" />
-          <ContactRow label="Privacy / data" email="privacy@mizaninvesting.com" />
+          <ContactRow label="General" email="hello@halalgauge.com" />
+          <ContactRow label="Methodology challenge" email="methodology@halalgauge.com" />
+          <ContactRow label="Press" email="press@halalgauge.com" />
+          <ContactRow label="Investors" email="investors@halalgauge.com" />
+          <ContactRow label="Privacy / data" email="privacy@halalgauge.com" />
         </dl>
         <p className="mt-6 text-[12px] italic text-gray-500">
           Every substantive email is read by the founder personally. No support tickets,

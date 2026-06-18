@@ -497,7 +497,7 @@ function TickerNotFound({
   const mailtoBody = encodeURIComponent(
     `Hi Gordon,\n\nI tried to screen ${ticker} on HalalGauge but it's not in the universe yet. Could you add it?\n\nThanks.`,
   );
-  const mailtoHref = `mailto:hello@mizaninvesting.com?subject=${mailtoSubject}&body=${mailtoBody}`;
+  const mailtoHref = `mailto:hello@halalgauge.com?subject=${mailtoSubject}&body=${mailtoBody}`;
 
   return (
     <div className="space-y-6">

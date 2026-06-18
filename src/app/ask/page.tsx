@@ -57,7 +57,7 @@ export default function AskPage() {
         setAiAnswer(data.result.answer);
         setAiAsked(q);
       } else {
-        setAiError(data.result.aiEnabled ? "The AI couldn't produce a confident answer — try rephrasing, or email methodology@mizaninvesting.com." : "AI answers aren't enabled yet. Pick from the knowledge base above, or email methodology@mizaninvesting.com.");
+        setAiError(data.result.aiEnabled ? "The AI couldn't produce a confident answer — try rephrasing, or email methodology@halalgauge.com." : "AI answers aren't enabled yet. Pick from the knowledge base above, or email methodology@halalgauge.com.");
       }
     } catch {
       setAiError("Network error. Please try again.");
@@ -191,7 +191,7 @@ export default function AskPage() {
             type="button"
             onClick={askAI}
             disabled={aiLoading}
-            className="inline-flex items-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900 disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700 disabled:opacity-60"
           >
             {aiLoading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
             {aiLoading ? "Asking…" : "Ask AI for a tailored answer"}
@@ -235,8 +235,8 @@ export default function AskPage() {
           entries in our seeded knowledge base are shown above — but your question may be
           outside their scope. The production version (powered by Claude) handles
           arbitrary questions. For a specific ruling, write to{" "}
-          <a href="mailto:methodology@mizaninvesting.com" className="underline hover:text-amber-700">
-            methodology@mizaninvesting.com
+          <a href="mailto:methodology@halalgauge.com" className="underline hover:text-amber-700">
+            methodology@halalgauge.com
           </a>.
         </div>
       )}

@@ -242,7 +242,7 @@ function EtfHalalView({ stock }: { stock: StockFundamentals }) {
             Fund details <ArrowRight size={14} />
           </a>
         )}
-        <Link href="/screen" className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-900">
+        <Link href="/screen" className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-700">
           Screen individual stocks <ArrowRight size={14} />
         </Link>
         <Link href="/methodology" className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:border-gray-400">
@@ -372,7 +372,7 @@ export default async function HalalTickerPage({ params }: { params: Promise<{ ti
       {/* CTAs */}
       <section className="mt-8 flex flex-wrap gap-3">
         <Link href={`/screen?ticker=${encodeURIComponent(stock.ticker)}`}
-          className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-900">
+          className="inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-700">
           Screen {stock.ticker} interactively <ArrowRight size={14} />
         </Link>
         <Link href={`/balance-sheet/${encodeURIComponent(stock.ticker)}`}

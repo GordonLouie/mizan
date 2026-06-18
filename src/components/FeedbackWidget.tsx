@@ -9,7 +9,7 @@ import { toast } from "@/lib/toast";
  * shows the founder's email with a copy button. No form, no mailto redirect,
  * no backend — nothing that can fail. People email feedback directly.
  */
-const FEEDBACK_EMAIL = "hello@mizaninvesting.com";
+const FEEDBACK_EMAIL = "hello@halalgauge.com";
 
 export default function FeedbackWidget() {
   const [open, setOpen] = useState(false);

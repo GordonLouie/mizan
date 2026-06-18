@@ -95,8 +95,8 @@ Authorization: Bearer <your-api-key>
           and we&apos;ll scope a pilot.
         </p>
         <a
-          href="mailto:hello@mizaninvesting.com?subject=HalalGauge%20for%20institutions"
-          className="mt-4 inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-5 py-2.5 text-[14px] font-semibold text-white transition hover:bg-navy-900"
+          href="mailto:hello@halalgauge.com?subject=HalalGauge%20for%20institutions"
+          className="mt-4 inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-5 py-2.5 text-[14px] font-semibold text-white transition hover:bg-navy-700"
         >
           Contact us <ArrowRight size={15} />
         </a>

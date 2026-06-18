@@ -67,7 +67,7 @@ export default function TermsPage() {
 
       <h2 className="mt-6 text-xl font-semibold text-gray-900">8. Contact</h2>
       <p className="mt-2 text-sm leading-6 text-gray-700">
-        Questions: <a href="mailto:legal@mizaninvesting.com" className="text-navy-700 underline">legal@mizaninvesting.com</a>.
+        Questions: <a href="mailto:legal@halalgauge.com" className="text-navy-700 underline">legal@halalgauge.com</a>.
       </p>
     </article>
   );

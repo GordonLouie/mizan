@@ -62,8 +62,8 @@ export default function RoadmapPage() {
         <p className="mt-2 text-sm text-gray-700">
           If there&apos;s a feature, scholar profile, or jurisdiction you wish was
           higher on this list, tell us:{" "}
-          <a href="mailto:roadmap@mizaninvesting.com" className="text-navy-700 underline">
-            roadmap@mizaninvesting.com
+          <a href="mailto:roadmap@halalgauge.com" className="text-navy-700 underline">
+            roadmap@halalgauge.com
           </a>
           . We don&apos;t respond to every email but we read every one, and the most
           repeated requests move up.

@@ -49,7 +49,7 @@ export default function EmailCapture({
     } catch {
       /* fall through */
     }
-    toast(`Couldn't save that — email hello@mizaninvesting.com instead.`, { tone: "error" });
+    toast(`Couldn't save that — email hello@halalgauge.com instead.`, { tone: "error" });
     setBusy(false);
   }
 
@@ -79,7 +79,7 @@ export default function EmailCapture({
         <button
           type="submit"
           disabled={busy || !email.includes("@")}
-          className="shrink-0 rounded-md bg-navy-800 px-3 py-2 text-sm font-semibold text-white transition hover:bg-navy-900 disabled:opacity-50"
+          className="shrink-0 rounded-md bg-navy-800 px-3 py-2 text-sm font-semibold text-white transition hover:bg-navy-700 disabled:opacity-50"
         >
           Notify me
         </button>

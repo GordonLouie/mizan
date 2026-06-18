@@ -68,7 +68,7 @@ export default function AccountPage() {
           </p>
           <div className="mt-4 flex flex-col gap-2 sm:flex-row">
             <SignUpButton mode="modal">
-              <button className="inline-flex flex-1 items-center justify-center rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900">
+              <button className="inline-flex flex-1 items-center justify-center rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700">
                 Create account
               </button>
             </SignUpButton>

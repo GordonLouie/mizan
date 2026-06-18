@@ -174,7 +174,7 @@ export default function AIReport({ ticker, scholarId }: { ticker: string; schola
           type="button"
           onClick={generate}
           disabled={loading || isCustom}
-          className="mt-4 inline-flex items-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-900 disabled:opacity-60"
+          className="mt-4 inline-flex items-center gap-2 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700 disabled:opacity-60"
         >
           {loading ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
           {loading ? "Generating…" : "Generate report"}

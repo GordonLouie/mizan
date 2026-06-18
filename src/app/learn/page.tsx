@@ -387,15 +387,15 @@ export default function LearnPage() {
           We&apos;re ingesting tickers progressively. Major US equities are
           covered first; we&apos;re expanding outward. Email{" "}
           <a
-            href="mailto:hello@mizaninvesting.com"
+            href="mailto:hello@halalgauge.com"
             className="text-navy-700 underline hover:text-navy-900"
           >
-            hello@mizaninvesting.com
+            hello@halalgauge.com
           </a>{" "}
           and we&apos;ll add it.
         </Q>
         <Q q="What if I disagree with how HalalGauge classifies a line item?">
-          Tell us. Email methodology@mizaninvesting.com with the ticker and
+          Tell us. Email methodology@halalgauge.com with the ticker and
           your reasoning. We log every methodology challenge and address it
           openly on the{" "}
           <Link href="/trust" className="text-navy-700 underline hover:text-navy-900">

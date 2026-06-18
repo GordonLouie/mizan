@@ -67,7 +67,7 @@ export default function DiscoverPage() {
           Discover
         </div>
         <h1
-          className="mt-3 text-[36px] font-bold leading-[1.1] tracking-tight text-gray-900"
+          className="mt-3 text-[28px] font-bold leading-[1.1] tracking-tight text-gray-900 sm:text-[36px]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Find your next halal investment

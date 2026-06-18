@@ -79,7 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   "@type": "Organization",
                   name: "HalalGauge",
                   url: "https://halalgauge.com",
-                  email: "hello@mizaninvesting.com",
+                  email: "hello@halalgauge.com",
                   description: "Multi-scholar halal stock screening, halal indexes, and grounded AI compliance reports.",
                 },
                 { "@type": "WebSite", name: "HalalGauge", url: "https://halalgauge.com" },
@@ -107,7 +107,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <a href="/help" className="hover:text-navy-700">Help</a>
                 <a href="/terms" className="hover:text-navy-700">Terms</a>
                 <a href="/privacy" className="hover:text-navy-700">Privacy</a>
-                <a href="mailto:hello@mizaninvesting.com" className="hover:text-navy-700">Contact</a>
+                <a href="mailto:hello@halalgauge.com" className="hover:text-navy-700">Contact</a>
               </nav>
             </div>
             <p className="mt-4 text-xs leading-6 text-gray-500">

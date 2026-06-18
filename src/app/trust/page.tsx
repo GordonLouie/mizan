@@ -165,10 +165,10 @@ export default function TrustPage() {
           Every threshold in the engine traces back to a public primary source. If you find
           a mismatch between a HalalGauge profile and the cited source, write to{" "}
           <a
-            href="mailto:methodology@mizaninvesting.com"
+            href="mailto:methodology@halalgauge.com"
             className="text-navy-700 underline hover:text-navy-900"
           >
-            methodology@mizaninvesting.com
+            methodology@halalgauge.com
           </a>{" "}
           and we&apos;ll publish a correction.
         </p>
@@ -301,8 +301,8 @@ export default function TrustPage() {
         <p className="mt-5 text-[12px] italic text-gray-500">
           Found something broken that&apos;s NOT on this list? Use the feedback button
           (bottom-right on every page) or email{" "}
-          <a href="mailto:hello@mizaninvesting.com" className="text-navy-700 underline hover:text-navy-900">
-            hello@mizaninvesting.com
+          <a href="mailto:hello@halalgauge.com" className="text-navy-700 underline hover:text-navy-900">
+            hello@halalgauge.com
           </a>.
         </p>
       </section>
@@ -320,12 +320,12 @@ export default function TrustPage() {
         </h2>
         <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-gray-700">
           No support tickets, no auto-responses, no chatbot deflecting you. Hit{" "}
-          <a href="mailto:hello@mizaninvesting.com" className="text-navy-700 underline hover:text-navy-900">
-            hello@mizaninvesting.com
+          <a href="mailto:hello@halalgauge.com" className="text-navy-700 underline hover:text-navy-900">
+            hello@halalgauge.com
           </a>{" "}
           and a person responds. Methodology challenges go to{" "}
-          <a href="mailto:methodology@mizaninvesting.com" className="text-navy-700 underline hover:text-navy-900">
-            methodology@mizaninvesting.com
+          <a href="mailto:methodology@halalgauge.com" className="text-navy-700 underline hover:text-navy-900">
+            methodology@halalgauge.com
           </a>{" "}
           and are reviewed against the cited primary source — and against the Supervisory
           Board, once one is seated.

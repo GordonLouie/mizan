@@ -54,7 +54,7 @@ export default function PrivacyPage() {
 
       <h2 className="mt-6 text-xl font-semibold text-gray-900">7. Contact</h2>
       <p className="mt-2 text-sm leading-6 text-gray-700">
-        Questions: <a href="mailto:privacy@mizaninvesting.com" className="text-navy-700 underline">privacy@mizaninvesting.com</a>.
+        Questions: <a href="mailto:privacy@halalgauge.com" className="text-navy-700 underline">privacy@halalgauge.com</a>.
       </p>
     </article>
   );
