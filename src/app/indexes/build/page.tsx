@@ -52,6 +52,8 @@ function Builder() {
         method: "POST", headers: { "content-type": "application/json" },
         body: JSON.stringify({ scholarId, theme, size }),
       });
+      if (r.status === 402) { setError("The custom index builder is a Pro feature. Upgrade at /pricing."); return; }
+      if (r.status === 429) { setError("You've hit today's build limit — please try again tomorrow."); return; }
       if (!r.ok) { setError("Couldn't build that index. Try different settings."); return; }
       const d = (await r.json()) as Result;
       if (!d.constituents?.length) { setError("No companies match those settings — try a broader theme or standard."); return; }
