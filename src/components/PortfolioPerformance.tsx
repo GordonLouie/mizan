@@ -15,6 +15,11 @@ type Holding = { ticker: string; shares: number };
 type Pt = { date: string; close: number };
 
 const RANGES: Record<string, number> = { "6M": 126, "1Y": 252, "2Y": 504, All: Number.POSITIVE_INFINITY };
+const BENCHES = [
+  { sym: "SPY", label: "S&P 500" },
+  { sym: "SPUS", label: "Halal S&P (SPUS)" },
+  { sym: "QQQ", label: "Nasdaq 100" },
+];
 const W = 640, H = 240, PAD = 30;
 
 function buildPath(values: number[], min: number, max: number): string {
@@ -35,39 +40,43 @@ export default function PortfolioPerformance({ holdings }: { holdings: Holding[]
   const [loading, setLoading] = useState(true);
   const [missing, setMissing] = useState<string[]>([]);
   const [range, setRange] = useState<string>("1Y");
+  const [bench, setBench] = useState<string>("SPY");
 
   const tickers = useMemo(
     () => Array.from(new Set(holdings.map((h) => h.ticker.toUpperCase()).filter(Boolean))),
     [holdings],
   );
+  const benchLabel = BENCHES.find((b) => b.sym === bench)?.label ?? bench;
 
   useEffect(() => {
     let alive = true;
     setLoading(true);
     (async () => {
-      const results = await Promise.all(
-        tickers.map((t) =>
-          fetch(`/api/prices/${encodeURIComponent(t)}`).then((r) => r.json()).catch(() => null)),
-      );
+      // Fetch holdings + the chosen benchmark's own series (so the picker actually switches it).
+      const [results, benchRes] = await Promise.all([
+        Promise.all(tickers.map((t) =>
+          fetch(`/api/prices/${encodeURIComponent(t)}`).then((r) => r.json()).catch(() => null))),
+        fetch(`/api/prices/${encodeURIComponent(bench)}`).then((r) => r.json()).catch(() => null),
+      ]);
       if (!alive) return;
       const m: Record<string, Map<string, number>> = {};
       const miss: string[] = [];
-      let spySeries: Pt[] | null = null;
       results.forEach((res, i) => {
-        if (res?.series?.length) {
-          m[tickers[i]] = new Map(res.series.map((p: Pt) => [p.date, p.close]));
-          if (!spySeries && res.benchmark?.series?.length) spySeries = res.benchmark.series;
-        } else {
-          miss.push(tickers[i]);
-        }
+        if (res?.series?.length) m[tickers[i]] = new Map(res.series.map((p: Pt) => [p.date, p.close]));
+        else miss.push(tickers[i]);
       });
+      // Prefer the benchmark's own series; fall back to the incidental one on a holding response.
+      let benchSeries: Pt[] | null = benchRes?.series?.length ? benchRes.series : null;
+      if (!benchSeries) {
+        for (const res of results) if (res?.benchmark?.series?.length) { benchSeries = res.benchmark.series; break; }
+      }
       setMaps(m);
-      setSpy(spySeries);
+      setSpy(benchSeries);
       setMissing(miss);
       setLoading(false);
     })();
     return () => { alive = false; };
-  }, [tickers]);
+  }, [tickers, bench]);
 
   const computed = useMemo(() => {
     if (!maps || !spy?.length) return null;
@@ -120,7 +129,7 @@ export default function PortfolioPerformance({ holdings }: { holdings: Holding[]
             Your holdings {computed.portRet != null ? `${computed.portRet >= 0 ? "+" : ""}${computed.portRet.toFixed(1)}%` : "—"}
           </span>
           {computed.spyRet != null && (
-            <span className="text-gray-500"> · S&amp;P 500 {computed.spyRet >= 0 ? "+" : ""}{computed.spyRet.toFixed(1)}% over {range}</span>
+            <span className="text-gray-500"> · {benchLabel} {computed.spyRet >= 0 ? "+" : ""}{computed.spyRet.toFixed(1)}% over {range}</span>
           )}
         </div>
         <div className="flex gap-1">
@@ -129,6 +138,15 @@ export default function PortfolioPerformance({ holdings }: { holdings: Holding[]
               className={"rounded px-2 py-0.5 text-[12px] " + (range === r ? "bg-navy-800 text-white" : "text-gray-500 hover:bg-gray-100")}>{r}</button>
           ))}
         </div>
+      </div>
+
+      {/* benchmark picker */}
+      <div className="mt-2 flex flex-wrap items-center gap-1.5">
+        <span className="text-[10px] font-semibold uppercase tracking-wide text-gray-400">Benchmark</span>
+        {BENCHES.map((b) => (
+          <button key={b.sym} type="button" onClick={() => setBench(b.sym)}
+            className={"rounded-md px-2.5 py-1 text-[12px] font-medium transition " + (bench === b.sym ? "bg-navy-800 text-white" : "border border-gray-200 bg-white text-gray-600 hover:bg-gray-50")}>{b.label}</button>
+        ))}
       </div>
 
       <svg viewBox={`0 0 ${W} ${H}`} className="mt-3 w-full" preserveAspectRatio="none" style={{ height: 240 }}>
@@ -141,12 +159,14 @@ export default function PortfolioPerformance({ holdings }: { holdings: Holding[]
 
       <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-gray-500">
         <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: "#1B2D4A" }} /> Your holdings</span>
-        <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: "#94a3b8" }} /> S&amp;P 500</span>
+        <span className="flex items-center gap-1"><span className="inline-block h-0.5 w-4" style={{ background: "#94a3b8" }} /> {benchLabel}</span>
         {missing.length > 0 && <span className="text-amber-700">· excl. {missing.join(", ")} (no history)</span>}
       </div>
       <p className="mt-2 text-[11px] leading-relaxed text-gray-400">
-        Shows how your current share counts would have tracked vs the S&amp;P 500 over the window,
-        from real closing prices. Not advice; past performance isn&apos;t indicative of future returns.
+        <span className="font-semibold text-gray-500">Method:</span> your current share counts valued at
+        real daily closes, indexed to 0% at the window start, vs {benchLabel} normalised the same way.
+        Price-return only — excludes dividends, and deposits/withdrawals (it is not a true account
+        time-weighted return). Illustrative; past performance isn&apos;t indicative of future returns.
       </p>
     </div>
   );
