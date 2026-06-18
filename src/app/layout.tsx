@@ -69,6 +69,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const tree = (
     <html lang="en">
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  name: "Mizan",
+                  url: "https://mizaninvesting.com",
+                  email: "hello@mizaninvesting.com",
+                  description: "Multi-scholar halal stock screening, halal indexes, and grounded AI compliance reports.",
+                },
+                { "@type": "WebSite", name: "Mizan", url: "https://mizaninvesting.com" },
+              ],
+            }),
+          }}
+        />
         <Header />
         <main className="mx-auto max-w-6xl px-6 py-8 pb-24 md:pb-8">{children}</main>
         <footer className="border-t border-gray-100">
