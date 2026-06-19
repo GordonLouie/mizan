@@ -15,19 +15,18 @@ interface Row { label: string; free: Cell; pro: Cell; inst: Cell }
 
 const ROWS: Row[] = [
   { label: "5-scholar verdict + cited sources", free: true, pro: true, inst: true },
-  { label: "Per-ticker pages, crypto, methodology", free: true, pro: true, inst: true },
+  { label: "Per-ticker pages + open methodology", free: true, pro: true, inst: true },
   { label: "Watchlist (saved in your browser)", free: true, pro: true, inst: true },
   { label: "Halal baskets — constituents & methodology", free: true, pro: true, inst: true },
+  { label: "Zakat & purification calculators", free: true, pro: true, inst: true },
+  { label: "Compliance drift watch (portfolio & watchlist)", free: false, pro: true, inst: true },
+  { label: "Portfolio-level halal % & purification owed", free: false, pro: true, inst: true },
   { label: "Custom screening thresholds", free: false, pro: true, inst: true },
-  { label: "Price charts & benchmark compare", free: false, pro: true, inst: true },
-  { label: "Technical analysis (MA / RSI / MACD)", free: false, pro: true, inst: true },
-  { label: "Portfolio performance vs benchmarks", free: false, pro: true, inst: true },
   { label: "Basket analytics + custom builder", free: false, pro: true, inst: true },
-  { label: "Compliance drift watch (portfolio & baskets)", free: false, pro: true, inst: true },
-  { label: "AI compliance report (stock & portfolio)", free: false, pro: "Included", inst: "Unlimited" },
-  { label: "AI portfolio assistant + halal swaps", free: false, pro: true, inst: true },
-  { label: "API / bulk export", free: false, pro: false, inst: true },
-  { label: "White-label reports, multi-seat", free: false, pro: false, inst: true },
+  { label: "AI compliance explainer (stock & portfolio)", free: false, pro: "Included", inst: "Unlimited" },
+  { label: "Price & benchmark chart", free: false, pro: true, inst: true },
+  { label: "Screening API / bulk export", free: false, pro: false, inst: true },
+  { label: "White-label reports + index licensing", free: false, pro: false, inst: true },
 ];
 
 function renderCell(c: Cell) {
@@ -79,8 +78,9 @@ export default function PricingPage() {
           Invest with confidence it&apos;s halal.
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
-          The verdict and cited sources are always free. Pro unlocks the analytics, indexes, and AI
-          reports. Institutions get data and white-label access.
+          The full multi-scholar verdict and cited sources are <strong>free forever</strong>. Pro keeps your
+          halal investing on track <em>over time</em> — the compliance drift watch, portfolio-level
+          screening, and the custom basket builder.
         </p>
 
         {/* Monthly / annual toggle */}

@@ -31,10 +31,17 @@ export default function IndexesPage() {
         Halal baskets you can act on.
       </h1>
       <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-gray-700">
-        Each basket is a thesis-driven list of companies that pass the mainstream AAOIFI halal
-        screen. See what it&apos;s made of today, the dividend slice to purify, and which holdings are
-        drifting toward a limit — then export the holdings to your broker. Constituents and methodology
-        are open; analytics, drift watch and export are Pro.
+        Each basket is a thesis-driven, screened starting point — what it&apos;s made of today, the
+        dividend slice to purify, and which holdings are drifting toward a limit. Use it to research,
+        customize, and monitor; export the holdings to your broker. Constituents and methodology are
+        open; analytics, drift watch and export are Pro.
+      </p>
+      <p className="mt-3 max-w-2xl rounded-lg border border-gray-200 bg-gray-50/60 px-4 py-3 text-[13px] leading-relaxed text-gray-600">
+        Want one-click broad halal exposure instead? The halal ETFs{" "}
+        <a href="https://www.halalgauge.com/halal/SPUS" className="font-semibold text-navy-700">SPUS</a> and{" "}
+        <a href="https://www.halalgauge.com/halal/HLAL" className="font-semibold text-navy-700">HLAL</a>{" "}
+        already do that in a single buy. HalalGauge&apos;s baskets are for screening, tailoring to your
+        own thesis, and monitoring compliance over time — not a fund you buy here.
       </p>
 
       <div className="mt-8"><IndexesTabs /></div>
