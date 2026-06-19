@@ -24,7 +24,6 @@ const ROWS: Row[] = [
   { label: "Custom screening thresholds", free: false, pro: true, inst: true },
   { label: "Basket analytics + custom builder", free: false, pro: true, inst: true },
   { label: "AI compliance explainer (stock & portfolio)", free: false, pro: "Included", inst: "Unlimited" },
-  { label: "Price & benchmark chart", free: false, pro: true, inst: true },
   { label: "Screening API / bulk export", free: false, pro: false, inst: true },
   { label: "White-label reports + index licensing", free: false, pro: false, inst: true },
 ];

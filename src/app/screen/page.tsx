@@ -17,7 +17,6 @@ import DemoBanner from "@/components/DemoBanner";
 import HalalAlternatives from "@/components/HalalAlternatives";
 import WatchlistButton from "@/components/WatchlistButton";
 import StockStats from "@/components/StockStats";
-import PriceChart from "@/components/PriceChart";
 import AIReport from "@/components/AIReport";
 import LockedFeature from "@/components/LockedFeature";
 import { Card } from "@/components/ui";
@@ -377,18 +376,6 @@ function ScreenInner() {
           Direct response to Saifuddin Abbas: "track that over time as well bc
           balance sheet may look v diff YoY." Surfaces next earnings date. */}
       <VerdictTimeline stock={stock} scholar={scholar} />
-
-      {/* PRICE & PERFORMANCE — Pro feature: real chart, ROI vs S&P, MA/RSI. */}
-      <section className="mt-12">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-          Price &amp; performance
-        </div>
-        <div className="mt-4">
-          <LockedFeature feature="charts" label="Price chart &amp; ROI">
-            <PriceChart ticker={stock.ticker} />
-          </LockedFeature>
-        </div>
-      </section>
 
       {/* AI COMPLIANCE REPORT — Pro feature: grounded, written analysis. */}
       <section className="mt-12">

@@ -16,6 +16,7 @@ import {
 import PortfolioPerformance from "@/components/PortfolioPerformance";
 import AIPortfolioAssistant from "@/components/AIPortfolioAssistant";
 import ComplianceWatch from "@/components/ComplianceWatch";
+import PurificationStatement from "@/components/PurificationStatement";
 import { scanDrift } from "@/lib/drift";
 import LockedFeature from "@/components/LockedFeature";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
@@ -299,6 +300,39 @@ export default function PortfolioPage() {
           </p>
           <div className="mt-5">
             <ComplianceWatch items={driftItems} scholarShort={scholar.short} />
+          </div>
+        </section>
+      )}
+
+      {/* PURIFICATION — Pro: itemized, downloadable year-end statement */}
+      {enriched.length > 0 && (
+        <section className="mt-12">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+            Purification
+          </div>
+          <h2
+            className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            What to give to charity
+          </h2>
+          <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-gray-600">
+            The impermissible slice of your dividend income, per holding — totalled into a statement you
+            can download and keep as your record for the year.
+          </p>
+          <div className="mt-5">
+            <LockedFeature feature="portfolioPerformance" label="Purification statement">
+              <PurificationStatement
+                holdings={enriched.map((e) => ({
+                  ticker: e.stock.ticker,
+                  name: e.stock.name,
+                  value: e.value,
+                  divYieldPct: e.stock.dividendYieldPct ?? 0,
+                  impermissiblePct: e.stock.impermissibleIncomePct ?? 0,
+                }))}
+                scholarLabel={scholar.label}
+              />
+            </LockedFeature>
           </div>
         </section>
       )}

@@ -369,9 +369,9 @@ export default function LearnPage() {
       <Section n={9} title="Common questions">
         <Q q="Is HalalGauge free?">
           The verdict, methodology, screener, watchlist, portfolio, and earnings
-          calendar are free forever, no signup. Pro ($9.99/mo or $89/yr) adds price
-          charts, basket analytics, the compliance drift watch, the custom builder, and
-          AI compliance reports. Institutions get the data API and white-label.
+          calendar are free forever, no signup. Pro ($9.99/mo or $89/yr) adds the
+          compliance drift watch, portfolio-level purification, basket analytics, the
+          custom builder, and AI compliance explainers. Institutions get the data API and white-label.
         </Q>
         <Q q="Where does the financial data come from?">
           Financial Modeling Prep (FMP) — institutional-grade equity data. We
