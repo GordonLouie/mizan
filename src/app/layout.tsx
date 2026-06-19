@@ -27,9 +27,12 @@ export const metadata: Metadata = {
   icons: {
     // Cache buster on every icon URL — browsers cache favicons aggressively
     // and won't refetch on simple SVG changes. Bump ?v=N when the mark changes.
-    icon: [{ url: "/favicon.svg?v=6", type: "image/svg+xml" }],
-    shortcut: "/favicon.svg?v=6",
-    apple: "/favicon.svg?v=6",
+    icon: [
+      { url: "/favicon.svg?v=7", type: "image/svg+xml" },
+      { url: "/icon-32.png?v=7", type: "image/png", sizes: "32x32" },
+    ],
+    shortcut: "/favicon.svg?v=7",
+    apple: [{ url: "/icon-180.png?v=7", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
     title: "HalalGauge — halal investing, calibrated to your conscience.",
