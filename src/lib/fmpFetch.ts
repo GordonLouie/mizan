@@ -77,7 +77,7 @@ const FX_PER_USD: Record<string, number> = {
 };
 
 /** Returns local-units-per-USD for a currency code; 1.0 if USD/unknown. */
-function fxPerUsd(currency: string | undefined | null): number {
+export function fxPerUsd(currency: string | undefined | null): number {
   if (!currency || currency === "USD") return 1;
   const rate = FX_PER_USD[currency.toUpperCase()];
   if (!rate) {

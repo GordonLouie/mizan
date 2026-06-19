@@ -15,6 +15,8 @@ import {
 } from "@/components/Charts";
 import PortfolioPerformance from "@/components/PortfolioPerformance";
 import AIPortfolioAssistant from "@/components/AIPortfolioAssistant";
+import ComplianceWatch from "@/components/ComplianceWatch";
+import { scanDrift } from "@/lib/drift";
 import LockedFeature from "@/components/LockedFeature";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import type { Verdict, StockFundamentals, ScreeningResult } from "@/lib/types";
@@ -119,6 +121,10 @@ export default function PortfolioPage() {
     const annualDividend = e.value * ((e.stock.dividendYieldPct ?? 0) / 100);
     return s + annualDividend * ((e.stock.impermissibleIncomePct ?? 0) / 100);
   }, 0);
+
+  const driftItems = scanDrift(
+    enriched.map((e) => ({ ticker: e.stock.ticker, name: e.stock.name, result: e.result })),
+  );
 
   const allocationByVerdict = enriched.map((e) => ({
     label: e.stock.ticker,
@@ -274,6 +280,28 @@ export default function PortfolioPage() {
           <div className="mt-2 text-[11px] text-gray-500">Under {scholar.short}</div>
         </div>
       </section>
+
+      {/* COMPLIANCE WATCH — drift detection (the differentiated feature) */}
+      {enriched.length > 0 && (
+        <section className="mt-12">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">
+            Compliance watch
+          </div>
+          <h2
+            className="mt-2 text-[24px] font-bold leading-tight text-gray-900 sm:text-[28px]"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            What&apos;s drifting
+          </h2>
+          <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-gray-600">
+            Holdings that aren&apos;t compliant — or that pass today but sit close to a ratio limit and
+            could drop out. The early-warning no other tracker gives you.
+          </p>
+          <div className="mt-5">
+            <ComplianceWatch items={driftItems} scholarShort={scholar.short} />
+          </div>
+        </section>
+      )}
 
       {/* PERFORMANCE CHART */}
       <section className="mt-12">

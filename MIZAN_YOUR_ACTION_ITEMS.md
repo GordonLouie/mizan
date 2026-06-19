@@ -58,6 +58,43 @@ institutions — citations aren't a substitute for sign-off.
 
 ---
 
+## Data provider decision — FMP → Twelve Data  (open, 2026-06-19)
+
+**Why this came up:** HK fundamentals are blocked on the current FMP plan, and — more
+importantly — **FMP Personal-Use doesn't license public commercial display of their
+data.** HalalGauge publicly shows FMP-derived metrics in a paid product, so the current
+US setup already sits outside FMP's Personal license (it "works" because nothing enforces
+it, not because it's permitted). FMP's commercial public-display = sales-led **Enterprise**
+(custom quote, account-manager funnel). Researched alternatives; **Twelve Data** is the
+only provider with a self-serve, **commercial external-display** tier that also includes
+global/HKEX fundamentals.
+
+**The plan:** move fundamentals (and US prices) to **Twelve Data Venture** (~$499/mo, or
+$4,990/yr). Code is ready — a provider-selectable adapter (`DATA_PROVIDER=twelvedata`)
+for both `enrichStocks.ts` (fundamentals) and `fetch_prices.mjs` (US prices). Switching is
+just env + a re-run; nothing in production changes until new data is committed.
+
+**Open / waiting on you + Twelve Data:**
+- **Twelve Data licensing confirmation (human, in progress).** Their bot couldn't confirm,
+  escalated to a human (replying "later today" as of 19 Jun). The decisive question:
+  *is commercial external display of non-US (HKEX) **fundamentals**-derived metrics to
+  anonymous web users permitted on Venture without extra approval?* Their bot flagged that
+  non-US **price** data needs extra approval and **HK historical prices need a separate
+  direct-exchange license** — so on Venture, **HK = screen-only (no price chart), US = full.**
+- **De-risk before annual:** subscribe **monthly first (~$499)**, run the smoke-test curls
+  on `0700`/`3690`/`1810` to confirm HK fundamentals actually populate (coverage
+  completeness is undocumented), then go annual. Ask for the **20% startup discount**.
+- **Don't cancel FMP** until a Twelve Data run completes cleanly + deploys.
+- *Then Claude:* if confirmed, finalize the cutover (set provider, help run, verify
+  `stocks.json`), and the US price chart moves to Twelve Data so FMP can be dropped.
+
+**Legal note (not legal advice):** the public-display license question is contractual.
+Get Twelve Data's answer in writing; for the commercial-display terms, a quick read by
+counsel (or your law-grad brother as a first pass) is worth it before relying on it —
+especially since institutional buyers will scrutinize data licensing in due diligence.
+
+---
+
 ### What's already done on Claude's side (so you know the split)
 Product built + hardened: multi-scholar screening, TradingView-grade charts, halal
 indexes + comparison + **custom index builder** with risk/reward, grounded AI

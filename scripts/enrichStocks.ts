@@ -26,17 +26,23 @@ import {
   fetchNextEarningsDate,
   fetchVerdictHistory,
 } from "../src/lib/fmpFetch";
+import { fetchStockFundamentalsTD } from "../src/lib/twelveDataFetch";
 import { SCHOLAR_PROFILES } from "../src/lib/scholars";
 import type { StockFundamentals } from "../src/lib/types";
 
+// ── DATA PROVIDER ───────────────────────────────────────────────────────────
+// DATA_PROVIDER=fmp (default) or =twelvedata. Twelve Data has a self-serve
+// commercial public-display license incl. global/HKEX fundamentals; it provides
+// the basic ratios only (the FMP "premium extras" below are FMP-specific and
+// skipped when on Twelve Data — the site degrades gracefully without them).
+const PROVIDER = (process.env.DATA_PROVIDER || "fmp").toLowerCase();
+const IS_TD = PROVIDER === "twelvedata";
+
 /**
- * Premium feature toggle. When true, the script fetches additional data
- * (full balance sheet line items, earnings calendar, 8-quarter verdict
- * history) for each ticker — requires FMP Premium tier or higher.
- *
- * When false, fetches only the basic aggregate ratios (Free tier works).
+ * Premium feature toggle (FMP only): full balance-sheet line items, earnings
+ * calendar, 8-quarter verdict history. Forced off on Twelve Data.
  */
-const PREMIUM_FEATURES = process.env.MIZAN_PREMIUM === "true" || true;
+const PREMIUM_FEATURES = !IS_TD && (process.env.MIZAN_PREMIUM === "true" || true);
 
 // ─── CONFIGURATION ─────────────────────────────────────────────────────────
 
@@ -44,9 +50,16 @@ const OUTPUT_PATH = join(process.cwd(), "src", "data", "stocks.json");
 const PROGRESS_PATH = join(process.cwd(), ".enrich-progress.json");
 
 // Throttle: how many concurrent requests, and pause between batches (ms).
-// FMP free tier ≈ 250 req/day. We're polite — 5 concurrent, 1s between batches.
-const CONCURRENCY = 5;
-const BATCH_DELAY_MS = 1000;
+// FMP: 5 concurrent, 1s between batches. Twelve Data: self-pace to stay under the
+// plan's per-minute CREDIT budget (TD_CREDITS_PER_MIN, default 610 = the cheapest
+// Venture tier). Each ticker on TD costs ~260 credits (profile+statistics+balance+income),
+// so at 610/min the run is slow but clean (no 429 storms) and fully resumable.
+const TD_CREDITS_PER_TICKER = 260;
+const TD_CREDITS_PER_MIN = Number(process.env.TD_CREDITS_PER_MIN || "610");
+const CONCURRENCY = IS_TD ? Number(process.env.TD_CONCURRENCY || "2") : 5;
+const BATCH_DELAY_MS = IS_TD
+  ? Math.ceil(((CONCURRENCY * TD_CREDITS_PER_TICKER) / TD_CREDITS_PER_MIN) * 60_000)
+  : 1000;
 
 // ─── FULL-UNIVERSE MODE ──────────────────────────────────────────────────────
 // Set MIZAN_UNIVERSE to pull entire exchange universes from FMP's screener
@@ -251,8 +264,10 @@ async function processBatch(
   await Promise.all(
     tickers.map(async (t) => {
       try {
-        // Step 1: basic fundamentals (always)
-        const result = await fetchStockFundamentals(t, apiKey);
+        // Step 1: basic fundamentals (always) — via the selected provider.
+        const result = IS_TD
+          ? await fetchStockFundamentalsTD(t, apiKey)
+          : await fetchStockFundamentals(t, apiKey);
         if (!result) {
           progress.done[t] = null;
           progress.failed.push(t);
@@ -293,11 +308,16 @@ async function processBatch(
 }
 
 async function main() {
-  const apiKey = process.env.FMP_API_KEY;
+  const apiKey = IS_TD ? process.env.TWELVE_DATA_API_KEY : process.env.FMP_API_KEY;
   if (!apiKey) {
-    console.error("ERROR: FMP_API_KEY environment variable not set.");
+    const key = IS_TD ? "TWELVE_DATA_API_KEY" : "FMP_API_KEY";
+    console.error(`ERROR: ${key} environment variable not set (DATA_PROVIDER=${PROVIDER}).`);
     console.error("Put it in .env.local and run with: npx tsx --env-file=.env.local scripts/enrichStocks.ts");
     process.exit(1);
+  }
+  console.log(`Data provider: ${PROVIDER}${IS_TD ? " (basic ratios; FMP-only premium extras skipped)" : ""}`);
+  if (IS_TD) {
+    console.log(`Pacing for ${TD_CREDITS_PER_MIN} credits/min (~${TD_CREDITS_PER_TICKER}/ticker): ${CONCURRENCY} concurrent, ${(BATCH_DELAY_MS / 1000).toFixed(0)}s between batches. Resumable — safe to stop/restart. Raise TD_CREDITS_PER_MIN if you upgrade the tier.`);
   }
 
   // ── Build the full ticker list: union of existing stocks.json + SEED_TICKERS.
@@ -319,11 +339,14 @@ async function main() {
   // Otherwise just the curated seed + whatever's already in stocks.json.
   const modes = new Set(UNIVERSE_MODE.split(",").map((m) => m.trim().toLowerCase()).filter(Boolean));
   let universeTickers: string[] = [];
-  if (modes.has("us")) {
+  if (IS_TD && modes.size) {
+    console.log("Note: MIZAN_UNIVERSE bulk fetch uses FMP's screener and is skipped on Twelve Data — using the seed + existing list. Add tickers to SEED_TICKERS to expand.");
+  }
+  if (!IS_TD && modes.has("us")) {
     console.log("MIZAN_UNIVERSE includes us → fetching full US universe from FMP screener…");
     universeTickers = universeTickers.concat(await fetchUsUniverse(apiKey));
   }
-  if (modes.has("hk")) {
+  if (!IS_TD && modes.has("hk")) {
     console.log("MIZAN_UNIVERSE includes hk → fetching full HKEX universe from FMP screener…");
     universeTickers = universeTickers.concat(await fetchHkUniverse(apiKey));
   }

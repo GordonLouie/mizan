@@ -15,6 +15,9 @@ test3.txt
 # Enrichment script working file
 .enrich-progress.json
 
+# Operational ledger — accounts, costs, renewals (NO secrets in it, but private). Never commit.
+OPERATIONS.md
+
 # Data-fix backups
 *.bak
 

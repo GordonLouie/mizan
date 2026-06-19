@@ -11,6 +11,8 @@ import { screenStock } from "@/lib/screen";
 import ScholarPicker from "@/components/ScholarPicker";
 import EarningsWidget from "@/components/EarningsWidget";
 import CompanyLogo from "@/components/CompanyLogo";
+import ComplianceWatch from "@/components/ComplianceWatch";
+import { scanDrift } from "@/lib/drift";
 import { VERDICT_LABEL } from "@/lib/verdictLabels";
 import type { StockFundamentals, Verdict, ScreeningResult } from "@/lib/types";
 
@@ -80,6 +82,19 @@ export default function WatchlistPage() {
       {/* UPCOMING EARNINGS WIDGET — at-risk flagging for items in watchlist */}
       {tickers.length > 0 && (
         <EarningsWidget tickers={tickers} title="Upcoming earnings · your watchlist" />
+      )}
+
+      {/* COMPLIANCE WATCH — drift detection across saved tickers */}
+      {items.length > 0 && (
+        <section className="mt-8">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-500">Compliance watch</div>
+          <div className="mt-3">
+            <ComplianceWatch
+              items={scanDrift(items.map(({ stock, result }) => ({ ticker: stock.ticker, name: stock.name, result })))}
+              scholarShort={scholar.short}
+            />
+          </div>
+        </section>
       )}
 
       {/* EMPTY STATE OR TABLE */}
