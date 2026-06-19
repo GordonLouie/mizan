@@ -146,7 +146,7 @@ export default async function IndexPage({ params }: { params: Promise<{ slug: st
         <h2 className="text-[15px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>Methodology</h2>
         <ul className="mt-2 space-y-1.5 text-[13px] leading-relaxed text-gray-700">
           <li><b>Universe:</b> HalalGauge&apos;s covered equities (ETFs excluded).</li>
-          <li><b>Screen:</b> every holding must PASS the {scholar.label} standard — the basis for most mainstream halal indices.</li>
+          <li><b>Screen:</b> every holding must PASS the {scholar.label} — the basis for most mainstream halal indices.</li>
           <li><b>Selection:</b> {def.filter ? "themed subset, " : ""}the {def.size} largest qualifying companies by market cap ({cons.length} currently qualify).</li>
           <li><b>Weighting:</b> equal-weight (each holding the same share) for the exported plan.</li>
           <li><b>Maintenance:</b> the screen re-runs on every data refresh; the drift watch flags holdings nearing a limit.</li>

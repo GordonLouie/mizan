@@ -104,7 +104,7 @@ Ask in interviews. "Does your 401(k) plan include any Shariah-compliant fund opt
 
 ## The bigger picture
 
-The fact that practising Muslim employees in 2026 are still asked to choose between participating in retirement saving and following their faith is a market failure. It's not for lack of demand or feasibility — it's institutional inertia. Closing this gap is part of why Mizan exists, and we're partnering with retirement-plan providers as a year-2 initiative to make halal 401(k) options the default available everywhere.
+The fact that practising Muslim employees in 2026 are still asked to choose between participating in retirement saving and following their faith is a market failure. It's not for lack of demand or feasibility — it's institutional inertia. Closing this gap is part of why HalalGauge exists, and we're partnering with retirement-plan providers as a year-2 initiative to make halal 401(k) options the default available everywhere.
 
 In the meantime, your current options:
 
@@ -112,10 +112,10 @@ In the meantime, your current options:
 2. Use the brokerage window if your plan has one. Invest in SPUS, HLAL, SPSK.
 3. Use IRA or Roth IRA for direct halal allocation.
 4. Email HR — coordinated with colleagues — asking for a halal fund option.
-5. Use Mizan to screen any holdings against your scholar's methodology, on or off the 401(k).
+5. Use HalalGauge to screen any holdings against your scholar's methodology, on or off the 401(k).
 
 The system isn't broken because people gave up. It changes when people insist.
 
 ---
 
-*Mizan screens any publicly-listed stock or ETF against six scholar methodologies. The 401(k) accommodation conversation is separate but related — if you want a templated email customized to your employer, write to hello@mizan.app and we'll help.*
+*HalalGauge screens any publicly-listed stock or ETF against five scholarly standards. The 401(k) accommodation conversation is separate but related — if you want a templated email customized to your employer, write to hello@halalgauge.com and we'll help.*

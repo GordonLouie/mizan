@@ -14,18 +14,18 @@ type Cell = boolean | string;
 interface Row { label: string; free: Cell; pro: Cell; inst: Cell }
 
 const ROWS: Row[] = [
-  { label: "6-scholar verdict + cited sources", free: true, pro: true, inst: true },
+  { label: "5-scholar verdict + cited sources", free: true, pro: true, inst: true },
   { label: "Per-ticker pages, crypto, methodology", free: true, pro: true, inst: true },
   { label: "Watchlist (saved in your browser)", free: true, pro: true, inst: true },
-  { label: "Halal indexes — constituents & methodology", free: true, pro: true, inst: true },
+  { label: "Halal baskets — constituents & methodology", free: true, pro: true, inst: true },
   { label: "Custom screening thresholds", free: false, pro: true, inst: true },
-  { label: "Price charts & ROI vs S&P", free: false, pro: true, inst: true },
-  { label: "Technical analysis (MA / RSI)", free: false, pro: true, inst: true },
+  { label: "Price charts & benchmark compare", free: false, pro: true, inst: true },
+  { label: "Technical analysis (MA / RSI / MACD)", free: false, pro: true, inst: true },
   { label: "Portfolio performance vs benchmarks", free: false, pro: true, inst: true },
-  { label: "Halal index performance (backtest)", free: false, pro: true, inst: true },
+  { label: "Basket analytics + custom builder", free: false, pro: true, inst: true },
+  { label: "Compliance drift watch (portfolio & baskets)", free: false, pro: true, inst: true },
   { label: "AI compliance report (stock & portfolio)", free: false, pro: "Included", inst: "Unlimited" },
   { label: "AI portfolio assistant + halal swaps", free: false, pro: true, inst: true },
-  { label: "Verdict-change & earnings alerts", free: false, pro: true, inst: true },
   { label: "API / bulk export", free: false, pro: false, inst: true },
   { label: "White-label reports, multi-seat", free: false, pro: false, inst: true },
 ];

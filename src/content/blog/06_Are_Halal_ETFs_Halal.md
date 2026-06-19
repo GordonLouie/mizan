@@ -43,4 +43,4 @@ The honest caveat: "screened" still means *under a particular methodology*. SPUS
 3. **Does the methodology match your scholar?** AAOIFI-screened ≠ Mufti-Taqi-screened. Check which one it uses.
 4. **Spot-check the holdings.** Pull the fund's top holdings and screen a few individually — if they fail under your scholar, the fund will too.
 
-You can screen any individual holding under all six methodologies on [Mizan](/screen), with every threshold cited to its source — so when a fund says "Sharia-compliant," you can check what that actually means for the scholar *you* follow.
+You can screen any individual holding under all six methodologies on [HalalGauge](/screen), with every threshold cited to its source — so when a fund says "Sharia-compliant," you can check what that actually means for the scholar *you* follow.

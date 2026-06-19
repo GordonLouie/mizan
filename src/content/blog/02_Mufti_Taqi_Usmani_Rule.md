@@ -82,11 +82,11 @@ The same logic applies to many beloved tech stocks: Amazon, Meta, NVIDIA, Salesf
 
 If you've been screening your portfolio against the default AAOIFI standard (which is what Zoya, Musaffa, Islamicly, and most halal robo-advisors use), and if you follow Mufti Taqi Usmani's published methodology, your portfolio may include holdings that you didn't realize were impermissible under his rules.
 
-This is not an indictment of those apps. They made a reasonable product decision — pick the most-followed single standard and ship. But it's the gap Mizan was built to close.
+This is not an indictment of those apps. They made a reasonable product decision — pick the most-followed single standard and ship. But it's the gap HalalGauge was built to close.
 
-## How Mizan handles this
+## How HalalGauge handles this
 
-Mizan ships with six scholar profiles, and Mufti Taqi Usmani's profile is one of them. When you select it:
+HalalGauge ships with five scholarly standards, and Mufti Taqi Usmani's profile is one of them. When you select it:
 
 - The illiquid-asset floor is computed and displayed for every stock you screen.
 - Stocks that pass AAOIFI but fail the illiquid floor are clearly marked **FAIL** under Mufti Taqi's profile, with the specific ratio highlighted.
@@ -98,11 +98,11 @@ No black-box score. No "trust us." You see the exact ratio, the exact threshold,
 
 For specific portfolio decisions, particularly when you have an existing position that's borderline, the right move is to consult a qualified scholar directly — your local imam, a member of your community's scholarly council, or a scholar whose rulings you follow.
 
-Mizan provides scholarly opinions based on published methodologies. It does not provide individualized advice. The two are different and complementary.
+HalalGauge provides scholarly opinions based on published methodologies. It does not provide individualized advice. The two are different and complementary.
 
-## Try Mizan with Mufti Taqi's profile
+## Try HalalGauge with Mufti Taqi's profile
 
-Open [mizan.app](https://mizan.app), select the Mufti Taqi Usmani profile, and search any ticker. The illiquid-asset breakdown is displayed inline.
+Open [halalgauge.com](https://halalgauge.com), select the Mufti Taqi Usmani profile, and search any ticker. The illiquid-asset breakdown is displayed inline.
 
 If you've been relying on a default halal screen and you follow Mufti Taqi, the first few searches may surprise you. That's the point.
 

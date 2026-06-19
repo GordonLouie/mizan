@@ -573,7 +573,7 @@ function ShareVerdictButton({
 
   async function handleShare() {
     const url = `https://halalgauge.com/screen?ticker=${ticker}`;
-    const text = `${ticker} (${name}) under ${scholarShort}: ${verdictLabel}.\nSee all 6 scholars on HalalGauge: ${url}`;
+    const text = `${ticker} (${name}) under ${scholarShort}: ${verdictLabel}.\nSee all 5 scholars on HalalGauge: ${url}`;
     try {
       if (typeof navigator !== "undefined" && navigator.share) {
         await navigator.share({

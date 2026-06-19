@@ -101,7 +101,7 @@ This is one of the cleanest examples of standards bodies differing. AAOIFI's off
 | **Mufti Taqi Usmani** | **≥ 20%** |
 | Some Ja'fari interpretations | varies |
 
-**This is the most under-implemented ratio in mainstream halal-investing apps.** Mufti Taqi has been publishing this threshold since the 1980s. Outside of Mizan, almost no consumer-facing halal app implements it.
+**This is the most under-implemented ratio in mainstream halal-investing apps.** Mufti Taqi has been publishing this threshold since the 1980s. Outside of HalalGauge, almost no consumer-facing halal app implements it.
 
 It's also the rule that produces the most divergent verdicts. Amazon, Meta, Netflix, NVIDIA all pass every other ratio cleanly. All fail the illiquid floor. If you follow Mufti Taqi, your portfolio looks very different from someone following the default screen.
 
@@ -111,10 +111,10 @@ It's also the rule that produces the most divergent verdicts. Amazon, Meta, Netf
 
 Now you can read any methodology document and immediately translate it. Pull up Wahed's methodology, Zoya's methodology, or any halal-fund prospectus — you'll see one of these five tables.
 
-**Most apps screen 3-4 ratios.** Mizan screens all five plus sector exclusion, and lets you set your own thresholds in the Custom profile if you follow a scholar whose rulings differ.
+**Most apps screen 3-4 ratios.** HalalGauge screens all five plus sector exclusion, and lets you set your own thresholds in the Custom profile if you follow a scholar whose rulings differ.
 
 **The harder choice is which scholar to follow.** That conversation is bigger than any app. But once you've made it, your screening tool should reflect that decision — not flatten it.
 
 ---
 
-*Try the screener: [mizan.app/screen](https://mizan.app/screen). Six pre-built scholar profiles, plus a Custom builder where you set each of these five thresholds yourself. Transparent ratio breakdowns on every verdict.*
+*Try the screener: [halalgauge.com/screen](https://halalgauge.com/screen). Five pre-built scholar profiles, plus a Custom builder where you set each of these five thresholds yourself. Transparent ratio breakdowns on every verdict.*

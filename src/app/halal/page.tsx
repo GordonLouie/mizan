@@ -17,7 +17,7 @@ const SITE = "https://halalgauge.com";
 export const metadata: Metadata = {
   title: "Is your stock halal? Free multi-scholar screener — HalalGauge",
   description:
-    "Check whether any stock is halal under all 6 scholarly methodologies — AAOIFI, Mufti Taqi Usmani, S&P DJIM, Ja'fari and the strict view — with every threshold cited to its source. Free, no signup. Browse popular tickers and crypto.",
+    "Check whether any stock is halal under all 5 scholarly methodologies — AAOIFI, Mufti Taqi Usmani, S&P DJIM, Ja'fari and the strict view — with every threshold cited to its source. Free, no signup. Browse popular tickers and crypto.",
   alternates: { canonical: `${SITE}/halal` },
 };
 
@@ -44,7 +44,7 @@ export default function HalalHub() {
         Is your stock halal?
       </h1>
       <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-gray-700">
-        See the verdict under all six scholarly methodologies — AAOIFI, Mufti Taqi Usmani, S&amp;P DJIM,
+        See the verdict under all five scholarly methodologies — AAOIFI, Mufti Taqi Usmani, S&amp;P DJIM,
         Ja&apos;fari, the strict view, and your own custom thresholds — side by side, with every threshold
         cited to its primary source. Free, no signup, no data collected.
       </p>

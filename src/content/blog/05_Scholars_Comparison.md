@@ -11,7 +11,7 @@ keywords: ["aaoifi vs mufti taqi", "halal screening methodologies", "shariah sta
 
 Most Muslim investors have heard of at least one Shariah screening standard. Few have a clear picture of how the major standards differ from each other.
 
-This is the side-by-side comparison I wished existed when I started building Mizan. It covers the five methodologies that matter for English-speaking diaspora investors, with the actual thresholds each one applies, and worked examples showing where they diverge.
+This is the side-by-side comparison I wished existed when I started building HalalGauge. It covers the five methodologies that matter for English-speaking diaspora investors, with the actual thresholds each one applies, and worked examples showing where they diverge.
 
 ## The five methodologies
 
@@ -116,10 +116,10 @@ If you genuinely don't know which scholar you follow, the right answer isn't "de
 
 The mainstream halal-investing apps you've used (Wahed, Zoya, Musaffa, Islamicly) all screen against a single default — typically AAOIFI. They built a defensible product, but they built it for the most-served audience. Everyone outside that audience — the Hanafi diaspora following Mufti Taqi, Ja'fari Shia investors, conservative Hanbalis, anyone who wants a customizable view — has been left to either accept the default or maintain their own spreadsheet.
 
-Mizan exists because we believe that should change. Six profiles ship at launch, plus Custom. Every verdict surfaces the underlying ratios transparently. If you select Mufti Taqi's profile, you see the illiquid-asset floor. If you select Ja'fari, you see the purification scope and khums applicability. If you select Strict, you see exactly why almost nothing passes.
+HalalGauge exists because we believe that should change. Six profiles ship at launch, plus Custom. Every verdict surfaces the underlying ratios transparently. If you select Mufti Taqi's profile, you see the illiquid-asset floor. If you select Ja'fari, you see the purification scope and khums applicability. If you select Strict, you see exactly why almost nothing passes.
 
 That's not us picking a winner. That's us giving you the right answer for *your* scholar.
 
 ---
 
-*[Try Mizan](https://mizan.app). Six scholar profiles plus a Custom builder. Free tier includes screening; paid tiers add portfolio sync and purification automation.*
+*[Try HalalGauge](https://halalgauge.com). Five scholarly standards plus a Custom builder. Free tier includes screening; paid tiers add portfolio sync and purification automation.*

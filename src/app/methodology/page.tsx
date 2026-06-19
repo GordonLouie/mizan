@@ -6,7 +6,7 @@ import { ExternalLink, ArrowRight } from "lucide-react";
 export const metadata = {
   title: "Methodology · HalalGauge",
   description:
-    "How HalalGauge screens stocks across six scholarly methodologies — with primary-source citations for every threshold.",
+    "How HalalGauge screens stocks across five scholarly methodologies — with primary-source citations for every threshold.",
 };
 
 interface Source {
@@ -363,7 +363,7 @@ export default function MethodologyPage() {
             href="/screen?ticker=AMZN"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-navy-700 hover:text-navy-900"
           >
-            See AMZN under all six scholars <ArrowRight size={14} />
+            See AMZN under all five scholars <ArrowRight size={14} />
           </Link>
         </div>
       </section>

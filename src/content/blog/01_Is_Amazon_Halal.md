@@ -73,9 +73,9 @@ If you're not sure which scholar you follow: that's a conversation worth having 
 
 "Is X halal *according to my scholar*?" is the right question — and for the first time, it's a question a halal-investing app can actually answer with the rigor it deserves.
 
-That's why we built Mizan. Pick your scholar, search a ticker, see the verdict that your tradition would give. Six profiles ship at launch, including AAOIFI, Mufti Taqi Usmani, Dow Jones Islamic Market, Ja'fari, strict zero-tolerance, and a fully customizable profile.
+That's why we built HalalGauge. Pick your scholar, search a ticker, see the verdict that your tradition would give. Six profiles ship at launch, including AAOIFI, Mufti Taqi Usmani, Dow Jones Islamic Market, Ja'fari, strict zero-tolerance, and a fully customizable profile.
 
-Try it: [mizan.app](https://mizan.app)
+Try it: [halalgauge.com](https://halalgauge.com)
 
 ---
 

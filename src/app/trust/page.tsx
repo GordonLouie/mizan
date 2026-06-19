@@ -57,7 +57,7 @@ export default function TrustPage() {
               label: "Live product deployed",
               status: "done",
               detail:
-                "HalalGauge is live, public, free to use. Web app supports six scholarly profiles, screens a 163-ticker representative sample, full source on GitHub.",
+                "HalalGauge is live, public, free to use. Web app supports five scholarly standards (plus a custom builder), screens a 163-ticker representative sample, full source on GitHub.",
             }}
           />
           <StatusRow

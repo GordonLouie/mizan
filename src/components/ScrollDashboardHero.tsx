@@ -74,7 +74,7 @@ export default function ScrollDashboardHero({
               className="mt-5 text-[40px] font-bold leading-[0.95] text-gray-900 sm:text-[64px]"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Six scholars.
+              Five scholars.
               <br />
               <span className="text-navy-900">One screen.</span>
             </h2>

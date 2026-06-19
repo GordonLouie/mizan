@@ -720,7 +720,7 @@ export const QA_KNOWLEDGE_BASE: QAEntry[] = [
     ],
     "a": {
       "aaoifi": {
-        "t": "Free tier: 5 screens per day, AAOIFI default. Plus: $7.99/month, unlimited screens and all six scholar profiles. Pro: $14.99/month, adds portfolio sync and purification automation. Family (4 seats): $19.99/month. Masjid plans (min 10 seats): $4.99/seat/month. Annual plans save ~38%.",
+        "t": "Free forever: the full multi-scholar verdict and cited sources for any covered stock, no signup. Pro ($9.99/month or $89/year) adds price charts, basket analytics and the compliance drift watch, the custom builder, portfolio performance, and AI compliance reports. Institutions get the data API, white-label reports and multi-seat (custom pricing). Cancel anytime; prices in USD.",
         "c": []
       }
     }
