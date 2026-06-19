@@ -27,7 +27,10 @@ import { useRouter } from "next/navigation";
 import TickerSearch from "@/components/TickerSearch";
 import { ArrowRight } from "lucide-react";
 import { CURATED_LISTS } from "@/lib/lists";
-import { listStocks } from "@/lib/data";
+import { listStocks, findStock } from "@/lib/data";
+import { SCHOLAR_PROFILES } from "@/lib/scholars";
+import { screenStock } from "@/lib/screen";
+import type { ScreeningResult } from "@/lib/types";
 import CompanyLogo from "@/components/CompanyLogo";
 import CompanyLogoMarquee from "@/components/CompanyLogoMarquee";
 import MethodologyBubble from "@/components/MethodologyBubble";
@@ -262,14 +265,34 @@ export default function Home() {
  *   - Uses real scholar names + real Amazon logo + real verdict logic
  *   - Quietly reinforces trust: this is what you actually get, not a mockup
  */
+// Compact deciding line for the card — same source of truth as the screen engine.
+function cardLine(r: ScreeningResult): string {
+  if (!r.sectorPasses) return r.sectorReason || "Sector exclusion";
+  const c = r.ratioChecks.find((x) => !x.passes);
+  if (c && c.threshold != null) {
+    const metric = c.label.split("/")[0].trim();
+    return `${metric} ${c.value.toFixed(1)}% ${c.direction === "max" ? ">" : "<"} ${c.threshold}%`;
+  }
+  return "All ratio checks pass";
+}
+
+const VERDICT_PILL: Record<ScreeningResult["verdict"], { label: string; cls: string }> = {
+  pass: { label: "Halal", cls: "bg-emerald-50 text-emerald-700" },
+  fail: { label: "Not halal", cls: "bg-rose-50 text-rose-700" },
+  borderline: { label: "Borderline", cls: "bg-amber-50 text-amber-700" },
+};
+
 function HeroVerdictCard({ tickerCount }: { tickerCount: number }) {
-  const rows: Array<{ scholar: string; verdict: "halal" | "not-halal"; deciding: string }> = [
-    { scholar: "AAOIFI", verdict: "halal", deciding: "all ratio checks pass" },
-    { scholar: "Mufti Taqi", verdict: "not-halal", deciding: "illiquid 14.8% < 20% floor" },
-    { scholar: "S&P DJIM", verdict: "halal", deciding: "all ratio checks pass" },
-    { scholar: "Ja'fari", verdict: "halal", deciding: "all ratio checks pass" },
-    { scholar: "Strict", verdict: "not-halal", deciding: "sector exclusion" },
-  ];
+  // REAL verdicts from the engine — never hardcoded (the card must match /halal/AMZN).
+  const stock = findStock("AMZN");
+  const named = SCHOLAR_PROFILES.filter((p) => p.id !== "custom");
+  const rows = stock
+    ? named.map((sc) => {
+        const r = screenStock(stock, sc);
+        return { short: sc.short, verdict: r.verdict, deciding: cardLine(r) };
+      })
+    : [];
+  const passCount = rows.filter((r) => r.verdict === "pass").length;
 
   return (
     <div className="relative">
@@ -280,25 +303,25 @@ function HeroVerdictCard({ tickerCount }: { tickerCount: number }) {
             <CompanyLogo ticker="AMZN" size={36} />
             <div className="min-w-0">
               <div className="font-mono text-[12px] uppercase tracking-[0.16em] text-gray-500">
-                AMZN · Consumer cyclical
+                AMZN · {stock?.sector ?? "Consumer Cyclical"}
               </div>
               <div
                 className="mt-0.5 truncate text-[17px] font-bold text-gray-900"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Amazon.com, Inc.
+                {stock?.name ?? "Amazon.com, Inc."}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Scholar verdict rows */}
+        {/* Scholar verdict rows — computed */}
         <div className="divide-y divide-gray-100">
           {rows.map((row) => {
-            const isPass = row.verdict === "halal";
+            const pill = VERDICT_PILL[row.verdict];
             return (
               <div
-                key={row.scholar}
+                key={row.short}
                 className="grid grid-cols-[1fr_auto] items-center gap-3 px-5 py-3"
               >
                 <div className="min-w-0">
@@ -306,21 +329,14 @@ function HeroVerdictCard({ tickerCount }: { tickerCount: number }) {
                     className="text-[14px] font-semibold text-gray-900"
                     style={{ fontFamily: "var(--font-display)" }}
                   >
-                    {row.scholar}
+                    {row.short}
                   </div>
                   <div className="mt-0.5 truncate font-mono text-[10.5px] uppercase tracking-[0.12em] text-gray-500">
                     {row.deciding}
                   </div>
                 </div>
-                <span
-                  className={
-                    "rounded-full px-2.5 py-1 text-[11px] font-semibold " +
-                    (isPass
-                      ? "bg-emerald-50 text-emerald-700"
-                      : "bg-rose-50 text-rose-700")
-                  }
-                >
-                  {isPass ? "Halal" : "Not halal"}
+                <span className={"rounded-full px-2.5 py-1 text-[11px] font-semibold " + pill.cls}>
+                  {pill.label}
                 </span>
               </div>
             );
@@ -329,7 +345,7 @@ function HeroVerdictCard({ tickerCount }: { tickerCount: number }) {
 
         {/* Consensus tease — the reconciliation moat in one line */}
         <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 border-t border-gray-100 bg-emerald-50/40 px-5 py-2.5">
-          <span className="text-[12.5px] font-semibold text-gray-800">3 of 5 standards say halal</span>
+          <span className="text-[12.5px] font-semibold text-gray-800">{passCount} of {rows.length} standards say halal</span>
           <span className="text-[11px] text-gray-500">— and we show <span className="text-navy-700">why they differ</span></span>
         </div>
 

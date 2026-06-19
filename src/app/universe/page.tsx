@@ -195,7 +195,7 @@ function UniverseInner() {
       <div className="mt-10 grid grid-cols-2 gap-y-5 border-y border-gray-200 py-5 sm:grid-cols-4">
         <StatPlain label="Total" value={stats.total.toString()} />
         <StatPlain label="Halal" value={stats.pass.toString()} tone="emerald" />
-        <StatPlain label="Doubtful" value={stats.border.toString()} tone="amber" />
+        <StatPlain label="Borderline" value={stats.border.toString()} tone="amber" />
         <StatPlain label="Not halal" value={stats.fail.toString()} tone="rose" />
       </div>
 
@@ -289,7 +289,7 @@ function UniverseInner() {
         >
           <option value="">All verdicts</option>
           <option value="pass">Halal only</option>
-          <option value="borderline">Doubtful only</option>
+          <option value="borderline">Borderline only</option>
           <option value="fail">Not halal only</option>
         </SelectField>
       </div>

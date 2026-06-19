@@ -103,23 +103,19 @@ export default function EarningsWidget({
         const result = screenStock(stock, scholar);
         const daysAway = daysBetween(stock.nextEarningsDate);
 
-        // "At risk" heuristic: passing or borderline AND close to any threshold
-        const closestRatio = result.ratioChecks
-          .filter((c) => c.threshold !== null && c.passes)
-          .map((c) => {
-            const buffer = Math.abs(c.value - (c.threshold ?? 0));
-            return { check: c, buffer };
-          })
-          .sort((a, b) => a.buffer - b.buffer)[0];
+        // "At risk" = passing but a max-direction ratio sits within 15% of its cap
+        // (value >= 85% of threshold). Same logic as the Compliance Drift Watch, so
+        // the two features never contradict each other. (The old absolute 5pp buffer
+        // wrongly flagged e.g. 0.5% income as "close to the 5% limit".)
+        const nearRatio = result.ratioChecks
+          .filter((c) => c.direction === "max" && c.passes && c.threshold != null && c.threshold > 0 && c.value >= 0.85 * c.threshold)
+          .sort((a, b) => b.value / (b.threshold ?? 1) - a.value / (a.threshold ?? 1))[0];
 
-        const atRisk =
-          (result.verdict === "pass" || result.verdict === "borderline") &&
-          !!closestRatio &&
-          closestRatio.buffer < 5; // within 5 pp of threshold
+        const atRisk = (result.verdict === "pass" || result.verdict === "borderline") && !!nearRatio;
 
         const riskReason =
-          atRisk && closestRatio
-            ? `${closestRatio.check.label} at ${closestRatio.check.value.toFixed(1)}% — close to ${closestRatio.check.threshold}% limit`
+          atRisk && nearRatio
+            ? `${nearRatio.label} at ${nearRatio.value.toFixed(1)}% — close to the ${nearRatio.threshold}% cap`
             : undefined;
 
         return {
@@ -129,7 +125,7 @@ export default function EarningsWidget({
           verdict: result.verdict,
           atRisk,
           riskReason,
-          smallestBuffer: closestRatio ? closestRatio.buffer : Infinity,
+          smallestBuffer: nearRatio ? (nearRatio.threshold ?? 0) - nearRatio.value : Infinity,
         };
       })
       .filter((r): r is EarningsRow => r !== null)

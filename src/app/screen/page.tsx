@@ -82,7 +82,7 @@ function ScreenInner() {
       const decidingMetric = !r.sectorPasses
         ? r.sectorReason
         : failing
-          ? `${failing.label} ${failing.value.toFixed(1)}% ${failing.direction === "max" ? "≤" : "≥"} ${failing.threshold}%`
+          ? `${failing.label} ${failing.value.toFixed(1)}% (${failing.direction === "max" ? "limit" : "floor"} ${failing.threshold}%)`
           : "All ratios pass";
       return { scholar: p, verdict: r.verdict, decidingMetric, isFailing: !!failing || !r.sectorPasses };
     });

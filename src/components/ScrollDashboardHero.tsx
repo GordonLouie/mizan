@@ -31,7 +31,7 @@ interface Props {
 
 const VERDICT_LABEL: Record<Verdict, string> = {
   pass: "Halal",
-  borderline: "Doubtful",
+  borderline: "Borderline",
   fail: "Not halal",
 };
 const VERDICT_TEXT: Record<Verdict, string> = {
