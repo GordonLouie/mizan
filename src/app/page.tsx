@@ -327,6 +327,12 @@ function HeroVerdictCard({ tickerCount }: { tickerCount: number }) {
           })}
         </div>
 
+        {/* Consensus tease — the reconciliation moat in one line */}
+        <div className="flex items-center justify-between gap-2 border-t border-gray-100 bg-emerald-50/40 px-5 py-2.5">
+          <span className="text-[12.5px] font-semibold text-gray-800">3 of 5 standards say halal</span>
+          <span className="text-[11px] text-gray-500">— and we show <span className="text-navy-700">why they differ</span></span>
+        </div>
+
         {/* Footer — quiet methodology pointer */}
         <div className="border-t border-gray-100 bg-gray-50 px-5 py-3">
           <div className="flex items-center justify-between">
@@ -334,7 +340,7 @@ function HeroVerdictCard({ tickerCount }: { tickerCount: number }) {
               Every threshold cited
             </span>
             <Link
-              href="/screen?ticker=AMZN"
+              href="/halal/AMZN"
               className="text-[12px] font-medium text-navy-700 hover:text-navy-900"
             >
               See full breakdown →

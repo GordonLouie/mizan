@@ -126,8 +126,8 @@ export default function LearnPage() {
           is methodology.
         </p>
         <p>
-          HalalGauge shows you all six side-by-side so you can see exactly where they
-          agree and where they split.
+          HalalGauge shows you all five standards side-by-side — with a consensus read and a
+          plain-English explanation of exactly where they agree and where they split.
         </p>
       </Section>
 
@@ -239,11 +239,12 @@ export default function LearnPage() {
           </ul>
         </NumberedItem>
 
-        <NumberedItem n="D" title="The multi-scholar comparison — bottom">
+        <NumberedItem n="D" title="The multi-standard reconciliation — bottom">
           <p>
-            A clean table showing how this same stock looks under all six
-            scholar profiles. If one stock is halal under AAOIFI but fails under
-            Mufti Taqi, you&apos;ll see exactly which check caused the split.
+            A consensus read (&ldquo;halal under 4 of 5 standards&rdquo;) plus a clean view of how this
+            stock looks under all five standards — and, when they disagree, a plain-English
+            explanation of <em>why</em> (e.g. &ldquo;Mufti Taqi requires illiquid assets ≥ 20%; the others
+            don&apos;t&rdquo;). It ends the &ldquo;check three apps&rdquo; guessing game.
           </p>
         </NumberedItem>
       </Section>
@@ -367,9 +368,10 @@ export default function LearnPage() {
       {/* SECTION 9 — FAQ */}
       <Section n={9} title="Common questions">
         <Q q="Is HalalGauge free?">
-          Yes — the methodology, screener, watchlist, portfolio, and earnings
-          calendar are all free, no signup. A small paid tier for alerts and
-          advanced features will land later.
+          The verdict, methodology, screener, watchlist, portfolio, and earnings
+          calendar are free forever, no signup. Pro ($9.99/mo or $89/yr) adds price
+          charts, basket analytics, the compliance drift watch, the custom builder, and
+          AI compliance reports. Institutions get the data API and white-label.
         </Q>
         <Q q="Where does the financial data come from?">
           Financial Modeling Prep (FMP) — institutional-grade equity data. We
