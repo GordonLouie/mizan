@@ -57,7 +57,7 @@ export default function TrustPage() {
               label: "Live product deployed",
               status: "done",
               detail:
-                "HalalGauge is live, public, free to use. Web app supports five scholarly standards (plus a custom builder), screens a 163-ticker representative sample, full source on GitHub.",
+                "HalalGauge is live, public, free to use. Web app supports five scholarly standards (plus a custom builder), screens 650+ US-listed equities, full source on GitHub.",
             }}
           />
           <StatusRow
@@ -212,16 +212,17 @@ export default function TrustPage() {
         <SectionHead title="Where the data comes from" />
         <ul className="mt-5 max-w-2xl space-y-3 text-[14px] leading-relaxed text-gray-700">
           <li>
-            <strong className="text-gray-900">Current (May 2026):</strong> 163 representative
-            tickers hand-seeded from Q1 2026 public filings. The FMP live-data integration
-            is wired (balance sheets, income statements, ratios) but not yet serving —
-            enrichment runs are gated by free-tier daily quotas, so real data accumulates
-            in batches. Ratios are computed in-house from raw filings; nothing relies on
-            any third-party &lsquo;halal score.&rsquo;
+            <strong className="text-gray-900">Current (June 2026):</strong> 650+ US-listed
+            equities screened from real fundamentals — balance sheets, income statements and
+            ratios sourced via Financial Modeling Prep. Every screening ratio is computed
+            in-house from the raw figures; nothing relies on any third-party &lsquo;halal
+            score.&rsquo; A data-quality guard withholds a verdict on any security whose
+            fundamentals look implausible rather than report a number we don&apos;t trust.
           </li>
           <li>
-            <strong className="text-gray-900">Year 1 production:</strong> Financial Modeling
-            Prep API for live fundamentals across any listed equity. Refresh cadence: nightly.
+            <strong className="text-gray-900">In progress:</strong> Hong Kong / Asia-Pacific
+            (HKEX) coverage, and a move to a commercial data licence as the company is set up.
+            Refresh runs on each enrichment pass, moving toward a scheduled cadence.
           </li>
           <li>
             <strong className="text-gray-900">Year 2 production:</strong> Graduate to
