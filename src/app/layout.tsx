@@ -37,7 +37,7 @@ export const metadata: Metadata = {
       "The first stock screener that adapts to your scholar. Five scholarly standards plus a custom builder. Transparent ratio reasoning behind every verdict.",
     url: "https://halalgauge.com",
     siteName: "HalalGauge",
-    images: [{ url: "/og-image.png?v=3", width: 1200, height: 630, alt: "HalalGauge — multi-scholar halal investing screener" }],
+    images: [{ url: "/og-image.png?v=4", width: 1200, height: 630, alt: "HalalGauge — multi-scholar halal investing screener" }],
     locale: "en_US",
     type: "website",
   },
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     title: "HalalGauge — halal investing, calibrated to your conscience.",
     description: "The first stock screener that adapts to your scholar's methodology.",
     creator: "@mizanapp",
-    images: ["/og-image.png?v=3"],
+    images: ["/og-image.png?v=4"],
   },
   robots: {
     index: true,
