@@ -180,7 +180,7 @@ export default function DiscoverPage() {
         <div className="mt-6 space-y-3">
           {sectorRates.map((s) => (
             <div key={s.sector} className="flex items-center gap-4">
-              <div className="w-36 truncate text-sm font-medium text-gray-900 sm:w-44">{s.sector}</div>
+              <div className="w-24 truncate text-sm font-medium text-gray-900 sm:w-44">{s.sector}</div>
               <div className="flex-1">
                 <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
                   <div className="h-full rounded-full bg-navy-700" style={{ width: `${Math.max(2, s.passRate)}%` }} />
