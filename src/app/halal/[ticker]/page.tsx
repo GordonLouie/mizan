@@ -19,6 +19,8 @@ import { SCHOLAR_PROFILES, getScholar } from "@/lib/scholars";
 import { screenStock } from "@/lib/screen";
 import { isEtf, etfInfo } from "@/lib/etfInfo";
 import { indexesContaining } from "@/lib/indexes";
+import { reconcile } from "@/lib/reconcile";
+import ScholarReconciliation from "@/components/ScholarReconciliation";
 import type { StockFundamentals, ScreeningResult, Verdict } from "@/lib/types";
 import CompanyLogo from "@/components/CompanyLogo";
 
@@ -263,6 +265,11 @@ export default async function HalalTickerPage({ params }: { params: Promise<{ ti
 
   const { results, pass, fail, borderline } = tallies(stock);
   const inIndexes = indexesContaining(stock.ticker);
+  const rec = reconcile(
+    stock,
+    SCHOLAR_PROFILES,
+    results.map((r) => ({ id: r.scholarId, short: getScholar(r.scholarId).short, verdict: r.verdict })),
+  );
 
   const headline =
     pass === NAMED_SCHOLARS.length
@@ -340,6 +347,9 @@ export default async function HalalTickerPage({ params }: { params: Promise<{ ti
           ))}
         </ul>
       </section>
+
+      {/* Multi-standard reconciliation — consensus + why they differ */}
+      <ScholarReconciliation rec={rec} />
 
       {/* Key metrics */}
       <section className="mt-8">
