@@ -14,19 +14,37 @@ interface Props {
 }
 
 /**
+ * Plain-English "who usually starts here" hooks. These answer the real
+ * friction (tester feedback): people don't recognise the standard names, so
+ * they bounce. A one-line identity/decision cue per option fixes that.
+ *
+ * Deliberately framed as screening *standards*, not schools of fiqh — we only
+ * name a sect where it is genuinely the marker (Ja'fari = Shia; Mufti Taqi =
+ * Hanafi/Deobandi). Otherwise we describe what the standard does differently.
+ */
+const AUDIENCE: Record<string, string> = {
+  aaoifi: "The mainstream global standard — most people start here.",
+  taqi_usmani: "Stricter — adds Mufti Taqi Usmani's illiquid-asset rule (Hanafi/Deobandi).",
+  djim: "The widely-used stock-index standard; the most lenient thresholds.",
+  jafari: "Shia (Ja'fari), following Ayatollah Sistani's rulings.",
+  strict: "Zero tolerance on any riba exposure — very few stocks pass.",
+  custom: "Know your scholar's exact numbers? Set them yourself.",
+};
+
+/** One-tap shortcuts shown in the panel — the "Help me choose" path. */
+const QUICK_PICKS: { label: string; id: string }[] = [
+  { label: "I'm new / not sure", id: "aaoifi" },
+  { label: "Stricter (Mufti Taqi)", id: "taqi_usmani" },
+  { label: "Shia (Ja'fari)", id: "jafari" },
+  { label: "Zero tolerance", id: "strict" },
+];
+
+/**
  * ScholarPicker — compact trigger pill + overlay dropdown panel.
  *
  * The compact mode is designed to sit inline beside other controls (e.g.
  * the search bar on /screen). The expanded panel renders ABSOLUTELY so it
- * can be wider than the trigger button's parent column — solves the
- * previous bug where putting the picker in a narrow column squeezed every
- * card into a vertical sliver.
- *
- * UX:
- *   - Trigger pill matches input-bar height; reads "Scholar · AAOIFI ▾"
- *   - Click opens an absolute panel with the 5 scholar cards in a clean grid
- *   - Click outside or Escape closes it
- *   - On mobile, the panel pins to the left edge with viewport-width
+ * can be wider than the trigger button's parent column.
  */
 export default function ScholarPicker({ value, onChange, expanded }: Props) {
   const [open, setOpen] = useState(false);
@@ -96,7 +114,7 @@ export default function ScholarPicker({ value, onChange, expanded }: Props) {
             role="listbox"
             className="absolute left-0 right-auto top-full z-40 mt-2 w-[min(680px,calc(100vw-2rem))] origin-top-left rounded-xl border border-gray-200 bg-white p-4 shadow-[0_12px_40px_rgba(28,69,55,0.10)]"
           >
-            <div className="mb-3 flex items-center justify-between">
+            <div className="mb-2 flex items-center justify-between">
               <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-500">
                 Choose your scholar
               </div>
@@ -105,8 +123,28 @@ export default function ScholarPicker({ value, onChange, expanded }: Props) {
                 onClick={() => setOpen(false)}
                 className="text-[11px] font-medium text-navy-700 hover:text-navy-900"
               >
-                Not sure? 60-second primer →
+                60-second primer →
               </Link>
+            </div>
+
+            {/* HELP ME CHOOSE — one-tap shortcuts so people who don't know the
+                standard names can still get a sensible starting point fast. */}
+            <div className="mb-3 rounded-lg bg-navy-50/60 px-3 py-2.5">
+              <div className="text-[11px] font-semibold text-gray-700">
+                Not sure which is you? Tap a starting point:
+              </div>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {QUICK_PICKS.map((q) => (
+                  <button
+                    key={q.label}
+                    type="button"
+                    onClick={() => { onChange(q.id); setOpen(false); }}
+                    className="rounded-full border border-navy-200 bg-white px-2.5 py-1 text-[11.5px] font-medium text-navy-800 transition hover:border-navy-400 hover:bg-navy-50"
+                  >
+                    {q.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -131,10 +169,10 @@ export default function ScholarPicker({ value, onChange, expanded }: Props) {
                         <Settings size={11} className="text-gold-600" />
                         {p.short}
                       </div>
-                      <div className="mt-0.5 text-[10.5px] uppercase tracking-[0.12em] text-gray-500">
-                        Build your own
+                      <div className="mt-1 text-[12px] font-medium leading-snug text-gray-700">
+                        {AUDIENCE[p.id] ?? "Build your own thresholds."}
                       </div>
-                      <div className="mt-2 line-clamp-3 text-[12px] leading-relaxed text-gray-600">
+                      <div className="mt-1.5 line-clamp-2 text-[11px] leading-relaxed text-gray-500">
                         {p.blurb}
                       </div>
                     </Link>
@@ -163,16 +201,23 @@ export default function ScholarPicker({ value, onChange, expanded }: Props) {
                         <Check size={12} className="shrink-0 text-navy-700" />
                       )}
                     </div>
-                    <div className="mt-0.5 text-[10.5px] uppercase tracking-[0.12em] text-gray-500">
-                      {p.label}
+                    <div className="mt-1 text-[12px] font-medium leading-snug text-gray-700">
+                      {AUDIENCE[p.id] ?? p.label}
                     </div>
-                    <div className="mt-2 line-clamp-3 text-[12px] leading-relaxed text-gray-600">
+                    <div className="mt-1.5 line-clamp-2 text-[11px] leading-relaxed text-gray-500">
                       {p.blurb}
                     </div>
                   </button>
                 );
               })}
             </div>
+
+            {/* Honest framing — keeps us credible with scholars. */}
+            <p className="mt-3 border-t border-gray-100 pt-2.5 text-[10.5px] leading-relaxed text-gray-500">
+              These are contemporary screening <em>standards</em>, not schools of
+              fiqh. If you&apos;re unsure, AAOIFI is a safe, mainstream default —
+              you can change it anytime.
+            </p>
           </div>
         )}
       </div>
@@ -201,12 +246,18 @@ export default function ScholarPicker({ value, onChange, expanded }: Props) {
               }
             >
               <div className="font-semibold text-gray-900">{p.short}</div>
-              <div className="mt-0.5 text-xs text-gray-500">{p.label}</div>
-              <div className="mt-2 text-xs text-gray-700">{p.blurb}</div>
+              <div className="mt-0.5 text-xs font-medium text-gray-700">
+                {AUDIENCE[p.id] ?? p.label}
+              </div>
+              <div className="mt-1.5 text-xs text-gray-500">{p.blurb}</div>
             </button>
           );
         })}
       </div>
+      <p className="mt-3 text-[11px] leading-relaxed text-gray-500">
+        These are contemporary screening standards, not schools of fiqh. Unsure?
+        AAOIFI is a safe, mainstream default — change it anytime.
+      </p>
     </div>
   );
 }

@@ -38,8 +38,12 @@ const config: Config = {
         },
         // Amber scale — replaces "gold" (same class names, less brass).
         gold: {
+          50:  "#fbf6ec",
+          100: "#f5e9d0",
+          200: "#ebd3a3",
           500: "#c89030",
           600: "#a87620",
+          700: "#855c1a",
         },
       },
     },

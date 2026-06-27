@@ -225,8 +225,9 @@ export default function EarningsWidget({
       )}
 
       <div className="mt-4 border-t border-gray-100 pt-3 text-[11px] italic text-gray-500">
-        At-risk flag triggers when a passing ratio is within 5 percentage
-        points of its threshold and earnings are coming soon.
+        At-risk flag triggers when a passing ratio sits within ~15% of its
+        limit (the same proximity the drift watch uses) and earnings are
+        coming soon.
       </div>
     </section>
   );

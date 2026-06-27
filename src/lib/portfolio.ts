@@ -36,6 +36,20 @@ export function loadPortfolio(): PortfolioState {
   } catch { return DEFAULT; }
 }
 
+/**
+ * True when the user has never saved their own positions, so the dashboard is
+ * showing the built-in DEFAULT sample. Lets the UI label the demo honestly
+ * instead of implying these are the user's real holdings.
+ */
+export function isSamplePortfolio(): boolean {
+  if (typeof window === "undefined") return true;
+  try {
+    return !window.localStorage.getItem(KEY);
+  } catch {
+    return true;
+  }
+}
+
 export function savePortfolio(state: PortfolioState): void {
   if (typeof window === "undefined") return;
   try {

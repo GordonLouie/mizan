@@ -6,18 +6,23 @@ export default function NotFound() {
   return (
     <div className="mx-auto max-w-md py-16 text-center">
       <div className="mx-auto h-20 w-20">
-        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="text-navy-800">
-          <rect width="64" height="64" rx="14" fill="currentColor"/>
-          <rect x="12" y="28" width="40" height="3" rx="1.5" fill="#C89030"/>
-          <rect x="30" y="14" width="3" height="14" rx="1.5" fill="#C89030"/>
-          <circle cx="32" cy="14" r="3.5" fill="#C89030"/>
-          <path d="M 14 36 Q 20 46 26 36 Z" fill="#FFFFFF"/>
-          <path d="M 38 35 Q 44 43 50 35 Z" fill="#FFFFFF" opacity="0.7"/>
-          <rect x="26" y="48" width="12" height="3" rx="1" fill="#C89030"/>
+        {/* HalalGauge mark — needle off the dial */}
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <rect width="64" height="64" rx="14" fill="#19402F"/>
+          <g fill="none" strokeLinecap="round">
+            <path d="M16.4 47 A18 18 0 0 1 47.6 47" stroke="#FFFFFF" strokeOpacity="0.28" strokeWidth="4.5"/>
+          </g>
+          <g stroke="#E0AC45" strokeLinecap="round">
+            {/* needle swung down, off the scale */}
+            <line x1="32" y1="38" x2="24" y2="50" strokeWidth="3.2"/>
+            <line x1="32" y1="38" x2="35" y2="33.5" strokeWidth="3.2"/>
+          </g>
+          <circle cx="32" cy="38" r="3.4" fill="#E0AC45"/>
+          <circle cx="32" cy="38" r="1.3" fill="#19402F"/>
         </svg>
       </div>
       <h1 className="mt-6 text-2xl font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
-        That page is out of balance.
+        This reading&apos;s off the dial.
       </h1>
       <p className="mt-3 text-sm text-gray-600">
         The URL you visited doesn&apos;t exist or has moved. The verdicts you came

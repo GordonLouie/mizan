@@ -20,7 +20,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, CalendarCheck } from "lucide-react";
 import CompanyLogo from "@/components/CompanyLogo";
 import { listStocks } from "@/lib/data";
 import { getScholar } from "@/lib/scholars";
@@ -67,7 +67,7 @@ const VERDICT_TEXT: Record<Verdict, string> = {
 
 const VERDICT_LABEL: Record<Verdict, string> = {
   pass: "PASS",
-  borderline: "DOUBTFUL",
+  borderline: "BORDERLINE",
   fail: "FAIL",
 };
 
@@ -196,15 +196,29 @@ export default function EarningsCalendar({
 
   if (cards.length === 0) {
     return (
-      <div
-        className={
-          "rounded-lg border border-gray-200 bg-white px-5 py-6 text-center text-[13px] text-gray-500 " +
-          (className ?? "")
-        }
-      >
-        {maxDaysAway !== undefined
-          ? `Nothing reporting in the next ${maxDaysAway} days.`
-          : "No upcoming earnings in this set."}
+      <div className={className}>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-600">
+          Earnings radar
+        </div>
+        <div className="mt-3 flex items-center gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+            <CalendarCheck size={18} />
+          </span>
+          <div>
+            <h3
+              className="text-[17px] font-bold leading-tight text-gray-900"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {maxDaysAway !== undefined
+                ? `All quiet for the next ${maxDaysAway} days`
+                : "No upcoming earnings in this set"}
+            </h3>
+            <p className="mt-1 text-[12px] leading-relaxed text-gray-600">
+              Nothing you track reports this soon — no verdicts likely to move yet.
+              The 3-month view below shows what&apos;s further out.
+            </p>
+          </div>
+        </div>
       </div>
     );
   }

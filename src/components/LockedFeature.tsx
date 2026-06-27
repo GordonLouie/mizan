@@ -79,11 +79,14 @@ export default function LockedFeature({
   feature,
   children,
   label,
+  benefit,
 }: {
   feature: FeatureKey;
   children: React.ReactNode;
   /** optional human label, e.g. "Price chart" */
   label?: string;
+  /** optional one-line value prop shown under the headline in the locked state */
+  benefit?: string;
 }) {
   const { tier } = useEntitlement();
   const need = featureTier(feature);
@@ -97,25 +100,33 @@ export default function LockedFeature({
   }
 
   return (
-    <div className="relative overflow-hidden rounded-xl">
-      {/* the real feature, blurred + inert */}
-      <div className="pointer-events-none select-none blur-sm" aria-hidden="true">
-        {children}
+    <div className="relative overflow-hidden rounded-xl border border-gray-200">
+      {/* A bounded peek at the real feature, blurred + inert. Capped height +
+          fade so a tall (or empty) child never renders as a big void — it
+          always reads as a deliberate preview frame. */}
+      <div className="relative max-h-[200px] overflow-hidden">
+        <div className="pointer-events-none select-none blur-[3px]" aria-hidden="true">
+          {children}
+        </div>
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white" />
       </div>
       {/* overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-white/55 backdrop-blur-[2px] p-4 text-center">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-800 text-white">
-          <Lock size={16} />
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-white/40 p-5 text-center">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-800 text-white shadow-sm">
+          <Lock size={15} />
         </div>
-        <div className="text-[13px] font-semibold text-gray-900">
-          {label ?? "This feature"} is a {needLabel} feature
+        <div className="text-[14px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
+          {label ?? "This feature"}
         </div>
+        {benefit ? (
+          <p className="max-w-xs text-[12px] leading-relaxed text-gray-600">{benefit}</p>
+        ) : null}
         <button
           type="button"
           onClick={onUnlock}
-          className="mt-1 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700"
+          className="mt-1.5 inline-flex items-center gap-1.5 rounded-md bg-navy-800 px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700"
         >
-          {need === "institutional" ? "Talk to us" : "Unlock with Pro"}
+          {need === "institutional" ? "Talk to us" : `Unlock with ${needLabel}`}
         </button>
       </div>
     </div>

@@ -383,7 +383,11 @@ function ScreenInner() {
           AI compliance report
         </div>
         <div className="mt-4">
-          <LockedFeature feature="aiReport" label="AI compliance report">
+          <LockedFeature
+            feature="aiReport"
+            label="AI compliance report"
+            benefit="A plain-English write-up of why this stock passes or fails under your scholar — grounded in the cited ratios above, never fabricated."
+          >
             <AIReport ticker={stock.ticker} scholarId={scholarId} />
           </LockedFeature>
         </div>
@@ -403,32 +407,47 @@ function ScreenInner() {
         </div>
       </section>
 
-      {/* FOOTER ACTIONS */}
-      <section className="border-t border-gray-200 pt-8">
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <Link
-            href={`/vs?a=${stock.ticker}&b=MSFT`}
-            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
-          >
-            Compare side-by-side <ArrowRight size={14} />
+      {/* WHAT'S NEXT — the handoff out of a one-off verdict into the watch loop.
+          A verdict is a snapshot; the value is keeping watch as it changes. */}
+      <section className="overflow-hidden rounded-2xl border border-navy-200 bg-navy-50/50">
+        <div className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+          <div className="max-w-md">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold-600">
+              What&apos;s next
+            </div>
+            <h3
+              className="mt-2 text-[20px] font-bold leading-tight text-gray-900 sm:text-[22px]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Now keep watch on {stock.ticker}.
+            </h3>
+            <p className="mt-2 text-[13px] leading-relaxed text-gray-600">
+              A verdict is a snapshot. Add {stock.ticker} to your portfolio and
+              HalalGauge re-screens it under {scholar.short} every quarter —
+              flagging it <em>before</em> it drifts out of compliance.
+            </p>
+          </div>
+          <div className="flex shrink-0 flex-col gap-2.5">
+            <Link
+              href="/portfolio"
+              className="inline-flex items-center justify-center gap-1.5 rounded-md bg-navy-800 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-700"
+            >
+              <BarChart3 size={15} /> Add to my portfolio
+            </Link>
+            <Link
+              href={`/vs?a=${stock.ticker}&b=MSFT`}
+              className="inline-flex items-center justify-center gap-1.5 rounded-md border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
+            >
+              Compare side-by-side <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-navy-100 bg-white/60 px-6 py-3 text-[12px] sm:px-7">
+          <Link href="/lists" className="inline-flex items-center gap-1 font-medium text-navy-700 hover:text-navy-900">
+            Browse curated lists <ArrowRight size={12} />
           </Link>
-          <Link
-            href="/portfolio"
-            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
-          >
-            <BarChart3 size={14} /> Add to portfolio score
-          </Link>
-          <Link
-            href="/lists"
-            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
-          >
-            Curated lists <ArrowRight size={14} />
-          </Link>
-          <Link
-            href={`/methodology`}
-            className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400 hover:text-gray-900"
-          >
-            How verdicts are computed <ArrowRight size={14} />
+          <Link href="/methodology" className="inline-flex items-center gap-1 font-medium text-navy-700 hover:text-navy-900">
+            How verdicts are computed <ArrowRight size={12} />
           </Link>
         </div>
       </section>

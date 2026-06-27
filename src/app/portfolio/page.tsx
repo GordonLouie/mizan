@@ -5,7 +5,7 @@ import { findStock } from "@/lib/data";
 import { getScholar, SCHOLAR_PROFILES } from "@/lib/scholars";
 import { loadCustomProfile } from "@/lib/customProfile";
 import { screenStock } from "@/lib/screen";
-import { loadPortfolio, savePortfolio, newPosition, type Position } from "@/lib/portfolio";
+import { loadPortfolio, savePortfolio, newPosition, isSamplePortfolio, type Position } from "@/lib/portfolio";
 import { currentPrice } from "@/lib/prices";
 import ScholarPicker from "@/components/ScholarPicker";
 import CurrencyInput from "@/components/CurrencyInput";
@@ -62,12 +62,15 @@ export default function PortfolioPage() {
   const [showEditor, setShowEditor] = useState(false);
   const [sortKey, setSortKey] = useState<"value" | "ticker" | "gain">("value");
   const [hydrated, setHydrated] = useState(false);
+  const [isSample, setIsSample] = useState(false);
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem("mizan.scholarId");
       if (saved && SCHOLAR_PROFILES.some((p) => p.id === saved)) setScholarId(saved);
     } catch {}
+    // Capture sample-vs-real BEFORE the autosave effect writes to storage.
+    setIsSample(isSamplePortfolio());
     setPositions(loadPortfolio().positions);
     setHydrated(true);
   }, []);
@@ -183,8 +186,8 @@ export default function PortfolioPage() {
               Your halal investing dashboard
             </h1>
             <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-gray-600">
-              Real positions with cost basis. Track gain/loss, sector exposure, and
-              compliance under your scholar. Saved to your browser.
+              Track your positions with cost basis — gain/loss, sector exposure, and
+              compliance under your scholar. Saved privately to your browser.
             </p>
           </div>
           <button
@@ -196,6 +199,24 @@ export default function PortfolioPage() {
           </button>
         </div>
       </header>
+
+      {/* SAMPLE-DATA BANNER — be honest that this is a demo until the user
+          enters their own holdings (autosave would otherwise make it look real). */}
+      {hydrated && isSample && (
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gold-200 bg-gold-50/60 px-4 py-3">
+          <p className="text-[13px] leading-relaxed text-gray-700">
+            <span className="font-semibold text-gray-900">This is a sample portfolio.</span>{" "}
+            AAPL, MSFT, TSLA, WMT and SPUS are here to show you the dashboard — they aren&apos;t your holdings yet.
+          </p>
+          <button
+            type="button"
+            onClick={() => setShowEditor(true)}
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-md bg-navy-800 px-3.5 py-2 text-[13px] font-semibold text-white transition hover:bg-navy-700"
+          >
+            <Plus size={14} /> Add your holdings
+          </button>
+        </div>
+      )}
 
       {/* SCHOLAR PICKER */}
       <div className="mt-8 sm:max-w-md">
@@ -321,7 +342,11 @@ export default function PortfolioPage() {
             can download and keep as your record for the year.
           </p>
           <div className="mt-5">
-            <LockedFeature feature="portfolioPerformance" label="Purification statement">
+            <LockedFeature
+              feature="portfolioPerformance"
+              label="Purification statement"
+              benefit="A dated, itemised record of the impermissible income to give to charity — downloadable to keep for your zakat year."
+            >
               <PurificationStatement
                 holdings={enriched.map((e) => ({
                   ticker: e.stock.ticker,
@@ -353,7 +378,11 @@ export default function PortfolioPage() {
           </div>
         </div>
         <div className="mt-6">
-          <LockedFeature feature="portfolioPerformance" label="Portfolio performance">
+          <LockedFeature
+            feature="portfolioPerformance"
+            label="Portfolio performance"
+            benefit="See your holdings tracked against the S&P 500, the halal S&P (SPUS) and the Nasdaq 100."
+          >
             <div className="rounded-xl border border-gray-200 bg-white p-6">
               <PortfolioPerformance holdings={positions.map((p) => ({ ticker: p.ticker, shares: p.shares }))} />
             </div>
@@ -367,7 +396,11 @@ export default function PortfolioPage() {
           AI portfolio assistant
         </div>
         <div className="mt-4">
-          <LockedFeature feature="aiReport" label="AI portfolio assistant">
+          <LockedFeature
+            feature="aiReport"
+            label="AI portfolio assistant"
+            benefit="How halal your portfolio is, what's dragging it down, and screened halal swaps to consider — grounded in your real holdings."
+          >
             <AIPortfolioAssistant
               holdings={positions.map((p) => ({ ticker: p.ticker, shares: p.shares }))}
               scholarId={scholarId}
