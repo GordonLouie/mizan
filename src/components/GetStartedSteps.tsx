@@ -18,7 +18,7 @@ const STEPS = [
     title: "Pick your scholar",
     body: "Six methodologies, or build your own thresholds. Pick once — HalalGauge remembers.",
     cta: "Browse scholars",
-    href: "/learn",
+    href: "/scholars",
   },
   {
     num: "02",

@@ -3,9 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
   async redirects() {
     return [
-      // Common guessed URLs for the scholar/standards content → methodology.
-      { source: "/scholars", destination: "/methodology", permanent: false },
-      { source: "/standards", destination: "/methodology", permanent: false },
+      // /scholars is now a real page (the "Your scholar" hub). Keep a couple of
+      // other guessable aliases pointing at it.
+      { source: "/standards", destination: "/scholars", permanent: false },
+      { source: "/your-scholar", destination: "/scholars", permanent: false },
     ];
   },
 };
