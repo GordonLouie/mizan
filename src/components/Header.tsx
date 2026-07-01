@@ -20,6 +20,7 @@ const MENUS: NavMenu[] = [
   {
     label: "Research",
     items: [
+      { href: "/assets", label: "Halal asset map", sub: "Every asset class, mapped" },
       { href: "/discover", label: "Discover", sub: "Trending & where scholars split" },
       { href: "/indexes", label: "Halal baskets", sub: "Screened, thesis-driven lists" },
       { href: "/sectors", label: "Sectors", sub: "By industry" },
