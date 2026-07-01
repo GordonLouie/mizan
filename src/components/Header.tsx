@@ -21,6 +21,7 @@ const MENUS: NavMenu[] = [
     label: "Research",
     items: [
       { href: "/assets", label: "Halal asset map", sub: "Every asset class, mapped" },
+      { href: "/baskets", label: "Fund screener", sub: "ETFs & REITs, looked through" },
       { href: "/discover", label: "Discover", sub: "Trending & where scholars split" },
       { href: "/indexes", label: "Halal baskets", sub: "Screened, thesis-driven lists" },
       { href: "/sectors", label: "Sectors", sub: "By industry" },
@@ -49,6 +50,8 @@ const MENUS: NavMenu[] = [
     label: "Learn",
     items: [
       { href: "/learn", label: "Halal investing 101", sub: "How screening works" },
+      { href: "/income", label: "Halal income", sub: "Sukuk, takaful, deposits" },
+      { href: "/crypto/is-crypto-halal", label: "Is crypto halal?", sub: "How to evaluate tokens" },
       { href: "/ask", label: "Halal investing Q&A", sub: "Common questions, answered" },
       { href: "/methodology", label: "Methodology", sub: "Our standards, sourced" },
     ],

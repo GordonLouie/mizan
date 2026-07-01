@@ -1,0 +1,113 @@
+[
+  {
+    "ticker": "SPUS",
+    "name": "SP Funds S&P 500 Sharia ETF",
+    "kind": "etf",
+    "category": "Halal large-cap equity ETF",
+    "shariahBranded": true,
+    "blurb": "Screens the S&P 500 down to Shariah-compliant names. A common first stop for US halal equity exposure.",
+    "holdings": [
+      { "ticker": "NVDA", "weight": 9.8 },
+      { "ticker": "AAPL", "weight": 9.1 },
+      { "ticker": "MSFT", "weight": 8.6 },
+      { "ticker": "AVGO", "weight": 5.4 },
+      { "ticker": "AMZN", "weight": 5.1 },
+      { "ticker": "META", "weight": 4.2 },
+      { "ticker": "GOOGL", "weight": 3.9 },
+      { "ticker": "TSLA", "weight": 3.1 },
+      { "ticker": "LLY", "weight": 2.6 },
+      { "ticker": "JNJ", "weight": 2.1 }
+    ]
+  },
+  {
+    "ticker": "HLAL",
+    "name": "Wahed FTSE USA Shariah ETF",
+    "kind": "etf",
+    "category": "Halal broad-market equity ETF",
+    "shariahBranded": true,
+    "blurb": "Tracks a FTSE Shariah-screened universe of US large- and mid-cap stocks.",
+    "holdings": [
+      { "ticker": "NVDA", "weight": 9.2 },
+      { "ticker": "AAPL", "weight": 8.4 },
+      { "ticker": "MSFT", "weight": 8.0 },
+      { "ticker": "AVGO", "weight": 5.0 },
+      { "ticker": "META", "weight": 4.6 },
+      { "ticker": "AMZN", "weight": 4.5 },
+      { "ticker": "GOOGL", "weight": 3.6 },
+      { "ticker": "LLY", "weight": 2.9 },
+      { "ticker": "COST", "weight": 2.3 },
+      { "ticker": "HD", "weight": 2.0 }
+    ]
+  },
+  {
+    "ticker": "SPY",
+    "name": "SPDR S&P 500 ETF Trust",
+    "kind": "etf",
+    "category": "Conventional broad-market ETF",
+    "shariahBranded": false,
+    "blurb": "The classic unscreened S&P 500 tracker. Shown here to demonstrate what a conventional index actually holds.",
+    "holdings": [
+      { "ticker": "NVDA", "weight": 7.2 },
+      { "ticker": "AAPL", "weight": 6.6 },
+      { "ticker": "MSFT", "weight": 6.3 },
+      { "ticker": "AMZN", "weight": 3.9 },
+      { "ticker": "META", "weight": 2.6 },
+      { "ticker": "GOOGL", "weight": 2.2 },
+      { "ticker": "AVGO", "weight": 2.1 },
+      { "ticker": "JPM", "weight": 1.5 },
+      { "ticker": "V", "weight": 1.1 },
+      { "ticker": "BAC", "weight": 1.0 }
+    ]
+  },
+  {
+    "ticker": "QQQ",
+    "name": "Invesco QQQ Trust",
+    "kind": "etf",
+    "category": "Conventional Nasdaq-100 ETF",
+    "shariahBranded": false,
+    "blurb": "Tracks the Nasdaq-100. Tech-heavy and unscreened — closer to compliant than the S&P, but still not screened.",
+    "holdings": [
+      { "ticker": "NVDA", "weight": 8.9 },
+      { "ticker": "AAPL", "weight": 8.1 },
+      { "ticker": "MSFT", "weight": 7.7 },
+      { "ticker": "AVGO", "weight": 5.1 },
+      { "ticker": "AMZN", "weight": 5.0 },
+      { "ticker": "META", "weight": 4.4 },
+      { "ticker": "TSLA", "weight": 3.4 },
+      { "ticker": "GOOGL", "weight": 2.6 },
+      { "ticker": "COST", "weight": 2.5 },
+      { "ticker": "NFLX", "weight": 2.4 }
+    ]
+  },
+  {
+    "ticker": "SPRE",
+    "name": "SP Funds S&P Global REIT Sharia ETF",
+    "kind": "etf",
+    "category": "Halal REIT ETF (property)",
+    "shariahBranded": true,
+    "blurb": "A Shariah-screened basket of real-estate investment trusts. Real-estate income is permissible in principle, but leverage is the usual concern — the look-through checks each REIT's debt.",
+    "holdings": [
+      { "ticker": "PLD", "weight": 11.4 },
+      { "ticker": "EQIX", "weight": 9.7 },
+      { "ticker": "WELL", "weight": 8.2 },
+      { "ticker": "PSA", "weight": 6.5 },
+      { "ticker": "DLR", "weight": 6.1 },
+      { "ticker": "O", "weight": 5.4 },
+      { "ticker": "AMT", "weight": 5.0 },
+      { "ticker": "SPG", "weight": 4.6 },
+      { "ticker": "VICI", "weight": 3.8 }
+    ]
+  },
+  {
+    "ticker": "O",
+    "name": "Realty Income Corporation",
+    "kind": "reit",
+    "category": "Single diversified net-lease REIT",
+    "shariahBranded": false,
+    "blurb": "A large, popular monthly-dividend REIT. Not screened, and highly leveraged — a clear illustration of why individual REITs usually fail the debt cap.",
+    "reitDebtToMarketCapPct": 58.06,
+    "holdings": [
+      { "ticker": "O", "weight": 100 }
+    ]
+  }
+]
