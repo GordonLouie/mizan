@@ -76,9 +76,9 @@ export default function Home() {
             </h1>
 
             <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-gray-600 sm:text-[16px]">
-              See it under all five scholarly standards side by side, including
-              Mufti Taqi Usmani&apos;s illiquid-asset rule — the one no other
-              halal app implements.
+              See it under five scholarly standards side by side — including
+              Mufti Taqi Usmani&apos;s illiquid-asset rule and a Ja&apos;fari (Shia)
+              profile — with every threshold cited to its source.
             </p>
 
             <div className="mt-8 max-w-lg">
@@ -368,7 +368,7 @@ function HeroVerdictCard({ tickerCount }: { tickerCount: number }) {
       {/* Coverage micro-strip below the card — replaces the banned in-hero
           stats trio with a single quiet line. */}
       <div className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-gray-400">
-        {tickerCount}+ tickers · 5 scholars · 0 black-box scores
+        5 scholarly standards · every threshold cited · 0 black-box scores
       </div>
     </div>
   );

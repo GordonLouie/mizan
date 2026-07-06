@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/ui";
 
 export const metadata = {
-  title: "Glossary · HalalGauge",
+  title: "Glossary",
   description: "Plain-language definitions of Islamic finance terms: riba, gharar, maisir, sukuk, zakat, khums, mudaraba, musharaka, ijara, and more.",
 };
 

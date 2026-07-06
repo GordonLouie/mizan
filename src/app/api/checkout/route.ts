@@ -12,7 +12,7 @@ import { sessionEmail } from "@/lib/auth";
 const SK = process.env.STRIPE_SECRET_KEY;
 const PRICE_MONTHLY = process.env.STRIPE_PRICE_RETAIL;
 const PRICE_ANNUAL = process.env.STRIPE_PRICE_RETAIL_ANNUAL;
-const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://halalgauge.com";
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://www.halalgauge.com";
 
 export const runtime = "nodejs";
 

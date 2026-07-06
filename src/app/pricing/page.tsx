@@ -25,7 +25,7 @@ const ROWS: Row[] = [
   { label: "Basket analytics + custom builder", free: false, pro: true, inst: true },
   { label: "AI compliance explainer (stock & portfolio)", free: false, pro: "Included", inst: "Unlimited" },
   { label: "Screening API / bulk export", free: false, pro: false, inst: true },
-  { label: "White-label reports + index licensing", free: false, pro: false, inst: true },
+  { label: "Screening reports + index licensing", free: false, pro: false, inst: true },
 ];
 
 function renderCell(c: Cell) {
@@ -109,7 +109,6 @@ export default function PricingPage() {
 
         {/* Pro */}
         <div className="relative rounded-2xl border-2 border-navy-800 bg-white p-6 shadow-sm">
-          <div className="absolute -top-3 left-6 rounded-full bg-navy-800 px-3 py-0.5 text-[11px] font-semibold text-white">Most popular</div>
           <div className="text-[13px] font-semibold uppercase tracking-wide text-navy-700">Pro</div>
           <div className="mt-2 flex items-end gap-1">
             <span className="text-[32px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>
@@ -134,7 +133,7 @@ export default function PricingPage() {
         <div id="institutional" className="rounded-2xl border border-gray-200 bg-white p-6">
           <div className="text-[13px] font-semibold uppercase tracking-wide text-gray-500">Institutional</div>
           <div className="mt-2 text-[32px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>Custom</div>
-          <p className="mt-1 text-[13px] text-gray-500">Data, white-label, multi-seat.</p>
+          <p className="mt-1 text-[13px] text-gray-500">Data, reports, multi-seat.</p>
           <div className="mt-4 h-10 flex items-center">
             {isInst
               ? <span className="text-[13px] font-semibold text-emerald-700">✓ Your current plan</span>

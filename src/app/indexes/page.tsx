@@ -8,10 +8,10 @@ import { ArrowRight } from "lucide-react";
 import { INDEXES, indexConstituents } from "@/lib/indexes";
 import IndexesTabs from "@/components/IndexesTabs";
 
-const SITE = "https://halalgauge.com";
+const SITE = "https://www.halalgauge.com";
 
 export const metadata: Metadata = {
-  title: "Halal stock baskets — thesis-driven, screened lists you can act on — HalalGauge",
+  title: "Halal stock baskets — thesis-driven, screened lists you can act on",
   description:
     "HalalGauge's halal baskets: thesis-driven lists of companies that pass the mainstream AAOIFI Shariah screen. See each basket's current characteristics, the dividend slice to purify, a compliance-drift watch, and export the holdings. Core, growth and income.",
   alternates: { canonical: `${SITE}/indexes` },

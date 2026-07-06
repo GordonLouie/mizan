@@ -10,7 +10,7 @@ import { Boxes, Database, FileBadge, ArrowRight } from "lucide-react";
 const PILLARS = [
   { icon: Boxes, title: "Custom index construction & licensing", body: "Bespoke Shariah-screened indices to your mandate — auditable methodology, ongoing maintenance." },
   { icon: Database, title: "Screening data API", body: "Multi-scholar verdicts, ratios and purification data, programmatically — JSON or CSV." },
-  { icon: FileBadge, title: "White-label compliance reports", body: "Client-ready Shariah reports — the verdict, the figures and the analysis, under your name." },
+  { icon: FileBadge, title: "Screening reports", body: "Deterministic screening reports — the figures, thresholds and cited sources behind every verdict. Methodology transparency, not religious certification." },
 ];
 
 export default function ForInstitutionsBand() {
@@ -28,12 +28,13 @@ export default function ForInstitutionsBand() {
                 className="mt-4 text-[28px] font-bold leading-[1.1] sm:text-[34px]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Shariah infrastructure you can put your name on.
+                Screening infrastructure that shows its work.
               </h2>
               <p className="mt-4 max-w-md text-[14px] leading-relaxed text-gray-300">
                 The same transparent, multi-scholar engine behind the retail product — licensable as
-                index construction, a screening data API, and white-label compliance reports for funds,
-                banks and pension/MPF providers.
+                index construction, a screening data API, and auditable screening reports for funds,
+                banks and pension/MPF providers. HalalGauge is not a Shariah certification body;
+                your own Shariah board keeps final authority.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link

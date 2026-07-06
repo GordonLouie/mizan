@@ -12,10 +12,10 @@ import { listStocks } from "@/lib/data";
 import { isEtf } from "@/lib/etfInfo";
 import { CRYPTO_ASSETS } from "@/lib/crypto";
 
-const SITE = "https://halalgauge.com";
+const SITE = "https://www.halalgauge.com";
 
 export const metadata: Metadata = {
-  title: "Is your stock halal? Free multi-scholar screener — HalalGauge",
+  title: "Is your stock halal? Free multi-scholar screener",
   description:
     "Check whether any stock is halal under all 5 scholarly methodologies — AAOIFI, Mufti Taqi Usmani, S&P DJIM, Ja'fari and the strict view — with every threshold cited to its source. Free, no signup. Browse popular tickers and crypto.",
   alternates: { canonical: `${SITE}/halal` },

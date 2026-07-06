@@ -233,7 +233,7 @@ export default function BasketsPage() {
           <div>
             <div className="flex items-baseline justify-between">
               <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-500">
-                % of covered weight compliant
+                % of sampled weight compliant
               </span>
               <span
                 className="text-[26px] font-bold tabular-nums text-gray-900"

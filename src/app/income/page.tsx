@@ -27,7 +27,7 @@ import ProductExplorer from "./ProductExplorer";
 import { COMPARISONS, EXCLUDED } from "./incomeData";
 
 export const metadata = {
-  title: "Halal income & protection · HalalGauge",
+  title: "Halal income & protection",
   description:
     "Sukuk, takaful and Islamic deposits explained in plain English — what they are, why they're permissible, and what to verify. Plus why bonds, CDs, insurance and annuities are excluded.",
 };

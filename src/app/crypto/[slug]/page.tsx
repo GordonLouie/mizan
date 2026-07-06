@@ -18,7 +18,7 @@ import {
   type CryptoVerdict,
 } from "@/lib/crypto";
 
-const SITE = "https://halalgauge.com";
+const SITE = "https://www.halalgauge.com";
 
 const slugOf = (a: CryptoAsset) => a.symbol.toLowerCase();
 function find(slug: string): CryptoAsset | undefined {
@@ -34,8 +34,8 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const a = find(slug);
-  if (!a) return { title: "Cryptoasset not found — HalalGauge" };
-  const title = `Is ${a.name} (${a.symbol}) halal? — HalalGauge`;
+  if (!a) return { title: "Cryptoasset not found" };
+  const title = `Is ${a.name} (${a.symbol}) halal?`;
   const description = `${a.blunt} See what Mufti Taqi Usmani, Mufti Faraz Adam, AAOIFI and others say about ${a.name}, side by side. Free, no signup.`;
   const url = `${SITE}/crypto/${slugOf(a)}`;
   return {

@@ -53,11 +53,11 @@ const SECTIONS: { title: string; faqs: FAQ[] }[] = [
     faqs: [
       {
         q: "How does brokerage sync work?",
-        a: <>We use Plaid (US) and TrueLayer (UK/EU) — the same secure read-only connectivity used by every major fintech. We can see your holdings and weights; we cannot see your full account number or initiate trades.</>,
+        a: <>Brokerage sync isn&apos;t live yet — today you enter positions manually and they stay in your browser. When it ships, it will use read-only connectivity (Plaid in the US, TrueLayer in the UK/EU): we&apos;d see holdings and weights only, never your full account number, and we could never initiate trades.</>,
       },
       {
         q: "What is purification?",
-        a: <>Purification is the practice of donating the impermissible portion of dividend income (and, under stricter scholars, realized capital gains) to charity without expecting reward. HalalGauge calculates this automatically per holding, then offers a one-tap donation flow to vetted charities.</>,
+        a: <>Purification is the practice of donating the impermissible portion of dividend income (and, under stricter scholars, realized capital gains) to charity without expecting reward. HalalGauge calculates this automatically per holding; donating it is up to you and your chosen charity.</>,
       },
       {
         q: "Do I need to purify capital gains?",

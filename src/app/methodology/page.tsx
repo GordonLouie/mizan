@@ -4,7 +4,7 @@ import { listStocks } from "@/lib/data";
 import { ExternalLink, ArrowRight } from "lucide-react";
 
 export const metadata = {
-  title: "Methodology · HalalGauge",
+  title: "Methodology",
   description:
     "How HalalGauge screens stocks across five scholarly methodologies — with primary-source citations for every threshold.",
 };

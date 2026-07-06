@@ -9,10 +9,10 @@ import { INDEXES, indexAnalytics } from "@/lib/indexes";
 import LockedFeature from "@/components/LockedFeature";
 import IndexesTabs from "@/components/IndexesTabs";
 
-const SITE = "https://halalgauge.com";
+const SITE = "https://www.halalgauge.com";
 
 export const metadata: Metadata = {
-  title: "Compare halal baskets — yield, debt, purification & drift — HalalGauge",
+  title: "Compare halal baskets — yield, debt, purification & drift",
   description:
     "Side-by-side comparison of HalalGauge's halal baskets on present-tense characteristics: holdings, weighted dividend yield, median debt, the dividend slice to purify, and compliance-drift count.",
   alternates: { canonical: `${SITE}/indexes/compare` },

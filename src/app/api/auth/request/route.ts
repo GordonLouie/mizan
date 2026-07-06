@@ -14,7 +14,7 @@ import { kvIncrWithTtl } from "@/lib/kv";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://halalgauge.com";
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://www.halalgauge.com";
 
 export async function POST(req: Request) {
   let body: { email?: string };

@@ -7,7 +7,7 @@ import {
 } from "@/lib/sukuk";
 
 export const metadata = {
-  title: "Sukuk · HalalGauge",
+  title: "Sukuk",
   description:
     "Islamic bonds explained — primer, accessible ETFs and funds, and notable issuances. The fixed-income leg every halal portfolio needs.",
 };

@@ -4,7 +4,7 @@ import GlossaryTerm from "@/components/GlossaryTerm";
 import { GLOSSARY } from "@/lib/glossaryEntries";
 
 export const metadata = {
-  title: "Halal investing 101 · HalalGauge",
+  title: "Halal investing 101",
   description:
     "Halal stock screening, explained from scratch. How to read a HalalGauge verdict, the math behind each check, and how to track your stocks over time.",
 };

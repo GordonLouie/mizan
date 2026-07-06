@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
 
 export const metadata = {
-  title: "Blog · HalalGauge",
+  title: "Blog",
   description: "Essays on halal investing, scholarly variation, and what existing products get wrong.",
 };
 

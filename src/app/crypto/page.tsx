@@ -8,7 +8,7 @@ import {
 import { fmtMarketCap } from "@/lib/lists";
 
 export const metadata = {
-  title: "Crypto compliance · HalalGauge",
+  title: "Crypto compliance",
   description:
     "Multi-scholar views on Bitcoin, Ethereum, stablecoins, DeFi tokens, and the rest of the major cryptoassets. No other app shows you what every scholar says, side by side.",
 };

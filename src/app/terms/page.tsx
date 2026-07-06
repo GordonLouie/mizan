@@ -1,4 +1,4 @@
-export const metadata = { title: "Terms of Use · HalalGauge" };
+export const metadata = { title: "Terms of Use" };
 
 export default function TermsPage() {
   return (

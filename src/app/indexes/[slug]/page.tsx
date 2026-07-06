@@ -17,7 +17,7 @@ import LockedFeature from "@/components/LockedFeature";
 import BasketExport from "@/components/BasketExport";
 import CompanyLogo from "@/components/CompanyLogo";
 
-const SITE = "https://halalgauge.com";
+const SITE = "https://www.halalgauge.com";
 
 export function generateStaticParams() {
   return INDEXES.map((i) => ({ slug: i.slug }));
@@ -27,8 +27,8 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const def = getIndexDef(slug);
-  if (!def) return { title: "Basket not found — HalalGauge" };
-  const title = `${def.name} — halal screened basket — HalalGauge`;
+  if (!def) return { title: "Basket not found" };
+  const title = `${def.name} — halal screened basket`;
   return {
     title,
     description: `${def.thesis} See the constituents, current characteristics, the dividend slice to purify, and the full screening methodology.`,

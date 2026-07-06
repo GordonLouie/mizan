@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "About · HalalGauge",
+  title: "About",
   description:
     "Why a non-Muslim builder in Hong Kong built a halal-investing platform — and the principles that keep it honest.",
 };

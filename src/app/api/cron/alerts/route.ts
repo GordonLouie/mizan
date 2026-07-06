@@ -79,7 +79,7 @@ export async function GET(req: Request) {
       const html =
         `<p>Updates on the stocks you're watching on HalalGauge:</p>` +
         `<ul>${lines.map((l) => `<li>${l}</li>`).join("")}</ul>` +
-        `<p><a href="https://halalgauge.com/screen">Open HalalGauge</a></p>` +
+        `<p><a href="https://www.halalgauge.com/screen">Open HalalGauge</a></p>` +
         `<p style="color:#888;font-size:12px">You're getting this because you asked for alerts at halalgauge.com.</p>`;
       if (await sendEmail(sub.email, "HalalGauge — watchlist update", html)) sent++;
     }

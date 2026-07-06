@@ -10,14 +10,14 @@ import PostHogProvider from "@/components/PostHogProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://halalgauge.com"),
+  metadataBase: new URL("https://www.halalgauge.com"),
   verification: { google: "DZV7UJw-g5iwpUnB7L9y-C4KV-jeIO6eMLCjSymFfQo" },
   title: {
     default: "HalalGauge — halal investing, calibrated to your conscience.",
     template: "%s · HalalGauge",
   },
   description:
-    "The first stock screener that adapts to your scholar's methodology — AAOIFI, Mufti Taqi Usmani, DJIM, Ja'fari, strict, or your own custom thresholds. With an AI-assisted halal investing Q&A.",
+    "The halal stock screener that adapts to your scholar's methodology — AAOIFI, Mufti Taqi Usmani, DJIM, Ja'fari, strict, or your own custom thresholds. Every verdict shows the math and cites its source.",
   applicationName: "HalalGauge",
   keywords: ["halal investing", "shariah screening", "halal stocks", "mufti taqi usmani", "AAOIFI", "DJIM", "halal stock screener", "muslim investing"],
   authors: [{ name: "HalalGauge" }],
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "HalalGauge — halal investing, calibrated to your conscience.",
     description:
-      "The first stock screener that adapts to your scholar. Five scholarly standards plus a custom builder. Transparent ratio reasoning behind every verdict.",
-    url: "https://halalgauge.com",
+      "The halal stock screener that adapts to your scholar. Five scholarly standards plus a custom builder. Transparent ratio reasoning behind every verdict.",
+    url: "https://www.halalgauge.com",
     siteName: "HalalGauge",
     images: [{ url: "/og-image.png?v=4", width: 1200, height: 630, alt: "HalalGauge — multi-scholar halal investing screener" }],
     locale: "en_US",
@@ -47,8 +47,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "HalalGauge — halal investing, calibrated to your conscience.",
-    description: "The first stock screener that adapts to your scholar's methodology.",
-    creator: "@mizanapp",
+    description: "The halal stock screener that adapts to your scholar's methodology.",
     images: ["/og-image.png?v=4"],
   },
   robots: {
@@ -81,11 +80,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {
                   "@type": "Organization",
                   name: "HalalGauge",
-                  url: "https://halalgauge.com",
+                  url: "https://www.halalgauge.com",
                   email: "hello@halalgauge.com",
                   description: "Multi-scholar halal stock screening, halal indexes, and grounded AI compliance reports.",
                 },
-                { "@type": "WebSite", name: "HalalGauge", url: "https://halalgauge.com" },
+                { "@type": "WebSite", name: "HalalGauge", url: "https://www.halalgauge.com" },
               ],
             }),
           }}
@@ -115,7 +114,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
             <p className="mt-4 text-xs leading-6 text-gray-500">
               HalalGauge provides information, not investment advice. Compliance verdicts
-              are scholarly opinions, not buy/sell recommendations. © {new Date().getFullYear()} HalalGauge.
+              are scholarly opinions, not buy/sell recommendations. HalalGauge is not a
+              religious authority and does not issue rulings.
+              © {new Date().getFullYear()} HalalGauge · operated by Mizan Operations (HK) Limited, Hong Kong.
             </p>
           </div>
         </footer>

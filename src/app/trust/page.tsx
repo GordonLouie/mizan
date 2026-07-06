@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CheckCircle2, AlertCircle, Clock, ExternalLink } from "lucide-react";
 
 export const metadata = {
-  title: "Trust centre · HalalGauge",
+  title: "Trust centre",
   description:
     "Everything a Muslim investor needs to evaluate whether to trust HalalGauge — in one place. Status of scholar onboarding, methodology sources, data sources, privacy, and how to reach the founder directly.",
 };

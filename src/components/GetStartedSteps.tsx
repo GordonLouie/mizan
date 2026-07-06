@@ -16,7 +16,7 @@ const STEPS = [
     num: "01",
     icon: <Layers size={18} />,
     title: "Pick your scholar",
-    body: "Six methodologies, or build your own thresholds. Pick once — HalalGauge remembers.",
+    body: "Five scholarly standards, or build your own thresholds. Pick once — HalalGauge remembers.",
     cta: "Browse scholars",
     href: "/scholars",
   },

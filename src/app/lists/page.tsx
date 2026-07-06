@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { CURATED_LISTS, statsForList, fmtMarketCap } from "@/lib/lists";
 
 export const metadata = {
-  title: "Curated lists · HalalGauge",
+  title: "Curated lists",
   description:
     "Hand-picked halal investing collections — mega-caps, dividend payers, ETFs, " +
     "tech leaders, consumer staples, and stricter-Hanafi-only equities.",

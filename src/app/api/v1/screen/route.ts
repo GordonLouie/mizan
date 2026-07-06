@@ -91,7 +91,7 @@ export async function GET(req: Request) {
       ].join(","));
     }
     return new NextResponse(lines.join("\n"), {
-      headers: { "content-type": "text/csv; charset=utf-8", "content-disposition": "attachment; filename=mizan-screen.csv" },
+      headers: { "content-type": "text/csv; charset=utf-8", "content-disposition": "attachment; filename=halalgauge-screen.csv" },
     });
   }
 

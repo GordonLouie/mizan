@@ -7,7 +7,7 @@ import { getAllPosts } from "@/lib/blog";
 import { INDEXES } from "@/lib/indexes";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://halalgauge.com";
+  const base = "https://www.halalgauge.com";
   const now = new Date();
   const routes = [
     { url: "", priority: 1.0, change: "weekly" as const },

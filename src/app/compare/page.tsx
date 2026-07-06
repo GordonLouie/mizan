@@ -1,21 +1,21 @@
-export const metadata = { title: "Compare · HalalGauge vs Wahed / Zoya / Musaffa" };
+export const metadata = { title: "HalalGauge vs Zoya, Musaffa, Wahed & Islamicly" };
 
 const ROWS = [
-  { feature: "Multi-scholar screening", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
-  { feature: "Mufti Taqi Usmani illiquid-asset rule", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
+  { feature: "Scholar-level standards (Mufti Taqi Usmani illiquid-asset rule)", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
   { feature: "Ja'fari (Shia) profile", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
+  { feature: "Switchable screening standards", mizan: true, zoya: true, musaffa: false, wahed: false, islamicly: false },
   { feature: "User-customizable thresholds", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
   { feature: "Named Shariah supervisory board", mizan: false, zoya: true, musaffa: true, wahed: true, islamicly: true },
   { feature: "Stock screening", mizan: true, zoya: true, musaffa: true, wahed: false, islamicly: true },
-  { feature: "Portfolio compliance scoring", mizan: true, zoya: true, musaffa: false, wahed: false, islamicly: false },
-  { feature: "Brokerage sync (Plaid)", mizan: true, zoya: true, musaffa: false, wahed: false, islamicly: false },
-  { feature: "Robo-advisor / managed money", mizan: false, zoya: false, musaffa: false, wahed: true, islamicly: false },
-  { feature: "Dividend purification calculator", mizan: true, zoya: false, musaffa: false, wahed: true, islamicly: false },
+  { feature: "Coverage (approx. listed stocks)", mizan: "657+", zoya: "30,000+", musaffa: "30,000+", wahed: "n/a", islamicly: "30,000+" },
+  { feature: "Portfolio compliance scoring", mizan: true, zoya: true, musaffa: true, wahed: false, islamicly: true },
+  { feature: "Brokerage sync", mizan: "planned", zoya: true, musaffa: true, wahed: false, islamicly: true },
+  { feature: "In-app trading / managed money", mizan: false, zoya: true, musaffa: true, wahed: true, islamicly: false },
+  { feature: "Purification calculator", mizan: true, zoya: true, musaffa: true, wahed: true, islamicly: true },
   { feature: "Capital-gain purification (Mufti Taqi / Ja'fari)", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
-  { feature: "AI-assisted halal Q&A", mizan: true, zoya: false, musaffa: false, wahed: false, islamicly: false },
-  { feature: "Open-published methodology", mizan: true, zoya: "partial", musaffa: "partial", wahed: "partial", islamicly: "partial" },
-  { feature: "Free tier with daily screens", mizan: true, zoya: true, musaffa: true, wahed: false, islamicly: true },
-  { feature: "Monthly price (paid plan)", mizan: "$7.99", zoya: "$9.99", musaffa: "$9.99", wahed: "0.99% AUM", islamicly: "$5.99" },
+  { feature: "Open-published methodology with cited primary sources", mizan: true, zoya: "partial", musaffa: "partial", wahed: "partial", islamicly: "partial" },
+  { feature: "Free tier", mizan: true, zoya: true, musaffa: true, wahed: false, islamicly: true },
+  { feature: "Paid plan (indicative)", mizan: "$9.99/mo", zoya: "$14.99/mo", musaffa: "$6–24/mo", wahed: "advisory fee", islamicly: "subscription" },
 ];
 
 function Cell({ v }: { v: boolean | string }) {
@@ -31,9 +31,10 @@ export default function ComparePage() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">HalalGauge vs the rest</h1>
         <p className="mt-2 max-w-2xl text-sm text-gray-600">
-          A neutral comparison of HalalGauge against the major halal investing apps in the
-          English-speaking market. Updated quarterly. We compete on multi-scholar
-          architecture, not on price — though we&apos;re cheaper too.
+          A comparison of HalalGauge against the major halal investing apps in the
+          English-speaking market, based on each platform&apos;s public materials. Updated
+          quarterly. We compete on scholar-level transparency, not on coverage or price —
+          and where a competitor is ahead, this table says so.
         </p>
       </div>
 
@@ -70,8 +71,8 @@ export default function ComparePage() {
         <h2 className="text-lg font-semibold text-gray-900">Honestly, when shouldn&apos;t you use HalalGauge?</h2>
         <ul className="mt-3 list-disc pl-5 text-sm text-gray-700">
           <li>If you only follow AAOIFI and want managed money — Wahed is the better fit. We don&apos;t manage money.</li>
-          <li>If you only need a research-heavy screener and you&apos;re an institution rather than an individual — Musaffa has deeper financials.</li>
-          <li>If you want the cheapest screener and don&apos;t care about scholar variety — Islamicly at $5.99 is below us.</li>
+          <li>If you need coverage beyond US large/mid caps today — Zoya, Musaffa and Islamicly screen tens of thousands of global stocks; our universe is still growing.</li>
+          <li>If a named Shariah supervisory board is your deciding factor — every competitor above has one; we don&apos;t yet, and we won&apos;t pretend otherwise.</li>
         </ul>
         <p className="mt-3 text-sm text-gray-600">
           We respect the other players. They each serve a real need; we serve a need they
@@ -80,7 +81,8 @@ export default function ComparePage() {
       </div>
 
       <p className="text-xs text-gray-500">
-        Feature comparison updated 18 May 2026. Information reflects publicly disclosed
+        Feature comparison updated 6 July 2026. Prices and features change; always check each
+        platform directly. Information reflects publicly disclosed
         capabilities of each platform; we welcome corrections via{" "}
         <a href="mailto:hello@halalgauge.com" className="text-navy-700 underline">hello@halalgauge.com</a>.
       </p>

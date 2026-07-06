@@ -30,7 +30,7 @@ const INDEX_RISK_TONE: Record<string, string> = {
   Income: "bg-navy-50 text-navy-800 border-navy-200",
 };
 
-const SITE = "https://halalgauge.com";
+const SITE = "https://www.halalgauge.com";
 
 // Only the 5 mainstream named standards (exclude the user-defined "custom").
 const NAMED_SCHOLARS = SCHOLAR_PROFILES.filter((s) => s.id !== "custom");
@@ -68,14 +68,14 @@ function tallies(stock: StockFundamentals) {
 export async function generateMetadata({ params }: { params: Promise<{ ticker: string }> }): Promise<Metadata> {
   const { ticker } = await params;
   const stock = findStock(decode(ticker));
-  if (!stock) return { title: "Stock not found — HalalGauge" };
+  if (!stock) return { title: "Stock not found" };
   const url = `${SITE}/halal/${encodeURIComponent(stock.ticker)}`;
 
   // ── ETF metadata ──
   if (isEtf(stock)) {
     const info = etfInfo(stock.ticker);
     const verdictWord = info ? (info.shariah ? "a Shariah-compliant ETF" : "not Shariah-screened") : "an ETF";
-    const title = `Is ${stock.ticker} (${stock.name}) halal? — HalalGauge`;
+    const title = `Is ${stock.ticker} (${stock.name}) halal?`;
     const description =
       `${stock.name} (${stock.ticker}) is ${verdictWord}. ${info?.summary ?? "An ETF's halal status depends on its holdings and structure, not single-company ratios."} Free, no signup.`;
     return {
@@ -90,7 +90,7 @@ export async function generateMetadata({ params }: { params: Promise<{ ticker: s
     pass === NAMED_SCHOLARS.length ? "halal under all 5 standards"
       : pass === 0 ? "not halal under the mainstream standards"
         : `halal under ${pass} of 5 standards`;
-  const title = `Is ${stock.ticker} (${stock.name}) halal? — HalalGauge`;
+  const title = `Is ${stock.ticker} (${stock.name}) halal?`;
   const description =
     `${stock.name} (${stock.ticker}) is ${verdictWord}. See the verdict under ` +
     `AAOIFI, Mufti Taqi Usmani, S&P DJIM, Ja'fari and the strict view side by side, ` +
@@ -324,6 +324,13 @@ export default async function HalalTickerPage({ params }: { params: Promise<{ ti
         Below is the verdict under each of the five mainstream scholarly standards, with the
         deciding numbers and the source behind every threshold.
       </p>
+      {stock.balanceSheet?.quarter && (
+        <p className="mt-2 text-[12px] text-gray-500">
+          Ratios computed from {stock.name}&apos;s {stock.balanceSheet.quarter} filing
+          {stock.balanceSheet.filingUrl ? <> (<a href={stock.balanceSheet.filingUrl} target="_blank" rel="noopener noreferrer" className="text-navy-700 underline hover:text-navy-900">source</a>)</> : null}.
+          Verdicts are re-computed when new financials are filed.
+        </p>
+      )}
 
       {/* Verdict table */}
       <section className="mt-8 overflow-hidden rounded-xl border border-gray-200 bg-white">

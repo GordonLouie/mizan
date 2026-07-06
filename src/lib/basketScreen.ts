@@ -308,24 +308,24 @@ export const BASKET_VERDICT_META: Record<
   { label: string; tone: "pass" | "warn" | "fail" | "muted"; blurb: string }
 > = {
   pass: {
-    label: "Broadly compliant",
+    label: "Sample: broadly compliant",
     tone: "pass",
-    blurb: "Nearly all of the covered weight passes this standard.",
+    blurb: "Nearly all of the sampled weight passes this standard. Based on a sample of top holdings, not the full book.",
   },
   mostly: {
-    label: "Mostly compliant",
+    label: "Sample: mostly compliant",
     tone: "warn",
-    blurb: "Most of the covered weight passes, with a meaningful failing slice.",
+    blurb: "Most of the sampled weight passes, with a meaningful failing slice. Based on a sample of top holdings, not the full book.",
   },
   mixed: {
-    label: "Mixed",
+    label: "Sample: mixed",
     tone: "warn",
-    blurb: "A substantial share of the covered weight fails this standard.",
+    blurb: "A substantial share of the sampled weight fails this standard. Based on a sample of top holdings, not the full book.",
   },
   fail: {
-    label: "Not compliant",
+    label: "Sample: not compliant",
     tone: "fail",
-    blurb: "Most of the covered weight fails this standard.",
+    blurb: "Most of the sampled weight fails this standard. Based on a sample of top holdings, not the full book.",
   },
   unknown: {
     label: "Not enough coverage",

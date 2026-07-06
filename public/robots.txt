@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /custom
 
-Sitemap: https://mizaninvesting.com/sitemap.xml
+Sitemap: https://www.halalgauge.com/sitemap.xml

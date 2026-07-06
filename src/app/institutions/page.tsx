@@ -10,12 +10,12 @@ import Link from "next/link";
 import { Boxes, Database, FileBadge, ShieldCheck, ArrowRight, Layers, Bell } from "lucide-react";
 import { listStocks } from "@/lib/data";
 
-const SITE = "https://halalgauge.com";
+const SITE = "https://www.halalgauge.com";
 
 export const metadata: Metadata = {
-  title: "HalalGauge for institutions — halal index licensing, screening data & white-label reports",
+  title: "HalalGauge for institutions — halal index licensing & screening data",
   description:
-    "Transparent, multi-scholar Shariah infrastructure for funds, banks and pension/MPF providers: custom halal index construction & licensing, a screening data API, white-label compliance reports, and audit-grade fund screening.",
+    "Transparent, multi-scholar screening infrastructure for funds, banks and pension/MPF providers: custom halal index construction & licensing, a screening data API, auditable screening reports, and fund screening with a full paper trail. Methodology transparency — not religious certification.",
   alternates: { canonical: `${SITE}/institutions` },
 };
 
@@ -32,8 +32,8 @@ const OFFERINGS = [
   },
   {
     icon: FileBadge,
-    title: "White-label compliance reports",
-    body: "Branded, client-ready Shariah reports for your funds and holdings — the deterministic verdict, every figure, and a plain-language explanation, under your name.",
+    title: "Auditable screening reports",
+    body: "Deterministic screening reports for your funds and holdings — every figure, threshold and cited source behind each verdict, in plain language. These are methodology reports, not Shariah certifications: sign-off remains with your own Shariah board.",
   },
   {
     icon: ShieldCheck,
@@ -49,13 +49,15 @@ export default function InstitutionsPage() {
     <main className="mx-auto max-w-4xl px-4 py-10 sm:py-14">
       <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500">For institutions</div>
       <h1 className="mt-2 text-[30px] font-bold leading-tight text-gray-900 sm:text-[38px]" style={{ fontFamily: "var(--font-display)" }}>
-        Shariah infrastructure you can put your name on.
+        Screening infrastructure that shows its work.
       </h1>
       <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-gray-700">
         The existing Shariah indices are narrow, opaque, single-standard fund products. HalalGauge is
         the transparent, multi-standard, customizable layer underneath — for funds, banks, and
         pension/MPF providers who need halal screening and indexing they (and their regulators)
-        can audit.
+        can audit. To be clear about what we are: HalalGauge has no Shariah supervisory board and
+        issues no religious certifications. We provide the arithmetic, the thresholds, and the
+        cited sources; religious sign-off remains with your scholars.
       </p>
 
       {/* The two differentiators — concrete, not generic */}
@@ -141,16 +143,16 @@ Authorization: Bearer <your-api-key>
         </p>
       </section>
 
-      {/* What's in the white-label report */}
+      {/* What's in a screening report */}
       <section className="mt-6 rounded-2xl border border-gray-200 bg-white p-6">
-        <h2 className="text-[16px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>What&apos;s in a white-label report</h2>
+        <h2 className="text-[16px] font-bold text-gray-900" style={{ fontFamily: "var(--font-display)" }}>What&apos;s in a screening report</h2>
         <ul className="mt-3 grid gap-2 text-[13px] leading-relaxed text-gray-700 sm:grid-cols-2">
           <li>• Per-holding verdict under your chosen standard</li>
           <li>• Every deciding ratio: observed, threshold, pass/fail</li>
           <li>• Business-activity (sector) screen with the reason</li>
           <li>• Purification owed, computed per holding</li>
           <li>• Plain-language explanation (no fiqh claims, no advice)</li>
-          <li>• Sources for every threshold, your branding throughout</li>
+          <li>• Sources for every threshold — clearly labelled as a HalalGauge methodology report, not a Shariah certification</li>
         </ul>
         <a
           href="mailto:hello@halalgauge.com?subject=HalalGauge%20%E2%80%94%20request%20a%20sample%20report"

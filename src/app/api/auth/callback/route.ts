@@ -9,7 +9,7 @@ import { consumeMagicToken, createSessionToken, SESSION_COOKIE, SESSION_MAX_AGE 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://halalgauge.com";
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://www.halalgauge.com";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
